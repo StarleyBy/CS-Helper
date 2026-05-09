@@ -156,7 +156,9 @@ function openItem(section, item) {
   $('page-breadcrumb').innerHTML = `
     <span style="cursor:pointer" onclick="showHome()">Home</span>
     <span class="bc-sep">›</span>
-    <span>${section.title}</span>
+    <span style="cursor:pointer" onclick="openSection('${section.id}')">${section.title}</span>
+    <span class="bc-sep">›</span>
+    <span>${item.title}</span>
   `;
   $('page-title-bar').textContent = item.title;
 
@@ -218,15 +220,48 @@ function renderHome() {
 function openSection(sectionId) {
   const section = State.manifest.sections.find(s => s.id === sectionId);
   if (!section) return;
-  const items = section.items.filter(i => State.role === 'admin' || i.visible);
-  if (items.length === 1) {
-    openItem(section, items[0]);
-  } else if (items.length > 1) {
-    // Expand nav section and open first item
-    const secEl = $('sidebar-nav').querySelector(`[data-id="${sectionId}"]`);
-    if (secEl) secEl.closest('.nav-section').classList.remove('collapsed');
-    openItem(section, items[0]);
-  }
+  renderSectionIndex(section);
+}
+
+function renderSectionIndex(section) {
+  State.currentItem = null;
+  const area = $('content-area');
+  const visibleItems = section.items.filter(i => State.role === 'admin' || i.visible);
+
+  // Update active nav (clear)
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+  $('page-breadcrumb').innerHTML = `
+    <span style="cursor:pointer" onclick="showHome()">Home</span>
+    <span class="bc-sep">›</span>
+    <span>${section.title}</span>
+  `;
+  $('page-title-bar').textContent = section.title;
+
+  let listHtml = '';
+  visibleItems.forEach(item => {
+    listHtml += `
+      <div class="index-card" onclick="openItemById('${section.id}', '${item.id}')">
+        <div class="index-card-title">${item.title}</div>
+        <div class="index-card-tags">
+          <span class="page-type-badge type-${item.type}">${item.type}</span>
+          ${(item.tags || []).map(t => `<span class="tag">#${t}</span>`).join(' ')}
+        </div>
+      </div>
+    `;
+  });
+
+  area.innerHTML = `
+    <div id="section-index">
+      <div class="index-grid">${listHtml}</div>
+    </div>
+  `;
+}
+
+function openItemById(sectionId, itemId) {
+  const section = State.manifest.sections.find(s => s.id === sectionId);
+  const item = section.items.find(i => i.id === itemId);
+  if (section && item) openItem(section, item);
 }
 
 // ── RENDER: MARKDOWN ─────────────────────────────────────
