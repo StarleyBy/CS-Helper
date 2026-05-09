@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "title": "ICD-9 Diagnoses — Cardiac Surgery Department",
+    "updated": "2026-05-09",
+    "note": "Curated list for cardiac surgery unit. Add codes as needed."
+  },
+  "categories": [
+    {
+      "name": "Ischemic Heart Disease",
+      "items": [
+        { "code": "410.01", "description": "Acute MI, anterolateral wall, initial episode" },
+        { "code": "410.11", "description": "Acute MI, other anterior wall, initial episode" },
+        { "code": "410.21", "description": "Acute MI, inferolateral wall, initial episode" },
+        { "code": "410.41", "description": "Acute MI, inferior wall, initial episode" },
+        { "code": "410.71", "description": "Subendocardial infarction, initial episode" },
+        { "code": "411.1",  "description": "Intermediate coronary syndrome (unstable angina)" },
+        { "code": "411.81", "description": "Acute coronary occlusion without MI" },
+        { "code": "413.9",  "description": "Angina pectoris, unspecified" },
+        { "code": "414.00", "description": "Coronary artery disease, unspecified vessel" },
+        { "code": "414.01", "description": "CAD of native coronary artery" },
+        { "code": "414.02", "description": "CAD of autologous vein bypass graft" },
+        { "code": "414.03", "description": "CAD of nonautologous biological bypass graft" },
+        { "code": "414.04", "description": "CAD of artery bypass graft" },
+        { "code": "414.06", "description": "CAD of native coronary artery of transplanted heart" }
+      ]
+    },
+    {
+      "name": "Valvular Heart Disease",
+      "items": [
+        { "code": "394.0",  "description": "Mitral stenosis" },
+        { "code": "394.1",  "description": "Rheumatic mitral insufficiency" },
+        { "code": "394.2",  "description": "Mitral stenosis with insufficiency" },
+        { "code": "395.0",  "description": "Rheumatic aortic stenosis" },
+        { "code": "395.1",  "description": "Rheumatic aortic insufficiency" },
+        { "code": "396.0",  "description": "Mitral stenosis and aortic stenosis" },
+        { "code": "424.0",  "description": "Mitral valve disorder, non-rheumatic" },
+        { "code": "424.1",  "description": "Aortic valve disorder, non-rheumatic" },
+        { "code": "424.2",  "description": "Tricuspid valve disorder, non-rheumatic" },
+        { "code": "424.3",  "description": "Pulmonary valve disorder" }
+      ]
+    },
+    {
+      "name": "Arrhythmias",
+      "items": [
+        { "code": "427.0",  "description": "Paroxysmal supraventricular tachycardia" },
+        { "code": "427.1",  "description": "Paroxysmal ventricular tachycardia" },
+        { "code": "427.31", "description": "Atrial fibrillation" },
+        { "code": "427.32", "description": "Atrial flutter" },
+        { "code": "427.41", "description": "Ventricular fibrillation" },
+        { "code": "427.5",  "description": "Cardiac arrest" },
+        { "code": "427.81", "description": "Sinoatrial node dysfunction (sick sinus syndrome)" },
+        { "code": "426.0",  "description": "AV block, complete (third degree)" },
+        { "code": "426.11", "description": "AV block, first degree" },
+        { "code": "426.12", "description": "Mobitz type I (Wenckebach)" },
+        { "code": "426.13", "description": "Mobitz type II" },
+        { "code": "426.3",  "description": "Left bundle branch block" },
+        { "code": "426.4",  "description": "Right bundle branch block" }
+      ]
+    },
+    {
+      "name": "Heart Failure",
+      "items": [
+        { "code": "428.0",  "description": "Congestive heart failure, unspecified" },
+        { "code": "428.1",  "description": "Left heart failure" },
+        { "code": "428.20", "description": "Systolic heart failure, unspecified" },
+        { "code": "428.21", "description": "Systolic heart failure, acute" },
+        { "code": "428.22", "description": "Systolic heart failure, chronic" },
+        { "code": "428.30", "description": "Diastolic heart failure, unspecified" },
+        { "code": "428.31", "description": "Diastolic heart failure, acute" },
+        { "code": "428.32", "description": "Diastolic heart failure, chronic" }
+      ]
+    },
+    {
+      "name": "Aortic Disease",
+      "items": [
+        { "code": "441.00", "description": "Aortic aneurysm, unspecified, without rupture" },
+        { "code": "441.01", "description": "Thoracic aortic aneurysm, without rupture" },
+        { "code": "441.02", "description": "Abdominal aortic aneurysm, without rupture" },
+        { "code": "441.1",  "description": "Thoracic aortic aneurysm, ruptured" },
+        { "code": "441.3",  "description": "Abdominal aortic aneurysm, ruptured" },
+        { "code": "441.2",  "description": "Aortic aneurysm, thoracic, without rupture" },
+        { "code": "441.5",  "description": "Aortic dissection" }
+      ]
+    },
+    {
+      "name": "Pericardial Disease",
+      "items": [
+        { "code": "420.90", "description": "Acute pericarditis, unspecified" },
+        { "code": "423.2",  "description": "Constrictive pericarditis" },
+        { "code": "423.9",  "description": "Pericardial effusion" }
+      ]
+    },
+    {
+      "name": "Endocarditis",
+      "items": [
+        { "code": "421.0",  "description": "Acute and subacute bacterial endocarditis" },
+        { "code": "421.1",  "description": "Acute and subacute infective endocarditis, other" },
+        { "code": "424.90", "description": "Endocarditis, valve unspecified" }
+      ]
+    },
+    {
+      "name": "Congenital",
+      "items": [
+        { "code": "745.0",  "description": "Common truncus" },
+        { "code": "745.1",  "description": "Transposition of great vessels" },
+        { "code": "745.4",  "description": "Ventricular septal defect" },
+        { "code": "745.5",  "description": "Atrial septal defect, secundum" },
+        { "code": "746.81", "description": "Patent ductus arteriosus" },
+        { "code": "747.10", "description": "Coarctation of aorta" }
+      ]
+    },
+    {
+      "name": "Postoperative / Complications",
+      "items": [
+        { "code": "997.1",  "description": "Cardiac complications, NEC" },
+        { "code": "998.0",  "description": "Postoperative shock" },
+        { "code": "998.11", "description": "Hemorrhage complicating a procedure" },
+        { "code": "998.59", "description": "Other postoperative infection" },
+        { "code": "996.09", "description": "Mechanical complication of cardiac device" }
+      ]
+    }
+  ]
+}

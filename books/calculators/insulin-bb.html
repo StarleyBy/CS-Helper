@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insulin Basis-Bolus Calculator</title>
+<style>
+  :root {
+    --bg: #f5f6f8; --bg-panel: #fff; --text: #1c2333;
+    --text-muted: #6b7a99; --accent: #3b6ff5; --accent-light: #e8effe;
+    --border: #dde1ec; --bg-hover: #eef0f5;
+    --green: #2d6a2d; --green-bg: #e8f4e8;
+    --orange: #8a5a00; --orange-bg: #fff4e0;
+    --font: 'IBM Plex Sans', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  [data-theme="dark"] {
+    --bg: #0f1117; --bg-panel: #181c27; --text: #e0e4f0;
+    --text-muted: #6b7a99; --accent: #4d7fff; --accent-light: #1a2a4a;
+    --border: #252b3d; --bg-hover: #1e2233;
+    --green: #5aaa5a; --green-bg: #1a2e1a;
+    --orange: #ddaa33; --orange-bg: #2a2000;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font); background: var(--bg); color: var(--text);
+    font-size: 14px; line-height: 1.5; padding: 20px;
+  }
+  h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+  .subtitle { color: var(--text-muted); font-size: 13px; margin-bottom: 20px; }
+  .card {
+    background: var(--bg-panel); border: 1px solid var(--border);
+    border-radius: 8px; padding: 18px; margin-bottom: 14px;
+  }
+  .card h2 {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--text-muted);
+    margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+  }
+  .row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  label { font-size: 13px; min-width: 180px; }
+  input[type=number], select {
+    background: var(--bg-hover); border: 1px solid var(--border);
+    border-radius: 6px; color: var(--text);
+    font-family: var(--font); font-size: 14px;
+    padding: 7px 10px; outline: none; width: 120px;
+    transition: border-color 0.15s;
+  }
+  input:focus, select:focus { border-color: var(--accent); }
+  .unit { color: var(--text-muted); font-size: 12px; }
+  .divider {
+    display: grid; gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    margin-top: 6px;
+  }
+  .result-item {
+    background: var(--bg-hover); border: 1px solid var(--border);
+    border-radius: 6px; padding: 12px;
+  }
+  .result-item .r-label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .result-item .r-value { font-size: 22px; font-weight: 600; font-family: var(--mono); }
+  .result-item .r-unit  { font-size: 12px; color: var(--text-muted); margin-left: 4px; }
+  .result-item.accent { background: var(--accent-light); border-color: var(--accent); }
+  .result-item.accent .r-value { color: var(--accent); }
+  .result-item.green-card { background: var(--green-bg); border-color: var(--green); }
+  .result-item.green-card .r-value { color: var(--green); }
+  .meal-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .meal-label { min-width: 90px; font-size: 13px; }
+  .note { font-size: 12px; color: var(--text-muted); margin-top: 8px; line-height: 1.6; }
+  .note strong { color: var(--text); }
+  .alert {
+    background: var(--orange-bg); border: 1px solid var(--orange);
+    color: var(--orange); border-radius: 6px; padding: 10px 14px;
+    font-size: 13px; margin-top: 10px; display: none;
+  }
+  h3 { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+  select { width: auto; }
+</style>
+</head>
+<body>
+<script>
+  const parent = window.parent;
+  const theme = (parent && parent.document.documentElement.getAttribute('data-theme')) || 
+                localStorage.getItem('pmr-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+</script>
+
+<h1>Insulin Basis-Bolus Calculator</h1>
+<p class="subtitle">Subcutaneous insulin regimen for inpatient glycemic management</p>
+
+<!-- INPUT -->
+<div class="card">
+  <h2>Patient Parameters</h2>
+  <div class="row">
+    <label>Body weight</label>
+    <input type="number" id="weight" min="30" max="200" value="70" step="0.5" oninput="calc()">
+    <span class="unit">kg</span>
+  </div>
+  <div class="row">
+    <label>Estimated GFR / renal function</label>
+    <select id="renal" onchange="calc()">
+      <option value="normal">Normal (≥ 60 mL/min)</option>
+      <option value="mild">Mild CKD (30–59)</option>
+      <option value="moderate">Moderate CKD (15–29)</option>
+      <option value="severe">Severe CKD / HD (< 15)</option>
+    </select>
+  </div>
+  <div class="row">
+    <label>Current glycemic control</label>
+    <select id="control" onchange="calc()">
+      <option value="naive">Insulin-naive / newly started</option>
+      <option value="good">Previously controlled</option>
+      <option value="poor">Poorly controlled (HbA1c > 9%)</option>
+    </select>
+  </div>
+  <div class="row">
+    <label>Eating pattern</label>
+    <select id="eating" onchange="calc()">
+      <option value="full">Full oral intake (3 meals)</option>
+      <option value="partial">Partial intake / soft diet</option>
+      <option value="npo">NPO / enteral nutrition</option>
+    </select>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="card">
+  <h2>Calculated Doses</h2>
+  <div id="alert-renal" class="alert">⚠️ CKD: reduce TDD by 25–50%. Monitor closely for hypoglycemia.</div>
+  <div class="divider" id="results"></div>
+  <div class="note" id="schedule-note"></div>
+</div>
+
+<!-- CORRECTION SCALE -->
+<div class="card">
+  <h2>Correction Scale (supplemental)</h2>
+  <h3>Add to bolus if pre-meal glucose is elevated:</h3>
+  <div class="divider" id="correction"></div>
+  <p class="note" style="margin-top:12px">
+    <strong>Target glucose:</strong> 6–10 mmol/L (fasting) · 7–11 mmol/L (post-meal)<br>
+    <strong>Hypoglycemia protocol:</strong> glucose &lt; 3.9 mmol/L → 15 g fast carbs, recheck in 15 min
+  </p>
+</div>
+
+<!-- NOTES -->
+<div class="card">
+  <h2>Clinical Notes</h2>
+  <p class="note">
+    <strong>Basal insulin</strong> (e.g. Glargine, Detemir) — inject once daily, same time each day.<br>
+    <strong>Rapid-acting bolus</strong> (e.g. Aspart, Lispro) — inject immediately before each meal.<br>
+    <strong>Dose adjustment:</strong> Increase or decrease total dose by 10–20% based on glucose trends. Titrate every 1–2 days.<br>
+    <strong>NPO patients:</strong> Give 50–75% of basal dose only. Hold bolus. Continue glucose monitoring q4h.<br>
+    <strong>Steroids:</strong> May require 30–50% TDD increase; consider afternoon/evening basal shift.
+  </p>
+</div>
+
+<script>
+function calc() {
+  const weight  = parseFloat(document.getElementById('weight').value) || 70;
+  const renal   = document.getElementById('renal').value;
+  const control = document.getElementById('control').value;
+  const eating  = document.getElementById('eating').value;
+
+  // Base TDD (total daily dose) factor
+  let factor = 0.4; // units/kg default
+  if (control === 'poor')   factor = 0.5;
+  if (control === 'naive')  factor = 0.3;
+
+  // Renal reduction
+  let renalFactor = 1.0;
+  if (renal === 'mild')     renalFactor = 0.8;
+  if (renal === 'moderate') renalFactor = 0.65;
+  if (renal === 'severe')   renalFactor = 0.5;
+
+  document.getElementById('alert-renal').style.display = renal !== 'normal' ? 'block' : 'none';
+
+  let tdd = Math.round(weight * factor * renalFactor);
+  const basal  = Math.round(tdd * 0.5);
+  const bolus  = Math.round(tdd * 0.5);
+
+  let meals = 3;
+  if (eating === 'partial') meals = 3; // still 3 but smaller
+  if (eating === 'npo')     meals = 0;
+
+  const perMeal = eating === 'npo' ? 0 : Math.round(bolus / meals);
+  const basalNPO = eating === 'npo' ? Math.round(basal * 0.75) : basal;
+
+  // Sensitivity factor (rule of 1800 / 100)
+  const isf = Math.round(100 / tdd); // mmol/L per unit (approx)
+
+  let results = `
+    <div class="result-item accent">
+      <div class="r-label">Total Daily Dose</div>
+      <div><span class="r-value">${tdd}</span><span class="r-unit">units/day</span></div>
+    </div>
+    <div class="result-item green-card">
+      <div class="r-label">Basal${eating === 'npo' ? ' (NPO 75%)' : ' (50%)'}</div>
+      <div><span class="r-value">${basalNPO}</span><span class="r-unit">units / day</span></div>
+    </div>`;
+
+  if (eating !== 'npo') {
+    results += `
+      <div class="result-item">
+        <div class="r-label">Bolus per meal</div>
+        <div><span class="r-value">${perMeal}</span><span class="r-unit">units × ${meals}</span></div>
+      </div>
+      <div class="result-item">
+        <div class="r-label">Correction factor</div>
+        <div><span class="r-value">${isf}</span><span class="r-unit">mmol/L per unit</span></div>
+      </div>
+    `;
+  }
+
+  document.getElementById('results').innerHTML = results;
+
+  // Schedule note
+  let note = '';
+  if (eating === 'npo') {
+    note = `<strong>NPO regimen:</strong> Basal ${basalNPO} units once daily. Hold all boluses. Monitor glucose every 4 hours. Resume bolus once oral intake resumes.`;
+  } else {
+    note = `<strong>Suggested regimen:</strong><br>
+    • <em>Basal:</em> ${basalNPO} units at bedtime (or morning)<br>
+    • <em>Bolus:</em> ${perMeal} units before breakfast / ${perMeal} units before lunch / ${perMeal} units before dinner<br>
+    • <em>Correction:</em> see correction scale below`;
+  }
+  document.getElementById('schedule-note').innerHTML = note;
+
+  // Correction scale
+  const corrThresholds = [
+    { label: '10.1–13.0 mmol/L', units: 1 },
+    { label: '13.1–16.0 mmol/L', units: 2 },
+    { label: '16.1–19.0 mmol/L', units: 3 },
+    { label: '> 19.0 mmol/L',    units: 4, note: 'notify MD' }
+  ];
+  let corrHtml = '';
+  for (const t of corrThresholds) {
+    corrHtml += `
+      <div class="result-item">
+        <div class="r-label">${t.label}</div>
+        <div><span class="r-value">+${t.units}</span><span class="r-unit">units${t.note ? ' — ' + t.note : ''}</span></div>
+      </div>`;
+  }
+  document.getElementById('correction').innerHTML = corrHtml;
+}
+
+calc();
+</script>
+</body>
+</html>

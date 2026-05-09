@@ -1,0 +1,93 @@
+{
+  "meta": {
+    "title": "ICD-9 Procedures — Cardiac Surgery Department",
+    "updated": "2026-05-09"
+  },
+  "categories": [
+    {
+      "name": "Coronary Artery Bypass",
+      "items": [
+        { "code": "36.10", "description": "Bypass anastomosis for heart revascularization, NOS" },
+        { "code": "36.11", "description": "Aortocoronary bypass of one coronary artery" },
+        { "code": "36.12", "description": "Aortocoronary bypass of two coronary arteries" },
+        { "code": "36.13", "description": "Aortocoronary bypass of three coronary arteries" },
+        { "code": "36.14", "description": "Aortocoronary bypass of four or more coronary arteries" },
+        { "code": "36.15", "description": "Single internal mammary-coronary artery bypass" },
+        { "code": "36.16", "description": "Double internal mammary-coronary artery bypass" },
+        { "code": "36.19", "description": "Other bypass anastomosis for heart revascularization" }
+      ]
+    },
+    {
+      "name": "Valve Surgery",
+      "items": [
+        { "code": "35.00", "description": "Closed valvotomy, unspecified valve" },
+        { "code": "35.10", "description": "Open heart valvuloplasty, unspecified valve" },
+        { "code": "35.11", "description": "Open heart valvuloplasty of aortic valve without replacement" },
+        { "code": "35.12", "description": "Open heart valvuloplasty of mitral valve without replacement" },
+        { "code": "35.13", "description": "Open heart valvuloplasty of pulmonary valve without replacement" },
+        { "code": "35.14", "description": "Open heart valvuloplasty of tricuspid valve without replacement" },
+        { "code": "35.20", "description": "Replacement of unspecified heart valve" },
+        { "code": "35.21", "description": "Replacement of aortic valve with tissue graft" },
+        { "code": "35.22", "description": "Other replacement of aortic valve" },
+        { "code": "35.23", "description": "Replacement of mitral valve with tissue graft" },
+        { "code": "35.24", "description": "Other replacement of mitral valve" },
+        { "code": "35.25", "description": "Replacement of pulmonary valve with tissue graft" },
+        { "code": "35.27", "description": "Replacement of tricuspid valve with tissue graft" },
+        { "code": "35.28", "description": "Other replacement of tricuspid valve" }
+      ]
+    },
+    {
+      "name": "Cardiac Assist Devices",
+      "items": [
+        { "code": "37.61", "description": "Implant of pulsation balloon (IABP)" },
+        { "code": "37.62", "description": "Insertion of non-surgical ventricular assist device" },
+        { "code": "37.64", "description": "Removal of external heart assist device" },
+        { "code": "37.65", "description": "Implant of external heart assist device" },
+        { "code": "37.66", "description": "Insertion of implantable heart assist device (LVAD)" }
+      ]
+    },
+    {
+      "name": "Pacemakers & ICD",
+      "items": [
+        { "code": "37.70", "description": "Initial insertion of cardiac lead, NOS" },
+        { "code": "37.71", "description": "Initial insertion of transvenous lead into ventricle" },
+        { "code": "37.72", "description": "Initial insertion of transvenous leads into atrium and ventricle" },
+        { "code": "37.80", "description": "Insertion of permanent pacemaker, NOS" },
+        { "code": "37.83", "description": "Initial insertion of single-chamber device" },
+        { "code": "37.85", "description": "Initial insertion of dual-chamber device" },
+        { "code": "37.94", "description": "Implantation or replacement of automatic cardioverter/defibrillator (ICD)" },
+        { "code": "37.74", "description": "Insertion or replacement of CRT-P (biventricular pacemaker)" },
+        { "code": "37.99", "description": "CRT-D — resynchronization defibrillator" }
+      ]
+    },
+    {
+      "name": "Extracorporeal Circulation",
+      "items": [
+        { "code": "39.61", "description": "Extracorporeal circulation auxiliary to open heart surgery" },
+        { "code": "39.65", "description": "Cardioplegia" },
+        { "code": "39.66", "description": "Autotransfusion" }
+      ]
+    },
+    {
+      "name": "Aortic Surgery",
+      "items": [
+        { "code": "38.34", "description": "Resection of thoracic aorta with replacement" },
+        { "code": "38.44", "description": "Resection of thoracic aorta with replacement, thoracic" },
+        { "code": "38.45", "description": "Resection of thoracoabdominal aorta with replacement" },
+        { "code": "39.25", "description": "Aorta-iliac-femoral bypass" }
+      ]
+    },
+    {
+      "name": "Diagnostic / Monitoring",
+      "items": [
+        { "code": "89.52", "description": "Electrocardiogram (12-lead)" },
+        { "code": "89.54", "description": "Electrocardiographic monitoring" },
+        { "code": "88.72", "description": "Diagnostic ultrasound of heart (echocardiography)" },
+        { "code": "88.73", "description": "Echocardiography" },
+        { "code": "37.21", "description": "Right heart cardiac catheterization" },
+        { "code": "37.22", "description": "Left heart cardiac catheterization" },
+        { "code": "37.23", "description": "Combined right and left heart catheterization" }
+      ]
+    }
+  ]
+}

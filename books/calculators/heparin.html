@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heparin Infusion Calculator</title>
+<style>
+  :root {
+    --bg:#f5f6f8;--bg-panel:#fff;--text:#1c2333;--text-muted:#6b7a99;
+    --accent:#3b6ff5;--accent-light:#e8effe;--border:#dde1ec;--bg-hover:#eef0f5;
+    --green:#2d6a2d;--green-bg:#e8f4e8;--red:#aa2a2a;--red-bg:#ffe8e8;
+    --font:'IBM Plex Sans',system-ui,sans-serif;--mono:'IBM Plex Mono',monospace;
+  }
+  [data-theme="dark"]{
+    --bg:#0f1117;--bg-panel:#181c27;--text:#e0e4f0;--text-muted:#6b7a99;
+    --accent:#4d7fff;--accent-light:#1a2a4a;--border:#252b3d;--bg-hover:#1e2233;
+    --green:#5aaa5a;--green-bg:#1a2e1a;--red:#ee6666;--red-bg:#2a0a0a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;padding:20px;}
+  h1{font-size:20px;font-weight:600;margin-bottom:4px;}
+  .subtitle{color:var(--text-muted);font-size:13px;margin-bottom:20px;}
+  .card{background:var(--bg-panel);border:1px solid var(--border);border-radius:8px;padding:18px;margin-bottom:14px;}
+  .card h2{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+  label{font-size:13px;min-width:200px;}
+  input[type=number]{background:var(--bg-hover);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--font);font-size:14px;padding:7px 10px;outline:none;width:120px;transition:border-color .15s;}
+  input:focus{border-color:var(--accent);}
+  .unit{color:var(--text-muted);font-size:12px;}
+  .grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));margin-top:6px;}
+  .ritem{background:var(--bg-hover);border:1px solid var(--border);border-radius:6px;padding:12px;}
+  .ritem .rl{font-size:11px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;}
+  .ritem .rv{font-size:20px;font-weight:600;font-family:var(--mono);}
+  .ritem .ru{font-size:12px;color:var(--text-muted);margin-left:3px;}
+  .ritem.ac{background:var(--accent-light);border-color:var(--accent);}
+  .ritem.ac .rv{color:var(--accent);}
+  .ritem.gr{background:var(--green-bg);border-color:var(--green);}
+  .ritem.gr .rv{color:var(--green);}
+  .note{font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.7;}
+  .note strong{color:var(--text);}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;}
+  th{background:var(--bg-hover);padding:8px 10px;text-align:left;border:1px solid var(--border);font-size:11px;text-transform:uppercase;letter-spacing:.04em;}
+  td{padding:7px 10px;border:1px solid var(--border);}
+  tr:nth-child(even) td{background:var(--bg-hover);}
+  .tag{display:inline-block;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:600;}
+  .tag-r{background:var(--red-bg);color:var(--red);}
+  .tag-g{background:var(--green-bg);color:var(--green);}
+  .tag-a{background:var(--accent-light);color:var(--accent);}
+</style>
+</head>
+<body>
+<script>
+  const theme = (window.parent?.document.documentElement.getAttribute('data-theme')) ||
+                localStorage.getItem('pmr-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+</script>
+
+<h1>Heparin Infusion Calculator</h1>
+<p class="subtitle">Weight-based UFH protocol for anticoagulation therapy</p>
+
+<div class="card">
+  <h2>Patient Parameters</h2>
+  <div class="row">
+    <label>Body weight (actual)</label>
+    <input type="number" id="weight" min="40" max="200" value="75" step="0.5" oninput="calc()">
+    <span class="unit">kg</span>
+  </div>
+  <div class="row">
+    <label>Heparin concentration</label>
+    <input type="number" id="conc" min="10" max="100" value="25" step="5" oninput="calc()">
+    <span class="unit">000 U / 500 mL (= <span id="conc-label">50</span> U/mL)</span>
+  </div>
+  <div class="row">
+    <label>Current aPTT</label>
+    <input type="number" id="aptt" min="0" max="500" value="0" step="1" oninput="calc()">
+    <span class="unit">sec &nbsp;(baseline ~30 sec; target 60–100 sec)</span>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Initial Dosing</h2>
+  <div class="grid" id="init-results"></div>
+  <p class="note" id="init-note"></p>
+</div>
+
+<div class="card">
+  <h2>aPTT-Based Dose Adjustment</h2>
+  <div id="adjustment-block">
+    <table id="adj-table">
+      <tr><th>aPTT (sec)</th><th>Action</th><th>Rate change</th><th>Recheck aPTT</th></tr>
+    </table>
+    <div class="grid" id="adj-result" style="margin-top:12px"></div>
+  </div>
+  <p class="note" style="margin-top:10px">
+    <strong>Check aPTT:</strong> 6h after initiation, 6h after each dose change, then every 24h when stable.<br>
+    <strong>Platelet count:</strong> Baseline, day 3–5, day 7–10 (monitor for HIT).
+  </p>
+</div>
+
+<div class="card">
+  <h2>Clinical Notes</h2>
+  <p class="note">
+    <strong>Indications covered:</strong> VTE treatment, ACS (NSTEMI/STEMI bridging), post-cardiac surgery anticoagulation, DVT/PE.<br>
+    <strong>Renal adjustment:</strong> UFH does not require dose adjustment for renal failure; preferred over LMWH in severe CKD.<br>
+    <strong>Reversal:</strong> Protamine sulfate — 1 mg per 100 U heparin given in last 2–3 hours (max 50 mg IV slow).<br>
+    <strong>Hold for procedures:</strong> Stop infusion 4–6h before; check aPTT before resumption.<br>
+    <strong>HIT suspicion:</strong> Stop all heparin immediately; switch to argatroban or fondaparinux.
+  </p>
+</div>
+
+<script>
+function calc() {
+  const w    = parseFloat(document.getElementById('weight').value) || 75;
+  const conc = parseFloat(document.getElementById('conc').value) * 1000 / 500; // U/mL
+  const aptt = parseFloat(document.getElementById('aptt').value) || 0;
+
+  document.getElementById('conc-label').textContent = conc.toFixed(0);
+
+  const bolus_u  = Math.round(w * 80);
+  const init_u   = Math.round(w * 18);
+  const init_ml  = (init_u / conc).toFixed(1);
+  const bolus_ml = (bolus_u / conc).toFixed(1);
+
+  document.getElementById('init-results').innerHTML = `
+    <div class="ritem ac">
+      <div class="rl">Loading Bolus</div>
+      <div><span class="rv">${bolus_u.toLocaleString()}</span><span class="ru">U IV</span></div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px">= ${bolus_ml} mL over 3–5 min</div>
+    </div>
+    <div class="ritem gr">
+      <div class="rl">Initial Infusion Rate</div>
+      <div><span class="rv">${init_ml}</span><span class="ru">mL/h</span></div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px">${init_u} U/h (18 U/kg/h)</div>
+    </div>
+    <div class="ritem">
+      <div class="rl">Concentration</div>
+      <div><span class="rv">${conc.toFixed(0)}</span><span class="ru">U/mL</span></div>
+    </div>
+  `;
+
+  document.getElementById('init-note').innerHTML =
+    `<strong>Protocol:</strong> Bolus ${bolus_u.toLocaleString()} U IV push → start infusion at ${init_ml} mL/h. ` +
+    `Check aPTT 6 hours after initiation.`;
+
+  // Adjustment table
+  const rules = [
+    { label:'< 35',  ratio:'< 1.2×',  action:'Rebolus + increase',  change: +4, hold:0, note:'Rebolus 80 U/kg', recheck:6, cls:'tag-r' },
+    { label:'35–45', ratio:'1.2–1.5×', action:'Increase rate',       change: +2, hold:0, note:'',                recheck:6, cls:'tag-r' },
+    { label:'46–70', ratio:'1.5–2.3×', action:'Increase rate',       change: +1, hold:0, note:'',                recheck:6, cls:'tag-a' },
+    { label:'71–100',ratio:'2.3–3.3×', action:'Therapeutic — no change', change:0, hold:0, note:'',             recheck:24,cls:'tag-g' },
+    { label:'101–120',ratio:'3.3–4.0×',action:'Decrease rate',       change: -1, hold:0, note:'',               recheck:6, cls:'tag-a' },
+    { label:'> 120', ratio:'> 4.0×',   action:'Stop 1h then decrease',change:-3, hold:60, note:'Hold 60 min',   recheck:6, cls:'tag-r' }
+  ];
+
+  let rows = '';
+  let adjHtml = '';
+  let currentRate = init_u;
+
+  for (const r of rules) {
+    const newRate_u = currentRate + (w * Math.abs(r.change));
+    const delta     = r.change === 0 ? '—' : (r.change > 0 ? '+' : '') + Math.round(w * r.change) + ' U/h';
+    const newMl     = r.change === 0 ? '—' : ((currentRate + w * r.change) / conc).toFixed(1) + ' mL/h';
+    rows += `<tr>
+      <td><strong>${r.label}</strong> sec</td>
+      <td><span class="tag ${r.cls}">${r.action}</span></td>
+      <td>${delta} ${r.note ? `<small style="color:var(--text-muted)">(${r.note})</small>` : ''}</td>
+      <td>${r.recheck}h</td>
+    </tr>`;
+  }
+
+  document.getElementById('adj-table').innerHTML = `
+    <tr><th>aPTT (sec)</th><th>Action</th><th>Rate change (for ${w}kg)</th><th>Recheck</th></tr>
+    ${rows}
+  `;
+
+  // Current aPTT guidance
+  if (aptt > 0) {
+    let match = null;
+    if (aptt < 35)       match = rules[0];
+    else if (aptt <= 45) match = rules[1];
+    else if (aptt <= 70) match = rules[2];
+    else if (aptt <= 100)match = rules[3];
+    else if (aptt <= 120)match = rules[4];
+    else                 match = rules[5];
+
+    const newRate_u = Math.max(0, init_u + w * match.change);
+    const newRate_ml = (newRate_u / conc).toFixed(1);
+
+    adjHtml = `
+      <div class="ritem ac">
+        <div class="rl">Current aPTT: ${aptt} sec</div>
+        <div><span class="rv" style="font-size:14px">${match.action}</span></div>
+      </div>
+      ${match.change !== 0 ? `
+      <div class="ritem gr">
+        <div class="rl">New Infusion Rate</div>
+        <div><span class="rv">${newRate_ml}</span><span class="ru">mL/h</span></div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px">${Math.round(newRate_u)} U/h</div>
+      </div>` : ''}
+      <div class="ritem">
+        <div class="rl">Recheck aPTT</div>
+        <div><span class="rv">${match.recheck}</span><span class="ru">hours</span></div>
+      </div>
+    `;
+  } else {
+    adjHtml = '<p style="color:var(--text-muted);font-size:13px">Enter current aPTT above to get adjustment guidance.</p>';
+  }
+  document.getElementById('adj-result').innerHTML = adjHtml;
+}
+calc();
+</script>
+</body>
+</html>

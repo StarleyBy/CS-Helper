@@ -1,0 +1,148 @@
+meta:
+  app: CS Helper
+  version: 1.0.0
+  updated: 2026-05-09
+
+sections:
+  - id: calculators
+    title: Calculators
+    icon: 🧮
+    items:
+      - id: insulin-bb
+        title: Insulin Basis-Bolus
+        file: books/calculators/insulin-bb.html
+        type: calculator
+        visible: true
+        tags: [insulin, diabetes, endocrine]
+
+      - id: heparin
+        title: Heparin Infusion
+        file: books/calculators/heparin.html
+        type: calculator
+        visible: true
+        tags: [anticoagulation, heparin, infusion]
+
+      - id: drug-dilution
+        title: Drug Dilution
+        file: books/calculators/drug-dilution.html
+        type: calculator
+        visible: true
+        tags: [dilution, pharmacy]
+
+      - id: iv-infusion
+        title: IV Infusion Rates
+        file: books/calculators/iv-infusion.html
+        type: calculator
+        visible: true
+        tags: [infusion, dosing, iv]
+
+  - id: references
+    title: References
+    icon: 📋
+    items:
+      - id: drug-formulary
+        title: Department Drug Formulary
+        file: books/references/drug-formulary.md
+        type: reference
+        visible: true
+        tags: [drugs, pharmacy, formulary]
+
+      - id: echo-norms
+        title: Echo Norms
+        file: books/references/echo-norms.md
+        type: reference
+        visible: true
+        tags: [echo, echocardiography, norms]
+
+      - id: ecg-norms
+        title: ECG Norms
+        file: books/references/ecg-norms.md
+        type: reference
+        visible: true
+        tags: [ecg, norms]
+
+  - id: scales
+    title: Scales & Scores
+    icon: 📊
+    items:
+      - id: cha2ds2-vasc
+        title: CHA₂DS₂-VASc
+        file: books/scales/cha2ds2-vasc.md
+        type: scale
+        visible: true
+        tags: [afib, stroke, anticoagulation]
+
+      - id: has-bled
+        title: HAS-BLED
+        file: books/scales/has-bled.md
+        type: scale
+        visible: true
+        tags: [bleeding, anticoagulation]
+
+      - id: nyha
+        title: NYHA Classification
+        file: books/scales/nyha.md
+        type: scale
+        visible: true
+        tags: [heart failure, classification]
+
+  - id: protocols
+    title: Protocols
+    icon: 📄
+    items:
+      - id: heparin-protocol
+        title: Heparin Protocol
+        file: books/protocols/heparin-protocol.md
+        type: protocol
+        visible: true
+        tags: [heparin, anticoagulation]
+
+  - id: cheatsheets
+    title: Cheat Sheets
+    icon: 🗒️
+    items:
+      - id: renal-failure
+        title: Renal Failure
+        file: books/cheatsheets/renal-failure.md
+        type: cheatsheet
+        visible: true
+        tags: [renal, acute, chronic]
+
+      - id: cirrhosis
+        title: Cirrhosis
+        file: books/cheatsheets/cirrhosis.md
+        type: cheatsheet
+        visible: true
+        tags: [liver, cirrhosis]
+
+      - id: carotid-doppler
+        title: Carotid Doppler
+        file: books/cheatsheets/carotid-doppler.md
+        type: cheatsheet
+        visible: true
+        tags: [doppler, carotid, vascular]
+
+      - id: prism-setup
+        title: PRISM Setup
+        file: books/cheatsheets/prism-setup.md
+        type: cheatsheet
+        visible: false
+        tags: [prism, device]
+
+  - id: icd
+    title: ICD Codes
+    icon: 🏷️
+    items:
+      - id: icd-diagnoses
+        title: Diagnoses (ICD-9)
+        file: books/icd/diagnoses.json
+        type: icd
+        visible: true
+        tags: [icd, diagnoses, coding]
+
+      - id: icd-procedures
+        title: Procedures (ICD-9)
+        file: books/icd/procedures.json
+        type: icd
+        visible: true
+        tags: [icd, procedures, coding]
