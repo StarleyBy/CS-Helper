@@ -78,6 +78,30 @@
       ]
     },
     {
+      "name": "Congenital Heart Repair",
+      "items": [
+        { "code": "35.41", "description": "Enlargement of atrial septal defect (Rashkind)" },
+        { "code": "35.51", "description": "Repair of atrial septal defect with prosthesis, open" },
+        { "code": "35.53", "description": "Repair of ventricular septal defect with prosthesis" },
+        { "code": "35.54", "description": "Repair of endocardial cushion defect with prosthesis" },
+        { "code": "35.61", "description": "Repair of atrial septal defect with tissue graft" },
+        { "code": "35.62", "description": "Repair of ventricular septal defect with tissue graft" },
+        { "code": "35.81", "description": "Total repair of tetralogy of Fallot" },
+        { "code": "35.82", "description": "Total repair of total anomalous pulmonary venous connection" },
+        { "code": "35.83", "description": "Total repair of truncus arteriosus" },
+        { "code": "35.84", "description": "Total repair of transposition of great vessels (Arterial switch)" },
+        { "code": "35.91", "description": "Interatrial transposition of venous return (Mustard/Senning)" },
+        { "code": "35.92", "description": "Creation of conduit between right ventricle and pulmonary artery (Rastelli)" },
+        { "code": "35.94", "description": "Creation of conduit between atrium and pulmonary artery (Fontan)" },
+        { "code": "35.98", "description": "Other operations on septa of heart" },
+        { "code": "37.51", "description": "Heart transplantation" },
+        { "code": "39.0",  "description": "Systemic-pulmonary artery anastomosis (Blalock-Taussig)" },
+        { "code": "39.21", "description": "Caval-pulmonary artery anastomosis (Glenn)" },
+        { "code": "38.85", "description": "Other surgical occlusion of vessels (PDA ligation)" },
+        { "code": "38.44", "description": "Resection of aorta with replacement (Coarctation repair)" }
+      ]
+    },
+    {
       "name": "Diagnostic / Monitoring",
       "items": [
         { "code": "89.52", "description": "Electrocardiogram (12-lead)" },

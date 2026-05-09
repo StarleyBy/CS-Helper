@@ -99,14 +99,32 @@
       ]
     },
     {
-      "name": "Congenital",
+      "name": "Congenital Heart Disease",
       "items": [
         { "code": "745.0",  "description": "Common truncus" },
-        { "code": "745.1",  "description": "Transposition of great vessels" },
+        { "code": "745.10", "description": "Complete transposition of great vessels" },
+        { "code": "745.11", "description": "Double outlet right ventricle" },
+        { "code": "745.12", "description": "Corrected transposition of great vessels" },
+        { "code": "745.2",  "description": "Tetralogy of Fallot" },
+        { "code": "745.3",  "description": "Common ventricle (single ventricle)" },
         { "code": "745.4",  "description": "Ventricular septal defect" },
-        { "code": "745.5",  "description": "Atrial septal defect, secundum" },
+        { "code": "745.5",  "description": "Atrial septal defect (secundum, PFO)" },
+        { "code": "745.60", "description": "Atrioventricular canal defect, unspecified" },
+        { "code": "745.61", "description": "Ostium primum defect" },
+        { "code": "745.69", "description": "Other endocardial cushion defect" },
+        { "code": "746.01", "description": "Congenital pulmonary valve atresia" },
+        { "code": "746.02", "description": "Congenital pulmonary valve stenosis" },
+        { "code": "746.1",  "description": "Congenital tricuspid atresia and stenosis" },
+        { "code": "746.2",  "description": "Ebstein's anomaly" },
+        { "code": "746.3",  "description": "Congenital stenosis of aortic valve" },
+        { "code": "746.7",  "description": "Hypoplastic left heart syndrome" },
         { "code": "746.81", "description": "Patent ductus arteriosus" },
-        { "code": "747.10", "description": "Coarctation of aorta" }
+        { "code": "746.85", "description": "Coronary artery anomaly (congenital)" },
+        { "code": "746.89", "description": "Aortic arch hypoplasia / Interrupted aortic arch" },
+        { "code": "747.10", "description": "Coarctation of aorta" },
+        { "code": "747.3",  "description": "Anomalies of pulmonary artery (stenosis, etc)" },
+        { "code": "747.41", "description": "Total anomalous pulmonary venous connection" },
+        { "code": "747.42", "description": "Partial anomalous pulmonary venous connection" }
       ]
     },
     {
