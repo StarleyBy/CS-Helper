@@ -308,7 +308,7 @@ async function renderICD(item, area) {
   area.innerHTML = '<p class="loading-msg">Loading codes…</p>';
   let data;
   try {
-    data = await fetch(item.file).then(r => r.json());
+    data = await fetch(item.file + '?v=' + Date.now()).then(r => r.json());
   } catch(e) {
     area.innerHTML = '<p class="empty-msg">ICD database not yet available.</p>';
     return;
