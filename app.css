@@ -426,6 +426,28 @@ body {
 }
 .md-body hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
+/* Images */
+.md-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  display: block;
+  margin: 12px 0;
+  box-shadow: var(--shadow-sm);
+}
+/* Optional: centered image with caption via ![caption](url){.center} */
+.md-body figure {
+  margin: 16px 0;
+  text-align: center;
+}
+.md-body figcaption {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  font-style: italic;
+}
+
 /* ── ICD SEARCH ─────────────────────────────────────────── */
 #icd-view { max-width: 860px; }
 #icd-search-bar {
@@ -529,33 +551,6 @@ body {
 }
 #login-btn:hover { background: var(--accent-dim); }
 #login-error { color: #e55; font-size: 12px; min-height: 16px; }
-
-/* ── SECTION INDEX ───────────────────────────────────────── */
-#section-index { max-width: 900px; margin: 0 auto; }
-.index-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 14px;
-}
-.index-card {
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
-  cursor: pointer;
-  transition: all 0.15s;
-  box-shadow: var(--shadow-sm);
-}
-.index-card:hover {
-  box-shadow: var(--shadow-md);
-  border-color: var(--accent);
-  transform: translateY(-1px);
-}
-.index-card-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
-.index-card-tags { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
-.index-card-tags .tag {
-  font-size: 11px; color: var(--text-muted);
-}
 
 /* ── SEARCH HIGHLIGHT ───────────────────────────────────── */
 mark { background: #ffee5580; color: inherit; border-radius: 2px; }
