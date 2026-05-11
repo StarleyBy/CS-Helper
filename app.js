@@ -13,17 +13,22 @@ const AUTH = {
 const MANIFEST_URL = './app-manifest.yml';
 
 // Base URL — directory where index.html lives
-const BASE_URL = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
+function getBaseUrl() {
+  const path = window.location.pathname;
+  // If path ends with a filename (e.g. /index.html), strip it
+  const dir = path.substring(0, path.lastIndexOf('/') + 1);
+  return window.location.origin + dir;
+}
+const BASE_URL = getBaseUrl();
 
 function resolvePath(file) {
-  // Normalize backslashes, then resolve relative to BASE_URL
   const normalized = file.replace(/\\/g, '/');
   if (normalized.startsWith('http')) return normalized;
-  try {
-    return new URL(normalized, BASE_URL).href;
-  } catch(e) {
-    return BASE_URL + normalized;
-  }
+  // If it's already an absolute path relative to domain, return it
+  if (normalized.startsWith('/')) return window.location.origin + normalized;
+  
+  // Resolve relative to BASE_URL
+  return new URL(normalized, BASE_URL).href;
 }
 
 // ── STATE ────────────────────────────────────────────────
