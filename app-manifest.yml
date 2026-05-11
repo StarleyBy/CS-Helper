@@ -5,7 +5,7 @@ meta:
 
 sections:
   - id: calculators
-    title: Calculators
+    title: Calculators and Schemes
     icon: 🧮
     items:
       - id: insulin-bb
@@ -35,6 +35,13 @@ sections:
         type: calculator
         visible: true
         tags: [infusion, dosing, iv]
+
+      - id: ecg
+        title: ECG CHEAT SHEET
+        file: books/calculators/ecg.html
+        type: calculator
+        visible: true
+        tags: [ecg, cheat, sheet]
 
   - id: references
     title: References
