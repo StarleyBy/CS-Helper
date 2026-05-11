@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cs-helper-v5';
+const CACHE_NAME = 'cs-helper-v6';
 
 const STATIC_ASSETS = [
   './',
@@ -9,30 +9,21 @@ const STATIC_ASSETS = [
   './libs/js-yaml.min.js',
   './libs/marked.min.js',
   './manifest.json',
-  './books/calculators/drug-dilution.html',
-  './books/calculators/heparin.html',
-  './books/calculators/insulin-bb.html',
-  './books/calculators/iv-infusion.html',
-  './books/cheatsheets/carotid-doppler.md',
-  './books/cheatsheets/cirrhosis.md',
-  './books/cheatsheets/prism-setup.md',
-  './books/cheatsheets/renal-failure.md',
   './books/icd/diagnoses.json',
-  './books/icd/procedures.json',
-  './books/protocols/heparin-protocol.md',
-  './books/references/drug-formulary.md',
-  './books/references/ecg-norms.md',
-  './books/references/echo-norms.md',
-  './books/scales/cha2ds2-vasc.md',
-  './books/scales/has-bled.md',
-  './books/scales/nyha.md'
+  './books/icd/procedures.json'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      console.log('Pre-caching assets...');
-      return cache.addAll(STATIC_ASSETS);
+    caches.open(CACHE_NAME).then(async cache => {
+      console.log('[SW] Installing v6 and pre-caching core assets...');
+      for (const url of STATIC_ASSETS) {
+        try {
+          await cache.add(url);
+        } catch (err) {
+          console.warn(`[SW] Could not pre-cache: ${url}. Check if file exists on server.`);
+        }
+      }
     })
   );
   self.skipWaiting();
@@ -61,7 +52,6 @@ self.addEventListener('fetch', event => {
         return response;
       })
       .catch(() => {
-        // Fallback to cache, ignoring search parameters for data files (md, json)
         return caches.match(event.request, { ignoreSearch: true }).then(cached => {
           if (cached) return cached;
           if (event.request.destination === 'document') {
