@@ -356,6 +356,35 @@ body {
 .home-card-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
 .home-card-count { font-size: 12px; color: var(--text-muted); }
 
+/* ── SECTION INDEX ──────────────────────────────────────── */
+#section-index { max-width: 900px; }
+.index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+.index-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: box-shadow 0.15s, border-color 0.15s, transform 0.12s;
+  box-shadow: var(--shadow-sm);
+}
+.index-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+.index-card-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+.index-card-tags { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.index-card-tags .tag {
+  font-size: 11px; color: var(--text-muted);
+  background: var(--bg-hover); border-radius: 3px;
+  padding: 1px 6px;
+}
+
 /* ── CONTENT PAGE ───────────────────────────────────────── */
 #page-view { max-width: 860px; }
 

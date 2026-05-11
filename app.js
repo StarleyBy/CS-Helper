@@ -87,6 +87,12 @@ async function showApp() {
   try {
     const text = await fetch(MANIFEST_URL).then(r => r.text());
     State.manifest = jsyaml.load(text);
+    // Normalize Windows-style backslashes in file paths
+    for (const section of State.manifest.sections) {
+      for (const item of section.items) {
+        if (item.file) item.file = item.file.replace(/\\/g, '/');
+      }
+    }
     buildNav();
     showHome();
   } catch(e) {
