@@ -402,6 +402,19 @@ initAuth();
 // PWA service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
+    navigator.serviceWorker.register('./sw.js').then(reg => {
+      reg.onupdatefound = () => {
+        const installingWorker = reg.installing;
+        installingWorker.onstatechange = () => {
+          if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            // New content is available, but wait for user to refresh
+            console.log('New content is available; please refresh.');
+            if (confirm('New version available! Refresh now?')) {
+              location.reload();
+            }
+          }
+        };
+      };
+    }).catch(() => {});
   });
 }

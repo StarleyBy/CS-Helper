@@ -1,22 +1,43 @@
-const CACHE_NAME = 'cs-helper-v2';
- 
+const CACHE_NAME = 'cs-helper-v5';
+
 const STATIC_ASSETS = [
   './',
   './index.html',
   './app.css',
   './app.js',
   './app-manifest.yml',
-  'https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js',
-  'https://cdn.jsdelivr.net/npm/marked@9/marked.min.js'
+  './libs/js-yaml.min.js',
+  './libs/marked.min.js',
+  './manifest.json',
+  './books/calculators/drug-dilution.html',
+  './books/calculators/heparin.html',
+  './books/calculators/insulin-bb.html',
+  './books/calculators/iv-infusion.html',
+  './books/cheatsheets/carotid-doppler.md',
+  './books/cheatsheets/cirrhosis.md',
+  './books/cheatsheets/prism-setup.md',
+  './books/cheatsheets/renal-failure.md',
+  './books/icd/diagnoses.json',
+  './books/icd/procedures.json',
+  './books/protocols/heparin-protocol.md',
+  './books/references/drug-formulary.md',
+  './books/references/ecg-norms.md',
+  './books/references/echo-norms.md',
+  './books/scales/cha2ds2-vasc.md',
+  './books/scales/has-bled.md',
+  './books/scales/nyha.md'
 ];
- 
+
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS))
+    caches.open(CACHE_NAME).then(cache => {
+      console.log('Pre-caching assets...');
+      return cache.addAll(STATIC_ASSETS);
+    })
   );
   self.skipWaiting();
 });
- 
+
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
@@ -25,26 +46,28 @@ self.addEventListener('activate', event => {
   );
   self.clients.claim();
 });
- 
+
 self.addEventListener('fetch', event => {
-  // Skip non-http(s) requests (chrome-extension, data:, etc.)
   if (!event.request.url.startsWith('http')) return;
- 
+
+  // Network First Strategy
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
-      return fetch(event.request).then(response => {
-        if (!response || response.status !== 200 || response.type === 'opaque') return response;
-        // Only cache http(s) requests
-        if (!event.request.url.startsWith('http')) return response;
-        const clone = response.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-        return response;
-      }).catch(() => {
-        if (event.request.destination === 'document') {
-          return caches.match('./index.html');
+    fetch(event.request)
+      .then(response => {
+        if (response && response.status === 200) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
         }
-      });
-    })
+        return response;
+      })
+      .catch(() => {
+        // Fallback to cache, ignoring search parameters for data files (md, json)
+        return caches.match(event.request, { ignoreSearch: true }).then(cached => {
+          if (cached) return cached;
+          if (event.request.destination === 'document') {
+            return caches.match('./index.html');
+          }
+        });
+      })
   );
 });
