@@ -12,6 +12,16 @@ const AUTH = {
 };
 const MANIFEST_URL = './app-manifest.yml';
 
+// Base URL — directory where index.html lives
+const BASE_URL = window.location.href.replace(/\/[^/]*$/, '/');
+
+function resolvePath(file) {
+  // Normalize backslashes, then resolve relative to BASE_URL
+  const normalized = file.replace(/\\/g, '/');
+  if (normalized.startsWith('http')) return normalized;
+  return BASE_URL + normalized;
+}
+
 // ── STATE ────────────────────────────────────────────────
 const State = {
   role: null,          // 'admin' | 'user'
@@ -87,12 +97,6 @@ async function showApp() {
   try {
     const text = await fetch(MANIFEST_URL).then(r => r.text());
     State.manifest = jsyaml.load(text);
-    // Normalize Windows-style backslashes in file paths
-    for (const section of State.manifest.sections) {
-      for (const item of section.items) {
-        if (item.file) item.file = item.file.replace(/\\/g, '/');
-      }
-    }
     buildNav();
     showHome();
   } catch(e) {
@@ -274,7 +278,7 @@ function openItemById(sectionId, itemId) {
 async function renderMarkdown(item, area, section) {
   area.innerHTML = '<p class="loading-msg">Loading…</p>';
   try {
-    const text = await fetch(item.file + '?v=' + Date.now()).then(r => {
+    const text = await fetch(resolvePath(item.file) + '?v=' + Date.now()).then(r => {
       if (!r.ok) throw new Error(r.status);
       return r.text();
     });
@@ -304,7 +308,7 @@ function renderCalculator(item, area) {
         <span class="page-type-badge type-calculator">calculator</span>
         ${State.role === 'admin' ? `<a href="redact.html?file=${encodeURIComponent(item.file)}" target="_blank" id="redact-link" style="margin-left:auto">✏️ Edit</a>` : ''}
       </div>
-      <iframe id="calc-frame" src="${item.file}" title="${item.title}"></iframe>
+      <iframe id="calc-frame" src="${resolvePath(item.file)}" title="${item.title}"></iframe>
     </div>
   `;
 }
@@ -314,7 +318,7 @@ async function renderICD(item, area) {
   area.innerHTML = '<p class="loading-msg">Loading codes…</p>';
   let data;
   try {
-    data = await fetch(item.file + '?v=' + Date.now()).then(r => r.json());
+    data = await fetch(resolvePath(item.file) + '?v=' + Date.now()).then(r => r.json());
   } catch(e) {
     area.innerHTML = '<p class="empty-msg">ICD database not yet available.</p>';
     return;
