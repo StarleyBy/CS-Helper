@@ -312,7 +312,8 @@ async function renderMarkdown(item, area, section) {
       </div>
     `;
   } catch(e) {
-    area.innerHTML = `<p class="empty-msg">Content not yet available.<br><small style="opacity:0.5">${item.file}</small></p>`;
+    console.error('Error loading markdown:', e, 'Path:', resolvePath(item.file));
+    area.innerHTML = `<p class="empty-msg">Content not yet available.<br><small style="opacity:0.5">${item.file}</small><br><small style="opacity:0.3; font-size: 10px">${e.message || e}</small></p>`;
   }
 }
 
