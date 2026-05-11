@@ -16,7 +16,7 @@ const STATIC_ASSETS = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(async cache => {
-      console.log('[SW] Installing v6 and pre-caching core assets...');
+      console.log(`[SW] Installing ${CACHE_NAME} and pre-caching core assets...`);
       for (const url of STATIC_ASSETS) {
         try {
           await cache.add(url);

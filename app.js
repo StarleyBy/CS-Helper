@@ -105,7 +105,14 @@ async function showApp() {
   // Load manifest
   try {
     const text = await fetch(MANIFEST_URL).then(r => r.text());
-    State.manifest = jsyaml.load(text);
+    
+    // Check if js-yaml library is loaded
+    const yamlLib = window.jsyaml || window.jsYaml;
+    if (!yamlLib) {
+      throw new Error('js-yaml library not found. Check if libs/js-yaml.min.js is loaded correctly.');
+    }
+    
+    State.manifest = yamlLib.load(text);
     buildNav();
     showHome();
   } catch(e) {
