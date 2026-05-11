@@ -9,6 +9,15 @@
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <link rel="stylesheet" href="app.css">
+  <script>
+    // Fix for GitHub Pages subdirectories without trailing slash
+    (function() {
+      const path = window.location.pathname;
+      if (path.length > 1 && !path.endsWith('/') && !path.split('/').pop().includes('.')) {
+        window.location.replace(path + '/');
+      }
+    })();
+  </script>
 </head>
 <body>
 
