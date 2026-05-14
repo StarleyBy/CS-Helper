@@ -194,7 +194,7 @@ function openItem(section, item) {
 
   // Render
   const area = $('content-area');
-  if (item.type === 'calculator') {
+  if (item.type === 'calculator' || item.file.endsWith('.html')) {
     renderCalculator(item, area);
   } else if (item.type === 'icd') {
     renderICD(item, area);
