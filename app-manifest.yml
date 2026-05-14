@@ -36,12 +36,6 @@ sections:
         visible: true
         tags: [infusion, dosing, iv]
 
-      - id: ecg
-        title: ECG CHEAT SHEET
-        file: books/calculators/ecg.html
-        type: calculator
-        visible: true
-        tags: [ecg, cheat, sheet]
 
   - id: references
     title: References
@@ -115,6 +109,20 @@ sections:
     title: Cheat Sheets
     icon: 🗒️
     items:
+      - id: acls_2025
+        title: Adult Advanced Life Support: 2025
+        file: books/cheatsheets/acls2025.html
+        type: cheatsheet
+        visible: true
+        tags: [icu, acute, cardiac support]
+
+      - id: ecg
+        title: ECG CHEAT SHEET
+        file: books/calculators/ecg.html
+        type: calculator
+        visible: true
+        tags: [ecg, cheat, sheet]
+
       - id: renal-failure
         title: Renal Failure
         file: books/cheatsheets/renal-failure.md
