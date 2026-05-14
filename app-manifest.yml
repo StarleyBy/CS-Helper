@@ -81,8 +81,8 @@ sections:
 
       - id: has-bled
         title: HAS-BLED
-        file: books/scales/has-bled.md
-        type: scale
+        file: books/scales/has-bled.html
+        type: calculator
         visible: true
         tags: [bleeding, anticoagulation]
 
