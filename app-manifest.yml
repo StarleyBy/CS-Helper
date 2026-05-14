@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-05-14 14:05
+  updated: 2026-05-14 14:10
 
 sections:
   - id: calculators
@@ -110,7 +110,7 @@ sections:
     icon: 🗒️
     items:
       - id: acls_2025
-        title: Adult Advanced Life Support: 2025
+        title: "Adult Advanced Life Support: 2025"
         file: books/cheatsheets/acls2025.html
         type: cheatsheet
         visible: true
