@@ -39,11 +39,7 @@
     --red: #f56c6c;
     --red-bg: #2e1a1a;
   }
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: var(--font);
     background: var(--bg);
@@ -52,198 +48,80 @@
     line-height: 1.5;
     padding: 20px;
   }
-  .container {
-    max-width: 1280px;
-    margin: 0 auto;
-  }
-  h1 {
-    font-size: 24px;
-    font-weight: 600;
-    letter-spacing: -0.2px;
-    margin-bottom: 4px;
-  }
-  .subtitle {
-    color: var(--text-muted);
-    font-size: 14px;
-    margin-bottom: 24px;
-    border-left: 3px solid var(--accent);
-    padding-left: 12px;
-  }
+  .container { max-width: 1000px; margin: 0 auto; }
+  h1 { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; border-left: 3px solid var(--accent); padding-left: 12px; }
+  
   .card {
     background: var(--bg-panel);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px 24px;
-    margin-bottom: 24px;
-    transition: box-shadow 0.1s;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
   }
   .card h2 {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: 0.03em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border-bottom: 1px solid var(--border);
+    margin-bottom: 15px;
     padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
   }
-  .grid-2cols {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px 24px;
-  }
-  .field-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .field-group label {
-    font-weight: 500;
-    font-size: 13px;
-    color: var(--text-muted);
-  }
+  
+  .grid-2cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .field-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+  .field-group label { font-weight: 500; font-size: 13px; color: var(--text-muted); }
+  
   select, input[type="number"] {
     background: var(--bg);
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 12px;
+    border-radius: 8px;
+    padding: 10px;
     font-family: var(--font);
     font-size: 14px;
     color: var(--text);
-    transition: 0.1s;
-  }
-  select:focus, input:focus {
     outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 2px var(--accent-light);
   }
+  select:focus, input:focus { border-color: var(--accent); }
+
   .checkbox-row {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 8px 0;
+    padding: 10px;
     cursor: pointer;
     border-radius: 8px;
     transition: background 0.1s;
+    user-select: none;
   }
-  .checkbox-row:hover {
-    background: var(--bg-hover);
-  }
-  .checkbox-row input {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    accent-color: var(--accent);
-  }
-  .checkbox-row span {
-    flex: 1;
-  }
-  .risk-badge {
-    font-size: 13px;
-    font-weight: 500;
-    display: inline-block;
-    margin-left: 8px;
-    font-family: var(--mono);
-  }
+  .checkbox-row:hover { background: var(--bg-hover); }
+  .checkbox-row input { width: 18px; height: 18px; cursor: pointer; }
+
   .score-panel {
     background: var(--accent-light);
     border: 1px solid var(--accent);
-    border-radius: 20px;
-    padding: 18px 24px;
+    border-radius: 12px;
+    padding: 20px;
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
+    align-items: center;
     margin-bottom: 24px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
   }
-  .score-label {
-    font-size: 18px;
-    font-weight: 600;
-  }
-  .risk-value {
-    font-size: 44px;
-    font-weight: 800;
-    font-family: var(--mono);
-    color: var(--accent);
-    line-height: 1;
-  }
-  .risk-unit {
-    font-size: 16px;
-    font-weight: 500;
-    margin-left: 6px;
-    color: var(--text-muted);
-  }
-  .risk-interpret {
-    margin-top: 8px;
-    font-size: 14px;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
-  th, td {
-    padding: 10px 12px;
-    border: 1px solid var(--border);
-    text-align: left;
-    vertical-align: top;
-  }
-  th {
-    background: var(--bg-hover);
-    font-weight: 600;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .highlight-row {
-    background: var(--accent-light) !important;
-    border-left: 3px solid var(--accent);
-  }
-  .note {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 16px;
-    padding-top: 12px;
-    border-top: 1px dashed var(--border);
-  }
-  .footnote {
-    font-size: 11px;
-    line-height: 1.5;
-  }
-  hr {
-    border-color: var(--border);
-    margin: 12px 0;
-  }
-  @media (max-width: 720px) {
-    .grid-2cols {
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-    .card {
-      padding: 16px;
-    }
-    .risk-value {
-      font-size: 32px;
-    }
-  }
-  button.reset-btn {
-    background: transparent;
-    border: 1px solid var(--border);
-    padding: 6px 14px;
-    border-radius: 40px;
-    font-size: 12px;
-    cursor: pointer;
-    color: var(--text-muted);
-    transition: 0.1s;
-    margin-top: 8px;
-  }
-  button.reset-btn:hover {
-    background: var(--bg-hover);
-    border-color: var(--accent);
-    color: var(--accent);
+  .risk-value { font-size: 40px; font-weight: 800; color: var(--accent); font-family: var(--mono); }
+  
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+  th, td { padding: 10px; border: 1px solid var(--border); text-align: left; }
+  th { background: var(--bg-hover); font-weight: 600; }
+  .highlight-row { background: var(--accent-light) !important; font-weight: 600; }
+
+  .note { font-size: 11px; color: var(--text-muted); margin-top: 15px; border-top: 1px dashed var(--border); padding-top: 10px; }
+  
+  @media (max-width: 600px) {
+    .grid-2cols { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -254,346 +132,174 @@
     document.documentElement.setAttribute('data-theme', theme);
   })();
 </script>
+
 <div class="container">
-  <h1>EuroSCORE II <span style="font-weight:400;">· Operative mortality risk</span></h1>
-  <p class="subtitle">Adult cardiac surgery — logistic regression model (2012, Nashef et al.)</p>
+  <h1>EuroSCORE II</h1>
+  <p class="subtitle">Operative mortality risk in adult cardiac surgery</p>
 
-  <!-- DYNAMIC RISK DISPLAY -->
   <div class="score-panel">
-    <span class="score-label">📊 Predicted operative mortality</span>
-    <div>
-      <span class="risk-value" id="predictedRisk">—</span><span class="risk-unit">%</span>
-    </div>
+    <span style="font-weight:600; font-size:16px;">Predicted Mortality:</span>
+    <div><span class="risk-value" id="riskValue">0.00</span><span style="font-size:18px; font-weight:600; color:var(--accent);">%</span></div>
   </div>
 
-  <!-- PATIENT FACTORS -->
   <div class="card">
-    <h2>🧬 Patient characteristics</h2>
+    <h2>Patient Factors</h2>
     <div class="grid-2cols">
       <div class="field-group">
-        <label>📅 Age (years, continuous)</label>
-        <input type="number" id="age" value="65" step="1" min="18" max="100">
+        <label>Age (years)</label>
+        <input type="number" id="age" value="65" min="1" max="110" oninput="calc()">
       </div>
       <div class="field-group">
-        <label>⚧ Sex</label>
-        <select id="sex">
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+        <label>Sex</label>
+        <select id="sex" onchange="calc()">
+          <option value="0">Male</option>
+          <option value="0.2196303">Female</option>
         </select>
       </div>
     </div>
-    <div style="margin-top: 8px;">
-      <div class="checkbox-row" onclick="toggleCheck('renalImpairment')">
-        <input type="checkbox" id="renalImpairment"> <span>🧫 Renal impairment (Cr >200 µmol/L or dialysis) &nbsp; <span class="risk-badge">+0.303</span></span>
-      </div>
-      <div class="checkbox-row" onclick="toggleCheck('extracardiacArteriopathy')">
-        <input type="checkbox" id="extracardiacArteriopathy"> <span>🩸 Extracardiac arteriopathy (carotid stenosis, PAD, prior limb revasc) &nbsp; <span class="risk-badge">+0.200</span></span>
-      </div>
-      <div class="checkbox-row" onclick="toggleCheck('poorMobility')">
-        <input type="checkbox" id="poorMobility"> <span>🦯 Poor mobility (severe impairment, neurological/musculoskeletal) &nbsp; <span class="risk-badge">+0.240</span></span>
-      </div>
-      <div class="checkbox-row" onclick="toggleCheck('priorCardiacSurgery')">
-        <input type="checkbox" id="priorCardiacSurgery"> <span>❤️‍🩹 Previous cardiac surgery (any open heart) &nbsp; <span class="risk-badge">+0.446</span></span>
-      </div>
-      <div class="checkbox-row" onclick="toggleCheck('chronicLungDisease')">
-        <input type="checkbox" id="chronicLungDisease"> <span>🫁 Chronic lung disease (long-term bronchodilators/steroids) &nbsp; <span class="risk-badge">+0.183</span></span>
-      </div>
-      <div class="checkbox-row" onclick="toggleCheck('activeEndocarditis')">
-        <input type="checkbox" id="activeEndocarditis"> <span>🦠 Active endocarditis (ongoing treatment) &nbsp; <span class="risk-badge">+0.525</span></span>
-      </div>
-      <div class="checkbox-row" onclick="toggleCheck('criticalPreopState')">
-        <input type="checkbox" id="criticalPreopState"> <span>⚠️ Critical preoperative state (inotropes, CPR, vent, arrhythmia/shock) &nbsp; <span class="risk-badge">+0.489</span></span>
-      </div>
-      <div class="checkbox-row" onclick="toggleCheck('insulinDiabetes')">
-        <input type="checkbox" id="insulinDiabetes"> <span>🍬 Diabetes on insulin &nbsp; <span class="risk-badge">+0.226</span></span>
-      </div>
+    
+    <div class="field-group">
+      <label>Renal Impairment (Creatinine Clearance)</label>
+      <select id="renal" onchange="calc()">
+        <option value="0">Normal (>85 ml/min)</option>
+        <option value="0.303553">Moderate (50-85 ml/min)</option>
+        <option value="0.8592256">Severe (<50 ml/min)</option>
+        <option value="0.6421565">On Dialysis</option>
+      </select>
     </div>
-    <div class="grid-2cols" style="margin-top: 12px;">
-      <div class="field-group">
-        <label>NYHA class (heart failure)</label>
-        <select id="nyha">
-          <option value="I">I / II (reference)</option>
-          <option value="III">III (moderate symptoms) +0.341</option>
-          <option value="IV">IV (severe at rest) +0.501</option>
-        </select>
-      </div>
-      <div class="checkbox-row" style="padding-left:0; margin-top: 20px;" onclick="toggleCheck('ccs4Angina')">
-        <input type="checkbox" id="ccs4Angina"> <span>💔 CCS class 4 angina (rest angina) &nbsp; <span class="risk-badge">+0.282</span></span>
-      </div>
-    </div>
+
+    <label class="checkbox-row"><input type="checkbox" id="extracardiac" onchange="calc()"> <span>Extracardiac arteriopathy</span></label>
+    <label class="checkbox-row"><input type="checkbox" id="mobility" onchange="calc()"> <span>Poor mobility</span></label>
+    <label class="checkbox-row"><input type="checkbox" id="reoperation" onchange="calc()"> <span>Previous cardiac surgery</span></label>
+    <label class="checkbox-row"><input type="checkbox" id="lung" onchange="calc()"> <span>Chronic lung disease</span></label>
+    <label class="checkbox-row"><input type="checkbox" id="endocarditis" onchange="calc()"> <span>Active endocarditis</span></label>
+    <label class="checkbox-row"><input type="checkbox" id="critical" onchange="calc()"> <span>Critical preoperative state</span></label>
+    <label class="checkbox-row"><input type="checkbox" id="diabetes" onchange="calc()"> <span>Insulin-dependent diabetes</span></label>
   </div>
 
-  <!-- CARDIAC FACTORS -->
   <div class="card">
-    <h2>🫀 Cardiac & functional status</h2>
+    <h2>Cardiac Factors</h2>
     <div class="grid-2cols">
       <div class="field-group">
-        <label>Left ventricular ejection fraction</label>
-        <select id="lvFunction">
-          <option value="good">Good (EF ≥50%) – reference</option>
-          <option value="moderate">Moderate (EF 31–50%) +0.175</option>
-          <option value="poor">Poor (EF ≤30%) +0.386</option>
+        <label>NYHA Class</label>
+        <select id="nyha" onchange="calc()">
+          <option value="0">Class I</option>
+          <option value="0.107054">Class II</option>
+          <option value="0.2958358">Class III</option>
+          <option value="0.5593929">Class IV</option>
         </select>
       </div>
-      <div class="checkbox-row" style="margin-top: 22px;" onclick="toggleCheck('recentMI')">
-        <input type="checkbox" id="recentMI"> <span>💢 Recent MI (≤90 days before surgery) &nbsp; <span class="risk-badge">+0.224</span></span>
+      <div class="field-group">
+        <label>CCS Class 4 Angina</label>
+        <label class="checkbox-row" style="padding:0;"><input type="checkbox" id="ccs4" onchange="calc()"> <span>Yes</span></label>
       </div>
     </div>
-    <div class="field-group" style="margin-top: 8px;">
-      <label>Pulmonary artery systolic pressure (estimated)</label>
-      <select id="pulmonaryHtn">
-        <option value="none">None / mild (≤30 mmHg) – reference</option>
-        <option value="moderate">Moderate (31–55 mmHg) +0.311</option>
-        <option value="severe">Severe (>55 mmHg) +0.508</option>
+
+    <div class="grid-2cols">
+      <div class="field-group">
+        <label>LV Function (EF)</label>
+        <select id="lv" onchange="calc()">
+          <option value="0">Good (>50%)</option>
+          <option value="0.3150652">Moderate (31-50%)</option>
+          <option value="0.8097619">Poor (21-30%)</option>
+          <option value="1.209197">Very Poor (≤20%)</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>Recent MI (≤90 days)</label>
+        <label class="checkbox-row" style="padding:0;"><input type="checkbox" id="mi" onchange="calc()"> <span>Yes</span></label>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Pulmonary Hypertension (sPAP)</label>
+      <select id="paph" onchange="calc()">
+        <option value="0">No (≤30 mmHg)</option>
+        <option value="0.1788899">Moderate (31-55 mmHg)</option>
+        <option value="0.3491475">Severe (>55 mmHg)</option>
       </select>
     </div>
   </div>
 
-  <!-- OPERATIVE FACTORS -->
   <div class="card">
-    <h2>🔪 Operative & procedural details</h2>
+    <h2>Operative Factors</h2>
     <div class="grid-2cols">
       <div class="field-group">
-        <label>⏱️ Urgency status</label>
-        <select id="urgency">
-          <option value="elective">Elective – reference</option>
-          <option value="urgent">Urgent (same admission, not immediate) +0.415</option>
-          <option value="emergency">Emergency (immediate before OR) +0.721</option>
+        <label>Urgency</label>
+        <select id="urgency" onchange="calc()">
+          <option value="0">Elective</option>
+          <option value="0.317873">Urgent</option>
+          <option value="0.7039121">Emergency</option>
+          <option value="1.362947">Salvage</option>
         </select>
       </div>
       <div class="field-group">
-        <label>🩺 Procedure weight</label>
-        <select id="procedureWeight">
-          <option value="cabg">Isolated CABG – reference</option>
-          <option value="singleNonCABG">Single non-CABG (valve, etc.) +0.371</option>
-          <option value="twoProcedures">Two procedures (e.g., CABG + valve) +0.567</option>
-          <option value="threeProcedures">Three procedures +0.683</option>
+        <label>Procedure Weight</label>
+        <select id="weight" onchange="calc()">
+          <option value="0">Isolated CABG</option>
+          <option value="0.0060029">Single Non-CABG</option>
+          <option value="0.3041887">2 Procedures</option>
+          <option value="0.6109311">3 Procedures</option>
         </select>
       </div>
     </div>
-    <div class="checkbox-row" onclick="toggleCheck('thoracicAorta')">
-      <input type="checkbox" id="thoracicAorta"> <span>✈️ Surgery on thoracic aorta (ascending/arch) &nbsp; <span class="risk-badge">+0.303</span></span>
-    </div>
+    <label class="checkbox-row"><input type="checkbox" id="aorta" onchange="calc()"> <span>Surgery on Thoracic Aorta</span></label>
   </div>
 
-  <!-- INTERPRETATION TABLE & NOTES -->
   <div class="card">
-    <h2>📖 Risk interpretation & clinical reference</h2>
-    <table id="riskTable">
-      <thead>
-        <tr><th>Predicted mortality</th><th>Risk category</th><th>Clinical consideration</th></tr>
-      </thead>
-      <tbody>
-        <tr id="rowLow"><td>&lt; 2%</td><td>Low risk</td><td>Standard care, OAC/antiplatelet per guidelines</td></tr>
-        <tr id="rowMid"><td>2% – 5%</td><td>Intermediate risk</td><td>Balance benefit vs. operative risk, enhanced perioperative monitoring</td></tr>
-        <tr id="rowHigh"><td>&gt; 5%</td><td>High risk</td><td>Consider alternative therapies, multidisciplinary discussion</td></tr>
-      </tbody>
+    <h2>Interpretation</h2>
+    <table>
+      <tr id="row_low"><td>&lt; 2%</td><td>Low Risk</td></tr>
+      <tr id="row_mid"><td>2 - 5%</td><td>Intermediate Risk</td></tr>
+      <tr id="row_high"><td>&gt; 5%</td><td>High Risk</td></tr>
     </table>
     <div class="note">
-      <strong>⚙️ EuroSCORE II formula:</strong> risk = exp(β) / (1+exp(β)) with β = -5.324 + Σ(coefficient × risk factor).<br>
-      <strong>✔️ Valid for all adult cardiac surgery (CABG, valve, aortic, combined).</strong> Model derived from 2010–2011 European database. Predicted in-hospital / 30-day mortality.
-      <hr>
-      <span class="footnote">📌 Female sex alone increases risk (coefficient +0.219). Age is linear per year (0.028). Each checkbox and dropdown directly adds logistic weight. The calculator returns operative mortality percentage. <br> 
-      ⚠️ Not applicable for transcatheter procedures, congenital heart surgery in children.</span>
-    </div>
-    <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
-      <button class="reset-btn" id="resetBtn">⟳ Reset to default (lowest risk profile)</button>
+      Formula: Logistic regression P = e<sup>logit</sup> / (1 + e<sup>logit</sup>)<br>
+      Intercept: -5.32427 | Age coefficient: 0.028511 per year.<br>
+      Published in: Eur J Cardiothorac Surg 2012;41:734-745.
     </div>
   </div>
 </div>
 
 <script>
-  // ---------- EUROSCORE II COEFFICIENTS ----------
-  const COEFF = {
-    intercept: -5.324,
-    age: 0.028,
-    female: 0.219,
-    renal: 0.303,
-    extracardiacArteriopathy: 0.200,
-    poorMobility: 0.240,
-    priorCardiacSurgery: 0.446,
-    chronicLungDisease: 0.183,
-    activeEndocarditis: 0.525,
-    criticalPreopState: 0.489,
-    insulinDiabetes: 0.226,
-    nyhaIII: 0.341,
-    nyhaIV: 0.501,
-    ccs4Angina: 0.282,
-    lvModerate: 0.175,
-    lvPoor: 0.386,
-    recentMI: 0.224,
-    pulmModerate: 0.311,
-    pulmSevere: 0.508,
-    urgent: 0.415,
-    emergency: 0.721,
-    singleNonCABG: 0.371,
-    twoProcedures: 0.567,
-    threeProcedures: 0.683,
-    thoracicAorta: 0.303
-  };
+  function calc() {
+    let logit = -5.32427;
+    
+    // Age
+    let age = parseFloat(document.getElementById('age').value) || 0;
+    logit += age * 0.028511;
 
-  // Helper: get DOM elements
-  const ageInput = document.getElementById('age');
-  const sexSelect = document.getElementById('sex');
-  const renal = document.getElementById('renalImpairment');
-  const extracardiac = document.getElementById('extracardiacArteriopathy');
-  const poorMobility = document.getElementById('poorMobility');
-  const priorSurgery = document.getElementById('priorCardiacSurgery');
-  const lungDisease = document.getElementById('chronicLungDisease');
-  const endocarditis = document.getElementById('activeEndocarditis');
-  const criticalState = document.getElementById('criticalPreopState');
-  const insulinDM = document.getElementById('insulinDiabetes');
-  const nyhaSelect = document.getElementById('nyha');
-  const ccs4 = document.getElementById('ccs4Angina');
-  const lvSelect = document.getElementById('lvFunction');
-  const recentMI = document.getElementById('recentMI');
-  const pulmSelect = document.getElementById('pulmonaryHtn');
-  const urgencySelect = document.getElementById('urgency');
-  const procedureSelect = document.getElementById('procedureWeight');
-  const thoracicAorta = document.getElementById('thoracicAorta');
-  const riskSpan = document.getElementById('predictedRisk');
+    // Selects
+    logit += parseFloat(document.getElementById('sex').value);
+    logit += parseFloat(document.getElementById('renal').value);
+    logit += parseFloat(document.getElementById('nyha').value);
+    logit += parseFloat(document.getElementById('lv').value);
+    logit += parseFloat(document.getElementById('paph').value);
+    logit += parseFloat(document.getElementById('urgency').value);
+    logit += parseFloat(document.getElementById('weight').value);
 
-  // all interactive inputs for reset
-  const allCheckboxes = [renal, extracardiac, poorMobility, priorSurgery, lungDisease, endocarditis, criticalState, insulinDM, ccs4, recentMI, thoracicAorta];
-  const allSelects = [sexSelect, nyhaSelect, lvSelect, pulmSelect, urgencySelect, procedureSelect];
+    // Checkboxes
+    if (document.getElementById('extracardiac').checked) logit += 0.5360243;
+    if (document.getElementById('mobility').checked) logit += 0.2407186;
+    if (document.getElementById('reoperation').checked) logit += 1.118599;
+    if (document.getElementById('lung').checked) logit += 0.1886507;
+    if (document.getElementById('endocarditis').checked) logit += 0.6194522;
+    if (document.getElementById('critical').checked) logit += 1.086517;
+    if (document.getElementById('diabetes').checked) logit += 0.3542749;
+    if (document.getElementById('ccs4').checked) logit += 0.2226147;
+    if (document.getElementById('mi').checked) logit += 0.1528943;
+    if (document.getElementById('aorta').checked) logit += 0.6527205;
 
-  // compute logit and risk
-  function computeRisk() {
-    let age = parseFloat(ageInput.value);
-    if (isNaN(age) || age < 18) age = 65;
-    if (age > 100) age = 100;
-    
-    let logit = COEFF.intercept;
-    
-    // age (continuous)
-    logit += COEFF.age * age;
-    
-    // sex: female
-    if (sexSelect.value === 'female') logit += COEFF.female;
-    
-    // binary risk factors (checkboxes)
-    if (renal.checked) logit += COEFF.renal;
-    if (extracardiac.checked) logit += COEFF.extracardiacArteriopathy;
-    if (poorMobility.checked) logit += COEFF.poorMobility;
-    if (priorSurgery.checked) logit += COEFF.priorCardiacSurgery;
-    if (lungDisease.checked) logit += COEFF.chronicLungDisease;
-    if (endocarditis.checked) logit += COEFF.activeEndocarditis;
-    if (criticalState.checked) logit += COEFF.criticalPreopState;
-    if (insulinDM.checked) logit += COEFF.insulinDiabetes;
-    if (ccs4.checked) logit += COEFF.ccs4Angina;
-    if (recentMI.checked) logit += COEFF.recentMI;
-    if (thoracicAorta.checked) logit += COEFF.thoracicAorta;
-    
-    // NYHA class
-    const nyhaVal = nyhaSelect.value;
-    if (nyhaVal === 'III') logit += COEFF.nyhaIII;
-    if (nyhaVal === 'IV') logit += COEFF.nyhaIV;
-    
-    // LV function
-    const lvVal = lvSelect.value;
-    if (lvVal === 'moderate') logit += COEFF.lvModerate;
-    if (lvVal === 'poor') logit += COEFF.lvPoor;
-    
-    // Pulmonary hypertension
-    const pulmVal = pulmSelect.value;
-    if (pulmVal === 'moderate') logit += COEFF.pulmModerate;
-    if (pulmVal === 'severe') logit += COEFF.pulmSevere;
-    
-    // Urgency
-    const urgencyVal = urgencySelect.value;
-    if (urgencyVal === 'urgent') logit += COEFF.urgent;
-    if (urgencyVal === 'emergency') logit += COEFF.emergency;
-    
-    // Procedure weight
-    const procVal = procedureSelect.value;
-    if (procVal === 'singleNonCABG') logit += COEFF.singleNonCABG;
-    if (procVal === 'twoProcedures') logit += COEFF.twoProcedures;
-    if (procVal === 'threeProcedures') logit += COEFF.threeProcedures;
-    
-    // risk = exp(logit) / (1+exp(logit))
-    let risk = 1 / (1 + Math.exp(-logit));
-    risk = risk * 100;
-    if (risk > 95) risk = 95; // sanity cap
-    if (risk < 0.01) risk = 0.01;
-    return { risk, logit };
+    let risk = (Math.exp(logit) / (1 + Math.exp(logit))) * 100;
+    document.getElementById('riskValue').textContent = risk.toFixed(2);
+
+    // Highlights
+    document.getElementById('row_low').className = risk < 2 ? 'highlight-row' : '';
+    document.getElementById('row_mid').className = (risk >= 2 && risk <= 5) ? 'highlight-row' : '';
+    document.getElementById('row_high').className = risk > 5 ? 'highlight-row' : '';
   }
-  
-  function updateUI() {
-    const { risk, logit } = computeRisk();
-    const displayRisk = risk.toFixed(2);
-    riskSpan.textContent = displayRisk;
-    
-    // highlight table row based on risk category
-    const rowLow = document.getElementById('rowLow');
-    const rowMid = document.getElementById('rowMid');
-    const rowHigh = document.getElementById('rowHigh');
-    rowLow.classList.remove('highlight-row');
-    rowMid.classList.remove('highlight-row');
-    rowHigh.classList.remove('highlight-row');
-    
-    if (risk < 2.0) {
-      rowLow.classList.add('highlight-row');
-    } else if (risk >= 2.0 && risk <= 5.0) {
-      rowMid.classList.add('highlight-row');
-    } else if (risk > 5.0) {
-      rowHigh.classList.add('highlight-row');
-    }
-    
-    // optional: small tooltip dynamic (for debugging we can skip)
-  }
-  
-  // attach events to all inputs
-  function bindEvents() {
-    const inputs = [
-      ageInput, sexSelect, renal, extracardiac, poorMobility, priorSurgery,
-      lungDisease, endocarditis, criticalState, insulinDM, nyhaSelect, ccs4,
-      lvSelect, recentMI, pulmSelect, urgencySelect, procedureSelect, thoracicAorta
-    ];
-    inputs.forEach(input => {
-      input.addEventListener('change', updateUI);
-      if (input.type === 'number') input.addEventListener('input', updateUI);
-    });
-    // also for checkboxes onclick caused by wrapper divs may double-fire but safe
-  }
-  
-  // reset to clinically "low risk" typical elective patient: age 65 male, no comorbidities, low risk procedure
-  function resetToDefault() {
-    ageInput.value = "65";
-    sexSelect.value = "male";
-    // uncheck all checkboxes
-    allCheckboxes.forEach(cb => { if (cb) cb.checked = false; });
-    nyhaSelect.value = "I";
-    lvSelect.value = "good";
-    pulmSelect.value = "none";
-    urgencySelect.value = "elective";
-    procedureSelect.value = "cabg";
-    ccs4.checked = false;
-    recentMI.checked = false;
-    thoracicAorta.checked = false;
-    updateUI();
-  }
-  
-  // helper for checkbox toggling via row click (makes UX friendly)
-  window.toggleCheck = function(id) {
-    const el = document.getElementById(id);
-    if (el) {
-      el.checked = !el.checked;
-      updateUI();
-    }
-  };
-  
-  // init
-  bindEvents();
-  updateUI();
-  
-  // reset button handler
-  const resetBtn = document.getElementById('resetBtn');
-  if (resetBtn) resetBtn.addEventListener('click', resetToDefault);
-  
-  // fix for any dynamic input that might need initial sync
-  window.addEventListener('load', () => {
-    updateUI();
-  });
+
+  window.onload = calc;
 </script>
 </body>
 </html>
