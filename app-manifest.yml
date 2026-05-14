@@ -86,6 +86,13 @@ sections:
         visible: true
         tags: [bleeding, anticoagulation]
 
+      - id: euroscore2
+        title: EuroSCORE II
+        file: books/scales/euroscore2.html
+        type: calculator
+        visible: true
+        tags: [cardiac surgery, risk, mortality]
+
       - id: nyha
         title: NYHA Classification
         file: books/scales/nyha.md
