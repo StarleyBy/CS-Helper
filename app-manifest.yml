@@ -118,7 +118,7 @@ sections:
 
       - id: ecg
         title: ECG CHEAT SHEET
-        file: books/calculators/ecg.html
+        file: books/cheatsheets/ecg.html
         type: cheatsheet
         visible: true
         tags: [ecg, cheat, sheet]
