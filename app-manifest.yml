@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-05-14 14:15
+  updated: 2026-05-14 14:44
 
 sections:
   - id: calculators
@@ -99,11 +99,18 @@ sections:
     icon: 📄
     items:
       - id: heparin-protocol
-        title: Heparin Protocol
-        file: books/protocols/heparin-protocol.md
+        title: Insulin Protocol
+        file: books/protocols/insulin-bb-protocol.md
         type: protocol
         visible: true
-        tags: [heparin, anticoagulation]
+        tags: [insulin, basis-bolus]
+
+     - id: insulin-protocol
+       title: Heparin Protocol
+       file: books/protocols/heparin-protocol.md
+       type: protocol
+       visible: true
+       tags: [heparin, anticoagulation]
 
   - id: cheatsheets
     title: Cheat Sheets
@@ -112,6 +119,13 @@ sections:
       - id: acls_2025
         title: "Adult Advanced Life Support: 2025"
         file: books/cheatsheets/acls2025.html
+        type: cheatsheet
+        visible: true
+        tags: [icu, acute, cardiac support]
+
+      - id: cardiac_surgery_acls_2025
+        title: "Cardiac Surgery Adult Advanced Life Support"
+        file: books/cheatsheets/cardiac-acls.html
         type: cheatsheet
         visible: true
         tags: [icu, acute, cardiac support]
