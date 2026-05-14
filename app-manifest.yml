@@ -105,12 +105,12 @@ sections:
         visible: true
         tags: [insulin, basis-bolus]
 
-     - id: heparin-protocol
-       title: Heparin Protocol
-       file: books/protocols/heparin-protocol.md
-       type: protocol
-       visible: true
-       tags: [heparin, anticoagulation]
+      - id: heparin-protocol
+        title: Heparin Protocol
+        file: books/protocols/heparin-protocol.md
+        type: protocol
+        visible: true
+        tags: [heparin, anticoagulation]
 
   - id: cheatsheets
     title: Cheat Sheets

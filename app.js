@@ -104,20 +104,37 @@ async function showApp() {
 
   // Load manifest
   try {
-    const text = await fetch(MANIFEST_URL + '?v=' + Date.now()).then(r => r.text());
+    const response = await fetch(MANIFEST_URL + '?v=' + Date.now());
+    if (!response.ok) throw new Error(`HTTP ${response.status} while fetching manifest`);
+    const text = await response.text();
     
     // Check if js-yaml library is loaded
     const yamlLib = window.jsyaml || window.jsYaml;
     if (!yamlLib) {
-      throw new Error('js-yaml library not found. Check if libs/js-yaml.min.js is loaded correctly.');
+      throw new Error('js-yaml library not found.');
     }
     
-    State.manifest = yamlLib.load(text);
+    try {
+      State.manifest = yamlLib.load(text);
+    } catch (yamlErr) {
+      throw new Error(`YAML Parse Error: ${yamlErr.message}`);
+    }
+
+    if (!State.manifest || !State.manifest.sections) {
+      throw new Error('Invalid manifest: "sections" field missing');
+    }
+
     buildNav();
     showHome();
   } catch(e) {
     console.error('Manifest load failed', e);
-    $('content-area').innerHTML = '<p class="empty-msg">Failed to load app manifest.</p>';
+    $('content-area').innerHTML = `
+      <div style="padding:20px; text-align:center;">
+        <p class="empty-msg">Failed to load app manifest.</p>
+        <p style="color:var(--text-muted); font-size:14px; margin-top:10px;">${e.message}</p>
+        <button class="footer-btn" style="margin-top:20px; padding:8px 16px; background:var(--accent); border-radius:4px;" onclick="location.reload()">Retry</button>
+      </div>
+    `;
   }
 }
 
