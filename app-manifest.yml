@@ -98,14 +98,14 @@ sections:
     title: Protocols
     icon: 📄
     items:
-      - id: heparin-protocol
+      - id: insulin-protocol
         title: Insulin Protocol
         file: books/protocols/insulin-bb-protocol.md
         type: protocol
         visible: true
         tags: [insulin, basis-bolus]
 
-     - id: insulin-protocol
+     - id: heparin-protocol
        title: Heparin Protocol
        file: books/protocols/heparin-protocol.md
        type: protocol
