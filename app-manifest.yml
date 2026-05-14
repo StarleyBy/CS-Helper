@@ -74,8 +74,8 @@ sections:
     items:
       - id: cha2ds2-vasc
         title: CHA₂DS₂-VASc
-        file: books/scales/cha2ds2-vasc.md
-        type: scale
+        file: books/scales/cha2ds2-vasc.html
+        type: calculator
         visible: true
         tags: [afib, stroke, anticoagulation]
 
