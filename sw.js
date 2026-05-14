@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cs-helper-v10';
+const CACHE_NAME = 'cs-helper-v11';
 
 const STATIC_ASSETS = [
   './',
