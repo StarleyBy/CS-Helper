@@ -119,7 +119,7 @@ sections:
       - id: ecg
         title: ECG CHEAT SHEET
         file: books/calculators/ecg.html
-        type: calculator
+        type: cheatsheet
         visible: true
         tags: [ecg, cheat, sheet]
 
