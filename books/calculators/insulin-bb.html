@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Insulin Basis-Bolus Calculator</title>
+<title>Insulin Basal-Bolus Calculator — Cardiac Surgery & CICU</title>
 <style>
   :root {
     --bg: #f5f6f8; --bg-panel: #fff; --text: #1c2333;
@@ -43,14 +43,13 @@
     background: var(--bg-hover); border: 1px solid var(--border);
     border-radius: 6px; color: var(--text);
     font-family: var(--font); font-size: 14px;
-    padding: 7px 10px; outline: none; width: 120px;
-    transition: border-color 0.15s;
+    padding: 7px 10px; outline: none; width: 140px;
   }
   input:focus, select:focus { border-color: var(--accent); }
   .unit { color: var(--text-muted); font-size: 12px; }
   .divider {
     display: grid; gap: 10px;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     margin-top: 6px;
   }
   .result-item {
@@ -64,17 +63,14 @@
   .result-item.accent .r-value { color: var(--accent); }
   .result-item.green-card { background: var(--green-bg); border-color: var(--green); }
   .result-item.green-card .r-value { color: var(--green); }
-  .meal-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-  .meal-label { min-width: 90px; font-size: 13px; }
-  .note { font-size: 12px; color: var(--text-muted); margin-top: 8px; line-height: 1.6; }
-  .note strong { color: var(--text); }
   .alert {
     background: var(--orange-bg); border: 1px solid var(--orange);
     color: var(--orange); border-radius: 6px; padding: 10px 14px;
     font-size: 13px; margin-top: 10px; display: none;
   }
   h3 { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
-  select { width: auto; }
+  .note { font-size: 12px; color: var(--text-muted); margin-top: 12px; line-height: 1.6; }
+  .note strong { color: var(--text); }
 </style>
 </head>
 <body>
@@ -85,10 +81,9 @@
   document.documentElement.setAttribute('data-theme', theme);
 </script>
 
-<h1>Insulin Basis-Bolus Calculator</h1>
-<p class="subtitle">Subcutaneous insulin regimen for inpatient glycemic management</p>
+<h1>Insulin Basal-Bolus Calculator</h1>
+<p class="subtitle">For Cardiac Surgery & CICU — all glucose values in mg/dL (Israel standard)</p>
 
-<!-- INPUT -->
 <div class="card">
   <h2>Patient Parameters</h2>
   <div class="row">
@@ -97,16 +92,25 @@
     <span class="unit">kg</span>
   </div>
   <div class="row">
-    <label>Estimated GFR / renal function</label>
+    <label>HbA1c (last 3 months)</label>
+    <select id="hba1c" onchange="calc()">
+      <option value="6.5">&lt;7.0% (good)</option>
+      <option value="8.0" selected>7.0–9.0% (moderate)</option>
+      <option value="10.0">&gt;9.0% (poor)</option>
+    </select>
+  </div>
+  <div class="row">
+    <label>Renal function (eGFR)</label>
     <select id="renal" onchange="calc()">
       <option value="normal">Normal (≥ 60 mL/min)</option>
       <option value="mild">Mild CKD (30–59)</option>
       <option value="moderate">Moderate CKD (15–29)</option>
-      <option value="severe">Severe CKD / HD (< 15)</option>
+      <option value="severe">Severe CKD (&lt;15)</option>
+      <option value="crrt">CRRT / Hemodialysis</option>
     </select>
   </div>
   <div class="row">
-    <label>Current glycemic control</label>
+    <label>Pre-admission glycemic control</label>
     <select id="control" onchange="calc()">
       <option value="naive">Insulin-naive / newly started</option>
       <option value="good">Previously controlled</option>
@@ -118,83 +122,106 @@
     <select id="eating" onchange="calc()">
       <option value="full">Full oral intake (3 meals)</option>
       <option value="partial">Partial intake / soft diet</option>
-      <option value="npo">NPO / enteral nutrition</option>
+      <option value="npo">NPO / Enteral nutrition</option>
+    </select>
+  </div>
+  <div class="row">
+    <label>Cardiac surgery (perioperative)</label>
+    <select id="cardsurg" onchange="calc()">
+      <option value="no">No</option>
+      <option value="preop">Preoperative (elective)</option>
+      <option value="postop">Postoperative (early)</option>
     </select>
   </div>
 </div>
 
-<!-- RESULTS -->
 <div class="card">
   <h2>Calculated Doses</h2>
-  <div id="alert-renal" class="alert">⚠️ CKD: reduce TDD by 25–50%. Monitor closely for hypoglycemia.</div>
+  <div id="alert-renal" class="alert">⚠️ Renal impairment: reduce TDD by 15–60% (max reduction on CRRT). Monitor closely for hypoglycemia.</div>
+  <div id="alert-cardiac" class="alert">💓 Cardiac surgery (EACTS 2024): start with 50% of calculated TDD post‑op. Resume bolus only after full oral intake.</div>
   <div class="divider" id="results"></div>
   <div class="note" id="schedule-note"></div>
 </div>
 
-<!-- CORRECTION SCALE -->
 <div class="card">
   <h2>Correction Scale (supplemental)</h2>
-  <h3>Add to bolus if pre-meal glucose is elevated:</h3>
+  <h3>Add to meal bolus if pre‑meal glucose is elevated:</h3>
   <div class="divider" id="correction"></div>
-  <p class="note" style="margin-top:12px">
-    <strong>Target glucose:</strong> 6–10 mmol/L (fasting) · 7–11 mmol/L (post-meal)<br>
-    <strong>Hypoglycemia protocol:</strong> glucose &lt; 3.9 mmol/L → 15 g fast carbs, recheck in 15 min
-  </p>
+  <p class="note"><strong>Target glucose (ADA 2026):</strong> 110–180 mg/dL (fasting) · 140–180 mg/dL early post‑op<br>
+  <strong>Hypoglycemia protocol:</strong> glucose &lt; 70 mg/dL → 15 g fast carbs, recheck in 15 min. &lt;54 mg/dL → treat immediately & notify MD.</p>
 </div>
 
-<!-- NOTES -->
 <div class="card">
-  <h2>Clinical Notes</h2>
+  <h2>Clinical Notes — Cardiac Surgery & CICU</h2>
   <p class="note">
-    <strong>Basal insulin</strong> (e.g. Glargine, Detemir) — inject once daily, same time each day.<br>
-    <strong>Rapid-acting bolus</strong> (e.g. Aspart, Lispro) — inject immediately before each meal.<br>
-    <strong>Dose adjustment:</strong> Increase or decrease total dose by 10–20% based on glucose trends. Titrate every 1–2 days.<br>
-    <strong>NPO patients:</strong> Give 50–75% of basal dose only. Hold bolus. Continue glucose monitoring q4h.<br>
-    <strong>Steroids:</strong> May require 30–50% TDD increase; consider afternoon/evening basal shift.
+    <strong>Basal insulin</strong> (Glargine, Detemir, Degludec) — inject once daily, same time.<br>
+    <strong>Rapid-acting bolus</strong> (Aspart, Lispro) — inject immediately before each meal.<br>
+    <strong>Perioperative (EACTS 2024):</strong> Start with 50% of calculated TDD after hemodynamic stability.<br>
+    <strong>Transition from IV insulin:</strong> calculate 24h IV requirement → give 50% as basal insulin once oral intake resumes.<br>
+    <strong>NPO patients:</strong> Give 50–75% of basal dose only. Hold bolus. Monitor glucose q4h.<br>
+    <strong>Steroids:</strong> May require 30–50% TDD increase; consider afternoon/evening basal shift.<br>
+    <strong>CRRT (Citrate):</strong> Insulin requirements may decrease; use conservative factor (0.3 U/kg max) and monitor glucose q2h.
   </p>
 </div>
 
 <script>
 function calc() {
   const weight  = parseFloat(document.getElementById('weight').value) || 70;
+  const hba1c   = document.getElementById('hba1c').value;
   const renal   = document.getElementById('renal').value;
   const control = document.getElementById('control').value;
   const eating  = document.getElementById('eating').value;
+  const cardsurg = document.getElementById('cardsurg').value;
 
-  // Base TDD (total daily dose) factor
-  let factor = 0.4; // units/kg default
-  if (control === 'poor')   factor = 0.5;
-  if (control === 'naive')  factor = 0.3;
+  // Base TDD factor (U/kg) based on HbA1c
+  let factor = 0.4;
+  if (hba1c === '10.0') factor = 0.5;        // HbA1c > 9%
+  if (hba1c === '8.0')  factor = 0.4;        // 7–9%
+  if (hba1c === '6.5')  factor = 0.3;        // <7%
+  if (control === 'naive') factor = Math.min(factor, 0.3); // safety for naive
 
-  // Renal reduction
+  // Renal adjustment
   let renalFactor = 1.0;
-  if (renal === 'mild')     renalFactor = 0.8;
-  if (renal === 'moderate') renalFactor = 0.65;
-  if (renal === 'severe')   renalFactor = 0.5;
+  if (renal === 'mild')     renalFactor = 0.85;
+  if (renal === 'moderate') renalFactor = 0.7;
+  if (renal === 'severe')   renalFactor = 0.55;
+  if (renal === 'crrt')     renalFactor = 0.4;
 
   document.getElementById('alert-renal').style.display = renal !== 'normal' ? 'block' : 'none';
 
   let tdd = Math.round(weight * factor * renalFactor);
+
+  // Cardiac surgery adjustment (EACTS 2024: 50–80% of TDD)
+  let cardiacFactor = 1.0;
+  if (cardsurg === 'preop') cardiacFactor = 0.8;
+  if (cardsurg === 'postop') cardiacFactor = 0.5;
+  if (cardsurg !== 'no') {
+    document.getElementById('alert-cardiac').style.display = 'block';
+    tdd = Math.round(tdd * cardiacFactor);
+  } else {
+    document.getElementById('alert-cardiac').style.display = 'none';
+  }
+
   const basal  = Math.round(tdd * 0.5);
   const bolus  = Math.round(tdd * 0.5);
 
   let meals = 3;
-  if (eating === 'partial') meals = 3; // still 3 but smaller
+  if (eating === 'partial') meals = 3;
   if (eating === 'npo')     meals = 0;
 
   const perMeal = eating === 'npo' ? 0 : Math.round(bolus / meals);
   const basalNPO = eating === 'npo' ? Math.round(basal * 0.75) : basal;
 
-  // Sensitivity factor (rule of 1800 / 100)
-  const isf = Math.round(100 / tdd); // mmol/L per unit (approx)
+  // Correction factor: Rule of 1800 (mg/dL)
+  const isfMg = Math.round(1800 / tdd);   // mg/dL per unit
 
   let results = `
     <div class="result-item accent">
-      <div class="r-label">Total Daily Dose</div>
+      <div class="r-label">Total Daily Dose (TDD)</div>
       <div><span class="r-value">${tdd}</span><span class="r-unit">units/day</span></div>
     </div>
     <div class="result-item green-card">
-      <div class="r-label">Basal${eating === 'npo' ? ' (NPO 75%)' : ' (50%)'}</div>
+      <div class="r-label">Basal${eating === 'npo' ? ' (NPO 75%)' : ' (50% of TDD)'}</div>
       <div><span class="r-value">${basalNPO}</span><span class="r-unit">units / day</span></div>
     </div>`;
 
@@ -205,32 +232,37 @@ function calc() {
         <div><span class="r-value">${perMeal}</span><span class="r-unit">units × ${meals}</span></div>
       </div>
       <div class="result-item">
-        <div class="r-label">Correction factor</div>
-        <div><span class="r-value">${isf}</span><span class="r-unit">mmol/L per unit</span></div>
+        <div class="r-label">Correction factor (ISF)</div>
+        <div><span class="r-value">${isfMg}</span><span class="r-unit">mg/dL per unit</span></div>
       </div>
     `;
   }
 
   document.getElementById('results').innerHTML = results;
 
-  // Schedule note
   let note = '';
   if (eating === 'npo') {
     note = `<strong>NPO regimen:</strong> Basal ${basalNPO} units once daily. Hold all boluses. Monitor glucose every 4 hours. Resume bolus once oral intake resumes.`;
+  } else if (cardsurg === 'postop') {
+    note = `<strong>Post‑cardiac surgery regimen (EACTS 2024):</strong><br>
+    • <em>Basal:</em> ${basalNPO} units at bedtime (or morning) — 50% of calculated TDD<br>
+    • <em>Bolus:</em> ${perMeal} units before breakfast / ${perMeal} units before lunch / ${perMeal} units before dinner — start only when full oral intake resumed<br>
+    • <em>Correction:</em> use scale below, target 140–180 mg/dL early post‑op`;
   } else {
-    note = `<strong>Suggested regimen:</strong><br>
+    note = `<strong>Suggested regimen (ADA 2026):</strong><br>
     • <em>Basal:</em> ${basalNPO} units at bedtime (or morning)<br>
     • <em>Bolus:</em> ${perMeal} units before breakfast / ${perMeal} units before lunch / ${perMeal} units before dinner<br>
     • <em>Correction:</em> see correction scale below`;
   }
   document.getElementById('schedule-note').innerHTML = note;
 
-  // Correction scale
+  // Correction scale in mg/dL (adapted for Israel)
   const corrThresholds = [
-    { label: '10.1–13.0 mmol/L', units: 1 },
-    { label: '13.1–16.0 mmol/L', units: 2 },
-    { label: '16.1–19.0 mmol/L', units: 3 },
-    { label: '> 19.0 mmol/L',    units: 4, note: 'notify MD' }
+    { label: '146–180 mg/dL', units: 1 },
+    { label: '181–220 mg/dL', units: 2 },
+    { label: '221–260 mg/dL', units: 3 },
+    { label: '261–300 mg/dL', units: 4 },
+    { label: '> 300 mg/dL',    units: 5, note: 'notify MD' }
   ];
   let corrHtml = '';
   for (const t of corrThresholds) {
