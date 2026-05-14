@@ -195,7 +195,7 @@ function openItem(section, item) {
   // Render
   const area = $('content-area');
   if (item.type === 'calculator' || item.file.endsWith('.html')) {
-    renderCalculator(item, area);
+    renderHTML(item, area);
   } else if (item.type === 'icd') {
     renderICD(item, area);
   } else {
@@ -317,12 +317,12 @@ async function renderMarkdown(item, area, section) {
   }
 }
 
-// ── RENDER: CALCULATOR ───────────────────────────────────
-function renderCalculator(item, area) {
+// ── RENDER: HTML (Iframe) ─────────────────────────────
+function renderHTML(item, area) {
   area.innerHTML = `
     <div id="page-view">
       <div class="page-header">
-        <span class="page-type-badge type-calculator">calculator</span>
+        <span class="page-type-badge type-${item.type}">${item.type}</span>
         ${State.role === 'admin' ? `<a href="redact.html?file=${encodeURIComponent(item.file)}" target="_blank" id="redact-link" style="margin-left:auto">✏️ Edit</a>` : ''}
       </div>
       <iframe id="calc-frame" src="${resolvePath(item.file)}" title="${item.title}"></iframe>
