@@ -104,7 +104,7 @@ async function showApp() {
 
   // Load manifest
   try {
-    const text = await fetch(MANIFEST_URL).then(r => r.text());
+    const text = await fetch(MANIFEST_URL + '?v=' + Date.now()).then(r => r.text());
     
     // Check if js-yaml library is loaded
     const yamlLib = window.jsyaml || window.jsYaml;

@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-05-09
+  updated: 2026-05-14
 
 sections:
   - id: calculators
