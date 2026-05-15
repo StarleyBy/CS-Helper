@@ -337,14 +337,50 @@ async function renderMarkdown(item, area, section) {
 // ── RENDER: HTML (Iframe) ─────────────────────────────
 function renderHTML(item, area) {
   area.innerHTML = `
-    <div id="page-view">
-      <div class="page-header">
+    <div id="page-view" class="wide">
+      <div class="page-header" style="margin-bottom: 8px;">
         <span class="page-type-badge type-${item.type}">${item.type}</span>
         ${State.role === 'admin' ? `<a href="redact.html?file=${encodeURIComponent(item.file)}" target="_blank" id="redact-link" style="margin-left:auto">✏️ Edit</a>` : ''}
       </div>
-      <iframe id="calc-frame" src="${resolvePath(item.file)}" title="${item.title}"></iframe>
+      <iframe id="calc-frame" src="${resolvePath(item.file)}" title="${item.title}" style="opacity:0; transition:opacity 0.2s;"></iframe>
     </div>
   `;
+
+  const frame = $('calc-frame');
+  frame.onload = () => {
+    try {
+      const doc = frame.contentWindow.document;
+      const style = doc.createElement('style');
+      style.textContent = `
+        body { background: transparent !important; padding: 0 !important; margin: 0 !important; }
+        .cals-container { max-width: none !important; margin: 0 !important; border-radius: 0 !important; box-shadow: none !important; width: 100% !important; }
+        .content { padding: 20px !important; }
+        @media (max-width: 720px) {
+          .content { padding: 12px !important; }
+          .header { padding: 16px !important; }
+          .header h1 { font-size: 20px !important; }
+        }
+      `;
+      doc.head.appendChild(style);
+
+      // Auto-resize handler
+      const updateHeight = () => {
+        const height = doc.documentElement.scrollHeight;
+        frame.style.height = height + 'px';
+      };
+      
+      updateHeight();
+      frame.style.opacity = '1';
+
+      // Watch for content changes
+      const observer = new ResizeObserver(updateHeight);
+      observer.observe(doc.body);
+    } catch(e) {
+      console.warn('Seamless mode failed:', e);
+      frame.style.height = '80vh';
+      frame.style.opacity = '1';
+    }
+  };
 }
 
 // ── RENDER: ICD ──────────────────────────────────────────

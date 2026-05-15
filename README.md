@@ -42,29 +42,34 @@ Hosted on GitHub Pages · Works offline · Mobile-friendly.
     └── icd/            # ICD-9 JSON databases
 ```
 
-## Adding Content
+## 🛠 Development & Content Management
 
-### New Markdown page
-1. Create `books/<category>/filename.md` with frontmatter:
-   ```yaml
-   ---
-   title: Page Title
-   type: reference   # reference | scale | protocol | cheatsheet
-   visible: true
-   tags: [tag1, tag2]
-   ---
-   ```
-2. Add entry to `app-manifest.yml` under the appropriate section.
+### Manifest Auto-Builder
+To avoid manual errors in `app-manifest.yml`, use the automatic builder. It scans the `books/` directories and generates the manifest based on file metadata.
 
-### New calculator
-1. Create `books/calculators/name.html` (self-contained HTML/JS).
-2. Add entry to `app-manifest.yml` with `type: calculator`.
+1.  **Add/Update files** in the `books/` subfolders.
+2.  **Add metadata** to your files:
+    -   **Markdown (.md):** Use standard frontmatter at the top.
+    -   **HTML (.html):** Add a comment block in the `<head>`:
+        ```html
+        <!--
+        metadata:
+          title: "My Custom Title"
+          tags: [tag1, tag2]
+          visible: true
+        -->
+        ```
+3.  **Run the builder:**
+    ```bash
+    node build-manifest.js
+    ```
+4.  The `app-manifest.yml` will be updated automatically with correct formatting.
 
-### ICD codes
-Edit `books/icd/diagnoses.json` or `books/icd/procedures.json` directly.
+### Manual Structure
+If you prefer manual editing, the structure is defined in `app-manifest.yml`. Be extremely careful with YAML indentation.
 
-### Hiding a page (in development)
-Set `visible: false` in `app-manifest.yml`. Admin sees all; users see only visible pages.
+### Theme & Styling
+The app uses a CSS variable-based theme system. Styles are defined in `app.css`. HTML pages automatically inherit the look and feel through the main app shell when rendered.
 
 ## Dependencies (CDN-free, bundled)
 

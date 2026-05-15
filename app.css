@@ -386,13 +386,16 @@ body {
 }
 
 /* ── CONTENT PAGE ───────────────────────────────────────── */
-#page-view { max-width: 860px; }
+#page-view { max-width: 860px; margin: 0 auto; }
+#page-view.wide { max-width: 100%; }
 
 .page-header {
   display: flex; align-items: flex-start; gap: 12px;
   margin-bottom: 20px; padding-bottom: 16px;
   border-bottom: 1px solid var(--border);
 }
+.page-header.hidden { display: none; }
+
 .page-type-badge {
   padding: 3px 8px; border-radius: 4px;
   font-size: 11px; font-weight: 600;
@@ -478,7 +481,7 @@ body {
 }
 
 /* ── ICD SEARCH ─────────────────────────────────────────── */
-#icd-view { max-width: 860px; }
+#icd-view { max-width: 860px; margin: 0 auto; }
 #icd-search-bar {
   display: flex; gap: 10px; margin-bottom: 16px;
 }
@@ -524,9 +527,9 @@ body {
 /* ── CALCULATOR FRAME ───────────────────────────────────── */
 #calc-frame {
   width: 100%; border: none;
-  background: var(--bg-panel);
-  border-radius: var(--radius);
-  min-height: 500px;
+  background: transparent;
+  min-height: 200px;
+  display: block;
 }
 
 /* ── LOGIN SCREEN ───────────────────────────────────────── */
