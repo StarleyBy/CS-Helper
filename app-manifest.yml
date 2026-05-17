@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-05-15 17:02
+  updated: 2026-05-17 04:05
 
 sections:
   - id: calculators
@@ -55,6 +55,12 @@ sections:
         type: reference
         visible: true
         tags: [echo, echocardiography, norms]
+      - id: platelets
+        title: "Platelets"
+        file: books/references/platelets.md
+        type: reference
+        visible: true
+        tags: []
 
   - id: scales
     title: Scales & Scores
