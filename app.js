@@ -125,7 +125,19 @@ async function showApp() {
     }
 
     buildNav();
-    showHome();
+    
+    // Deep linking support
+    const urlParams = new URLSearchParams(window.location.search);
+    const sectionId = urlParams.get('section');
+    const itemId = urlParams.get('item');
+
+    if (sectionId && itemId) {
+      openItemById(sectionId, itemId, false);
+    } else if (sectionId) {
+      openSection(sectionId, false);
+    } else {
+      showHome(false);
+    }
   } catch(e) {
     console.error('Manifest load failed', e);
     $('content-area').innerHTML = `
@@ -187,21 +199,45 @@ function buildNav(filter = '') {
 }
 
 // ── ROUTING ──────────────────────────────────────────────
-function openItem(section, item) {
+function updateUrl(params) {
+  const url = new URL(window.location);
+  if (params.view === 'home') {
+    url.search = '';
+  } else if (params.view === 'section') {
+    url.searchParams.set('section', params.id);
+    url.searchParams.delete('item');
+  } else if (params.view === 'item') {
+    url.searchParams.set('section', params.sectionId);
+    url.searchParams.set('item', params.itemId);
+  }
+  window.history.pushState(params, '', url);
+}
+
+window.addEventListener('popstate', (event) => {
+  const state = event.state;
+  if (!state || state.view === 'home') {
+    showHome(false);
+  } else if (state.view === 'section') {
+    openSection(state.id, false);
+  } else if (state.view === 'item') {
+    openItemById(state.sectionId, state.itemId, false);
+  }
+});
+
+function openItem(section, item, push = true) {
   State.currentItem = item;
+  if (push) updateUrl({ view: 'item', sectionId: section.id, itemId: item.id });
 
   // Update active nav
   document.querySelectorAll('.nav-item').forEach(el => {
     el.classList.toggle('active', el.dataset.itemId === item.id);
   });
 
-  // Breadcrumb & title
+  // Breadcrumb - cleaner look
   $('page-breadcrumb').innerHTML = `
-    <span style="cursor:pointer" onclick="showHome()">Home</span>
-    <span class="bc-sep">›</span>
-    <span style="cursor:pointer" onclick="openSection('${section.id}')">${section.title}</span>
-    <span class="bc-sep">›</span>
-    <span>${item.title}</span>
+    <span class="bc-link" onclick="showHome()">Home</span>
+    <span class="bc-sep">/</span>
+    <span class="bc-link" onclick="openSection('${section.id}')">${section.title}</span>
   `;
   $('page-title-bar').textContent = item.title;
 
@@ -218,9 +254,11 @@ function openItem(section, item) {
   } else {
     renderMarkdown(item, area, section);
   }
+  area.scrollTo(0, 0);
 }
 
-function showHome() {
+function showHome(push = true) {
+  if (push) updateUrl({ view: 'home' });
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
   $('page-breadcrumb').innerHTML = '';
   $('page-title-bar').textContent = 'CS Helper';
@@ -260,9 +298,10 @@ function renderHome() {
   `;
 }
 
-function openSection(sectionId) {
+function openSection(sectionId, push = true) {
   const section = State.manifest.sections.find(s => s.id === sectionId);
   if (!section) return;
+  if (push) updateUrl({ view: 'section', id: sectionId });
   renderSectionIndex(section);
 }
 
@@ -275,9 +314,7 @@ function renderSectionIndex(section) {
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
   $('page-breadcrumb').innerHTML = `
-    <span style="cursor:pointer" onclick="showHome()">Home</span>
-    <span class="bc-sep">›</span>
-    <span>${section.title}</span>
+    <span class="bc-link" onclick="showHome()">Home</span>
   `;
   $('page-title-bar').textContent = section.title;
 
@@ -301,10 +338,10 @@ function renderSectionIndex(section) {
   `;
 }
 
-function openItemById(sectionId, itemId) {
+function openItemById(sectionId, itemId, push = true) {
   const section = State.manifest.sections.find(s => s.id === sectionId);
-  const item = section.items.find(i => i.id === itemId);
-  if (section && item) openItem(section, item);
+  const item = section?.items.find(i => i.id === itemId);
+  if (section && item) openItem(section, item, push);
 }
 
 // ── RENDER: MARKDOWN ─────────────────────────────────────
