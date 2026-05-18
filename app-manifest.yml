@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-05-18 14:08
+  updated: 2026-05-18 17:31
 
 sections:
   - id: calculators
@@ -15,7 +15,7 @@ sections:
         visible: true
         tags: []
       - id: heparin
-        title: "Cardiac Surgery Heparin Protocol"
+        title: "Cardiac Surgery Heparin Protocol | Appendix 7"
         file: books/calculators/heparin.html
         type: calculator
         visible: true
@@ -56,7 +56,7 @@ sections:
         visible: true
         tags: [echo, echocardiography, norms]
       - id: platelets
-        title: "Platelets Inhibitors"
+        title: "Platelets"
         file: books/references/platelets.md
         type: reference
         visible: true
@@ -124,6 +124,12 @@ sections:
         type: cheatsheet
         visible: true
         tags: [icu, acute, cardiac surgery]
+      - id: cardiac-echo
+        title: "Echocardiography Reference Guide | Normal Values & Severity Grading | ASE/EACVI"
+        file: books/cheatsheets/cardiac-echo.html
+        type: cheatsheet
+        visible: true
+        tags: []
       - id: carotid-doppler
         title: "Carotid & Vertebral Doppler — Interpretation"
         file: books/cheatsheets/carotid-doppler.md
