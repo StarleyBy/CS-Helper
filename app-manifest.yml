@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-05-18 13:57
+  updated: 2026-05-18 14:08
 
 sections:
   - id: calculators
@@ -96,11 +96,11 @@ sections:
     icon: 📄
     items:
       - id: heparin-protocol
-        title: "Heparin Anticoagulation Protocol"
+        title: "Heparin Anticoagulation Protocol — Cardiac Surgery (Appendix 7)"
         file: books/protocols/heparin-protocol.md
         type: protocol
         visible: true
-        tags: [heparin, anticoagulation, protocol]
+        tags: [heparin, anticoagulation, protocol, cardiac-surgery]
       - id: insulin-bb-protocol
         title: "Insulin Bb Protocol"
         file: books/protocols/insulin-bb-protocol.md
@@ -139,6 +139,12 @@ sections:
       - id: ecg
         title: "ECG Cheat Sheet – LITFL based | Advanced"
         file: books/cheatsheets/ecg.html
+        type: cheatsheet
+        visible: true
+        tags: []
+      - id: inotrops
+        title: "Inotropes & Vasoactive Drugs | Cardiac Surgery Guide"
+        file: books/cheatsheets/inotrops.html
         type: cheatsheet
         visible: true
         tags: []
