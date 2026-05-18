@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-05-17 04:05
+  updated: 2026-05-18 13:57
 
 sections:
   - id: calculators
@@ -15,7 +15,7 @@ sections:
         visible: true
         tags: []
       - id: heparin
-        title: "Heparin Infusion Calculator"
+        title: "Cardiac Surgery Heparin Protocol | Appendix 7"
         file: books/calculators/heparin.html
         type: calculator
         visible: true
