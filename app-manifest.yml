@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-05-18 17:31
+  updated: 2026-05-18 18:45
 
 sections:
   - id: calculators
@@ -145,6 +145,12 @@ sections:
       - id: ecg
         title: "ECG Cheat Sheet – LITFL based | Advanced"
         file: books/cheatsheets/ecg.html
+        type: cheatsheet
+        visible: true
+        tags: []
+      - id: electrolytes
+        title: "Electrolyte Disorders in Cardiac Surgery | K⁺, Ca²⁺, Mg²⁺ Guide"
+        file: books/cheatsheets/electrolytes.html
         type: cheatsheet
         visible: true
         tags: []
