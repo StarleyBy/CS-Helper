@@ -15,7 +15,7 @@ sections:
         visible: true
         tags: []
       - id: heparin
-        title: "Cardiac Surgery Heparin Protocol | Appendix 7"
+        title: "Cardiac Surgery Heparin Protocol"
         file: books/calculators/heparin.html
         type: calculator
         visible: true
@@ -56,7 +56,7 @@ sections:
         visible: true
         tags: [echo, echocardiography, norms]
       - id: platelets
-        title: "Platelets"
+        title: "Platelets Inhibitors"
         file: books/references/platelets.md
         type: reference
         visible: true
