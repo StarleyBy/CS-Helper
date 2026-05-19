@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-05-19 13:58
+  updated: 2026-05-19 14:20
 
 sections:
   - id: calculators
@@ -163,6 +163,12 @@ sections:
       - id: electrolytes
         title: "Electrolyte Disorders in Cardiac Surgery | K⁺, Ca²⁺, Mg²⁺ Guide"
         file: books/cheatsheets/electrolytes.html
+        type: cheatsheet
+        visible: true
+        tags: []
+      - id: external_pacing
+        title: "Medtronic 5388 – Temporary External Pacing Guide"
+        file: books/cheatsheets/external_pacing.html
         type: cheatsheet
         visible: true
         tags: []
