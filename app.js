@@ -319,9 +319,10 @@ function renderSectionIndex(section) {
   $('page-title-bar').textContent = section.title;
 
   let listHtml = '';
-  visibleItems.forEach(item => {
+  visibleItems.forEach((item, index) => {
+    const variant = index % 5;
     listHtml += `
-      <div class="index-card" onclick="openItemById('${section.id}', '${item.id}')">
+      <div class="index-card ic-${item.type} v-${variant}" onclick="openItemById('${section.id}', '${item.id}')">
         <div class="index-card-title">${item.title}</div>
         <div class="index-card-tags">
           <span class="page-type-badge type-${item.type}">${item.type}</span>
