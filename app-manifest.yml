@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-05-19 11:19
+  updated: 2026-05-19 11:31
 
 sections:
   - id: calculators
@@ -163,6 +163,12 @@ sections:
       - id: inotrops
         title: "Inotropes & Vasoactive Drugs | Cardiac Surgery Guide"
         file: books/cheatsheets/inotrops.html
+        type: cheatsheet
+        visible: true
+        tags: []
+      - id: picco
+        title: "PiCCO Monitoring – Comprehensive Clinical Guide"
+        file: books/cheatsheets/picco.html
         type: cheatsheet
         visible: true
         tags: []
