@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-05-19 12:41
+  updated: 2026-05-19 13:11
 
 sections:
   - id: calculators
@@ -121,6 +121,12 @@ sections:
       - id: acls2025
         title: "ACLS 2025 Quick Reference – AHA Guidelines"
         file: books/cheatsheets/acls2025.html
+        type: cheatsheet
+        visible: true
+        tags: []
+      - id: alter_coagulation
+        title: "Non‑Heparin Anticoagulation | Angiomax, Iloprost, DOACs, Argatroban, Fondaparinux & Defibrotide"
+        file: books/cheatsheets/alter_coagulation.html
         type: cheatsheet
         visible: true
         tags: []
