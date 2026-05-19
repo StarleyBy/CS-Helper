@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-05-18 18:45
+  updated: 2026-05-19 09:53
 
 sections:
   - id: calculators
@@ -29,6 +29,12 @@ sections:
       - id: iv-infusion
         title: "IV Infusion Rates"
         file: books/calculators/iv-infusion.html
+        type: calculator
+        visible: true
+        tags: []
+      - id: ppm
+        title: "PPM Calculator | Prosthesis-Patient Mismatch · Heart Valve Sizing"
+        file: books/calculators/ppm.html
         type: calculator
         visible: true
         tags: []
