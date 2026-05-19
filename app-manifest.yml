@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-05-18 18:45
+  updated: 2026-05-19 11:31
 
 sections:
   - id: calculators
@@ -29,6 +29,12 @@ sections:
       - id: iv-infusion
         title: "IV Infusion Rates"
         file: books/calculators/iv-infusion.html
+        type: calculator
+        visible: true
+        tags: []
+      - id: ppm
+        title: "PPM Calculator | Prosthesis-Patient Mismatch · Heart Valve Sizing (including Bicarbon)"
+        file: books/calculators/ppm.html
         type: calculator
         visible: true
         tags: []
@@ -160,6 +166,12 @@ sections:
         type: cheatsheet
         visible: true
         tags: []
+      - id: picco
+        title: "PiCCO Monitoring – Comprehensive Clinical Guide"
+        file: books/cheatsheets/picco.html
+        type: cheatsheet
+        visible: true
+        tags: []
       - id: prism-setup
         title: "PRISM Setup — Quick Reference"
         file: books/cheatsheets/prism-setup.md
@@ -172,6 +184,12 @@ sections:
         type: cheatsheet
         visible: true
         tags: [renal, AKI, acute kidney injury]
+      - id: ventilation
+        title: "Hamilton C1 Ventilator Guide | VSIMV, PSIMV, Modes & Clinical Reference"
+        file: books/cheatsheets/ventilation.html
+        type: cheatsheet
+        visible: true
+        tags: []
       - id: warfarin
         title: "Warfarin Anticoagulation Protocol – Bojar Appendix 8 & 9 | Cardiac Surgery"
         file: books/cheatsheets/warfarin.html
