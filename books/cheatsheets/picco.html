@@ -162,6 +162,18 @@
             font-weight: 500;
         }
         .toc a:hover { text-decoration: underline; }
+        .img-container {
+            margin: 0 0 24px 0;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #e2edf5;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .img-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
         @media (max-width: 680px) {
             .content { padding: 20px; }
         }
@@ -201,6 +213,11 @@
         <!-- 1. Principles -->
         <div class="section" id="principles">
             <div class="section-title">🔬 1. How PiCCO Works – Two Complementary Technologies</div>
+            
+            <div class="img-container">
+                <img src="../assets/picco.jpeg" alt="PiCCO Technologies Map">
+            </div>
+
             <div class="grid-2col">
                 <div class="card">
                     <div class="card-header">🌡️ Transpulmonary Thermodilution (TPTD)</div>
