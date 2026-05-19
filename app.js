@@ -353,6 +353,7 @@ async function renderMarkdown(item, area, section) {
       return r.text();
     });
     const html = marked.parse(text);
+    const responsiveHtml = html.replace(/<table>/g, '<div class="table-wrapper"><table>').replace(/<\/table>/g, '</table></div>');
     area.innerHTML = `
       <div id="page-view">
         <div class="page-header">
@@ -362,7 +363,7 @@ async function renderMarkdown(item, area, section) {
           <div style="flex:1"></div>
           ${State.role === 'admin' ? `<a href="redact.html?file=${encodeURIComponent(item.file)}" target="_blank" id="redact-link">✏️ Edit</a>` : ''}
         </div>
-        <div class="md-body">${html}</div>
+        <div class="md-body">${responsiveHtml}</div>
       </div>
     `;
   } catch(e) {

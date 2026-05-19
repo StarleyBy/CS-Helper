@@ -456,6 +456,14 @@ body {
   width: 100%; border-collapse: collapse; margin: 0 0 16px;
   font-size: 13.5px;
 }
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 16px;
+  border-radius: 6px;
+}
+.table-wrapper table { margin-bottom: 0; }
 .md-body th {
   background: var(--bg-active);
   font-weight: 600; text-align: left;
