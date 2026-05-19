@@ -391,12 +391,25 @@ function renderHTML(item, area) {
       const style = doc.createElement('style');
       style.textContent = `
         body { background: transparent !important; padding: 0 !important; margin: 0 !important; }
-        .cals-container { max-width: none !important; margin: 0 !important; border-radius: 0 !important; box-shadow: none !important; width: 100% !important; }
+        /* Auto-fit any container */
+        [class*="-container"] { max-width: none !important; margin: 0 !important; border-radius: 0 !important; box-shadow: none !important; width: 100% !important; }
         .content { padding: 20px !important; }
+        
+        /* Universal Table Fix: make all tables scrollable by default */
+        table { 
+          display: block !important; 
+          width: 100% !important; 
+          overflow-x: auto !important; 
+          -webkit-overflow-scrolling: touch !important;
+          border-collapse: collapse !important;
+        }
+        
         @media (max-width: 720px) {
           .content { padding: 12px !important; }
           .header { padding: 16px !important; }
           .header h1 { font-size: 20px !important; }
+          .grid-main, .grid-2col, .card-grid { flex-direction: column !important; display: flex !important; }
+          .input-panel, .result-panel { min-width: 0 !important; width: 100% !important; }
         }
       `;
       doc.head.appendChild(style);
