@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-05-19 10:55
+  updated: 2026-05-19 11:19
 
 sections:
   - id: calculators
@@ -178,6 +178,12 @@ sections:
         type: cheatsheet
         visible: true
         tags: [renal, AKI, acute kidney injury]
+      - id: ventilation
+        title: "Hamilton C1 Ventilator Guide | VSIMV, PSIMV, Modes & Clinical Reference"
+        file: books/cheatsheets/ventilation.html
+        type: cheatsheet
+        visible: true
+        tags: []
       - id: warfarin
         title: "Warfarin Anticoagulation Protocol – Bojar Appendix 8 & 9 | Cardiac Surgery"
         file: books/cheatsheets/warfarin.html
