@@ -161,14 +161,14 @@ metadata:
     <table id="iv_table">
       <thead><tr><th>Glucose (mg/dL)</th><th>IV Bolus</th><th>Rate change</th></tr></thead>
       <tbody>
-        <tr style="background: var(--red-bg);"><td>&lt; 90</td><td>½ amp D50W IV</td><td>Stop infusion (call MD)</td></tr>
-        <tr><td>91–110</td><td>No bolus</td><td>Stop; resume at 50% of previous rate when glucose &lt;150</td></tr>
-        <tr style="background: var(--green-bg);"><td>111–150</td><td>No bolus</td><td>No change (target range)</td></tr>
-        <tr><td>151–200</td><td>No bolus</td><td>Increase by 2 U/h</td></tr>
-        <tr><td>201–240</td><td>4 U</td><td>Increase by 2 U/h</td></tr>
-        <tr><td>241–280</td><td>6 U</td><td>Increase by 2 U/h</td></tr>
-        <tr><td>281–320</td><td>10 U</td><td>Increase by 4 U/h</td></tr>
-        <tr style="background: var(--orange-bg);"><td>&gt; 320</td><td colspan="2">Call attending physician immediately</td></tr>
+        <tr style="background: var(--red-bg);"><td>&lt; 90</th><td>½ amp D50W IV</th><td>Stop infusion (call MD)</th></tr>
+        <tr style="background: var(--red-bg);"><td>91–110</th><td>No bolus</th><td>Stop; resume at 50% of previous rate when glucose <150</th></tr>
+        <tr style="background: var(--green-bg);"><td>111–150</th><td>No bolus</th><td>No change (target range)</th></tr>
+        <tr><td>151–200</th><td>No bolus</th><td>Increase by 2 U/h</th></tr>
+        <tr><td>201–240</th><td>4 U</th><td>Increase by 2 U/h</th></tr>
+        <tr><td>241–280</th><td>6 U</th><td>Increase by 2 U/h</th></tr>
+        <tr><td>281–320</th><td>10 U</th><td>Increase by 4 U/h</th></tr>
+        <tr style="background: var(--orange-bg);"><td>&gt; 320</th><td colspan="2">Call attending physician immediately</th></tr>
       </tbody>
     </table>
     <p class="note"><strong>Target range:</strong> 111–150 mg/dL post‑cardiac surgery. <br>
@@ -213,7 +213,7 @@ metadata:
         <option value="normal">Normal (≥ 60)</option>
         <option value="mild">Mild CKD (30–59)</option>
         <option value="moderate">Moderate CKD (15–29)</option>
-        <option value="severe">Severe CKD (&lt;15) / CRRT</option>
+        <option value="severe">Severe CKD (<15) / CRRT</option>
       </select>
     </div>
     <div class="row">
@@ -249,9 +249,32 @@ metadata:
   </div>
 
   <div class="card">
-    <h2>Correction Scale (for pre‑meal hyperglycemia)</h2>
+    <h2>📊 Correction Scale (for pre‑meal hyperglycemia)</h2>
     <div class="divider" id="sc_correction"></div>
     <p class="note"><strong>Target glucose (ward):</strong> 110–180 mg/dL. Add correction to meal bolus.</p>
+  </div>
+
+  <!-- NEW: Advanced correction for insufficient control after 2 days -->
+  <div class="card">
+    <h2>🔧 Persistent Hyperglycemia (>180 mg/dL after 2 days of Basal-Bolus)</h2>
+    <p class="note" style="margin-bottom: 12px;">If fasting or post‑prandial glucose remains >180 mg/dL despite adequate basal‑bolus for ≥2 days, use the table below to add an extra correction dose. <strong>Do not use before 48 h of stable basal/bolus therapy.</strong></p>
+    <div class="row">
+      <label>Current glucose (mg/dL)</label>
+      <input type="number" id="persistent_glucose" value="210" step="5" oninput="updatePersistentCorrection()">
+    </div>
+    <div class="row">
+      <label>Timing</label>
+      <select id="persistent_timing" onchange="updatePersistentCorrection()">
+        <option value="postprandial">After eating (post‑prandial)</option>
+        <option value="fasting">On empty stomach (fasting)</option>
+      </select>
+    </div>
+    <div id="persistent_result" class="result-item accent">
+      <div class="r-label">Additional correction insulin</div>
+      <div><span class="r-value" id="persistent_units">—</span><span class="r-unit">units (rapid‑acting)</span></div>
+    </div>
+    <div id="persistent_table" class="divider" style="margin-top: 16px;"></div>
+    <p class="note"><strong>Important:</strong> Re‑evaluate basal and bolus doses every 2‑3 days. Persistent hyperglycemia may require upward adjustment of total daily dose (TDD) by 10‑20%. Always confirm with blood glucose monitoring and avoid stacking with routine pre‑meal bolus.</p>
   </div>
 </div>
 
@@ -274,10 +297,11 @@ metadata:
       btnIV.classList.remove('active');
       btnSC.classList.add('active');
       calcSC();
+      updatePersistentCorrection();
     }
   }
 
-  // IV MODE logic
+  // IV MODE logic (unchanged)
   function updateIV() {
     let glucose = parseFloat(document.getElementById('iv_glucose').value) || 180;
     let currentRate = parseFloat(document.getElementById('iv_rate').value) || 2;
@@ -355,15 +379,13 @@ metadata:
     } else {
       alertDiv.style.display = 'none';
     }
-
-    // Potassium reminder
     document.getElementById('iv_alert_k').innerHTML = '🧪 Maintain serum K⁺ 4.0–4.5 mEq/L. Check q4-6h.';
     document.getElementById('iv_alert_k').style.display = 'block';
   }
 
   function updateTransition() {
     let avg = parseFloat(document.getElementById('avg_hourly').value) || 1;
-    let tdd = avg * 24 * 0.8;   // 80% of total 24h requirement
+    let tdd = avg * 24 * 0.8;
     tdd = Math.round(tdd);
     let basal = Math.round(tdd * 0.5);
     let bolusTotal = tdd - basal;
@@ -390,7 +412,7 @@ metadata:
     document.getElementById('transition_result').innerHTML = html;
   }
 
-  // SUBCUTANEOUS MODE (updated with 110–150 target but general ward 110–180)
+  // SUBCUTANEOUS MODE (routine basal‑bolus)
   function calcSC() {
     const weight  = parseFloat(document.getElementById('sc_weight').value) || 70;
     const hba1c   = document.getElementById('sc_hba1c').value;
@@ -454,7 +476,7 @@ metadata:
     }
     document.getElementById('sc_note').innerHTML = note;
 
-    // Correction scale in mg/dL
+    // routine correction scale (simple)
     const corrThresholds = [
       { label: '146–180 mg/dL', units: 1 },
       { label: '181–220 mg/dL', units: 2 },
@@ -473,10 +495,54 @@ metadata:
     document.getElementById('sc_correction').innerHTML = corrHtml;
   }
 
-  // Initial calls
+  // PERSISTENT HYPERGLYCEMIA CORRECTION (new)
+  const persistentTable = [
+    { min: 141, max: 180, post: 4, fasting: 0 },
+    { min: 181, max: 220, post: 6, fasting: 2 },
+    { min: 221, max: 260, post: 8, fasting: 3 },
+    { min: 261, max: 300, post: 10, fasting: 4 },
+    { min: 301, max: 350, post: 12, fasting: 5 },
+    { min: 351, max: 400, post: 14, fasting: 6 }
+  ];
+
+  function updatePersistentCorrection() {
+    const glucose = parseFloat(document.getElementById('persistent_glucose').value) || 180;
+    const timing = document.getElementById('persistent_timing').value;
+    let correctionUnits = 0;
+    let matched = false;
+    for (let row of persistentTable) {
+      if (glucose >= row.min && glucose <= row.max) {
+        if (timing === 'postprandial') correctionUnits = row.post;
+        else correctionUnits = row.fasting;
+        matched = true;
+        break;
+      }
+    }
+    if (!matched && glucose > 400) {
+      correctionUnits = (timing === 'postprandial') ? 16 : 8; // extrapolated
+    } else if (!matched && glucose < 141) {
+      correctionUnits = 0;
+    }
+    document.getElementById('persistent_units').innerHTML = correctionUnits;
+    // build table display
+    let tableHtml = `<h3 style="font-size:13px; margin-bottom:6px;">Decision table (after 2 days of basal‑bolus)</h3>`;
+    tableHtml += `<div class="divider">`;
+    for (let row of persistentTable) {
+      tableHtml += `
+        <div class="result-item">
+          <div class="r-label">Glucose ${row.min}–${row.max} mg/dL</div>
+          <div><span class="r-value">+${row.post}</span><span class="r-unit"> (post‑prandial)</span> / <span class="r-value">+${row.fasting}</span><span class="r-unit"> (fasting)</span></div>
+        </div>`;
+    }
+    tableHtml += `</div>`;
+    document.getElementById('persistent_table').innerHTML = tableHtml;
+  }
+
+  // Initialize
   updateIV();
   updateTransition();
   calcSC();
+  updatePersistentCorrection();
 </script>
 </body>
 </html>
