@@ -10,97 +10,24 @@
             background: #f8f9fc;
             font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
             color: #1e2937;
-            padding: 0;
-            display: flex;
+            padding: 20px;
+            display: block;
             min-height: 100vh;
-        }
-
-        /* Navigation Sidebar */
-        .sidebar {
-            width: 280px;
-            background: #1e3a8a;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 100;
-            transition: transform 0.3s ease;
-        }
-        .sidebar-header {
-            padding: 24px;
-            background: #1e40af;
-            border-bottom: 1px solid #2563eb;
-        }
-        .sidebar-header h1 { font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
-        .sidebar-header p { color: #93c5fd; font-size: 11px; margin-top: 4px; }
-        
-        .nav-menu {
-            display: flex;
-            flex-direction: column;
-            padding: 16px;
-            gap: 8px;
-            overflow-y: auto;
-            flex: 1;
-        }
-        .tab-btn {
-            padding: 14px 16px;
-            border: none;
-            background: none;
-            font-size: 14px;
-            font-weight: 600;
-            color: #93c5fd;
-            cursor: pointer;
-            border-radius: 10px;
-            text-align: left;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .tab-btn:hover { color: white; background: rgba(255,255,255,0.08); }
-        .tab-btn.active {
-            color: white;
-            background: #2563eb;
-            font-weight: 700;
-            box-shadow: 0 4px 12px rgba(37,99,235,0.3);
         }
 
         /* Main Content Layout */
         .main-content {
-            flex: 1;
-            margin-left: 280px;
-            padding: 32px;
-            max-width: 1300px;
+            max-width: 1200px;
+            margin: 0 auto;
             width: 100%;
         }
 
-        /* Mobile Menu Toggle Button */
-        .menu-toggle {
-            display: none;
-            position: fixed;
-            top: 16px;
-            left: 16px;
-            z-index: 200;
-            background: #1e3a8a;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            font-weight: 700;
-            font-size: 14px;
+        .header {
+            margin-bottom: 24px;
+            text-align: center;
         }
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.4);
-            z-index: 50;
-        }
+        .header h1 { font-size: 24px; color: #1e3a8a; }
+        .header p { color: #64748b; font-size: 14px; }
 
         /* Patient Information Panel */
         .patient-info {
@@ -109,9 +36,9 @@
             border-radius: 16px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.04);
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 16px;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             border: 1px solid #e2e8f0;
         }
         .input-group { display: flex; flex-direction: column; gap: 6px; }
@@ -153,8 +80,41 @@
             color: #2563eb;
         }
 
+        /* Navigation Tabs */
+        .nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+            background: #fff;
+            padding: 8px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        .tab-btn {
+            padding: 10px 16px;
+            border: 1px solid transparent;
+            background: #f1f5f9;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: #e2e8f0; color: #1e2937; }
+        .tab-btn.active {
+            color: white;
+            background: #1e3a8a;
+            border-color: #1e3a8a;
+            box-shadow: 0 2px 8px rgba(30,58,138,0.2);
+        }
+
         /* Data Tables Content */
-        .tab-content { display: none; background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; overflow: hidden; }
+        .tab-content { display: none; background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; overflow: hidden; margin-bottom: 40px; }
         table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
         th { background: #f8fafc; padding: 16px; font-weight: 700; color: #475569; border-bottom: 2px solid #e2e8f0; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
         td { padding: 16px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; line-height: 1.5; }
@@ -174,30 +134,18 @@
         }
         .info { color: #64748b; font-size: 13px; }
 
-        /* Responsive Design Rules */
-        @media (max-width: 992px) {
-            .menu-toggle { display: block; }
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            .sidebar.open {
-                transform: translateX(0);
-            }
-            .sidebar-overlay.open {
-                display: block;
-            }
-            .main-content {
-                margin-left: 0;
-                padding: 80px 16px 24px 16px;
-            }
-        }
-
         @media (max-width: 640px) {
+            body { padding: 12px; }
             .patient-info {
                 grid-template-columns: 1fr 1fr;
             }
-            .patient-info .input-group:last-child {
-                grid-column: span 2;
+            .patient-info .input-group:nth-last-child(-n+2) {
+                grid-column: span 1;
+            }
+            .tab-btn {
+                min-width: calc(50% - 4px);
+                font-size: 12px;
+                padding: 12px 8px;
             }
             
             /* Responsive table transform to grid cards */
@@ -217,25 +165,11 @@
 </head>
 <body>
 
-<button class="menu-toggle" onclick="toggleSidebar()">☰ Menu</button>
-<div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
-
-<div class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-        <h1>🩺 Pediatric ICU</h1>
-        <p>Dynamic Synchronized Calculator</p>
-    </div>
-    <div class="nav-menu">
-        <button class="tab-btn active" data-tab="resus" onclick="selectTab(this)">Resuscitation</button>
-        <button class="tab-btn" data-tab="intub" onclick="selectTab(this)">Intubation</button>
-        <button class="tab-btn" data-tab="sedation" onclick="selectTab(this)">Sedation Infusions</button>
-        <button class="tab-btn" data-tab="drips" onclick="selectTab(this)">Drugs in Drip</button>
-        <button class="tab-btn" data-tab="various" onclick="selectTab(this)">Various Drugs</button>
-        <button class="tab-btn" data-tab="abx" onclick="selectTab(this)">Antibiotics I.V.</button>
-    </div>
-</div>
-
 <div class="main-content">
+    <div class="header">
+        <h1>🩺 Pediatric Emergency & ICU Drug Calculator</h1>
+        <p>Dynamic Synchronized Dosing Guide</p>
+    </div>
     
     <div class="patient-info">
         <div class="input-group">
@@ -260,6 +194,15 @@
         </div>
     </div>
 
+    <div class="nav-menu">
+        <button class="tab-btn active" data-tab="resus" onclick="selectTab(this)">Resuscitation</button>
+        <button class="tab-btn" data-tab="intub" onclick="selectTab(this)">Intubation</button>
+        <button class="tab-btn" data-tab="sedation" onclick="selectTab(this)">Sedation Infusions</button>
+        <button class="tab-btn" data-tab="drips" onclick="selectTab(this)">Drugs in Drip</button>
+        <button class="tab-btn" data-tab="various" onclick="selectTab(this)">Various Drugs</button>
+        <button class="tab-btn" data-tab="abx" onclick="selectTab(this)">Antibiotics I.V.</button>
+    </div>
+
     <div id="tab-resus" class="tab-content" style="display: block;"><table id="resus-table"></table></div>
     <div id="tab-intub" class="tab-content"><table id="intub-table"></table></div>
     <div id="tab-sedation" class="tab-content"><table id="sedation-table"></table></div>
@@ -269,21 +212,15 @@
 </div>
 
 <script>
-// Sidebar Control Mechanisms
-function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('open');
-    document.getElementById('overlay').classList.toggle('open');
-}
-
+// Tab Control Logic
 function selectTab(btn) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     
     document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-    document.getElementById('tab-' + btn.dataset.tab).style.display = 'block';
-    
-    if (window.innerWidth <= 992) {
-        toggleSidebar();
+    const targetTab = document.getElementById('tab-' + btn.dataset.tab);
+    if (targetTab) {
+        targetTab.style.display = 'block';
     }
 }
 
