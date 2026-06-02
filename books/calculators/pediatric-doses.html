@@ -84,82 +84,108 @@
         .nav-menu {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
             margin-bottom: 24px;
             background: #fff;
-            padding: 8px;
-            border-radius: 12px;
+            padding: 12px;
+            border-radius: 16px;
             border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         }
         .tab-btn {
-            padding: 10px 16px;
-            border: 1px solid transparent;
-            background: #f1f5f9;
+            padding: 12px 16px;
+            border: 2px solid transparent;
+            background: #f8fafc;
             font-size: 13px;
-            font-weight: 600;
-            color: #475569;
+            font-weight: 700;
+            color: #64748b;
             cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.2s;
+            border-radius: 12px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             flex: 1;
-            min-width: 140px;
+            min-width: 150px;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
-        .tab-btn:hover { background: #e2e8f0; color: #1e2937; }
-        .tab-btn.active {
-            color: white;
-            background: #1e3a8a;
-            border-color: #1e3a8a;
-            box-shadow: 0 2px 8px rgba(30,58,138,0.2);
+        
+        /* Color Mapping for Tabs */
+        .tab-btn[data-tab="resus"] { border-color: #fee2e2; color: #991b1b; }
+        .tab-btn[data-tab="resus"].active { background: #dc2626; color: white; border-color: #dc2626; }
+        
+        .tab-btn[data-tab="intub"] { border-color: #f3e8ff; color: #6b21a8; }
+        .tab-btn[data-tab="intub"].active { background: #7c3aed; color: white; border-color: #7c3aed; }
+        
+        .tab-btn[data-tab="sedation"] { border-color: #ccfbf1; color: #115e59; }
+        .tab-btn[data-tab="sedation"].active { background: #0d9488; color: white; border-color: #0d9488; }
+        
+        .tab-btn[data-tab="drips"] { border-color: #dbeafe; color: #1e40af; }
+        .tab-btn[data-tab="drips"].active { background: #2563eb; color: white; border-color: #2563eb; }
+        
+        .tab-btn[data-tab="various"] { border-color: #ffedd5; color: #9a3412; }
+        .tab-btn[data-tab="various"].active { background: #ea580c; color: white; border-color: #ea580c; }
+        
+        .tab-btn[data-tab="abx"] { border-color: #dcfce7; color: #166534; }
+        .tab-btn[data-tab="abx"].active { background: #16a34a; color: white; border-color: #16a34a; }
+
+        .tab-btn:hover:not(.active) {
+            transform: translateY(-2px);
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         /* Data Tables Content */
-        .tab-content { display: none; background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; overflow: hidden; margin-bottom: 40px; }
+        .tab-content { display: none; background: white; border-radius: 16px; box-shadow: 0 4px 25px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; overflow: hidden; margin-bottom: 40px; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
-        th { background: #f8fafc; padding: 16px; font-weight: 700; color: #475569; border-bottom: 2px solid #e2e8f0; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
-        td { padding: 16px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; line-height: 1.5; }
+        
+        /* Category specific header colors */
+        .theme-resus th { background: #fef2f2; color: #991b1b; border-bottom-color: #fecaca; }
+        .theme-intub th { background: #faf5ff; color: #6b21a8; border-bottom-color: #e9d5ff; }
+        .theme-sedation th { background: #f0fdfa; color: #115e59; border-bottom-color: #ccfbf1; }
+        .theme-drips th { background: #eff6ff; color: #1e40af; border-bottom-color: #dbeafe; }
+        .theme-various th { background: #fff7ed; color: #9a3412; border-bottom-color: #ffedd5; }
+        .theme-abx th { background: #f0fdf4; color: #166534; border-bottom-color: #dcfce7; }
+
+        th { padding: 18px 16px; font-weight: 800; border-bottom: 2px solid #e2e8f0; text-transform: uppercase; font-size: 11px; letter-spacing: 0.8px; }
+        td { padding: 18px 16px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; line-height: 1.5; }
         tr:hover td { background: #f8fafc; }
         
         .dose-value {
-            font-family: monospace;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
             font-size: 15px;
-            font-weight: 700;
-            color: #16a34a;
-            background: #f0fdf4;
+            font-weight: 800;
             padding: 8px 14px;
-            border-radius: 8px;
+            border-radius: 10px;
             display: inline-block;
             white-space: nowrap;
-            border: 1px solid #dcfce7;
+            border: 1px solid;
         }
-        .info { color: #64748b; font-size: 13px; }
+
+        .theme-resus .dose-value { background: #fef2f2; color: #dc2626; border-color: #fee2e2; }
+        .theme-intub .dose-value { background: #faf5ff; color: #7c3aed; border-color: #f3e8ff; }
+        .theme-sedation .dose-value { background: #f0fdfa; color: #0d9488; border-color: #ccfbf1; }
+        .theme-drips .dose-value { background: #eff6ff; color: #2563eb; border-color: #dbeafe; }
+        .theme-various .dose-value { background: #fff7ed; color: #ea580c; border-color: #ffedd5; }
+        .theme-abx .dose-value { background: #f0fdf4; color: #16a34a; border-color: #dcfce7; }
+        
+        .info { color: #64748b; font-size: 13px; font-style: italic; }
 
         @media (max-width: 640px) {
             body { padding: 12px; }
-            .patient-info {
-                grid-template-columns: 1fr 1fr;
-            }
-            .patient-info .input-group:nth-last-child(-n+2) {
-                grid-column: span 1;
-            }
-            .tab-btn {
-                min-width: calc(50% - 4px);
-                font-size: 12px;
-                padding: 12px 8px;
-            }
-            
-            /* Responsive table transform to grid cards */
-            table, thead, tbody, th, td, tr { 
-                display: block; 
-            }
-            thead tr { position: absolute; top: -9999px; left: -9999px; }
-            tr { border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 16px; padding: 12px; background: white; }
-            td { border: none; padding: 6px 0; position: relative; }
-            td:first-child { font-size: 16px; font-weight: 700; color: #1e2937; padding-bottom: 8px; border-bottom: 1px solid #f1f5f9; }
-            td:nth-child(2) { color: #475569; font-weight: 600; padding-top: 8px; }
-            td:nth-child(3) { margin: 6px 0; }
-            .dose-value { width: 100%; text-align: center; font-size: 16px; padding: 10px; }
-            td.info { font-size: 12px; border-top: 1px solid #f1f5f9; padding-top: 8px; margin-top: 6px; }
+            .patient-info { grid-template-columns: 1fr 1fr; gap: 12px; padding: 16px; }
+            .tab-btn { min-width: calc(50% - 5px); font-size: 12px; padding: 14px 8px; }
+            tr { border: 1px solid #e2e8f0; border-radius: 16px; margin-bottom: 20px; padding: 16px; }
+            td:first-child { font-size: 18px; color: #1e3a8a; border-bottom: 2px solid #f1f5f9; margin-bottom: 10px; }
+            .dose-value { width: 100%; text-align: center; font-size: 17px; padding: 12px; margin: 8px 0; }
         }
     </style>
 </head>
@@ -167,8 +193,8 @@
 
 <div class="main-content">
     <div class="header">
-        <h1>🩺 Pediatric Emergency & ICU Drug Calculator</h1>
-        <p>Dynamic Synchronized Dosing Guide</p>
+        <h1>🩺 Pediatric Emergency & ICU</h1>
+        <p>Synchronized Precision Dosing Guide</p>
     </div>
     
     <div class="patient-info">
@@ -185,43 +211,44 @@
             <input type="number" id="age" value="0.25" step="0.01" oninput="updateAll()">
         </div>
         <div class="input-group">
-            <label>BSA m² (Calculated)</label>
+            <label>BSA m²</label>
             <div id="bsaDisplay" class="meta-calculated">—</div>
         </div>
         <div class="input-group">
-            <label>E.T. Size (Calculated)</label>
+            <label>E.T. Size</label>
             <div id="etDisplay" class="meta-calculated et-box">—</div>
         </div>
     </div>
 
     <div class="nav-menu">
-        <button class="tab-btn active" data-tab="resus" onclick="selectTab(this)">Resuscitation</button>
-        <button class="tab-btn" data-tab="intub" onclick="selectTab(this)">Intubation</button>
-        <button class="tab-btn" data-tab="sedation" onclick="selectTab(this)">Sedation Infusions</button>
-        <button class="tab-btn" data-tab="drips" onclick="selectTab(this)">Drugs in Drip</button>
-        <button class="tab-btn" data-tab="various" onclick="selectTab(this)">Various Drugs</button>
-        <button class="tab-btn" data-tab="abx" onclick="selectTab(this)">Antibiotics I.V.</button>
+        <button class="tab-btn active" data-tab="resus" onclick="selectTab('resus')">Resuscitation</button>
+        <button class="tab-btn" data-tab="intub" onclick="selectTab('intub')">Intubation</button>
+        <button class="tab-btn" data-tab="sedation" onclick="selectTab('sedation')">Sedation</button>
+        <button class="tab-btn" data-tab="drips" onclick="selectTab('drips')">Drips</button>
+        <button class="tab-btn" data-tab="various" onclick="selectTab('various')">Various</button>
+        <button class="tab-btn" data-tab="abx" onclick="selectTab('abx')">Antibiotics</button>
     </div>
 
-    <div id="tab-resus" class="tab-content" style="display: block;"><table id="resus-table"></table></div>
-    <div id="tab-intub" class="tab-content"><table id="intub-table"></table></div>
-    <div id="tab-sedation" class="tab-content"><table id="sedation-table"></table></div>
-    <div id="tab-drips" class="tab-content"><table id="drip-table"></table></div>
-    <div id="tab-various" class="tab-content"><table id="various-table"></table></div>
-    <div id="tab-abx" class="tab-content"><table id="abx-table"></table></div>
+    <div id="tab-resus" class="tab-content active theme-resus"><table id="resus-table"></table></div>
+    <div id="tab-intub" class="tab-content theme-intub"><table id="intub-table"></table></div>
+    <div id="tab-sedation" class="tab-content theme-sedation"><table id="sedation-table"></table></div>
+    <div id="tab-drips" class="tab-content theme-drips"><table id="drip-table"></table></div>
+    <div id="tab-various" class="tab-content theme-various"><table id="various-table"></table></div>
+    <div id="tab-abx" class="tab-content theme-abx"><table id="abx-table"></table></div>
 </div>
 
 <script>
 // Tab Control Logic
-function selectTab(btn) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+function selectTab(tabId) {
+    // Update buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tabId);
+    });
     
-    document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-    const targetTab = document.getElementById('tab-' + btn.dataset.tab);
-    if (targetTab) {
-        targetTab.style.display = 'block';
-    }
+    // Update content
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.toggle('active', content.id === 'tab-' + tabId);
+    });
 }
 
 // Math Engine Logic
