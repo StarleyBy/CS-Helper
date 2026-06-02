@@ -3,396 +3,1056 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECG Cheat Sheet – LITFL based | Advanced</title>
+    <title>Expert ECG Reference Manual & Clinical Toolsuite</title>
     <style>
+        :root {
+            --bg-main: #f4f6f9;
+            --bg-sidebar: #1e293b;
+            --bg-card: #ffffff;
+            --bg-tip: #fffbeb;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --text-sidebar: #94a3b8;
+            --primary: #1d4ed8;
+            --primary-light: #dbeafe;
+            --danger: #b91c1c;
+            --danger-light: #fee2e2;
+            --success: #15803d;
+            --success-light: #dcfce7;
+            --warning: #b45309;
+            --border: #cbd5e1;
+            --accent: #0f766e;
+            --mono-bg: #f1f5f9;
+        }
+
+        [data-theme="dark"] {
+            --bg-main: #0f172a;
+            --bg-sidebar: #020617;
+            --bg-card: #1e293b;
+            --bg-tip: #2d2613;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-sidebar: #64748b;
+            --primary: #3b82f6;
+            --primary-light: #1e3a8a;
+            --danger: #ef4444;
+            --danger-light: #7f1d1d;
+            --success: #22c55e;
+            --success-light: #14532d;
+            --warning: #f59e0b;
+            --border: #334155;
+            --accent: #14b8a6;
+            --mono-bg: #334155;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
         }
+
         body {
-            background: #e9ecef;
-            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-            line-height: 1.4;
-            padding: 30px 20px;
+            background: var(--bg-main);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: var(--text-main);
             display: flex;
-            justify-content: center;
+            min-height: 100vh;
         }
-        .cheat-container {
-            max-width: 1300px;
-            width: 100%;
-            background: white;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.1);
-            padding: 25px 30px;
-            border-radius: 16px;
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 320px;
+            background: var(--bg-sidebar);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
         }
-        h1 {
-            font-size: 28px;
-            color: #c0392b;
-            border-left: 10px solid #e74c3c;
-            padding-left: 18px;
-            margin-bottom: 20px;
-            background: #fef2f0;
-            border-radius: 0 12px 12px 0;
+
+        .sidebar-header {
+            padding: 24px;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        h2 {
-            font-size: 20px;
-            background: #1e466e;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 30px;
-            margin: 20px 0 12px 0;
-            display: inline-block;
+
+        .sidebar-header h1 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #f8fafc;
             letter-spacing: 0.5px;
         }
-        h3 {
-            font-size: 17px;
-            color: #0f5b5f;
-            margin: 15px 0 6px 0;
-            border-bottom: 2px solid #9ed9cc;
-            padding-bottom: 3px;
+
+        .sidebar-menu {
+            overflow-y: auto;
+            flex: 1;
+            padding: 15px 10px;
+            list-style: none;
         }
-        .grid-2col {
+
+        .sidebar-menu li a {
+            display: block;
+            padding: 10px 14px;
+            color: var(--text-sidebar);
+            text-decoration: none;
+            font-size: 13.5px;
+            border-radius: 8px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-menu li a:hover, .sidebar-menu li.active a {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .theme-toggle-container {
+            padding: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.1);
+        }
+
+        .btn-toggle {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #ffffff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .btn-toggle:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Main Content Container */
+        .main-content {
+            margin-left: 320px;
+            flex: 1;
+            padding: 40px;
+            max-width: 1400px;
+        }
+
+        .section-panel {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out forwards;
+        }
+
+        .section-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 8px;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-desc {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
+            gap: 24px;
+            margin-bottom: 24px;
         }
+
         .card {
-            background: #fcf9f2;
-            border-left: 5px solid #3498db;
-            padding: 12px 16px;
-            border-radius: 16px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-            break-inside: avoid;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            margin-bottom: 24px;
         }
+
+        .card h3 {
+            font-size: 16px;
+            color: var(--accent);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 6px;
+        }
+
+        /* Typography & elements */
+        ul, ol {
+            margin-left: 24px;
+            margin-bottom: 12px;
+        }
+
+        li {
+            margin-bottom: 6px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .bold { font-weight: 700; }
+        .red { color: var(--danger); font-weight: 600; }
+        .green { color: var(--success); font-weight: 600; }
+        .blue { color: var(--primary); font-weight: 600; }
+        .orange { color: var(--warning); font-weight: 600; }
+
+        .mono {
+            font-family: 'Courier New', Courier, monospace;
+            background: var(--mono-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .art-block {
+            font-family: monospace;
+            background: var(--mono-bg);
+            padding: 12px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            font-size: 13px;
+            line-height: 1.3;
+            margin: 12px 0;
+            border-left: 4px solid var(--border);
+        }
+
+        /* Tables */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 10px 0;
-            font-size: 13px;
+            margin: 14px 0;
+            font-size: 13.5px;
         }
+
         th, td {
-            border: 1px solid #cbd5e1;
-            padding: 6px 8px;
+            border: 1px solid var(--border);
+            padding: 10px 12px;
+            text-align: left;
             vertical-align: top;
         }
+
         th {
-            background: #2c3e50;
-            color: white;
+            background: var(--mono-bg);
+            color: var(--text-main);
+            font-weight: 600;
         }
+
+        /* Badges */
         .badge {
             display: inline-block;
-            background: #e67e22;
-            color: white;
-            font-weight: bold;
-            padding: 2px 10px;
-            border-radius: 30px;
             font-size: 11px;
-            margin-right: 8px;
-        }
-        .badge-red {
-            background: #c0392b;
-        }
-        .badge-green {
-            background: #27ae60;
-        }
-        .badge-blue {
-            background: #2980b9;
-        }
-        .red {
-            color: #c0392b;
             font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .green {
-            color: #27ae60;
-            font-weight: 700;
-        }
-        .blue {
-            color: #1f618d;
-            font-weight: 700;
-        }
-        .mono {
-            font-family: 'Courier New', monospace;
-            background: #f1f3f5;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-        }
-        .ecg-wave-art {
-            font-family: monospace;
-            background: #f0f4fa;
-            padding: 10px;
-            text-align: center;
-            font-size: 13px;
-            white-space: pre;
-            overflow-x: auto;
-            border-radius: 12px;
-            margin: 10px 0;
-        }
-        hr {
-            margin: 20px 0;
-            border: none;
-            height: 2px;
-            background: linear-gradient(90deg, #ff9a9e, #fad0c4);
-        }
+        .badge-danger { background: var(--danger-light); color: var(--danger); }
+        .badge-success { background: var(--success-light); color: var(--success); }
+        .badge-primary { background: var(--primary-light); color: var(--primary); }
+
         .tip {
-            background: #fef9e3;
-            border-left: 4px solid #f1c40f;
-            padding: 10px 14px;
+            background: var(--bg-tip);
+            border-left: 4px solid var(--warning);
+            padding: 14px;
+            border-radius: 0 8px 8px 0;
+            font-size: 14px;
             margin: 12px 0;
-            border-radius: 12px;
         }
-        @media (max-width: 800px) {
-            .grid-2col { grid-template-columns: 1fr; }
-            .cheat-container { padding: 16px; }
+
+        /* Interactive Tools Engine Styles */
+        .tool-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .tool-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .tool-field label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .tool-field input, .tool-field select {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg-main);
+            color: var(--text-main);
+            font-size: 14px;
+        }
+
+        .btn-calc {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .btn-calc:hover { opacity: 0.9; }
+
+        .calc-results {
+            margin-top: 15px;
+            padding: 12px;
+            background: var(--mono-bg);
+            border-radius: 8px;
+            font-size: 13.5px;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 13.5px;
+            cursor: pointer;
+        }
+
+        .checkbox-row input {
+            margin-top: 3px;
+        }
+
+        @media (max-width: 1024px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; position: relative; height: auto; }
+            .main-content { margin-left: 0; padding: 20px; }
+            .grid-2 { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-<div class="cheat-container">
-    <h1>⚡ THE ULTIMATE ECG CHEAT SHEET (LITFL-BASED) ⚡</h1>
-    <p style="margin-bottom: 12px;"><strong>For clinicians &amp; specialists</strong> – systematic approach, lethal patterns, subtle nuances, and “don’t miss” signs.</p>
 
-    <!-- 1. BASICS + RATE/AXIS -->
-    <div class="grid-2col">
-        <div class="card">
-            <h3>📐 Heart rate & rhythm</h3>
-            <table>
-                <tr><th>Method</th><th>Formula</th></tr>
-                <tr><td>Regular (big squares)</td><td><span class="red">300 / large squares</span> between RR</td></tr>
-                <tr><td>Irregular (6‑second)</td><td>QRS in 6 sec × 10</td></tr>
-                <tr><td>Normal adult</td><td>60‑100 bpm</td></tr>
-            </table>
-            <h3>🧭 Cardiac axis (I + aVF)</h3>
-            <ul style="margin-left: 20px;">
-                <li>I↑ aVF↑ → <span class="green">normal (-30° to +90°)</span></li>
-                <li>I↑ aVF↓ → left axis deviation (LAFB, LVH, inferior MI)</li>
-                <li>I↓ aVF↑ → right axis deviation (RVH, PE, COPD)</li>
-                <li>I↓ aVF↓ → <span class="red">northwest axis</span> → VT until proven (90% spec!)</li>
-            </ul>
-            <div class="tip">
-                💡 <strong>Tip:</strong> Isoelectric lead method – the axis is perpendicular to the most equiphasic QRS. Useful when quadrant ambiguous.
-            </div>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h1>📊 ECG EXPERT MANUAL</h1>
+            <div style="font-size: 11px; color: var(--text-sidebar); margin-top: 4px;">Advanced Clinical Toolsuite</div>
         </div>
-        <div class="card">
-            <h3>⏱️ Normal intervals & prolongation</h3>
-            <table>
-                <tr><th>Interval</th><th>Normal</th><th>Prolonged → think</th></tr>
-                <tr><td>PR</td><td>120‑200 ms</td><td>1st degree AV block, Mobitz I, drugs</td></tr>
-                <tr><td>QRS</td><td>&lt;100 ms</td><td>BBB, VT, hyperK, Na‑blocker toxicity</td></tr>
-                <tr><td>QTc (♂/♀)</td><td>&lt;440 / &lt;460 ms</td><td>QTc &gt;500 → Torsade risk</td></tr>
-            </table>
-            <div class="tip">
-                💡 <strong>Bazett overcorrects at high HR</strong> → use Fridericia or Framingham for extremes.
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. BRADY & AV BLOCK -->
-    <h2>🕰️ Bradyarrhythmias & AV block</h2>
-    <div class="grid-2col">
-        <div class="card">
-            <h3>🔻 Second‑degree AV block</h3>
-            <p><span class="badge" style="background:#2c6e2c;">Mobitz I (Wenckebach)</span> Progressive PR prolongation → dropped QRS. <span class="green">Usually benign, AV node level.</span></p>
-            <p><span class="badge" style="background:#b03a2e;">Mobitz II</span> Constant PR with intermittent dropped QRS. <span class="red">Infranodal, high risk of complete block → pacemaker.</span></p>
-            <p><span class="badge">2:1 block</span> – can’t classify from single strip; look at QRS width (wide favors Mobitz II).</p>
-        </div>
-        <div class="card">
-            <h3>🛑 Complete heart block</h3>
-            <p>Complete AV dissociation, atrial rate &gt; ventricular rate.</p>
-            <p>• Junctional escape (narrow QRS, 40‑60) – block at AV node<br>
-            • Ventricular escape (wide QRS, 20‑40) – infranodal block, worse prognosis</p>
-            <div class="tip">
-                💡 <strong>Narrow complex complete HB</strong> often responds to atropine (AV nodal ischaemia in inferior MI). Wide complex → atropine ineffective, needs pacing.
-            </div>
-        </div>
-    </div>
-
-    <!-- 3. WIDE QRS TACHY: VT vs SVT -->
-    <h2>⚡ Wide complex tachycardia (QRS ≥120 ms)</h2>
-    <div class="grid-2col">
-        <div class="card">
-            <h3>🚨 GOLDEN RULE</h3>
-            <p><span class="red">All regular wide complex tachycardias are VT until proven otherwise.</span></p>
-            <p><strong>Brugada algorithm</strong> (stepwise):<br>
-            1) Absence of RS in all precordial leads → VT<br>
-            2) RS interval &gt;100 ms in any lead → VT<br>
-            3) AV dissociation → VT<br>
-            4) Morphology criteria (V1/V6) → VT</p>
-            <div class="ecg-wave-art">
-                ▸ Morphology clues: taller left rabbit ear in V1 (VT) vs taller right (RBBB aberrancy)
-            </div>
-        </div>
-        <div class="card">
-            <h3>🧩 Specific VT entities</h3>
-            <p>🔸 <strong>RVOT VT</strong> – LBBB pattern, inferior axis, adenosine‑sensitive (often benign).<br>
-            🔸 <strong>Bidirectional VT</strong> – alternating axis → <span class="red">digoxin toxicity</span> until proven.<br>
-            🔸 <strong>Torsade de Pointes</strong> – polymorphic with QRS twisting around baseline, always preceded by long QT. <span class="green">Treat with IV magnesium (2g), NOT amiodarone.</span></p>
-        </div>
-    </div>
-
-    <!-- 4. ISCHEMIA + KILLER PATTERNS -->
-    <h2>❤️‍🔥 Acute coronary syndromes & killer patterns</h2>
-    <div class="grid-2col">
-        <div class="card">
-            <h3>📌 STEMI localisation (quick reference)</h3>
-            <table>
-                <tr><th>Leads</th><th>Territory</th><th>Culprit</th></tr>
-                <tr><td>V2‑V4</td><td>Anterior</td><td>LAD</td></tr>
-                <tr><td>II, III, aVF</td><td>Inferior</td><td>RCA (80%) or LCx</td></tr>
-                <tr><td>V4R</td><td>RV infarct</td><td>Proximal RCA → avoid nitrates/volume depletion</td></tr>
-                <tr><td>V7‑V9, tall R V1‑V3</td><td>Posterior MI</td><td>RCA/LCx</td></tr>
-            </table>
-            <div class="tip">
-                💡 <strong>Wellens’ syndrome</strong> – biphasic or deep T inversion in V2‑V3 during pain‑free period = critical LAD stenosis. <span class="red">Do not stress test; call cath lab.</span>
-            </div>
-        </div>
-        <div class="card">
-            <h3>⚠️ Patterns you must not miss</h3>
-            <ul>
-                <li><span class="badge-red">De Winter</span> – upsloping STD + tall symmetric T waves in precordial leads (LAD occlusion, no STE!)</li>
-                <li><span class="badge-red">Left main / triple vessel</span> – diffuse STD with STE in aVR &gt; V1</li>
-                <li><span class="badge-red">Sgarbossa criteria (LBBB/ paced)</span> – concordant STE ≥1 mm (5 pts), STD V1‑V3 (3 pts) → score ≥3 specific for MI</li>
-                <li><span class="badge-red">New RBBB + LAFB</span> in chest pain → proximal LAD occlusion until disproven</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- 5. ELECTROLYTES & DRUGS (nuances) -->
-    <h2>🧪 Electrolytes, toxins & drugs – nuanced signs</h2>
-    <div class="grid-2col">
-        <div class="card">
-            <h3>⚡ Hyperkalaemia (progressive)</h3>
-            <p>Peaked T → PR prolongation/P loss → wide QRS → sine wave → VF/asystole.<br>
-            <span class="green">Calcium first!</span> (membrane stabilization), then insulin+glucose, albuterol, kayexalate/dialysis.</p>
-            <div class="ecg-wave-art">
-                T /‾\  →  [P flattens]  →  ~~~~ (sine)
-            </div>
-            <h3>💧 Hypokalaemia</h3>
-            <p>ST depression, prominent U wave (U &gt; 1 mm), T‑U fusion → pseudo‑QT prolongation. Increases Torsade risk.</p>
-        </div>
-        <div class="card">
-            <h3>💊 Digoxin effect vs toxicity</h3>
-            <p><span class="blue">Effect:</span> downsloping “Salvador Dali” STD, short QT.<br>
-            <span class="red">Toxicity:</span> any arrhythmia – most common = ventricular bigeminy; <span class="red">highly specific</span> = bidirectional VT or atrial tachycardia with block.</p>
-            <h3>🧪 TCA / Na‑channel blocker toxicity</h3>
-            <p>Wide QRS (>100 ms), terminal R wave &gt;3 mm in aVR. <span class="green">Give IV sodium bicarbonate (target pH 7.50‑7.55).</span></p>
-            <div class="tip">
-                💡 <strong>Hypocalcaemia</strong> – prolongs ST segment (QTc prolonged) but T wave normal.<br>
-                <strong>Hypercalcaemia</strong> – short QT, no U waves.
-            </div>
-        </div>
-    </div>
-
-    <!-- 6. CHANNELOPATHIES & CARDIOMYOPATHIES -->
-    <h2>🧬 Channelopathies & structural nuances</h2>
-    <div class="grid-2col">
-        <div class="card">
-            <h3>🇧 Brugada syndrome</h3>
-            <p>Type 1 (diagnostic): coved STE ≥2 mm in V1‑V3 + negative T. Unmasked by fever, sodium blockers, cocaine.<br>
-            <span class="red">Avoid procainamide, flecainide. ICD is only proven therapy.</span></p>
-            <h3>🇱 Long QT syndrome (LQTS)</h3>
-            <p>Romano‑Ward (AD), Jervell‑Lange (AR + deafness). QTc &gt;500 ms high risk. Avoid QT prolonging drugs, competitive sports, hypokalaemia.</p>
-            <div class="tip">
-                💡 “T‑wave alternans” (visible beat‑to‑beat T variation) often precedes Torsade.
-            </div>
-        </div>
-        <div class="card">
-            <h3>💔 Hypertrophic cardiomyopathy (HCM)</h3>
-            <p>Giant precordial voltages, dagger‑like Q waves in inferior/lateral leads (pseudoinfarct). Apical HCM → <span class="green">giant T inversion</span> in V3‑V6 (“Yamaguchi”).</p>
-            <h3>🫀 Arrhythmogenic RV dysplasia (ARVD)</h3>
-            <p><span class="badge-blue">Epsilon wave</span> (small deflection after QRS in V1‑V3) + T inversion V1‑V4. Increased risk of VT of LBBB morphology.</p>
-        </div>
-    </div>
-
-    <!-- 7. PULMONARY EMBOLISM + PERICARDITIS -->
-    <h2>🫁 Pulmonary embolism & pericardial syndromes</h2>
-    <div class="grid-2col">
-        <div class="card">
-            <h3>🩸 PE – specific ECG clue</h3>
-            <p>Sinus tachycardia most common, but <span class="red">most specific</span> for PE = simultaneous T inversion in inferior (II,III,aVF) AND right precordial (V1‑V4).<br>
-            S₁Q₃T₃ (deep S in I, Q+ inverted T in III) – neither sensitive nor specific (20%).<br>
-            💡 <strong>Remember:</strong> 18% of PE patients have completely normal ECG.</p>
-        </div>
-        <div class="card">
-            <h3>❤️ Acute pericarditis</h3>
-            <p>Concave (“saddle‑shaped”) STE in most leads + PR depression (except aVR, V1). No reciprocal changes (unlike STEMI).<br>
-            Stage I → widespread STE, Stage II → ST normalisation, Stage III → T inversion, Stage IV → normal.<br>
-            <span class="blue">Spodick’s sign</span> – downsloping TP segment.</p>
-        </div>
-    </div>
-
-    <!-- 8. PACED RHYTHMS & MISPLACEMENT -->
-    <h2>🩻 Paced rhythms & tricky artefacts</h2>
-    <div class="grid-2col">
-        <div class="card">
-            <h3>Pacemaker malfunction</h3>
-            <ul>
-                <li><strong>Failure to capture</strong> – spike without P/QRS</li>
-                <li><strong>Failure to sense</strong> – spike falls on intrinsic P/QRS (undersensing) or absent spike when expected (oversensing)</li>
-                <li><strong>Pacemaker‑mediated tachycardia (PMT)</strong> – DDD mode, rate = upper tracking limit (~130 bpm). Apply magnet → VOO/DOO.</li>
-            </ul>
-            <div class="tip">
-                💡 <strong>Runaway pacemaker</strong> (rare, rate &gt;200) – immediately place magnet over generator.
-            </div>
-        </div>
-        <div class="card">
-            <h3>Electrode misplacement mimics</h3>
-            <p>🔸 High V1/V2 → loss of R wave progression, Brugada‑like pattern.<br>
-            🔸 Arm‑leg reversal → lead I inverted, aVR/aVL swap.<br>
-            🔸 Tremor artefact – regular 8‑10 Hz oscillations mimicking atrial flutter.</p>
-        </div>
-    </div>
-
-    <!-- 9. PAEDIATRIC PEARLS -->
-    <h2>👶 Paediatric ECG pearls</h2>
-    <div class="card">
-        <ul>
-            <li>Newborn axis +30° to +190°, gradually shifts left with age.</li>
-            <li><span class="green">Juvenile T wave pattern</span> – T inversion in V1‑V3 normal up to adolescence.</li>
-            <li>RV dominance: R &gt; S in V1 up to 6–12 months (normal).</li>
-            <li><span class="badge-blue">Katz‑Wachtel phenomenon</span> – biphasic (tall R + deep S) in mid‑precordial leads → biventricular hypertrophy (VSD/AVSD).</li>
+        <ul class="sidebar-menu">
+            <li class="active"><a href="#sec1" onclick="switchTab(event, 'sec1')">1. Electrophysiological Foundations</a></li>
+            <li><a href="#sec2" onclick="switchTab(event, 'sec2')">2. Axis & Vectorcardiography</a></li>
+            <li><a href="#sec3" onclick="switchTab(event, 'sec3')">3. Chamber Enlargement & Strain</a></li>
+            <li><a href="#sec4" onclick="switchTab(event, 'sec4')">4. SA Node & Atrial Arrhythmias</a></li>
+            <li><a href="#sec5" onclick="switchTab(event, 'sec5')">5. AV & Intraventricular Blocks</a></li>
+            <li><a href="#sec6" onclick="switchTab(event, 'sec6')">6. Pre-excitation & Pathways</a></li>
+            <li><a href="#sec7" onclick="switchTab(event, 'sec7')">7. Paroxysmal SVT Dynamics</a></li>
+            <li><a href="#sec8" onclick="switchTab(event, 'sec8')">8. Wide QRS Diagnostics</a></li>
+            <li><a href="#sec9" onclick="switchTab(event, 'sec9')">9. Ventricular Arrhythmias Map</a></li>
+            <li><a href="#sec10" onclick="switchTab(event, 'sec10')">10. Ischemic OMI Paradigm</a></li>
+            <li><a href="#sec11" onclick="switchTab(event, 'sec11')">11. Myocardial Scars & Q-Waves</a></li>
+            <li><a href="#sec12" onclick="switchTab(event, 'sec12')">12. Channelopathies & SCD</a></li>
+            <li><a href="#sec13" onclick="switchTab(event, 'sec13')">13. Electrolytes & Toxidromes</a></li>
+            <li><a href="#sec14" onclick="switchTab(event, 'sec14')">14. Systemic & Extra-Cardiac</a></li>
+            <li><a href="#sec15" onclick="switchTab(event, 'sec15')">15. Pacing & Device Malfunction</a></li>
+            <li><a href="#sec16" onclick="switchTab(event, 'sec16')">16. Advanced Pediatrics</a></li>
+            <li><a href="#sectools" onclick="switchTab(event, 'sectools')">🛠️ INTERACTIVE TOOLS</a></li>
         </ul>
-    </div>
-
-    <!-- 10. ADDITIONAL NUGGETS & MNEMONICS -->
-    <h2>🧠 Clinical nuggets & “don’t forget”</h2>
-    <div class="grid-2col">
-        <div class="card">
-            <h3>🔸 WPW + pre‑excited AF</h3>
-            <p><span class="red">NEVER give AV nodal blockers (adenosine, verapamil, digoxin)</span> – they divert conduction to accessory pathway → VF. Use procainamide or cardiovert.</p>
-            <h3>🔸 Hypothermia</h3>
-            <p>Osborne (J) waves at J‑point – seen in V3‑V5, proportional to degree of hypothermia. Also prolonged QT, bradycardia.</p>
-            <h3>🔸 Takotsubo (stress cardiomyopathy)</h3>
-            <p>ST elevation (often anterior), deep T inversion, QT prolongation, but <span class="blue">no reciprocal changes</span> – resolves spontaneously.</p>
-        </div>
-        <div class="card">
-            <h3>🎯 Quick clinical pearls</h3>
-            <ul>
-                <li><strong>Ashman phenomenon</strong> – aberrant RBBB in AF after a long‑short cycle. Benign, not VT.</li>
-                <li><strong>Electrical alternans</strong> (beat‑to‑beat QRS amplitude variation) → large pericardial effusion / tamponade.</li>
-                <li><strong>LVH strain pattern</strong> – downsloping STD in lateral leads with asymmetrical T inversion, <span class="green">not ischaemia</span>.</li>
-                <li><strong>Inferior MI + RV infarct</strong> – V4R STE ≥1 mm, avoid nitrates/morphine, give fluids.</li>
-                <li><strong>AF with very slow ventricular response</strong> – digoxin toxicity or sick sinus syndrome until proven.</li>
-            </ul>
+        <div class="theme-toggle-container">
+            <button class="btn-toggle" onclick="toggleTheme()">🌓 Switch Theme</button>
         </div>
     </div>
 
-    <!-- 11. FINAL ALGORITHM SUMMARY -->
-    <h2>📌 LITFL systematic approach – 12‑step checklist</h2>
-    <div class="card">
-        <p>1️⃣ Rate (atrial/ventricular) | 2️⃣ Rhythm regularity | 3️⃣ QRS width & morphology | 4️⃣ P waves (axis, presence) | 5️⃣ P‑QRS relationship | 6️⃣ Axis (I + aVF) | 7️⃣ PR interval | 8️⃣ Q waves (pathological?) | 9️⃣ ST segments (elevation/depression, reciprocal) | 🔟 T waves (peaked/inverted/biphasic) | 1️⃣1️⃣ U waves, QT, epsilon, delta | 1️⃣2️⃣ Compare with prior ECG.</p>
-        <div class="tip" style="margin-top: 8px;">
-            🩺 <strong>Remember:</strong> “Ischaemia doesn’t always present with ST elevation – look for reciprocal changes, hyperacute T, and Wellens’ pattern.” <br>
-            “The absence of ECG changes does NOT rule out acute coronary syndrome or PE.”
+    <div class="main-content">
+
+        <div id="sec1" class="section-panel active">
+            <h2>1. Electrophysiological Foundations: Waves, Intervals, Segments, and Norms</h2>
+            <div class="section-desc">Technical calibration configurations, physiological parameters, and morphological metrics.</div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>⚙️ Technical Specifications & Calibration</h3>
+                    <ul>
+                        <li><span class="bold">Paper Speed Calibration:</span>
+                            <ul>
+                                <li><span class="mono">25 mm/s</span>: 1 mm small square = <span class="blue">40 ms</span>; 5 mm large square = <span class="blue">200 ms</span>.</li>
+                                <li><span class="mono">50 mm/s</span>: 1 mm small square = <span class="blue">20 ms</span>; 5 mm large square = <span class="blue">100 ms</span>.</li>
+                            </ul>
+                        </li>
+                        <li><span class="bold">Voltage Gain:</span> Standard configuration is <span class="mono">10 mm/mV</span>. Half-gain (<span class="mono">5 mm/mV</span>) or double-gain (<span class="mono">20 mm/mV</span>) settings alter voltages drastically. Check calibration spikes before diagnosing low or high voltage syndromes.</li>
+                        <li><span class="bold">Filter Configurations:</span> Diagnostic monitoring mode (<span class="mono">0.05–150 Hz</span>) is mandatory for ST/T evaluation. Monitoring filter mode (<span class="mono">0.5–40 Hz</span>) artificially alters and introduces false ST segment shifts and suppresses fine components like pacemaker spikes or Epsilon waves.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>📐 Waves & Segments Reference Matrix</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Component</th><th>Normal Metric</th><th>Pathological Criteria</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><span class="bold">P Wave</span></td><td>Dur: &lt;120 ms<br>Amp: &lt;2.5 mm</td><td>Notched/Broadened (LAE), Tall/Peaked (RAE), Inverted in II, III, aVF (Ectopic/Junctional).</td></tr>
+                            <tr><td><span class="bold">PR Interval</span></td><td>120 – 200 ms</td><td>&gt;200 ms (1st degree AVB/Infranodal delay); &lt;120 ms (Pre-excitation / Pre-excited pathways / Junctional rhythm).</td></tr>
+                            <tr><td><span class="bold">QRS Complex</span></td><td>Dur: &lt;100 ms</td><td>100–119 ms (Incomplete delay); &ge;120 ms (Complete Bundle Branch Blocks, Ventricular rhythms, HyperK, Toxidromes).</td></tr>
+                            <tr><td><span class="bold">T Wave</span></td><td>Concordant with QRS</td><td>Hyperacute (Asymmetric, wide base); Deeply symmetric inverted (Ischemia, Severe Strain); Biphasic (Wellens).</td></tr>
+                            <tr><td><span class="bold">U Wave</span></td><td>Max in V2–V3</td><td>Prominent &gt;1 mm or &gt;T amp (Severe Hypokalemia); Inverted U wave (Ischemia or LV volume overload).</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card">
+                <h3>⏱️ The QT & QTc Interval Dynamics</h3>
+                <p>Normal upper boundary limits: <span class="mono">♂ &le; 450 ms</span> and <span class="mono">♀ &le; 460 ms</span>. Value crossing <span class="red">&gt; 500 ms</span> marks critical high-vulnerability threshold for inducing automaticity and triggered *Torsades de Pointes* (TdP).</p>
+                <div class="tip">
+                    ⚠️ <span class="bold">Mathematical Formula Operational Boundaries:</span><br>
+                    • <span class="bold">Bazett's Formula:</span> <span class="mono">QTc = QT / √RR</span>. Clinically unstable at extreme parameters; severly overcorrects at rapid heart rates and undercorrects during significant bradycardia.<br>
+                    • <span class="bold">Fridericia's Formula:</span> <span class="mono">QTc = QT / ∛RR</span>. Highly stable and statistically preferred formula for tachycardic or bradycardic boundaries.
+                </div>
+            </div>
         </div>
+
+        <div id="sec2" class="section-panel">
+            <h2>2. Frontal and Horizontal Plane Geometry: Axis and Vectorcardiography</h2>
+            <div class="section-desc">Vector analysis coordinates for cardiac depolarization axis mapping.</div>
+            <div class="card">
+                <h3>🧭 Frontal Plane Hexaxial Alignment (Cabrera Circle)</h3>
+                <p>The core classification relies on checking Lead I and Lead aVF to project the main vector quadrant alignment:</p>
+                <table>
+                    <thead>
+                        <tr><th>Lead I</th><th>Lead aVF</th><th>Calculated Quadrant Vector</th><th>Common Differential Diagnosis Etiologies</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="green">Positive (↑)</td><td class="green">Positive (↑)</td><td class="green">Normal Axis (-30° to +90°)</td><td>Physiological standard alignment vector.</td></tr>
+                        <tr><td class="green">Positive (↑)</td><td class="red">Negative (↓)</td><td class="orange">Left Axis Deviation (LAD, -30° to -90°)</td><td>LAFB, LVH, Inferior wall MI, Ventricular apical pacing shifts.</td></tr>
+                        <tr><td class="red">Negative (↓)</td><td class="green">Positive (↑)</td><td class="orange">Right Axis Deviation (RAD, +90° to +180°)</td><td>LPFB, RVH, Acute Pulmonary Embolism (PE), severe COPD shifts.</td></tr>
+                        <tr><td class="red">Negative (↓)</td><td class="red">Negative (↓)</td><td class="red">Extreme / Northwest Axis (-90° to 180°)</td><td>Ventricular Tachycardia (VT), extreme Hyperkalemia, Dextrocardia.</td></tr>
+                    </tbody>
+                </table>
+                <div class="tip">
+                    💡 <span class="bold">Isoelectric Lead Refinement:</span> Find the most equiphasic/isoelectric lead (where net R and S area approaches zero). The true electrical vector runs completely perpendicular (90 degrees) to that specific lead. Cross-reference this with the standard hexaxial grid for exact degree calculations.
+                </div>
+            </div>
+        </div>
+
+        <div id="sec3" class="section-panel">
+            <h2>3. Chamber Enlargement, Hypertrophy, and Strain Dynamics</h2>
+            <div class="section-desc">Voltage metrics, tracking equations, and secondary repolarization phenotypes.</div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🫀 Left Ventricular Hypertrophy (LVH) Criteria</h3>
+                    <ul>
+                        <li><span class="bold">Sokolow-Lyon Index:</span> <span class="mono">S(V1) + R(V5 or V6) &ge; 35 mm</span> or <span class="mono">R(aVL) &ge; 11 mm</span>.</li>
+                        <li><span class="bold">Cornell Voltage Criteria:</span> <span class="mono">R(aVL) + S(V3) &gt; 28 mm</span> in males or <span class="mono">&gt; 20 mm</span> in females. Highly specific framework.</li>
+                        <li><span class="bold">Peguero-Lo Presti Index (Superior Sensitivity):</span> Deepest S wave in any single lead (<span class="mono">S_SD</span>) + <span class="mono">S(V4) &ge; 4 mm</span> (males) / <span class="mono">&ge; 3 mm</span> (females).</li>
+                        <li><span class="bold">Romhilt-Estes Scoring System:</span> Point-based matrix scoring voltage, LAE, left axis deviation, QRS duration, and delayed intrinsicoid deflection.</li>
+                        <li><span class="bold">LVH Strain Pattern:</span> Asymmetric, smoothly downsloping ST segment depressions coupled with deep asymmetrical T-wave inversions in the lateral tracking leads (I, aVL, V5, V6). Represent structural remodeling, not acute primary ischemia.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>ПЖ и Предсердия Criteria</h3>
+                    <ul>
+                        <li><span class="bold">Right Ventricular Hypertrophy (RVH):</span>
+                            <ul>
+                                <li>Sokolow-Lyon RV Index: <span class="mono">R(V1) + S(V5/V6) &gt; 10.5 mm</span>.</li>
+                                <li>Dominant R wave in V1 with an <span class="mono">R/S ratio &gt; 1.0</span>; right axis deviation present.</li>
+                                <li>RV Strain Pattern: ST depression and T-wave inversion across V1–V3 and inferior leads.</li>
+                            </ul>
+                        </li>
+                        <li><span class="bold">Left Atrial Enlargement (P-mitrale):</span> Notched P wave in limb leads with an inter-peak notch interval <span class="mono">&gt; 40 ms</span>; total P duration <span class="mono">&gt; 120 ms</span>. Biphasic P wave in V1 with terminal negative component <span class="mono">&ge; 1 mm deep and &ge; 40 ms wide</span>.</li>
+                        <li><span class="bold">Right Atrial Enlargement (P-pulmonale):</span> Tall, sharp, peaked P wave voltage amplitude <span class="mono">&gt; 2.5 mm</span> in inferior anchors (II, III, aVF) or <span class="mono">&gt; 1.5 mm</span> inside V1/V2 leads.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="sec4" class="section-panel">
+            <h2>4. Sinoatrial Node Dysfunction and Atrial Arrhythmias</h2>
+            <div class="section-desc">Exit blocks, macro-reentrant macrocircuits, and automated focus mapping.</div>
+            <div class="card">
+                <h3>⏳ Sinoatrial (SA) Exit Blocks Matrix</h3>
+                <ul>
+                    <li><span class="bold">First-Degree SA Block:</span> Conduction elongation from pacemaker cells to the surrounding atrium occurs but remains unviewable on surface standard ECG grids.</li>
+                    <li><span class="bold">Second-Degree SA Block Type I (Wenckebach):</span> Grouped beating intervals with progressive PP interval shortening sequence until a P-QRS complex drops completely. The resulting pause duration is mathematically less than double the preceding PP cycle.</li>
+                    <li><span class="bold">Second-Degree SA Block Type II:</span> Intermittent abrupt dropped P wave complexes without prior interval changes. The pause duration is an exact integer multiple of the baseline PP cycle.</li>
+                    <li><span class="bold">Third-Degree SA Block / Sinus Arrest:</span> Total absence of sinus tracking P waves. Relies on junctional or ventricular escape focuses.</li>
+                </ul>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🦅 Macro-Reentrant Atrial Circuits</h3>
+                    <p><span class="bold">Atrial Flutter:</span></p>
+                    <ul>
+                        <li><span class="bold">Typical (Cavo-Tricuspid Isthmus Dependent):</span> Counter-clockwise re-entry yields deep negative "sawtooth" configurations in leads II, III, aVF, and upright positive waves in V1. Clockwise variants flip these directional polarities.</li>
+                        <li><span class="bold">Conduction Ratios:</span> Usually locked at fixed ratios (2:1, 3:1, 4:1). A critical danger occurs during 1:1 rapid conduction, mimicking hyper-unstable wide Ventricular Tachycardia if aberrant pathways co-exist.</li>
+                    </ul>
+                    <p><span class="bold">Atrial Fibrillation (AF):</span> Completely chaotic, multiple micro-reentrant waves. Irregularly irregular ventricular response pattern. Coarse variants imply structural trial enlargement metrics.</p>
+                </div>
+                <div class="card">
+                    <h3>⚡ Focal & Chaotic Ectopic Arrhythmias</h3>
+                    <ul>
+                        <li><span class="bold">Multifocal Atrial Tachycardia (MAT):</span> Heart tracking rate exceeding <span class="mono">&gt;100 bpm</span> featuring <span class="bold">&ge; 3 morphologically distinct P waves</span> with completely varying, changing PP, PR, and RR intervals. Strongly linked with acute COPD exacerbation, severe hypoxemia, and acute hypomagnesemia.</li>
+                        <li><span class="bold">The Ashman Phenomenon:</span> Occurs when a long RR interval is immediately followed by a short RR cycle. The premature impulse tracks into the refractory period of one of the bundle branches (typically the Right Bundle branch), inducing an aberrant QRS complex tracking pattern. Mimics single or ventricular ectopy salvos.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="sec5" class="section-panel">
+            <h2>5. Atrioventricular and Intraventricular Conduction Blocks</h2>
+            <div class="section-desc">Nodal vs. Infranodal block topology mapping and fascicular disease configurations.</div>
+            <div class="card">
+                <h3>🚦 Atrioventricular (AV) Blocks Architecture</h3>
+                <table>
+                    <thead>
+                        <tr><th>AV Block Type</th><th>Anatomical Level</th><th>ECG Tracking Criteria</th><th>Prognosis & Treatment</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="bold">First-Degree</span></td><td>AV Nodal (Usually)</td><td>Constant prolonged PR interval <span class="mono">&gt;200 ms</span>. Every P wave conducts successfully.</td><td>Benign. Monitor for drug interactions.</td></tr>
+                        <tr><td><span class="bold">Second-Degree Mobitz I</span></td><td>AV Nodal</td><td>Progressive PR prolongation cycle until a QRS is completely dropped. Grouped beating pattern.</td><td>Usually transient, stable. Reversible cause likely.</td></tr>
+                        <tr><td><span class="bold">Second-Degree Mobitz II</span></td><td>Infranodal (His-Purkinje)</td><td>Intermittent dropped QRS complexes with completely fixed, constant PR intervals on conducted complexes.</td><td><span class="red">Highly unstable</span>. High progression rate to complete block. Permanent pacemaker mandatory.</td></tr>
+                        <tr><td><span class="bold">Third-Degree (Complete)</span></td><td>Nodal or Infranodal</td><td>Complete AV dissociation. Atrial and ventricular rates independent. P-P and R-R intervals fixed.</td><td>Escape rhythm dictates stability: Narrow junctional (40-60 bpm, stable) vs Wide Ventricular (20-40 bpm, unstable).</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🔱 Monofascicular Intraventricular Delay</h3>
+                    <ul>
+                        <li><span class="bold">Complete LBBB:</span> QRS duration <span class="mono">&ge; 120 ms</span>. Broad, notched or slurred monophasic R waves in lateral hosts (I, aVL, V5, V6). Complete loss of standard septal q waves in lateral leads. Deep S waves in V1–V3.</li>
+                        <li><span class="bold">Complete RBBB:</span> QRS duration <span class="mono">&ge; 120 ms</span>. Triphasic <span class="mono">rsr', rsR', or rSR'</span> complexes in V1–V2 ("M-shaped" complex). Broad, wide, slurred S waves in lateral anchors (I, aVL, V5, V6).</li>
+                        <li><span class="bold">Left Anterior Fascicular Block (LAFB):</span> Strong Left Axis Deviation (<span class="mono">-30° to -90°</span>). Small q with tall R (<span class="mono">qR</span> complexes) in I and aVL; small r coupled with deep S (<span class="mono">rS</span> complexes) in II, III, aVF.</li>
+                        <li><span class="bold">Left Posterior Fascicular Block (LPFB):</span> Strong Right Axis Deviation (<span class="mono">+90° to +180°</span>) in the absolute absence of secondary drivers (like RVH or lateral wall loss). <span class="mono">rS</span> complexes in I and aVL; <span class="mono">qR</span> complexes in II, III, aVF.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>⚠️ Bifascicular, Trifascicular, & Masquerading Blends</h3>
+                    <ul>
+                        <li><span class="bold">Bifascicular Syndrome:</span> Combination of RBBB + LAFB (common) or RBBB + LPFB (highly unstable indicator of widespread disease).</li>
+                        <li><span class="bold">Trifascicular Block Phenotypes:</span>
+                            <ul>
+                                <li>Incomplete: Bifascicular presentation coupled with a prolonged 1st-degree AV block pattern.</li>
+                                <li>Alternating Bundle Branch Block: RBBB and LBBB alternating on successive traces. Signifies critical, near-total failure of the entire conduction apparatus.</li>
+                            </ul>
+                        </li>
+                        <li><span class="bold">Masquerading Bundle Branch Block:</span> Precordial leads exhibit clear RBBB, but limb leads exhibit an LBBB morphology. Indicates extensive bilateral structural destruction.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="sec6" class="section-panel">
+            <h2>6. Pre-excitation Syndromes and Accessory Pathways</h2>
+            <div class="section-desc">Delta physics, accessory pathway tracking, and pre-excited tachyarrhythmia traps.</div>
+            <div class="card">
+                <h3>⚡ Wolff-Parkinson-White (WPW) Structural Matrix</h3>
+                <p>The standard presentation displays a triad: shortened PR interval (<span class="mono">&lt;120 ms</span>), slurred initial upstroke of the QRS complex (<span class="bold">Delta Wave</span>), and a widened QRS complex (<span class="mono">&gt;110 ms</span>) with secondary repolarization changes tracking discordant to the primary vector.</p>
+                <div class="art-block">
+                     /\
+                    /  \    &lt;-- Normal QRS
+                   /    \
+                 _/\
+                /   \   &lt;-- WPW Pre-excitation Delta Wave slurring initial vector
+               /     \
+                </div>
+                <p><span class="bold">Pathway Localization (Arruda & Gallagher Principles):</span> Map the Delta wave and QRS polarity in V1: a dominant upright vector (Positive/Type A) confirms a left-sided pathway tracking vector; a downsloping negative vector in V1 (Negative/Type B) tracks a right-sided pathway alignment across the tricuspid valve.</p>
+            </div>
+            <div class="card">
+                <h3>🚨 Pre-Excited Atrial Fibrillation & FBI Syndrome</h3>
+                <p>When AF occurs down a manifest accessory pathway, it bypasses the rate-limiting filtering effects of the AV node. It presents as the lethal <span class="red">FBI Syndrome: Fast, Broad, Irregular</span>.</p>
+                <ul>
+                    <li>Ventricular response rates often exceed <span class="mono">250 to 300+ bpm</span> due to the brief refractory periods of the bypass pathway.</li>
+                    <li>Morphologies change continuously from beat to beat based on the degree of bypass pathway utilization vs. AV node tracking.</li>
+                    <li><span class="badge badge-danger">Absolute Contraindication Warning</span>: <span class="bold">NEVER administer AV nodal blocking drugs (Adenosine, Beta-blockers, Verapamil, Diltiazem, Digoxin)</span>. Blocking the AV node removes competitive tracking and accelerates conduction down the accessory pathway, causing degeneration into fatal <span class="red">Ventricular Fibrillation (VF)</span>. Use Procainamide or immediate synchronized electrical cardioversion.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="sec7" class="section-panel">
+            <h2>7. Paroxysmal Supraventricular Tachycardias (SVT)</h2>
+            <div class="section-desc">Dual AV nodal tracks, macro-reentry dynamics, and RP relationship paradigms.</div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🔄 AV Nodal Reentrant Tachycardia (AVNRT)</h3>
+                    <ul>
+                        <li><span class="bold">Typical (Slow-Fast / Common):</span> Uses dual pathways inside the AV node. Anterograde conduction tracks down the slow pathway; retrograde conduction speeds up the fast pathway. Retrograde P waves are hidden within the QRS or present as a <span class="bold">pseudo-R' wave in V1</span> or a <span class="bold">pseudo-S wave in inferior leads</span>.</li>
+                        <li><span class="bold">Atypical (Fast-Slow):</span> Reverses tracking. Anterograde conduction uses the fast track; retrograde tracks up the slow pathway. This yields a long-RP tachycardia pattern with inverted retrograde P waves preceding the QRS complex.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>⏱️ The RP Interval Diagnostic Paradigm</h3>
+                    <p>Differentiate narrow complex regular tachycardias by calculating the position of the retrograde P wave relative to the preceding R wave:</p>
+                    <ul>
+                        <li><span class="bold">Short-RP Tachycardias (<span class="mono">RP &lt; PR</span> or <span class="mono">RP &lt; 90 ms</span>):</span> Typical AVNRT (P wave near simultaneous with QRS), Orthodromic AVRT (P wave tracking clearly visible within the ST segment frame).</li>
+                        <li><span class="bold">Long-RP Tachycardias (<span class="mono">RP &gt; PR</span>):</span> Atypical AVNRT, Focal Atrial Tachycardia (FAT), Permanent Junctional Reciprocating Tachycardia (PJRT).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="sec8" class="section-panel">
+            <h2>8. Wide QRS Complex Tachycardias: VT vs. SVT with Aberrancy</h2>
+            <div class="section-desc">Stepwise algorithmic differentiation criteria for regular wide-complex rhythms.</div>
+            <div class="card">
+                <h3>⚖️ The Core Diagnostic Algorithms</h3>
+                <p>The absolute foundational clinical rule: <span class="red">All regular wide complex tachycardias are Ventricular Tachycardia (VT) until proven otherwise.</span></p>
+                <div class="grid-2">
+                    <div>
+                        <p><span class="bold">1. The Brugada Framework Cascade:</span></p>
+                        <ol>
+                            <li>Absence of an RS complex across all precordial leads ($V_1$–$V_6$)? &rarr; <span class="red">VT</span></li>
+                            <li>RS interval length exceeding <span class="mono">&gt;100 ms</span> in any single precordial lead? &rarr; <span class="red">VT</span></li>
+                            <li>Atrioventricular (AV) dissociation identified? &rarr; <span class="red">VT</span></li>
+                            <li>Specific morphology criteria matched in $V_1$–$V_2$ and $V_6$? &rarr; <span class="red">VT</span></li>
+                        </ol>
+                    </div>
+                    <div>
+                        <p><span class="bold">2. The Vereckei Engine (Lead aVR Analysis):</span></p>
+                        <ol>
+                            <li>Presence of an initial dominant R wave in $aVR$? &rarr; <span class="red">VT</span></li>
+                            <li>Initial r or q wave duration width exceeding <span class="mono">&gt;40 ms</span>? &rarr; <span class="red">VT</span></li>
+                            <li>Notching present on the initial downward limb of a negative QRS? &rarr; <span class="red">VT</span></li>
+                            <li>Ventricular activation velocity ratio ($V_i/V_t \le 1$)? &rarr; <span class="red">VT</span></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h3>🕵️‍♂️ Morphological Clues & Eponymous Signs</h3>
+                <ul>
+                    <li><span class="bold">AV Dissociation Indicators:</span> Look closely for independent P waves, <span class="blue">Capture beats</span> (briefly conducted normal narrow complexes), and <span class="blue">Fusion beats</span> (hybrid intermediate shapes showing combined activation).</li>
+                    <li><span class="bold">Josephson's Sign:</span> Fine notching or fragmentation located near the lowest point (nadir) of the deep S wave vector. Signifies VT tracking through myocardial scar borders.</li>
+                    <li><span class="bold">Cabrera's Sign:</span> Notching or stepping on the ascending (upward) limb of the deep S wave vector across precordial leads V1–V4. Confirms extensive history of prior myocardial infarction.</li>
+                    <li><span class="bold">Precordial Concordance:</span> Completely positive or completely negative vectors across all precordial leads V1 to V6. Confirms a ventricular focal origin.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="sec9" class="section-panel">
+            <h2>9. Ventricular Arrhythmias and Topographic Mapping</h2>
+            <div class="section-desc">Ectopic mapping, pathway tracking, and idiopathic channel focuses.</div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🗺️ Outflow Tract Topographic Mapping</h3>
+                    <ul>
+                        <li><span class="bold">Right Ventricular Outflow Tract (RVOT) focus:</span> Displays a complete Left Bundle Branch Block (LBBB) morphology coupled with a strongly vertical or inferior axis vector (strongly positive tracking in leads II, III, and aVF). Driven by intracellular calcium overload triggers. Response can be terminated with Adenosine.</li>
+                        <li><span class="bold">Left Ventricular Outflow Tract (LVOT) focus:</span> Exhibits LBBB tracking with early precordial transition zone shifts ($V_2$ or $V_3$), or complete Right Bundle Branch Block (RBBB) architecture with a sharp inferior axis vector.</li>
+                        <li><span class="bold">Belhassen Idiopathic Fascicular VT:</span> Re-entry circuit localized within the left posterior fascicle network. Morphological signature presents an RBBB pattern coupled with extreme Left Axis Deviation. Highly responsive to Verapamil therapy. Do not mistake for ischemic VT.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🌀 Polymorphic Variants & Bidirectional Traps</h3>
+                    <ul>
+                        <li><span class="bold">Bidirectional VT:</span> The frontal plane QRS axis alternates beat-to-beat (e.g., flipping between extreme LAD and extreme RAD). Strongly indicates acute <span class="red">Digitalis Toxicity</span> or underlying Catecholaminergic Polymorphic Ventricular Tachycardia (CPVT).</li>
+                        <li><span class="bold">Torsades de Pointes (TdP):</span> Polymorphic VT displaying a continuous twisting of the main QRS vector around the isoelectric baseline. Must occur in the setting of a prolonged baseline QT/QTc interval. Typically initiated by a characteristic <span class="mono">"short-long-short"</span> sequence of RR cycle intervals.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="sec10" class="section-panel">
+            <h2>10. Ischemic Heart Disease: The OMI (Occlusive Myocardial Infarction) Paradigm</h2>
+            <div class="section-desc">Coronary vectors, micro-territory analysis, and subtle non-STEMI occlusion patterns.</div>
+            <div class="card">
+                <h3>🗺️ Anatomy Matrix: Vectors & Reciprocal Territories</h3>
+                <table>
+                    <thead>
+                        <tr><th>Anatomical Substrate</th><th>Primary Electrocardiographic Leads</th><th>Culprit Vessel Architecture</th><th>Reciprocal Leads Matrix</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="bold">Septal</span></td><td>$V_1, V_2$</td><td>Proximal LAD</td><td>None</td></tr>
+                        <tr><td><span class="bold">Anterior</span></td><td>$V_3, V_4$</td><td>Mid-to-Distal LAD</td><td>None</td></tr>
+                        <tr><td><span class="bold">Antero-Septal</span></td><td>$V_1 – V_4$</td><td>Proximal-to-Mid LAD</td><td>II, III, aVF</td></tr>
+                        <tr><td><span class="bold">High Lateral</span></td><td>I, aVL</td><td>First Diagonal ($D_1$ LAD) or Obtuse Marginal ($OM_1$ LCx)</td><td>II, III, aVF (Highly specific tracking marker)</td></tr>
+                        <tr><td><span class="bold">Inferior</span></td><td>II, III, aVF</td><td>Right Coronary (RCA ~85%) or Left Circumflex (LCx ~15%)</td><td>I, aVL (Crucial early validation for OMI)</td></tr>
+                        <tr><td><span class="bold">Posterior / Inferobasal</span></td><td>$V_7 – V_9$ (STE &ge; 0.5 mm)</td><td>Distal RCA or LCx artery branches</td><td>$V_1 – V_3$ (Horizontal ST depression, tall R, upright T)</td></tr>
+                        <tr><td><span class="bold">Right Ventricle</span></td><td>$V_3R, V_4R$ (STE &ge; 0.5 – 1 mm)</td><td>Proximal RCA artery network</td><td>I, aVL</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>⚠️ Lethal OMI Equivalents (No Classic STEMI Elements)</h3>
+                    <ul>
+                        <li><span class="bold">Wellens Syndrome (Critical LAD Stenosis):</span> Captured exclusively during *pain-free* periods.
+                            <ul>
+                                <li>Type A: Biphasic T waves in V2 and V3.</li>
+                                <li>Type B: Deep, highly symmetrical inverted T waves in V2 and V3.</li>
+                                <li><span class="red">Stress testing is strictly contraindicated</span> due to the imminent risk of an extensive anterior wall occlusion. Inform the cath lab.</li>
+                            </ul>
+                        </li>
+                        <li><span class="bold">de Winter Sign (Hyperacute LAD Occlusion):</span> Displays sharp, upsloping horizontal ST-segment depressions ($&gt;1 \text{ mm}$ at the J-point) across precordial leads V1–V6, transitioning into tall, broad, symmetric hyperacute T waves, coupled with small ST elevations in lead aVR.</li>
+                        <li><span class="bold">Aslanger Pattern:</span> ST-segment elevation isolated *only* to lead III, with widespread ST depression across I, aVL, V4–V6 leads, and an elevated aVR. Indicates acute inferior OMI masked by multi-vessel disease or severe right ventricular ischemia.</li>
+                        <li><span class="bold">South African Flag Sign:</span> Localized ST elevation in leads I, aVL, and V2, paired with ST-segment depression in lead III. Confirms occlusion of a first diagonal branch of the LAD.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🛡️ Ischemia with Underlying Conduction Distortions</h3>
+                    <p><span class="bold">The Modified Smith-Sgarbossa Criteria (LBBB & Paced Rhythms):</span> Validates acute ischemia despite widened conduction. Any single component matching triggers OMI alert status:</p>
+                    <ol>
+                        <li><span class="bold">Concordant ST Elevation:</span> ST elevation $\ge 1$ mm in any single lead tracking a concordantly positive QRS vector. (Extremely specific).</li>
+                        <li><span class="bold">Concordant ST Depression:</span> ST depression $\ge 1$ mm inside leads V1, V2, or V3.</li>
+                        <li><span class="bold">Modified Smith Ratio Criteria:</span> Excessive discordant ST-segment elevation measured at the J-point, where the ratio of ST elevation relative to the preceding terminal negative S wave is <span class="mono">ST/S &le; -0.25</span> (ST elevation amplitude represents $\ge 25\%$ of the total S wave depth).</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div id="sec11" class="section-panel">
+            <h2>11. Myocardial Scars, Chronic Infarction, and Non-Ischemic Q-Waves</h2>
+            <div class="section-desc">Tissue necrosis metrics, vector drops, and non-ischemic mimics.</div>
+            <div class="card">
+                <h3>🪦 Pathological Q-Wave Tracking Matrix</h3>
+                <p>Confirms localized transmural tissue loss and scar formation. Criteria require:</p>
+                <ul>
+                    <li>Any visible Q wave vector in right precordial leads $V_1$ through $V_3$.</li>
+                    <li>Q-wave duration width <span class="mono">&ge; 30 ms (0.03 s)</span> coupled with a depth amplitude <span class="mono">&ge; 1 mm</span> or representing <span class="mono">&ge; 25%</span> of the subsequent R-wave vector inside leads I, II, aVL, aVF, or V4–V6. Must track across at least two anatomically contiguous leads.</li>
+                    <li><span class="bold">Equale's Sign:</span> Stable pathological T-wave flattening or inversion adjacent to Q-wave territories without active ST-segment displacement. Confirms a mature, chronic scar tracking vector.</li>
+                </ul>
+                <div class="tip">
+                    🔍 <span class="bold">Non-Ischemic Pseudo-Infarction Mimics:</span> Hypertrophic Cardiomyopathy (deep septal Q waves in lateral leads), pre-excitation syndromes (negative delta waves mimicking path Q vectors in inferior leads), and deep QS vectors in V1-V3 due to complete LBBB layout.
+                </div>
+            </div>
+        </div>
+
+        <div id="sec12" class="section-panel">
+            <h2>12. Channelopathies, Cardiomyopathies, and Sudden Cardiac Death (SCD) Syndromes</h2>
+            <div class="section-desc">Genetic ion-channel failures and structural mechanical mutations.</div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🇧 Brugada Syndrome Diagnostics</h3>
+                    <ul>
+                        <li><span class="bold">Type 1 (Diagnostic Phenotype):</span> Widespread coved (convex) ST elevation <span class="mono">&ge; 2 mm</span> in at least one right precordial lead ($V_1$ or $V_2$) positioned in the standard or high (2nd/3rd intercostal space) baseline grid, leading into a symmetric, inverted T wave.</li>
+                        <li><span class="bold">Type 2 (Suspicious Phenotype):</span> "Saddle-back" ST morphology with elevation $\ge 2$ mm dropping into a positive or broad biphasic T wave structure.</li>
+                        <li>Unmasked by high fevers or administration of Class Ic sodium blockers. Avoid list database at <span class="mono">brugadadrugs.org</span>.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🧬 Congenital Long & Short QT Syndromes</h3>
+                    <ul>
+                        <li><span class="bold">LQT1 Phenotype (60%):</span> *KCNQ1* mutation. Arrhythmia triggered by exercise or swimming stress. Displays broad, prolonged, early-onset T waves.</li>
+                        <li><span class="bold">LQT2 Phenotype (35%):</span> *KCNH2* mutation. Arrhythmia triggered by sudden acoustic stimuli (alarms). Displays low-amplitude, notched or bifid T waves.</li>
+                        <li><span class="bold">LQT3 Phenotype (5%):</span> *SCN5A* mutation. Driven by bradycardia; events occur during sleep. Displays late-onset T waves with a long, flat ST segment.</li>
+                        <li><span class="bold">Short QT Syndrome (SQTS):</span> Confirmed when <span class="mono">QTc &le; 340 ms</span>. Characterized by near-absent ST segments and tall, narrow, symmetrical T waves. High rate of spontaneous early AF/VF.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <h3>🫀 Cardiomyopathic Sudden Death Triggers</h3>
+                <ul>
+                    <li><span class="bold">Hypertrophic Cardiomyopathy (HCM):</span> Displays huge precordial voltages. Features deep, sharp, narrow "dagger-like" Q waves inside lateral and inferior leads (septal hypertrophy vectors). Apical HCM (<span class="bold">Yamaguchi Syndrome</span>) displays giant, deeply inverted precordial T waves ($&gt; -10 \text{ mm}$) tracking from V3 through V6.</li>
+                    <li><span class="bold">Arrhythmogenic Right Ventricular Cardiomyopathy (ARVC):</span>
+                        <ul>
+                            <li><span class="bold">The Epsilon Wave:</span> A distinct, low-amplitude electrical notch or post-excitation deflection between the end of the QRS complex and the start of the ST segment inside right precordial leads V1–V3.</li>
+                            <li>T-wave inversions across leads V1–V4 in individuals over 14 years old (in the absence of complete RBBB).</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="sec13" class="section-panel">
+            <h2>13. Electrolyte Derangements, Metabolic Shifts, and Toxicological Phenotypes</h2>
+            <div class="section-desc">Membrane potential tracking alterations and drug-induced kinetic blocks.</div>
+            <div class="card">
+                <h3>🧪 Core Electrolyte & Toxidrome Matrix</h3>
+                <table>
+                    <thead>
+                        <tr><th>Pathology / Agent</th><th>Early / Moderate ECG Indicators</th><th>Advanced / Critical Lethal Phases</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="bold">Hyperkalemia</span></td><td>Narrow, symmetrically peaked, "tent-shaped" T waves with a tight base (best seen in $V_2$–$V_4$).</td><td>P wave flattens and disappears, PR prolongs, QRS widens diffusely, culminating in a terminal <span class="red">Sine Wave configuration</span>.</td></tr>
+                        <tr><td><span class="bold">Hypokalemia</span></td><td>ST segment depression, T wave flattening, development of prominent <span class="bold">U waves ($U &gt; 1 \text{ mm}$ or $U &gt; T$ amplitude)</span>.</td><td>T-U wave fusion sequence creates apparent pseudo-prolongation of the QT interval (QU interval). High risk for TdP.</td></tr>
+                        <tr><td><span class="bold">Hypercalcemia</span></td><td>Shortening of the ST segment, moving the T wave up against the QRS complex; short QTc.</td><td>Severe ventricular automaticity triggers.</td></tr>
+                        <tr><td><span class="bold">Hypocalcemia</span></td><td>Prolongation of the ST segment, causing rate-independent lengthening of the QTc interval. T wave remains normal.</td><td>Increases vulnerability to triggered ventricular tachyarrhythmias.</td></tr>
+                        <tr><td><span class="bold">Digitalis Effect</span></td><td>Downsloping "scooped" ST depression resembling a reverse check mark (<span class="bold">"Salvador Dali mustache" sign</span>), short QT.</td><td>Reflects therapeutic level, <span class="green">not toxic status</span>.</td></tr>
+                        <tr><td><span class="bold">Digitalis Toxicity</span></td><td>Increased automaticity paired with conduction inhibition. Ventricular bigeminy salvos.</td><td>Highly specific: <span class="red">Paroxysmal Atrial Tachycardia with AV block</span> or true bidirectional VT.</td></tr>
+                        <tr><td><span class="bold">Tricyclic (TCA) Overdose</span></td><td>QRS widening ($&gt;100 \text{ ms}$ predicts seizures, $&gt;160 \text{ ms}$ predicts VT/VF risks), prolonged QTc interval.</td><td>Highly specific tracking marker: <span class="red">Terminal R wave &gt; 3 mm in lead aVR</span> with an $R/S \text{ ratio} &gt; 0.7$ in aVR.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="sec14" class="section-panel">
+            <h2>14. Systemic, Pulmonary, and Extra-Cardiac Conditions</h2>
+            <div class="section-desc">Mechanical shifts, macro-vascular blocks, and central neurological tracking loops.</div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🫁 Pulmonary Embolism & Acute Cor Pulmonale</h3>
+                    <ul>
+                        <li><span class="bold">Sinus Tachycardia:</span> The most common, non-specific presentation.</li>
+                        <li><span class="bold">Simultaneous T-Wave Inversions (Highly Specific):</span> Concurrent, structural T-wave inversions across *inferior leads* (II, III, aVF) AND *right precordial leads* (V1–V4). Confirms severe, acute right ventricular strain.</li>
+                        <li><span class="bold">The S1Q3T3 Pattern (McGinn-White Sign):</span> Deep S wave in lead I, pathological Q wave vector in lead III, and an inverted T wave in lead III. Present in only 15–20% of acute massive PE presentations.</li>
+                        <li>Acute new-onset complete or incomplete RBBB, right axis deviation shifts, and clockwise rotation of the precordial transition zone out to V5–V6.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🕊️ Pericardial Syndromes & Tamponade</h3>
+                    <ul>
+                        <li><span class="bold">Acute Pericarditis Stage I:</span> Widespread, diffuse concave upsloping ST elevations across almost all leads (except aVR and V1), accompanied by <span class="bold">widespread PR-segment depression</span>. Lead aVR exhibits reciprocal ST depression and PR segment elevation.</li>
+                        <li><span class="bold">Spodick's Sign:</span> Downward-sloping line of the TP segment baseline, seen clearly in up to 80% of acute pericarditis cases.</li>
+                        <li><span class="bold">Massive Tamponade / Effusion:</span> Low QRS voltage across all leads, coupled with <span class="bold">Electrical Alternans</span> (the amplitude, axis, and polarity of the QRS complexes alternate beat-to-beat as the heart swings within the fluid-filled pericardial sac).</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <h3>🧠 Central Nervous System Intracranial Catastrophes</h3>
+                <p><span class="bold">The Neurogenic T-Wave Pattern:</span> Classically unmasked during acute subarachnoid hemorrhage (SAH), massive ischemic strokes, or severe traumatic brain injuries. Features massive, widely broad-based, deeply inverted "cerebral" T waves across precordial leads, along with substantial QTc prolongation. Mimics ischemia due to central autonomic dysfunction.</p>
+            </div>
+        </div>
+
+        <div id="sec15" class="section-panel">
+            <h2>15. Cardiac Implantable Electronic Devices (CIED): Pacing and Malfunctions</h2>
+            <div class="section-desc">Hardware synchronization tracking, sensing failures, and endless loop tracking.</div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🩻 Pacing Architectures & Vectors</h3>
+                    <ul>
+                        <li><span class="bold">RV Apical Pacing Vector:</span> Features a pacing spike followed by a widened QRS complex that mimics a complete LBBB morphology with a strong Left Axis Deviation.</li>
+                        <li><span class="bold">Biventricular Pacing / CRT:</span> Displays a dominant, upright R wave vector in lead $V_1$ (R-wave dominant, mimicking an RBBB pattern). This confirms electrical activation coming from the epicardial lead placed over the left ventricular lateral wall.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>⚠️ Hardware Function Failures</h3>
+                    <ul>
+                        <li><span class="bold">Failure to Pace:</span> Total absence of pacing spike outputs despite the patient's intrinsic tracking heart rate falling well below the programmed lower rate limits.</li>
+                        <li><span class="bold">Failure to Capture:</span> Pacing spikes fire normally at regular intervals, but they fail to trigger a subsequent myocardial depolarization wave (no P wave or QRS complex follows the spike).</li>
+                        <li><span class="bold">Undersensing Malfunction:</span> The device fails to see intrinsic baseline cardiac signals. It fires asynchronously, introducing a critical danger of triggering VF if a pacing spike lands on an intrinsic T wave (<span class="red">Spike-on-T Phenomenon</span>).</li>
+                        <li><span class="bold">Pacemaker-Mediated Tachycardia (PMT):</span> An endless-loop tracking rhythm where the device senses retrograde P waves and fires ventricular pacing spikes at the upper tracking limit. Can be terminated by applying a magnet to switch the device into VOO/DOO mode.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="sec16" class="section-panel">
+            <h2>16. Advanced Pediatric Electrocardiography</h2>
+            <div class="section-desc">Evolutionary baseline developments and neonatal structural markers.</div>
+            <div class="card">
+                <h3>👶 Age-Dependent Evolution Matrix</h3>
+                <ul>
+                    <li><span class="bold">Neonatal Dominance:</span> Right ventricular dominance is physiological in neonates and infants due to fetal circulation tracking. It presents as normal Right Axis Deviation ($&gt;110^{\circ}$) and a dominant, tall R wave inside lead $V_1$. This gradually shifts leftward over the first years of development.</li>
+                    <li><span class="bold">The Juvenile T-Wave Pattern:</span> Inverted T waves extending from lead $V_1$ through $V_3$ are entirely normal findings in children up to early adolescence. They should not be mistaken for ischemia or strain patterns.</li>
+                    <li><span class="bold">Katz-Wachtel Phenomenon:</span> Massive, equiphasic (biphasic) QRS complexes with huge combined voltage amplitudes tracking across the mid-precordial leads ($V_2$–$V_4$). This finding is pathognomonic for congenital heart defects causing severe biventricular hypertrophy, such as a large Ventricular Septal Defect (VSD) or an Atrioventricular Septal Defect (AVSD).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="sectools" class="section-panel">
+            <h2>🛠️ Interactive Clinical Toolsuite Engine</h2>
+            <div class="section-desc">Validated programmatic engines for near-instant bedside diagnostic calculations.</div>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <h3>⏱️ Advanced QTc Calculator Engine</h3>
+                    <div class="tool-group">
+                        <div class="tool-field">
+                            <label>Measured Raw QT Interval (ms):</label>
+                            <input type="number" id="qtInput" placeholder="e.g., 420">
+                        </div>
+                        <div class="tool-field">
+                            <label>Patient Heart Rate (bpm):</label>
+                            <input type="number" id="hrInput" placeholder="e.g., 75">
+                        </div>
+                        <button class="btn-calc" onclick="calculateQTc()">Compute QTc Profiles</button>
+                    </div>
+                    <div id="qtcResults" class="calc-results" style="display:none;"></div>
+                </div>
+
+                <div class="card">
+                    <h3>🧭 Frontal Plane Axis Resolver</h3>
+                    <div class="tool-group">
+                        <div class="tool-field">
+                            <label>Net QRS Polarity in Lead I:</label>
+                            <select id="leadI">
+                                <option value="positive">Positive (Net Upright Vector ↑)</option>
+                                <option value="negative">Negative (Net Downward Vector ↓)</option>
+                            </select>
+                        </div>
+                        <div class="tool-field">
+                            <label>Net QRS Polarity in Lead aVF:</label>
+                            <select id="leadaVF">
+                                <option value="positive">Positive (Net Upright Vector ↑)</option>
+                                <option value="negative">Negative (Net Downward Vector ↓)</option>
+                            </select>
+                        </div>
+                        <button class="btn-calc" onclick="resolveAxis()">Resolve Vector Quadrant</button>
+                    </div>
+                    <div id="axisResults" class="calc-results" style="display:none;"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🛡️ Interactive Smith-Sgarbossa OMI Calculator (For LBBB / Paced Rhythms)</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Evaluate for acute MI tracking in the presence of an altered or widened baseline QRS complex configuration.</p>
+                <div class="tool-group">
+                    <label class="checkbox-row">
+                        <input type="checkbox" id="sg1" value="5">
+                        <span><strong>Concordant ST Elevation &ge; 1 mm:</strong> ST elevation tracking in the same directional polarity as a positive QRS complex vector in any lead. <span class="red">(Score: 5 points)</span></span>
+                    </label>
+                    <label class="checkbox-row">
+                        <input type="checkbox" id="sg2" value="3">
+                        <span><strong>Concordant ST Depression &ge; 1 mm in V1, V2, or V3:</strong> ST depression tracking inside the right precordial leads. <span class="red">(Score: 3 points)</span></span>
+                    </label>
+                    <label class="checkbox-row">
+                        <input type="checkbox" id="sg3" value="0">
+                        <span><strong>Excessive Discordant ST/S Ratio &le; -0.25:</strong> ST elevation amplitude at the J-point represents &ge; 25% of the preceding terminal negative S wave depth. <span class="orange">(Modified Smith Criteria Validation)</span></span>
+                    </label>
+                    <button class="btn-calc" onclick="evaluateSgarbossa()">Run OMI Probability Analysis</button>
+                </div>
+                <div id="sgResults" class="calc-results" style="display:none;"></div>
+            </div>
+        </div>
+
     </div>
 
-    <hr>
-    <div style="text-align: center; font-size: 11px; color: #6c757d; margin-top: 20px;">
-        Based on LITFL ECG Library (litfl.com) – free open‑access medical education. All clinical decisions require integration with full history & physical exam.
-    </div>
-</div>
+    <script>
+        // Tab Navigation Handler
+        function switchTab(event, targetId) {
+            event.preventDefault();
+            
+            // Remove active classes from navigation menu items
+            const menuItems = document.querySelectorAll('.sidebar-menu li');
+            menuItems.forEach(item => item.classList.remove('active'));
+            
+            // Highlight current target
+            event.currentTarget.parentElement.classList.add('active');
+            
+            // Display corresponding structural panel
+            const panels = document.querySelectorAll('.section-panel');
+            panels.forEach(panel => panel.classList.remove('active'));
+            
+            document.getElementById(targetId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Dark Mode / Theme Handler
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        }
+
+        // TOOL 1 Engine: QTc Formula Arrays
+        function calculateQTc() {
+            const qt = parseFloat(document.getElementById('qtInput').value);
+            const hr = parseFloat(document.getElementById('hrInput').value);
+            const resultsDiv = document.getElementById('qtcResults');
+
+            if (!qt || !hr || qt <= 0 || hr <= 0) {
+                resultsDiv.style.display = 'block';
+                resultsDiv.innerHTML = '<span class="red">Error: Please provide valid positive numeric inputs.</span>';
+                return;
+            }
+
+            const rrSeconds = 60 / hr;
+            const qtSeconds = qt / 1000;
+
+            // Bazett Equation Calculations
+            const qtcBazett = Math.round((qtSeconds / Math.sqrt(rrSeconds)) * 1000);
+            // Fridericia Equation Calculations
+            const qtcFridericia = Math.round((qtSeconds / Math.cbrt(rrSeconds)) * 1000);
+            // Framingham Linear Model Calculations
+            const qtcFramingham = Math.round((qt + 154 * (1 - rrSeconds)));
+            // Hodges Linear Model Calculations
+            const qtcHodges = Math.round((qt + 1.75 * (hr - 60)));
+
+            let highRiskWarning = (qtcBazett > 500 || qtcFridericia > 500) ? 
+                '<br><span class="badge badge-danger" style="margin-top:8px;">⚠️ CRITICAL TORSDES RISK: QTc &gt; 500 ms</span>' : '';
+
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = `
+                <strong>Calculated Rate-Correction Profiles:</strong><br>
+                • <strong>Bazett Formula:</strong> <span class="mono">${qtcBazett} ms</span> (Note: Overcorrects at high HR)<br>
+                • <strong>Fridericia Formula:</strong> <span class="mono" style="color:var(--primary); font-weight:bold;">${qtcFridericia} ms</span> (Preferred clinical benchmark)<br>
+                • <strong>Framingham Formula:</strong> <span class="mono">${qtcFramingham} ms</span><br>
+                • <strong>Hodges Formula:</strong> <span class="mono">${qtcHodges} ms</span>
+                ${highRiskWarning}
+            `;
+        }
+
+        // TOOL 2 Engine: Frontal Plane Axis Decoder
+        function resolveAxis() {
+            const leadI = document.getElementById('leadI').value;
+            const leadaVF = document.getElementById('leadaVF').value;
+            const resultsDiv = document.getElementById('axisResults');
+            
+            resultsDiv.style.display = 'block';
+
+            if (leadI === 'positive' && leadaVF === 'positive') {
+                resultsDiv.innerHTML = `
+                    🎯 Vector Quadrant: <span class="green" style="font-weight:bold;">NORMAL AXIS (-30° to +90°)</span><br>
+                    • <strong>Clinical Context:</strong> Standard normal cardiac vector tracking. No immediate axial pathologies indicated.
+                `;
+            } else if (leadI === 'positive' && leadaVF === 'negative') {
+                resultsDiv.innerHTML = `
+                    🎯 Vector Quadrant: <span class="orange" style="font-weight:bold;">LEFT AXIS DEVIATION (LAD, -30° to -90°)</span><br>
+                    • <strong>Primary Differential Diagnosis:</strong> Left Anterior Fascicular Block (LAFB), Left Ventricular Hypertrophy (LVH), inferior Wall Myocardial Infarction, or ventricular apical pacing vector shifts.
+                `;
+            } else if (leadI === 'negative' && leadaVF === 'positive') {
+                resultsDiv.innerHTML = `
+                    🎯 Vector Quadrant: <span class="orange" style="font-weight:bold;">RIGHT AXIS DEVIATION (RAD, +90° to +180°)</span><br>
+                    • <strong>Primary Differential Diagnosis:</strong> Left Posterior Fascicular Block (LPFB), Right Ventricular Hypertrophy (RVH), Acute Pulmonary Embolism (PE), or chronic pulmonary disorders (COPD/Cor Pulmonale).
+                `;
+            } else if (leadI === 'negative' && leadaVF === 'negative') {
+                resultsDiv.innerHTML = `
+                    🎯 Vector Quadrant: <span class="red" style="font-weight:bold;">EXTREME / NORTHWEST AXIS (-90° to 180°)</span><br>
+                    • <strong>Primary Differential Diagnosis:</strong> <span class="red">Ventricular Tachycardia (VT) until proven otherwise</span>, severe life-threatening Hyperkalemia, or anomalous dextrocardia.
+                `;
+            }
+        }
+
+        // TOOL 3 Engine: Sgarbossa Classifier
+        function evaluateSgarbossa() {
+            const sg1Checked = document.getElementById('sg1').checked;
+            const sg2Checked = document.getElementById('sg2').checked;
+            const sg3Checked = document.getElementById('sg3').checked;
+            const resultsDiv = document.getElementById('sgResults');
+
+            resultsDiv.style.display = 'block';
+            let score = 0;
+            if (sg1Checked) score += 5;
+            if (sg2Checked) score += 3;
+
+            let isSmithPositive = sg3Checked;
+
+            let diagnosisText = "";
+            if (score >= 3 || isSmithPositive) {
+                diagnosisText = `
+                    <span class="badge badge-danger">🚨 ACUTE OMI ALERT ACTIVE</span><br><br>
+                    • <strong>Total Sgarbossa Point Score:</strong> <span class="mono">${score}</span><br>
+                    • <strong>Modified Smith Criteria Validation:</strong> ${isSmithPositive ? '<span class="red bold">POSITIVE RATIO MATCHED</span>' : 'Negative/Unchecked'}<br>
+                    • <strong>Clinical Interpretation:</strong> Widespread diagnostic specificity for acute coronary occlusion on background distortion. <span class="red bold">Activate urgent coronary intervention cascade immediately.</span>
+                `;
+            } else {
+                diagnosisText = `
+                    <span class="badge badge-success">✓ NO ACTIVE SGARBOSSA CRITERIA REACHED</span><br><br>
+                    • <strong>Total Point Score:</strong> <span class="mono">${score}</span><br>
+                    • <strong>Clinical Interpretation:</strong> Does not meet the strict automated thresholds for Sgarbossa-validated occlusion. Note: This does NOT completely rule out acute coronary syndromes; final diagnostics must integrate ongoing clinical trends, serial tracks, and point-of-care imaging.
+                `;
+            }
+            resultsDiv.innerHTML = diagnosisText;
+        }
+    </script>
 </body>
 </html>
