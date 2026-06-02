@@ -804,6 +804,11 @@ function updateAll() {
     renderTable('abx-table', drugDB.antibiotics);
 }
 
+// Initial rendering
+updateAll();
+
+// Robustness listeners
+document.addEventListener('DOMContentLoaded', updateAll);
 window.onload = updateAll;
 </script>
 
