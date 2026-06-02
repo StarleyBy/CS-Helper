@@ -10,162 +10,254 @@
             background: #f8f9fc;
             font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
             color: #1e2937;
-            padding: 20px;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
         }
-        .container {
-            max-width: 1500px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            overflow: hidden;
-        }
-        .header {
-            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+
+        /* Navigation Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #1e3a8a;
             color: white;
-            padding: 24px 32px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            transition: transform 0.3s ease;
         }
-        .header h1 { font-size: 26px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
-        .header p { color: #93c5fd; font-size: 13px; margin-top: 4px; }
+        .sidebar-header {
+            padding: 24px;
+            background: #1e40af;
+            border-bottom: 1px solid #2563eb;
+        }
+        .sidebar-header h1 { font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .sidebar-header p { color: #93c5fd; font-size: 11px; margin-top: 4px; }
         
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            padding: 16px;
+            gap: 8px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .tab-btn {
+            padding: 14px 16px;
+            border: none;
+            background: none;
+            font-size: 14px;
+            font-weight: 600;
+            color: #93c5fd;
+            cursor: pointer;
+            border-radius: 10px;
+            text-align: left;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .tab-btn:hover { color: white; background: rgba(255,255,255,0.08); }
+        .tab-btn.active {
+            color: white;
+            background: #2563eb;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+        }
+
+        /* Main Content Layout */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 32px;
+            max-width: 1300px;
+            width: 100%;
+        }
+
+        /* Mobile Menu Toggle Button */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 200;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 50;
+        }
+
+        /* Patient Information Panel */
         .patient-info {
-            background: #f1f5f9;
-            padding: 20px 32px;
-            border-bottom: 1px solid #e2e8f0;
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            align-items: end;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+            border: 1px solid #e2e8f0;
         }
         .input-group { display: flex; flex-direction: column; gap: 6px; }
         .input-group label {
             font-size: 11px;
             font-weight: 700;
-            color: #475569;
+            color: #64748b;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .input-group input {
-            padding: 10px 14px;
+            padding: 12px 14px;
             border: 2px solid #cbd5e1;
             border-radius: 10px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             color: #1e2937;
-            background: white;
+            background: #f8fafc;
+            width: 100%;
+            transition: border-color 0.15s;
         }
-        .input-group input:focus { outline: none; border-color: #2563eb; }
-        .input-group input[readonly] { background: #e2e8f0; border-color: #cbd5e1; cursor: not-allowed; }
+        .input-group input:focus { outline: none; border-color: #2563eb; background: white; }
 
         .meta-calculated {
-            background: #e0f2fe;
-            border: 1px solid #bae6fd;
-            padding: 10px 14px;
+            background: #f0fdf4;
+            border: 2px solid #bbf7d0;
+            padding: 12px 14px;
             border-radius: 10px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
-            color: #0369a1;
-            min-height: 43px;
+            color: #16a34a;
+            min-height: 47px;
             display: flex;
             align-items: center;
         }
-
-        .tabs {
-            display: flex;
-            background: #f8f9fc;
-            padding: 12px 32px 0 32px;
-            border-bottom: 1px solid #e2e8f0;
-            gap: 6px;
-            overflow-x: auto;
-        }
-        .tab-btn {
-            padding: 12px 18px;
-            border: none;
-            background: none;
-            font-size: 13.5px;
-            font-weight: 600;
-            color: #64748b;
-            cursor: pointer;
-            border-radius: 10px 10px 0 0;
-            border: 1px solid transparent;
-            margin-bottom: -1px;
-            white-space: nowrap;
-            transition: all 0.15s;
-        }
-        .tab-btn:hover { color: #1e40af; background: #f1f5f9; }
-        .tab-btn.active {
-            color: #1e40af;
-            background: white;
-            border-color: #e2e8f0 #e2e8f0 transparent #e2e8f0;
-            font-weight: 700;
+        .meta-calculated.et-box {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+            color: #2563eb;
         }
 
-        .tab-content { padding: 32px; display: none; }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; }
-        th { background: #f8fafc; padding: 12px 16px; font-weight: 600; color: #475569; border-bottom: 2px solid #e2e8f0; }
-        td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; line-height: 1.4; }
+        /* Data Tables Content */
+        .tab-content { display: none; background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+        th { background: #f8fafc; padding: 16px; font-weight: 700; color: #475569; border-bottom: 2px solid #e2e8f0; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+        td { padding: 16px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; line-height: 1.5; }
         tr:hover td { background: #f8fafc; }
         
         .dose-value {
             font-family: monospace;
-            font-size: 14.5px;
+            font-size: 15px;
             font-weight: 700;
             color: #16a34a;
             background: #f0fdf4;
-            padding: 6px 12px;
+            padding: 8px 14px;
             border-radius: 8px;
             display: inline-block;
             white-space: nowrap;
+            border: 1px solid #dcfce7;
         }
-        .info { color: #64748b; font-size: 12.5px; }
+        .info { color: #64748b; font-size: 13px; }
+
+        /* Responsive Design Rules */
+        @media (max-width: 992px) {
+            .menu-toggle { display: block; }
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .sidebar-overlay.open {
+                display: block;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 80px 16px 24px 16px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .patient-info {
+                grid-template-columns: 1fr 1fr;
+            }
+            .patient-info .input-group:last-child {
+                grid-column: span 2;
+            }
+            
+            /* Responsive table transform to grid cards */
+            table, thead, tbody, th, td, tr { 
+                display: block; 
+            }
+            thead tr { position: absolute; top: -9999px; left: -9999px; }
+            tr { border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 16px; padding: 12px; background: white; }
+            td { border: none; padding: 6px 0; position: relative; }
+            td:first-child { font-size: 16px; font-weight: 700; color: #1e2937; padding-bottom: 8px; border-bottom: 1px solid #f1f5f9; }
+            td:nth-child(2) { color: #475569; font-weight: 600; padding-top: 8px; }
+            td:nth-child(3) { margin: 6px 0; }
+            .dose-value { width: 100%; text-align: center; font-size: 16px; padding: 10px; }
+            td.info { font-size: 12px; border-top: 1px solid #f1f5f9; padding-top: 8px; margin-top: 6px; }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1>🩺 Pediatric ICU &amp; Emergency Calculator</h1>
-        <p>Полная математическая синхронизация с Excel-протоколом «דף החייאה 21.05»</p>
-    </div>
+<button class="menu-toggle" onclick="toggleSidebar()">☰ Menu</button>
+<div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
 
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <h1>🩺 Pediatric ICU</h1>
+        <p>Dynamic Synchronized Calculator</p>
+    </div>
+    <div class="nav-menu">
+        <button class="tab-btn active" data-tab="resus" onclick="selectTab(this)">Resuscitation</button>
+        <button class="tab-btn" data-tab="intub" onclick="selectTab(this)">Intubation</button>
+        <button class="tab-btn" data-tab="sedation" onclick="selectTab(this)">Sedation Infusions</button>
+        <button class="tab-btn" data-tab="drips" onclick="selectTab(this)">Drugs in Drip</button>
+        <button class="tab-btn" data-tab="various" onclick="selectTab(this)">Various Drugs</button>
+        <button class="tab-btn" data-tab="abx" onclick="selectTab(this)">Antibiotics I.V.</button>
+    </div>
+</div>
+
+<div class="main-content">
+    
     <div class="patient-info">
         <div class="input-group">
-            <label>Name (B2)</label>
-            <input type="text" id="pName" value="רפאל">
-        </div>
-        <div class="input-group">
-            <label>D.O.B (G2)</label>
-            <input type="date" id="dob" value="2025-08-06" onchange="updateAll()">
-        </div>
-        <div class="input-group">
-            <label>Weight kg (D2)</label>
+            <label>Weight (kg)</label>
             <input type="number" id="weight" value="4.995" step="0.001" oninput="updateAll()">
         </div>
         <div class="input-group">
-            <label>Age in Years (B3)</label>
-            <div id="ageDisplay" class="meta-calculated">—</div>
+            <label>Height (cm)</label>
+            <input type="number" id="height" value="65" step="0.1" oninput="updateAll()">
         </div>
         <div class="input-group">
-            <label>E.T. Size (D3)</label>
-            <div id="etDisplay" class="meta-calculated">—</div>
+            <label>Age (years)</label>
+            <input type="number" id="age" value="0.25" step="0.01" oninput="updateAll()">
         </div>
         <div class="input-group">
-            <label>BSA m² (H3)</label>
+            <label>BSA m² (Calculated)</label>
             <div id="bsaDisplay" class="meta-calculated">—</div>
         </div>
         <div class="input-group">
-            <label>Height cm (F3)</label>
-            <div id="heightDisplay" class="meta-calculated">—</div>
+            <label>E.T. Size (Calculated)</label>
+            <div id="etDisplay" class="meta-calculated et-box">—</div>
         </div>
-    </div>
-
-    <div class="tabs">
-        <button class="tab-btn active" data-tab="resus">Resuscitation (5-29)</button>
-        <button class="tab-btn" data-tab="intub">Intubation (30-43)</button>
-        <button class="tab-btn" data-tab="sedation">Sedation Infusions (44-74)</button>
-        <button class="tab-btn" data-tab="drips">Drugs in Drip (75-150)</button>
-        <button class="tab-btn" data-tab="various">Various Drugs (151-178)</button>
-        <button class="tab-btn" data-tab="abx">Antibiotics I.V. (179-203)</button>
     </div>
 
     <div id="tab-resus" class="tab-content" style="display: block;"><table id="resus-table"></table></div>
@@ -177,46 +269,41 @@
 </div>
 
 <script>
-// Вспомогательные функции безопасного математического округления Excel
+// Sidebar Control Mechanisms
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('open');
+}
+
+function selectTab(btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+    document.getElementById('tab-' + btn.dataset.tab).style.display = 'block';
+    
+    if (window.innerWidth <= 992) {
+        toggleSidebar();
+    }
+}
+
+// Math Engine Logic
 function excelRound(value, decimals) {
     if (isNaN(value) || !isFinite(value)) return 0;
     return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
 }
 
-// Глобальный объект промежуточных вычисляемых переменных
-let calcVars = { w: 4.995, age: 0, bsa: 0, height: 0, et: 0 };
+let calcVars = { w: 4.995, height: 65, age: 0.25, bsa: 0, et: 3 };
 
 function updateCalculatedVariables() {
-    let w = parseFloat(document.getElementById('weight').value) || 0;
-    calcVars.w = w;
+    calcVars.w = parseFloat(document.getElementById('weight').value) || 0;
+    calcVars.height = parseFloat(document.getElementById('height').value) || 0;
+    calcVars.age = parseFloat(document.getElementById('age').value) || 0;
 
-    // 1. Возраст Age (B3): =(NOW - DOB)/365.25
-    let dobInput = document.getElementById('dob').value;
-    if (dobInput) {
-        let dobDate = new Date(dobInput);
-        let now = new Date();
-        let diffTime = now - dobDate;
-        let diffYears = diffTime / (1000 * 60 * 60 * 24 * 365.25);
-        calcVars.age = diffYears > 0 ? diffYears : 0;
-    } else {
-        calcVars.age = 0;
-    }
-    document.getElementById('ageDisplay').textContent = calcVars.age.toFixed(3);
-
-    // 2. BSA (H3): =IF((D2+4)/30<1.75, (D2+4)/30, 1.75)
-    let bsaRaw = (w + 4) / 30;
+    let bsaRaw = (calcVars.w + 4) / 30;
     calcVars.bsa = bsaRaw < 1.75 ? bsaRaw : 1.75;
     document.getElementById('bsaDisplay').textContent = calcVars.bsa.toFixed(3);
 
-    // 3. Height (F3): =IF(D2<31, H3*H3*3600/D2, IF(D2<41,160,170))
-    if (w > 0) {
-        calcVars.height = w < 31 ? (calcVars.bsa * calcVars.bsa * 3600 / w) : (w < 41 ? 160 : 170);
-    } else {
-        calcVars.height = 0;
-    }
-    document.getElementById('heightDisplay').textContent = calcVars.height.toFixed(1);
-
-    // 4. E.T. (D3): =IF(B3<0.3,3, IF(B3<0.6,4, IF(B3/4+4>8,8, B3/4+4)))
     let etVal = 3;
     if (calcVars.age < 0.3) { etVal = 3; }
     else if (calcVars.age < 0.6) { etVal = 4; }
@@ -228,11 +315,10 @@ function updateCalculatedVariables() {
     document.getElementById('etDisplay').textContent = calcVars.et.toFixed(2);
 }
 
-// База данных формул на основе строк таблицы
 const drugDB = {
     resuscitation: [
         {
-            row: 7, name: "Adrenaline", conc: "1mg/10ml", dose: "0.01 mg/kg",
+            name: "Adrenaline", conc: "1mg/10ml", dose: "0.01 mg/kg",
             calc: (v) => {
                 let mg = v.w < 40 ? excelRound(v.w * 0.01, 2) : (v.w < 50 ? 0.5 : 1);
                 let ml = excelRound(mg * 10, 2);
@@ -240,7 +326,7 @@ const drugDB = {
             }
         },
         {
-            row: 9, name: "Atropine", conc: "1mg/1ml", dose: "0.02mg/kg",
+            name: "Atropine", conc: "1mg/1ml", dose: "0.02mg/kg",
             calc: (v) => {
                 let mg = v.w < 5 ? 0.1 : (v.w < 25 ? excelRound(v.w * 0.02, 2) : (v.w < 50 ? 0.5 : 1));
                 let ml = excelRound(mg / 1, 2);
@@ -248,16 +334,16 @@ const drugDB = {
             }
         },
         {
-            row: 12, name: "Sodium bicarbonate", conc: "1meq/1ml", dose: "1 meq/kg",
+            name: "Sodium bicarbonate", conc: "1meq/1ml", dose: "1 meq/kg",
             calc: (v) => {
-                let meq = v.w; // G12 references D2 conceptually in dynamic dose
+                let meq = v.w;
                 let ml = v.w < 100 ? v.w : 100;
                 return `${excelRound(meq, 2).toFixed(2)} meq | ${excelRound(ml, 2).toFixed(2)} ml`;
             },
             note: "For peripheral use mix 1:1 with water"
         },
         {
-            row: 15, name: "Ca Gluconate 10%", conc: "100mg/1ml", dose: "100mg/kg",
+            name: "Ca Gluconate 10%", conc: "100mg/1ml", dose: "100mg/kg",
             calc: (v) => {
                 let mg = v.w < 10 ? (100 * v.w) : 1000;
                 let ml = excelRound(mg / 100, 2);
@@ -265,7 +351,7 @@ const drugDB = {
             }
         },
         {
-            row: 17, name: "Lidocaine 1%", conc: "10mg/1ml", dose: "1mg/kg",
+            name: "Lidocaine 1%", conc: "10mg/1ml", dose: "1mg/kg",
             calc: (v) => {
                 let mg = v.w;
                 let ml = excelRound(mg / 10, 2);
@@ -273,12 +359,12 @@ const drugDB = {
             }
         },
         {
-            row: 19, name: "Narcan", conc: "0.4mg/ml", dose: "—",
+            name: "Narcan", conc: "0.4mg/ml", dose: "—",
             calc: (v) => "Protocol",
             note: "Dilute 0.4mg in 20ml Nacl 0.9%..."
         },
         {
-            row: 21, name: "Adenosine", conc: "3mg/ml", dose: "0.1mg/kg",
+            name: "Adenosine", conc: "3mg/ml", dose: "0.1mg/kg",
             calc: (v) => {
                 let mg = excelRound(0.1 * v.w, 2);
                 let ml = excelRound(mg / 3, 3);
@@ -287,69 +373,69 @@ const drugDB = {
             note: "Rapid IV push. May increase by 0.05-0.25mg/kg max 12mg"
         },
         {
-            row: 24, name: "Defibrillation", conc: "—", dose: "2 joule/kg",
+            name: "Defibrillation", conc: "—", dose: "2 joule/kg",
             calc: (v) => `${excelRound(v.w * 2, 1).toFixed(1)} Joule`,
             note: "VF / No sync"
         },
         {
-            row: 27, name: "Cardioversion", conc: "—", dose: "0.5 joule/kg",
+            name: "Cardioversion", conc: "—", dose: "0.5 joule/kg",
             calc: (v) => `${excelRound(v.w * 0.5, 1).toFixed(1)} Joule`,
             note: "With sync"
         }
     ],
     intubation: [
         {
-            row: 31, name: "Pentotal", conc: "100mg/1ml", dose: "4mg/kg",
+            name: "Pentotal", conc: "100mg/1ml", dose: "4mg/kg",
             calc: (v) => `${excelRound(v.w * 4, 2).toFixed(1)} mg | ${excelRound((v.w * 4) / 100, 2).toFixed(2)} ml`
         },
         {
-            row: 33, name: "Ketamine", conc: "50mg/1ml", dose: "1mg/kg",
+            name: "Ketamine", conc: "50mg/1ml", dose: "1mg/kg",
             calc: (v) => `${excelRound(v.w, 2).toFixed(1)} mg | ${excelRound(v.w / 50, 2).toFixed(2)} ml`
         },
         {
-            row: 35, name: "Atracurium", conc: "10mg/1ml", dose: "0.3mg/kg",
+            name: "Atracurium", conc: "10mg/1ml", dose: "0.3mg/kg",
             calc: (v) => `${excelRound(0.3 * v.w, 2).toFixed(2)} mg | ${excelRound((0.3 * v.w) / 10, 2).toFixed(2)} ml`
         },
         {
-            row: 37, name: "Fentanyl", conc: "50mcg/1ml", dose: "2mcg/kg",
+            name: "Fentanyl", conc: "50mcg/1ml", dose: "2mcg/kg",
             calc: (v) => `${excelRound(v.w * 2, 2).toFixed(1)} mcg | ${excelRound((v.w * 2) / 50, 2).toFixed(2)} ml`
         },
         {
-            row: 39, name: "Midazolam", conc: "1mg/1ml", dose: "0.1mg/kg",
+            name: "Midazolam", conc: "1mg/1ml", dose: "0.1mg/kg",
             calc: (v) => {
                 let mg = (v.w * 0.1) > 3 ? 3 : (v.w * 0.1);
                 return `${excelRound(mg, 2).toFixed(2)} mg | ${excelRound(mg / 1, 2).toFixed(2)} ml`;
             }
         },
         {
-            row: 41, name: "Rocuronium", conc: "10mg/1ml", dose: "1mg/kg",
+            name: "Rocuronium", conc: "10mg/1ml", dose: "1mg/kg",
             calc: (v) => `${excelRound(v.w, 2).toFixed(1)} mg | ${excelRound(v.w / 10, 2).toFixed(2)} ml`
         }
     ],
     sedation: [
         {
-            row: 45, name: "Fentanyl (Pure)", conc: "50mcg/1ml", dose: "1 mcg/kg/hr",
+            name: "Fentanyl (Pure)", conc: "50mcg/1ml", dose: "1 mcg/kg/hr",
             calc: (v) => `${excelRound(v.w / 50, 2).toFixed(2)} ml/hr`, note: "Pure / Can be diluted"
         },
         {
-            row: 49, name: "Morphine", conc: "Dilute 1mg/ml", dose: "0.01 - 0.04 mg/kg/hr",
+            name: "Morphine", conc: "Dilute 1mg/ml", dose: "0.01 - 0.04 mg/kg/hr",
             calc: (v) => `Min: ${excelRound(v.w * 0.01, 2).toFixed(2)} ml/hr<br>Max: ${excelRound(0.04 * v.w, 1).toFixed(2)} ml/hr`
         },
         {
-            row: 52, name: "Remifentanil", conc: "Variable", dose: "0.1 mcg/kg/min",
+            name: "Remifentanil", conc: "Variable", dose: "0.1 mcg/kg/min",
             calc: (v) => `Mix ${excelRound(0.1 * v.w * 60 * 20 / 1000, 2).toFixed(2)} mg to total 20ml`,
             note: "Increase to effect by 0.3ml every 5min. Max 7.4cc/hr. Don't bolus"
         },
         {
-            row: 56, name: "Midazolam (5mg/ml)", conc: "5mg/1ml", dose: "0.1 mg/kg/hr",
+            name: "Midazolam (5mg/ml)", conc: "5mg/1ml", dose: "0.1 mg/kg/hr",
             calc: (v) => `${excelRound(0.1 * v.w / 5, 2).toFixed(2)} ml/hr`
         },
         {
-            row: 57, name: "Midazolam (1mg/ml)", conc: "1mg/1ml", dose: "0.1 mg/kg/hr",
+            name: "Midazolam (1mg/ml)", conc: "1mg/1ml", dose: "0.1 mg/kg/hr",
             calc: (v) => `${excelRound(0.1 * v.w, 2).toFixed(2)} ml/hr`
         },
         {
-            row: 60, name: "Propofol (Loading)", conc: "10mg/1ml", dose: "1 - 2 mg/kg",
+            name: "Propofol (Loading)", conc: "10mg/1ml", dose: "1 - 2 mg/kg",
             calc: (v) => {
                 let mgMin = excelRound(v.w * 1, 2);
                 let mgMax = excelRound(v.w * 2, 2);
@@ -357,65 +443,64 @@ const drugDB = {
             }
         },
         {
-            row: 61, name: "Propofol (Maintenance)", conc: "10mg/1ml", dose: "100 - 200 mcg/kg/min",
+            name: "Propofol (Maintenance)", conc: "10mg/1ml", dose: "100 - 200 mcg/kg/min",
             calc: (v) => `Min: ${excelRound(100 * v.w * 60 / 1000 / 10, 2).toFixed(2)} ml/hr<br>Max: ${excelRound(200 * v.w * 60 / 1000 / 10, 2).toFixed(2)} ml/hr`,
             note: "If 20 mg/ml use half rates"
         },
         {
-            row: 65, name: "Precedex", conc: "200mcg / 50ml", dose: "0.2 - 0.7 mcg/kg/hr",
+            name: "Precedex", conc: "200mcg / 50ml", dose: "0.2 - 0.7 mcg/kg/hr",
             calc: (v) => `Min: ${excelRound(0.2 * v.w / 4, 3).toFixed(2)} ml/hr<br>Max: ${excelRound(0.7 * v.w / 4, 3).toFixed(2)} ml/hr`,
             note: "May load 1mcg/kg -> Vol: " + excelRound(1 * v.w / 4, 2).toFixed(2) + " ml"
         },
         {
-            row: 69, name: "Ketamine Infusion", conc: "250mg / 50ml", dose: "0.5 - 2 mg/kg/hr",
+            name: "Ketamine Infusion", conc: "250mg / 50ml", dose: "0.5 - 2 mg/kg/hr",
             calc: (v) => {
                 let min = excelRound(0.5 * v.w / 5, 2);
-                // J69 references max dose directly from cell logic structure
                 let max = excelRound(2 * v.w / 5, 2); 
                 return `Min: ${min.toFixed(2)} ml/hr<br>Max: ${max.toFixed(2)} ml/hr`;
             }
         },
         {
-            row: 73, name: "Esmeron (Pure)", conc: "10mg/1ml", dose: "1 mg/kg/hr",
+            name: "Esmeron (Pure)", conc: "10mg/1ml", dose: "1 mg/kg/hr",
             calc: (v) => `${excelRound(v.w / 10, 2).toFixed(2)} ml/hr`
         }
     ],
     drips: [
-        { row: 76, name: "Adrenaline (Drip)", conc: "In 50ml", dose: "1ml/hr = 0.1 mcg/kg/min", calc: (v) => `Mix ${excelRound(0.3 * v.w, 2).toFixed(2)} mg into 50ml` },
-        { row: 79, name: "Noradrenaline", conc: "In 50ml", dose: "1ml/hr = 0.1 mcg/kg/min", calc: (v) => `Mix ${excelRound(0.3 * v.w, 2).toFixed(2)} mg into 50ml` },
-        { row: 82, name: "Phenylephrine", conc: "In 50ml", dose: "1ml/hr = 0.1 mcg/kg/min", calc: (v) => `Mix ${excelRound(0.3 * v.w, 2).toFixed(2)} mg into 50ml` },
-        { row: 86, name: "Dopamine", conc: "In 50ml", dose: "1ml/hr = 1 mcg/kg/min", calc: (v) => `Mix ${excelRound(3 * v.w, 2).toFixed(2)} mg into 50ml`, note: "Complete to 50ml with Nacl 0.9%/Glu 5%" },
-        { row: 89, name: "Dobutrex", conc: "In 50ml", dose: "1ml/hr = 1 mcg/kg/min", calc: (v) => `Mix ${excelRound(3 * v.w, 2).toFixed(2)} mg into 50ml` },
+        { name: "Adrenaline (Drip)", conc: "In 50ml", dose: "1ml/hr = 0.1 mcg/kg/min", calc: (v) => `Mix ${excelRound(0.3 * v.w, 2).toFixed(2)} mg into 50ml` },
+        { name: "Noradrenaline", conc: "In 50ml", dose: "1ml/hr = 0.1 mcg/kg/min", calc: (v) => `Mix ${excelRound(0.3 * v.w, 2).toFixed(2)} mg into 50ml` },
+        { name: "Phenylephrine", conc: "In 50ml", dose: "1ml/hr = 0.1 mcg/kg/min", calc: (v) => `Mix ${excelRound(0.3 * v.w, 2).toFixed(2)} mg into 50ml` },
+        { name: "Dopamine", conc: "In 50ml", dose: "1ml/hr = 1 mcg/kg/min", calc: (v) => `Mix ${excelRound(3 * v.w, 2).toFixed(2)} mg into 50ml`, note: "Complete to 50ml with Nacl 0.9%/Glu 5%" },
+        { name: "Dobutrex", conc: "In 50ml", dose: "1ml/hr = 1 mcg/kg/min", calc: (v) => `Mix ${excelRound(3 * v.w, 2).toFixed(2)} mg into 50ml` },
         { 
-            row: 93, name: "Vasopressin", conc: "In 50ml", dose: "1ml/hr = 0.0001 U/kg/min", 
+            name: "Vasopressin", conc: "In 50ml", dose: "1ml/hr = 0.0001 U/kg/min", 
             calc: (v) => `Mix ${excelRound(0.0001 * v.w * 60 * 50, 4).toFixed(4)} Units into 50ml` 
         },
         { 
-            row: 97, name: "Isuprel", conc: "In 50ml", dose: "0.05-2 mcg/kg/min", 
+            name: "Isuprel", conc: "In 50ml", dose: "0.05-2 mcg/kg/min", 
             calc: (v) => `Mix Fixed 400 mcg into 50ml<br>1 ml/hr = ${excelRound(8 / v.w / 60, 3).toFixed(3)} mcg/kg/min` 
         },
         {
-            row: 100, name: "Levosimendan", conc: "2.5mg / 50ml Glu 5%", dose: "0.1 mg/kg/day",
+            name: "Levosimendan", conc: "2.5mg / 50ml Glu 5%", dose: "0.1 mg/kg/day",
             calc: (v) => `${excelRound(0.1 * v.w / 24 * 50 / 2.5, 2).toFixed(2)} ml/hr`, note: "May double dose on second day"
         },
         {
-            row: 103, name: "Nitroprusside", conc: "In 50ml Glu 5%", dose: "Max conc 50mg/50ml",
+            name: "Nitroprusside", conc: "In 50ml Glu 5%", dose: "Max conc 50mg/50ml",
             calc: (v) => {
                 let mg = v.w * 3;
                 let finalMg = mg > 50 ? 50 : mg; 
-                return `Mix ${excelRound(finalMg, 2).toFixed(2)} mg into 50ml<br>(Logic /10: ${excelRound(finalMg/10, 2).toFixed(2)} mg)`;
+                return `Mix ${excelRound(finalMg, 2).toFixed(2)} mg into 50ml`;
             },
             note: "up to 16.5kg 1ml/hr=1mcg/kg/min. Max dose 8mcg/kg/min. Add Thiosulphate"
         },
         {
-            row: 108, name: "Nitroglycerin", conc: "In 50ml", dose: "0-15kg: 1ml/hr=1mcg/kg/m | >=15kg: 1ml/hr=0.2mcg/kg/m",
+            name: "Nitroglycerin", conc: "In 50ml", dose: "0-15kg: 1ml/hr=1mcg/kg/m | >=15kg: 1ml/hr=0.2mcg/kg/m",
             calc: (v) => {
                 let mg = v.w <= 15 ? (v.w * 3) : (v.w * 3 / 5);
                 return `Mix ${excelRound(mg, 2).toFixed(2)} mg into 50ml`;
             }
         },
         {
-            row: 112, name: "Milrinone", conc: "In 50ml", dose: "1ml/hr = 0.375 mcg/kg/min (<50kg)",
+            name: "Milrinone", conc: "In 50ml", dose: "1ml/hr = 0.375 mcg/kg/min (<50kg)",
             calc: (v) => {
                 let mg = v.w <= 50 ? excelRound(1125 * v.w / 1000, 2) : 50;
                 return `Mix ${mg.toFixed(2)} mg into 50ml`;
@@ -423,32 +508,31 @@ const drugDB = {
             note: "Loading dose: " + excelRound(v.w * 50, 1).toFixed(0) + " mcg over 15 min"
         },
         {
-            row: 116, name: "Esmolol Infusion", conc: "10mg/1ml", dose: "LD: 100mcg/kg over 1 min | MD: 50-500mcg/kg/min",
+            name: "Esmolol Infusion", conc: "10mg/1ml", dose: "LD: 100mcg/kg over 1 min | MD: 50-500mcg/kg/min",
             calc: (v) => {
                 let ld = excelRound(v.w * 100, 1);
                 let mdMax = excelRound(500 * v.w * 60 / 1000 / 10, 2);
-                return `LD: ${ld.toFixed(0)} mcg<br>MD Max (500 mcg): ${mdMax.toFixed(2)} ml/hr (Min: ${(mdMax/10).toFixed(2)} ml/hr)`;
+                return `LD: ${ld.toFixed(0)} mcg<br>MD Max (500 mcg): ${mdMax.toFixed(2)} ml/hr`;
             }
         },
         {
-            row: 120, name: "Labetalol", conc: "Dilute to 1mg/ml", dose: "0.4 - 1 mg/kg/hr (Max 3)",
-            calc: (v) => `Min: ${excelRound(0.4 * v.w, 1).toFixed(1)} ml/hr<br>Max: ${excelRound(v.w, 1).toFixed(1)} ml/hr`,
-            note: "May bolus: " + excelRound(v.w, 1).toFixed(1) + " ml down to " + excelRound(0.4*v.w/2, 2).toFixed(2) + " ml"
+            name: "Labetalol", conc: "Dilute to 1mg/ml", dose: "0.4 - 1 mg/kg/hr (Max 3)",
+            calc: (v) => `Min: ${excelRound(0.4 * v.w, 1).toFixed(1)} ml/hr<br>Max: ${excelRound(v.w, 1).toFixed(1)} ml/hr`
         },
         {
-            row: 123, name: "Prostaglandin E", conc: "In 50ml", dose: "1ml/hr = 0.1 mcg/kg/min",
-            calc: (v) => `Mix ${excelRound(0.3 * v.w, 2).toFixed(2)} mg into 50ml`, note: "Start with 0.1..."
+            name: "Prostaglandin E", conc: "In 50ml", dose: "1ml/hr = 0.1 mcg/kg/min",
+            calc: (v) => `Mix ${excelRound(0.3 * v.w, 2).toFixed(2)} mg into 50ml`
         },
         {
-            row: 127, name: "Epoprostenol", conc: "250mcg / 50ml", dose: "2 - 16 ng/kg/min",
-            calc: (v) => `Rate (2 ng): ${excelRound(2 * v.w * 60 / 5000, 3).toFixed(3)} ml/hr`, note: "Dilution in glycine"
+            name: "Epoprostenol", conc: "250mcg / 50ml", dose: "2 - 16 ng/kg/min",
+            calc: (v) => `Rate (2 ng): ${excelRound(2 * v.w * 60 / 5000, 3).toFixed(3)} ml/hr`
         },
         {
-            row: 130, name: "Lidocaine (Drip)", conc: "In 50ml Glu 5%", dose: "1ml/hr = 10 mcg/kg/min",
-            calc: (v) => `Mix ${excelRound(30 * v.w, 2).toFixed(1)} mg into 50ml`, note: "Range: 20-50 mcg/kg/min"
+            name: "Lidocaine (Drip)", conc: "In 50ml Glu 5%", dose: "1ml/hr = 10 mcg/kg/min",
+            calc: (v) => `Mix ${excelRound(30 * v.w, 2).toFixed(1)} mg into 50ml`
         },
         {
-            row: 134, name: "Amiodarone", conc: "Glu 5% (Peri: 1mg/ml, Cent: 2mg/ml)", dose: "LD: 5mg/kg over 10m | MD: 5-15 mcg/kg/min",
+            name: "Amiodarone", conc: "Glu 5%", dose: "LD: 5mg/kg over 10m | MD: 5-15 mcg/kg/min",
             calc: (v) => {
                 let ld = v.w < 31 ? (v.w * 5) : 150;
                 let md10 = excelRound(10 * v.w * 60 / 1000, 2);
@@ -456,20 +540,20 @@ const drugDB = {
             }
         },
         {
-            row: 140, name: "Heparin", conc: "In 50ml", dose: "LD: 50 u/kg | MD: 10-25 u/kg/hr",
+            name: "Heparin", conc: "In 50ml", dose: "LD: 50 u/kg | MD: 10-25 u/kg/hr",
             calc: (v) => {
                 let ld = 50 * v.w;
                 let mdMin = excelRound(v.w * 10 / 100, 1);
-                return `LD: ${excelRound(ld, 0).toFixed(0)} Units<br>MD Min: ${mdMin.toFixed(2)} ml/hr (Rate = MD_units * 2.5)`;
+                return `LD: ${excelRound(ld, 0).toFixed(0)} Units<br>MD Min: ${mdMin.toFixed(2)} ml/hr`;
             }
         },
-        { row: 143, name: "Lasix Infusion", conc: "1mg/1ml", dose: "0.1 mg/kg/hr", calc: (v) => `${excelRound(0.1 * v.w, 2).toFixed(2)} ml/hr` },
-        { row: 146, name: "Aminophylline (Drip)", conc: "In 50ml Nacl 0.9%", dose: "0.25 mg/kg/hr", calc: (v) => `Mix ${excelRound(0.25 * v.w * 50, 2).toFixed(2)} mg<br>Rate: 1 ml/hr` },
-        { row: 150, name: "Ventolin Infusion", conc: "1mg/1ml", dose: "1 mcg/kg/min (Range 1-10)", calc: (v) => `${excelRound(v.w * 60 / 1000, 1).toFixed(2)} ml/hr` }
+        { name: "Lasix Infusion", conc: "1mg/1ml", dose: "0.1 mg/kg/hr", calc: (v) => `${excelRound(0.1 * v.w, 2).toFixed(2)} ml/hr` },
+        { name: "Aminophylline (Drip)", conc: "In 50ml Nacl 0.9%", dose: "0.25 mg/kg/hr", calc: (v) => `Mix ${excelRound(0.25 * v.w * 50, 2).toFixed(2)} mg<br>Rate: 1 ml/hr` },
+        { name: "Ventolin Infusion", conc: "1mg/1ml", dose: "1 mcg/kg/min", calc: (v) => `${excelRound(v.w * 60 / 1000, 1).toFixed(2)} ml/hr` }
     ],
     various: [
         {
-            row: 152, name: "Albumin 20%", conc: "20%", dose: "0.5 - 1 gr/kg/dose",
+            name: "Albumin 20%", conc: "20%", dose: "0.5 - 1 gr/kg/dose",
             calc: (v) => {
                 let gMin = v.w * 0.5; let gMax = v.w * 1;
                 let mlMin = gMin * 100 / 20; let mlMax = gMax * 100 / 20;
@@ -477,30 +561,30 @@ const drugDB = {
             }
         },
         {
-            row: 154, name: "Aldacton", conc: "p.o.", dose: "2 - 4 mg/kg/day",
+            name: "Aldacton", conc: "p.o.", dose: "2 - 4 mg/kg/day",
             calc: (v) => {
                 let min = (v.w < 25) ? v.w : 25;
                 let max = (1 * v.w < 50) ? (v.w * 2) : 50;
                 return `Min: ${excelRound(min, 1).toFixed(1)} mg/day<br>Max: ${excelRound(max, 1).toFixed(1)} mg/day`;
             }
         },
-        { row: 155, name: "Aminophyllin (Oral)", conc: "p.o.", dose: "6 mg/kg/day q8-12hr", calc: (v) => `${excelRound(6 * v.w, 1).toFixed(1)} mg/day` },
+        { name: "Aminophyllin (Oral)", conc: "p.o.", dose: "6 mg/kg/day q8-12hr", calc: (v) => `${excelRound(6 * v.w, 1).toFixed(1)} mg/day` },
         {
-            row: 156, name: "Aspirin (Prophylactic)", conc: "p.o.", dose: "5 - 10 mg/kg/day",
+            name: "Aspirin (Prophylactic)", conc: "p.o.", dose: "5 - 10 mg/kg/day",
             calc: (v) => `Min: ${excelRound(5 * v.w, 1).toFixed(1)} mg/day<br>Max: ${excelRound(10 * v.w, 1).toFixed(1)} mg/day`
         },
         {
-            row: 157, name: "Aspirin (Antiinflammatory)", conc: "p.o.", dose: "60 - 100 mg/kg/day",
+            name: "Aspirin (Antiinflammatory)", conc: "p.o.", dose: "60 - 100 mg/kg/day",
             calc: (v) => {
                 let min = (60 * v.w < 4000) ? (60 * v.w) : 4000;
-                let max = (v.w * 100) ? (v.w * 100) : 4000; // matching excel test syntax safely
+                let max = (v.w * 100) ? (v.w * 100) : 4000;
                 if (max > 4000) max = 4000;
                 return `Min: ${excelRound(min, 0).toFixed(0)} mg/day<br>Max: ${excelRound(max, 0).toFixed(0)} mg/day`;
             }
         },
-        { row: 158, name: "Capoten (Test Dose)", conc: "p.o.", dose: "0.1 mg/kg", calc: (v) => `${excelRound(0.1 * v.w, 2).toFixed(2)} mg` },
+        { name: "Capoten (Test Dose)", conc: "p.o.", dose: "0.1 mg/kg", calc: (v) => `${excelRound(0.1 * v.w, 2).toFixed(2)} mg` },
         {
-            row: 159, name: "Capoten (Maintenance)", conc: "p.o.", dose: "0.5 - 6 mg/kg/day",
+            name: "Capoten (Maintenance)", conc: "p.o.", dose: "0.5 - 6 mg/kg/day",
             calc: (v) => {
                 let pMin = (0.5 * v.w < 25) ? (0.5 * v.w) : 25;
                 let pMax = (v.w * 2 < 25) ? (v.w * 2) : 25;
@@ -508,7 +592,7 @@ const drugDB = {
             }
         },
         {
-            row: 160, name: "Clexan (Therapeutic)", conc: "s.c.", dose: "2 - 3 mg/kg/day (div x2)",
+            name: "Clexan (Therapeutic)", conc: "s.c.", dose: "2 - 3 mg/kg/day (div x2)",
             calc: (v) => {
                 let lim = v.w * 2 < 80 ? v.w * 2 : 80;
                 if (v.age < 0.16) { lim = v.w * 3 < 80 ? v.w * 3 : 80; }
@@ -516,37 +600,37 @@ const drugDB = {
             }
         },
         {
-            row: 161, name: "Clexan (Prophylactic)", conc: "s.c.", dose: "div x2",
+            name: "Clexan (Prophylactic)", conc: "s.c.", dose: "div x2",
             calc: (v) => {
                 let lim = v.w < 80 ? v.w : 80;
                 if (v.age < 0.16) { lim = v.w * 1.5 < 80 ? v.w * 1.5 : 80; }
                 return `${excelRound(lim, 1).toFixed(1)} mg/day`;
             }
         },
-        { row: 162, name: "Diamox", conc: "Metabolic alkalosis", dose: "5 mg/kg/dose prn", calc: (v) => `${excelRound(v.w * 5, 1).toFixed(1)} mg/dose` },
+        { name: "Diamox", conc: "Metabolic alkalosis", dose: "5 mg/kg/dose prn", calc: (v) => `${excelRound(v.w * 5, 1).toFixed(1)} mg/dose` },
         {
-            row: 163, name: "Dormicum (Bolus)", conc: "i.v.", dose: "0.05 - 0.1 mg/kg/dose",
+            name: "Dormicum (Bolus)", conc: "i.v.", dose: "0.05 - 0.1 mg/kg/dose",
             calc: (v) => {
                 let min = (0.05 * v.w < 1) ? (0.05 * v.w) : 1;
                 let max = (0.1 * v.w < 1.1) ? (0.1 * v.w) : 1;
                 return `Min: ${excelRound(min, 2).toFixed(2)} mg<br>Max: ${excelRound(max, 2).toFixed(2)} mg`;
             }
         },
-        { row: 164, name: "Erythromycin (Oral)", conc: "Prokinetic", dose: "10 mg/kg/day", calc: (v) => `${excelRound(v.w * 10, 1).toFixed(1)} mg/day` },
-        { row: 165, name: "Essidrex", conc: "p.o.", dose: "2 mg/kg/day", calc: (v) => `${excelRound((v.w * 2 < 100 ? v.w * 2 : 100), 1).toFixed(1)} mg/day` },
-        { row: 166, name: "Fentanyl (Bolus)", conc: "i.v.", dose: "1 - 2 mcg/dose", calc: (v) => `Min: ${excelRound(v.w, 1).toFixed(1)}<br>Max: ${excelRound(v.w * 2, 1).toFixed(1)} mcg/dose` },
+        { name: "Erythromycin (Oral)", conc: "Prokinetic", dose: "10 mg/kg/day", calc: (v) => `${excelRound(v.w * 10, 1).toFixed(1)} mg/day` },
+        { name: "Essidrex", conc: "p.o.", dose: "2 mg/kg/day", calc: (v) => `${excelRound((v.w * 2 < 100 ? v.w * 2 : 100), 1).toFixed(1)} mg/day` },
+        { name: "Fentanyl (Bolus)", conc: "i.v.", dose: "1 - 2 mcg/dose", calc: (v) => `Min: ${excelRound(v.w, 1).toFixed(1)}<br>Max: ${excelRound(v.w * 2, 1).toFixed(1)} mcg/dose` },
         {
-            row: 167, name: "Fusid", conc: "i.v. / p.o.", dose: "0.5 - 1 mg/kg/dose",
+            name: "Fusid", conc: "i.v. / p.o.", dose: "0.5 - 1 mg/kg/dose",
             calc: (v) => {
                 let min = 0.5 * v.w < 40 ? 0.5 * v.w : 40;
                 let max = v.w < 40 ? v.w : 40;
                 return `Min: ${excelRound(min, 1).toFixed(1)}<br>Max: ${excelRound(max, 1).toFixed(1)} mg/dose`;
             }
         },
-        { row: 168, name: "Halidol", conc: "Max 0.15mg/kg/d", dose: "0.075 - 0.15 mg/kg/day", calc: (v) => `Min: ${excelRound(0.025 * v.w * 3, 2).toFixed(2)}<br>Max: ${excelRound(0.05 * v.w * 3, 2).toFixed(2)} mg/day` },
-        { row: 169, name: "Ketamine (Bolus)", conc: "i.v.", dose: "1 - 2 mg/kg/dose", calc: (v) => `Min: ${excelRound(v.w, 1).toFixed(1)}<br>Max: ${excelRound(v.w * 2, 1).toFixed(1)} mg/dose` },
+        { name: "Halidol", conc: "Max 0.15mg/kg/d", dose: "0.075 - 0.15 mg/kg/day", calc: (v) => `Min: ${excelRound(0.025 * v.w * 3, 2).toFixed(2)}<br>Max: ${excelRound(0.05 * v.w * 3, 2).toFixed(2)} mg/day` },
+        { name: "Ketamine (Bolus)", conc: "i.v.", dose: "1 - 2 mg/kg/dose", calc: (v) => `Min: ${excelRound(v.w, 1).toFixed(1)}<br>Max: ${excelRound(v.w * 2, 1).toFixed(1)} mg/dose` },
         {
-            row: 170, name: "Lorivan", conc: "i.v. / p.o.", dose: "0.05 - 0.1 mg/kg/dose",
+            name: "Lorivan", conc: "i.v. / p.o.", dose: "0.05 - 0.1 mg/kg/dose",
             calc: (v) => {
                 let min = 0.05 * v.w < 2 ? 0.05 * v.w : 2;
                 let max = 0.1 * v.w < 2 ? 0.1 * v.w : 2;
@@ -554,17 +638,17 @@ const drugDB = {
             }
         },
         {
-            row: 171, name: "MgSo4", conc: "i.v.", dose: "25 - 50 mg/kg/dose",
+            name: "MgSo4", conc: "i.v.", dose: "25 - 50 mg/kg/dose",
             calc: (v) => {
                 let min = 25 * v.w < 1000 ? 25 * v.w : 1000;
                 let max = 50 * v.w < 1000 ? 50 * v.w : 1000;
                 return `Min: ${excelRound(min, 0).toFixed(0)}<br>Max: ${excelRound(max, 0).toFixed(0)} mg/dose`;
             }
         },
-        { row: 172, name: "Morphine (Bolus)", conc: "i.v.", dose: "0.05 - 0.2 mg/kg/dose", calc: (v) => `Min: ${excelRound(0.05 * v.w, 2).toFixed(2)}<br>Max: ${excelRound(0.2 * v.w, 2).toFixed(2)} mg/dose` },
-        { row: 173, name: "Oxycode", conc: "p.o. (4-6/day)", dose: "0.2 mg/kg/dose", calc: (v) => `${excelRound((0.2 * v.w < 5 ? 0.2 * v.w : 5), 2).toFixed(2)} mg/dose` },
+        { name: "Morphine (Bolus)", conc: "i.v.", dose: "0.05 - 0.2 mg/kg/dose", calc: (v) => `Min: ${excelRound(0.05 * v.w, 2).toFixed(2)}<br>Max: ${excelRound(0.2 * v.w, 2).toFixed(2)} mg/dose` },
+        { name: "Oxycode", conc: "p.o.", dose: "0.2 mg/kg/dose", calc: (v) => `${excelRound((0.2 * v.w < 5 ? 0.2 * v.w : 5), 2).toFixed(2)} mg/dose` },
         {
-            row: 174, name: "Pramin", conc: "i.v. / p.o.", dose: "0.1 - 0.2 mg/kg/dose",
+            name: "Pramin", conc: "i.v. / p.o.", dose: "0.1 - 0.2 mg/kg/dose",
             calc: (v) => {
                 let min = 0.1 * v.w < 10 ? 0.1 * v.w : 10;
                 let max = 0.2 * v.w < 10 ? 0.2 * v.w : 10;
@@ -572,7 +656,7 @@ const drugDB = {
             }
         },
         {
-            row: 175, name: "Promethazine (Antihist.)", conc: "i.v. / p.o.", dose: "0.1 - 0.5 mg/kg/dose",
+            name: "Promethazine (Antihist.)", conc: "i.v. / p.o.", dose: "0.1 - 0.5 mg/kg/dose",
             calc: (v) => {
                 let min = 0.1 * v.w < 12.5 ? 0.1 * v.w : 12.5;
                 let max = 0.5 * v.w < 25 ? 0.5 * v.w : 25;
@@ -580,7 +664,7 @@ const drugDB = {
             }
         },
         {
-            row: 176, name: "Promethazine (Vomiting)", conc: "i.v. / p.o.", dose: "0.25 - 1 mg/kg/dose",
+            name: "Promethazine (Vomiting)", conc: "i.v. / p.o.", dose: "0.25 - 1 mg/kg/dose",
             calc: (v) => {
                 let min = 0.25 * v.w < 12.5 ? 0.25 * v.w : 12.5;
                 let max = v.w < 25 ? v.w : 25;
@@ -588,31 +672,31 @@ const drugDB = {
             }
         },
         {
-            row: 177, name: "Zantac", conc: "i.v. use lower dose", dose: "2 - 4 mg/kg/day",
+            name: "Zantac", conc: "i.v.", dose: "2 - 4 mg/kg/day",
             calc: (v) => {
                 let min = v.w * 2 < 300 ? v.w * 2 : 300;
                 let max = v.w * 4 < 300 ? v.w * 4 : 300;
                 return `Min: ${excelRound(min, 1).toFixed(1)}<br>Max: ${excelRound(max, 1).toFixed(1)} mg/day`;
             }
         },
-        { row: 178, name: "Zaroxylline", conc: "p.o.", dose: "0.1 mg/kg/dose", calc: (v) => `${excelRound(0.1 * v.w, 2).toFixed(2)} mg/dose` }
+        { name: "Zaroxylline", conc: "p.o.", dose: "0.1 mg/kg/dose", calc: (v) => `${excelRound(0.1 * v.w, 2).toFixed(2)} mg/dose` }
     ],
     antibiotics: [
         {
-            row: 180, name: "Acyclovir", conc: "I.V.", dose: "30 - 45 mg/kg/day",
+            name: "Acyclovir", conc: "I.V.", dose: "30 - 45 mg/kg/day",
             calc: (v) => {
                 let min = 30 * v.w < 1200 ? 30 * v.w : 1200;
                 let max = 45 * v.w < 1200 ? 45 * v.w : 1200;
                 return `Min: ${excelRound(min, 0).toFixed(0)}<br>Max: ${excelRound(max, 0).toFixed(0)} mg/day`;
             }
         },
-        { row: 181, name: "Amikacin", conc: "I.V.", dose: "22.5 mg/kg/day qd", calc: (v) => `${excelRound((v.w * 22.5 < 1500 ? v.w * 22.5 : 1500), 1).toFixed(1)} mg/day` },
+        { name: "Amikacin", conc: "I.V.", dose: "22.5 mg/kg/day qd", calc: (v) => `${excelRound((v.w * 22.5 < 1500 ? v.w * 22.5 : 1500), 1).toFixed(1)} mg/day` },
         {
-            row: 182, name: "Amphothericin", conc: "I.V. Test Dose", dose: "0.1 mg/kg",
+            name: "Amphothericin", conc: "I.V. Test Dose", dose: "0.1 mg/kg",
             calc: (v) => `${excelRound(0.1 * v.w, 2).toFixed(2)} mg`, note: "Usual therapeutic: " + excelRound(1.5 * v.w, 1).toFixed(1) + " mg/day qd"
         },
         {
-            row: 184, name: "Ampiciliin (Mild/Mod)", conc: "I.V.", dose: "100 - 200 mg/kg/day",
+            name: "Ampiciliin (Mild/Mod)", conc: "I.V.", dose: "100 - 200 mg/kg/day",
             calc: (v) => {
                 let min = 100 * v.w < 12000 ? 100 * v.w : 12000;
                 let max = 200 * v.w < 12000 ? 200 * v.w : 12000;
@@ -620,17 +704,17 @@ const drugDB = {
             }
         },
         {
-            row: 185, name: "Ampiciliin (Severe)", conc: "I.V.", dose: "200 - 400 mg/kg/day",
+            name: "Ampiciliin (Severe)", conc: "I.V.", dose: "200 - 400 mg/kg/day",
             calc: (v) => {
                 let min = 200 * v.w < 12000 ? 200 * v.w : 12000;
                 let max = 400 * v.w < 12000 ? 400 * v.w : 12000;
                 return `Min: ${excelRound(min, 0).toFixed(0)}<br>Max: ${excelRound(max, 0).toFixed(0)} mg/day`;
             }
         },
-        { row: 186, name: "Augmentin", conc: "I.V.", dose: "75 mg/kg/day", calc: (v) => `${excelRound((v.w * 75 < 4000 ? v.w * 75 : 4000), 0).toFixed(0)} mg/day` },
-        { row: 187, name: "Azithromycin", conc: "I.V.", dose: "10 mg/kg/day", calc: (v) => `${excelRound((v.w * 10 < 500 ? v.w * 10 : 500), 0).toFixed(0)} mg/day` },
+        { name: "Augmentin", conc: "I.V.", dose: "75 mg/kg/day", calc: (v) => `${excelRound((v.w * 75 < 4000 ? v.w * 75 : 4000), 0).toFixed(0)} mg/day` },
+        { name: "Azithromycin", conc: "I.V.", dose: "10 mg/kg/day", calc: (v) => `${excelRound((v.w * 10 < 500 ? v.w * 10 : 500), 0).toFixed(0)} mg/day` },
         {
-            row: 188, name: "Cefazolin (Cefamezine)", conc: "I.V.", dose: "50 - 100 mg/kg/day",
+            name: "Cefazolin (Cefamezine)", conc: "I.V.", dose: "50 - 100 mg/kg/day",
             calc: (v) => {
                 let min = 50 * v.w < 6000 ? 50 * v.w : 6000;
                 let max = 100 * v.w < 6000 ? 100 * v.w : 6000;
@@ -638,7 +722,7 @@ const drugDB = {
             }
         },
         {
-            row: 189, name: "Ciproxin", conc: "I.V.", dose: "20 - 30 mg/kg/day",
+            name: "Ciproxin", conc: "I.V.", dose: "20 - 30 mg/kg/day",
             calc: (v) => {
                 let min = 20 * v.w < 1500 ? 20 * v.w : 1500;
                 let max = 30 * v.w < 1500 ? 30 * v.w : 1500;
@@ -646,7 +730,7 @@ const drugDB = {
             }
         },
         {
-            row: 190, name: "Claforan", conc: "I.V.", dose: "100 - 200 mg/kg/day",
+            name: "Claforan", conc: "I.V.", dose: "100 - 200 mg/kg/day",
             calc: (v) => {
                 let min = 100 * v.w < 12000 ? 100 * v.w : 12000;
                 let max = 200 * v.w < 12000 ? 200 * v.w : 12000;
@@ -654,19 +738,19 @@ const drugDB = {
             }
         },
         {
-            row: 191, name: "Clindamycin", conc: "I.V.", dose: "25 - 40 mg/kg/day",
+            name: "Clindamycin", conc: "I.V.", dose: "25 - 40 mg/kg/day",
             calc: (v) => {
                 let min = 25 * v.w < 1800 ? 25 * v.w : 1800;
                 let max = 40 * v.w < 1800 ? 40 * v.w : 1800;
                 return `Min: ${excelRound(min, 0).toFixed(0)}<br>Max: ${excelRound(max, 0).toFixed(0)} mg/day`;
             }
         },
-        { row: 192, name: "Coliracin", conc: "I.V.", dose: "2.5 - 5 mg/kg/day", calc: (v) => `Min: ${excelRound(2.5 * v.w, 1).toFixed(1)}<br>Max: ${excelRound(5 * v.w, 1).toFixed(1)} mg/day` },
-        { row: 193, name: "Erythromycin (I.V.)", conc: "מינון פרוкиנטי", dose: "10 - 20 mg/kg/day", calc: (v) => `Min: ${excelRound(10 * v.w / 4, 2).toFixed(2)}<br>Max: ${excelRound(20 * v.w / 4, 2).toFixed(2)} mg/dose` },
-        { row: 194, name: "Flagyl", conc: "I.V.", dose: "30 mg/kg/day", calc: (v) => `${excelRound((30 * v.w < 4000 ? 30 * v.w : 4000), 0).toFixed(0)} mg/day` },
-        { row: 195, name: "Garamycin", conc: "I.V.", dose: "5 mg/kg/day", calc: (v) => `${excelRound(5 * v.w, 1).toFixed(1)} mg/day` },
+        { name: "Coliracin", conc: "I.V.", dose: "2.5 - 5 mg/kg/day", calc: (v) => `Min: ${excelRound(2.5 * v.w, 1).toFixed(1)}<br>Max: ${excelRound(5 * v.w, 1).toFixed(1)} mg/day` },
+        { name: "Erythromycin (I.V.)", conc: "Prokinetic", dose: "10 - 20 mg/kg/day", calc: (v) => `Min: ${excelRound(10 * v.w / 4, 2).toFixed(2)}<br>Max: ${excelRound(20 * v.w / 4, 2).toFixed(2)} mg/dose` },
+        { name: "Flagyl", conc: "I.V.", dose: "30 mg/kg/day", calc: (v) => `${excelRound((30 * v.w < 4000 ? 30 * v.w : 4000), 0).toFixed(0)} mg/day` },
+        { name: "Garamycin", conc: "I.V.", dose: "5 mg/kg/day", calc: (v) => `${excelRound(5 * v.w, 1).toFixed(1)} mg/day` },
         {
-            row: 196, name: "Meropenem", conc: "I.V.", dose: "60 - 120 mg/kg/day",
+            name: "Meropenem", conc: "I.V.", dose: "60 - 120 mg/kg/day",
             calc: (v) => {
                 let min = 60 * v.w < 6000 ? 60 * v.w : 6000;
                 let max = 120 * v.w < 6000 ? 120 * v.w : 6000;
@@ -674,7 +758,7 @@ const drugDB = {
             }
         },
         {
-            row: 197, name: "Orbenin", conc: "I.V.", dose: "100 - 200 mg/kg/day",
+            name: "Orbenin", conc: "I.V.", dose: "100 - 200 mg/kg/day",
             calc: (v) => {
                 let min = 100 * v.w < 12000 ? 100 * v.w : 12000;
                 let max = 200 * v.w < 12000 ? 200 * v.w : 12000;
@@ -682,16 +766,16 @@ const drugDB = {
             }
         },
         {
-            row: 198, name: "Resprim (Mild/Mod)", conc: "I.V.", dose: "8 - 10 mg/kg/day",
+            name: "Resprim (Mild/Mod)", conc: "I.V.", dose: "8 - 10 mg/kg/day",
             calc: (v) => {
                 let min = v.w < 40 ? (8 * v.w) : 320;
                 let max = v.w < 40 ? (10 * v.w) : 320;
                 return `Min: ${excelRound(min, 1).toFixed(1)}<br>Max: ${excelRound(max, 1).toFixed(1)} mg/day`;
             }
         },
-        { row: 199, name: "Resprim (Severe)", conc: "I.V.", dose: "20 mg/kg/day", calc: (v) => `${excelRound(20 * v.w, 1).toFixed(1)} mg/day` },
+        { name: "Resprim (Severe)", conc: "I.V.", dose: "20 mg/kg/day", calc: (v) => `${excelRound(20 * v.w, 1).toFixed(1)} mg/day` },
         {
-            row: 200, name: "Rocephin", conc: "I.V.", dose: "50 - 100 mg/kg/day",
+            name: "Rocephin", conc: "I.V.", dose: "50 - 100 mg/kg/day",
             calc: (v) => {
                 let min = (v.w * 50 < 4000) ? (v.w * 50) : 4000;
                 let max = (v.w * 100 < 2000) ? (v.w * 100) : 2000;
@@ -699,7 +783,7 @@ const drugDB = {
             }
         },
         {
-            row: 201, name: "Tazocin", conc: "I.V.", dose: "200 - 400 mg/kg/day",
+            name: "Tazocin", conc: "I.V.", dose: "200 - 400 mg/kg/day",
             calc: (v) => {
                 let min = 200 * v.w < 12000 ? 200 * v.w : 12000;
                 let max = 400 * v.w < 18000 ? 400 * v.w : 18000;
@@ -707,7 +791,7 @@ const drugDB = {
             }
         },
         {
-            row: 202, name: "Vancomycin", conc: "I.V.", dose: "40 - 60 mg/kg/day",
+            name: "Vancomycin", conc: "I.V.", dose: "40 - 60 mg/kg/day",
             calc: (v) => {
                 let min = 40 * v.w < 4000 ? 40 * v.w : 4000;
                 let max = 60 * v.w < 3000 ? 60 * v.w : 3000;
@@ -715,7 +799,7 @@ const drugDB = {
             }
         },
         {
-            row: 203, name: "Zinacef", conc: "I.V.", dose: "75 - 150 mg/kg/day",
+            name: "Zinacef", conc: "I.V.", dose: "75 - 150 mg/kg/day",
             calc: (v) => {
                 let min = 75 * v.w < 4500 ? 75 * v.w : 4500;
                 let max = 150 * v.w < 4500 ? 150 * v.w : 4500;
@@ -725,18 +809,16 @@ const drugDB = {
     ]
 };
 
-// Рендеринг интерфейса таблиц
 function renderTable(tableId, list) {
     const table = document.getElementById(tableId);
-    let html = `<thead><tr><th style="width:40px;">Row</th><th>Drug Name</th><th>Concentration / Target Dose</th><th>Calculated Output (Excel Logic)</th><th>Clinical Notes</th></tr></thead><tbody>`;
+    let html = `<thead><tr><th>Drug Name</th><th>Concentration &amp; Target Dose</th><th>Calculated Output (Excel Logic)</th><th>Clinical Notes</th></tr></thead><tbody>`;
 
     list.forEach(item => {
         let output = item.calc ? item.calc(calcVars) : '—';
         html += `
             <tr>
-                <td style="color:#94a3b8; font-size:11px;">${item.row}</td>
                 <td><strong>${item.name}</strong></td>
-                <td><small style="color:#475569;">${item.conc || ''}</small><br><b>${item.dose || ''}</b></td>
+                <td><small style="color:#64748b;">${item.conc || ''}</small><br><b>${item.dose || ''}</b></td>
                 <td><span class="dose-value">${output}</span></td>
                 <td class="info">${item.note || '—'}</td>
             </tr>`;
@@ -755,16 +837,6 @@ function updateAll() {
     renderTable('various-table', drugDB.various);
     renderTable('abx-table', drugDB.antibiotics);
 }
-
-// Переключение табов
-document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-        document.getElementById('tab-' + btn.dataset.tab).style.display = 'block';
-    });
-});
 
 window.onload = updateAll;
 </script>
