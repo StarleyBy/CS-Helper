@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Pediatric Emergency &amp; ICU Drug Calculator</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #f8f9fc;
+            font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+            color: #1e2937;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            color: white;
+            padding: 28px 32px;
+        }
+        .header h1 { font-size: 28px; font-weight: 700; }
+        .patient-info {
+            background: #f1f5f9;
+            padding: 20px 32px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: end;
+        }
+        .form-group { flex: 1; min-width: 160px; }
+        label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #334155; }
+        input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            font-size: 15px;
+        }
+        input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+        .main-content {
+            padding: 32px;
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 32px;
+        }
+        .calculator-panel {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 24px;
+        }
+        .section h2 {
+            font-size: 18px;
+            color: #1e40af;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #bfdbfe;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background: #f8fafc; font-weight: 600; }
+        .dose-value { font-weight: 700; color: #1e40af; font-family: monospace; }
+        .info { font-size: 12.5px; color: #64748b; line-height: 1.3; }
+        .bsa-value { font-size: 32px; font-weight: 800; color: #1e40af; }
+        .tab-btn {
+            padding: 8px 16px;
+            border-radius: 9999px;
+            background: #f1f5f9;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .tab-btn.active { background: #1e40af; color: white; }
+        @media (max-width: 1100px) { .main-content { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🩺 Pediatric Emergency &amp; ICU Drug Calculator</h1>
+        <p style="opacity:0.9; margin-top:8px;">Complete data from your Excel file • Real-time calculations</p>
+    </div>
+
+    <div class="patient-info">
+        <div class="form-group"><label>Patient Name</label><input type="text" id="patientName" value="Raphael"></div>
+        <div class="form-group"><label>Age (years)</label><input type="number" id="age" value="0.185" step="0.001" oninput="updateAll()"></div>
+        <div class="form-group"><label>Weight (kg)</label><input type="number" id="weight" value="4.995" step="0.001" oninput="updateAll()"></div>
+        <div class="form-group"><label>Height (cm)</label><input type="number" id="height" value="64.79" step="0.1" oninput="updateAll()"></div>
+        <div class="form-group"><label>BSA (m²)</label><div id="bsaDisplay" class="bsa-value">0.300</div></div>
+    </div>
+
+    <div class="main-content">
+        <div class="calculator-panel">
+            <div style="margin-bottom:20px; display:flex; gap:8px; flex-wrap:wrap;" id="tabs">
+                <button class="tab-btn active" data-tab="0">Resuscitation</button>
+                <button class="tab-btn" data-tab="1">Intubation</button>
+                <button class="tab-btn" data-tab="2">Sedation &amp; Infusions</button>
+                <button class="tab-btn" data-tab="3">Drips / Inotropes</button>
+                <button class="tab-btn" data-tab="4">Various Drugs</button>
+                <button class="tab-btn" data-tab="5">Antibiotics</button>
+            </div>
+
+            <div id="tab-0" class="tab-content"> <div class="section"><h2>Resuscitation Drugs</h2><table id="resus-table"></table></div> </div>
+            <div id="tab-1" class="tab-content" style="display:none"> <div class="section"><h2>Drugs for Intubation</h2><table id="intub-table"></table></div> </div>
+            <div id="tab-2" class="tab-content" style="display:none"> <div class="section"><h2>Sedation and Paralysis Infusions</h2><table id="sedation-table"></table></div> </div>
+            <div id="tab-3" class="tab-content" style="display:none"> <div class="section"><h2>Drugs in Drip</h2><table id="drip-table"></table></div> </div>
+            <div id="tab-4" class="tab-content" style="display:none"> <div class="section"><h2>Various Drugs</h2><table id="various-table"></table></div> </div>
+            <div id="tab-5" class="tab-content" style="display:none"> <div class="section"><h2>Antibiotics (I.V.)</h2><table id="abx-table"></table></div> </div>
+        </div>
+
+        <div>
+            <div class="calculator-panel">
+                <h3>Quick Defibrillation / Cardioversion</h3>
+                <table>
+                    <tr><td><strong>VF / Pulseless VT</strong></td><td class="dose-value" id="defib">—</td></tr>
+                    <tr><td><strong>Cardioversion (Sync)</strong></td><td class="dose-value" id="cardio">—</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ==================== FULL DATABASE FROM YOUR EXCEL ====================
+const drugDB = {
+    resuscitation: [
+        {name:"Adrenaline", conc:"1mg/10ml", dose:"0.01 mg/kg", calc:w=>(w*0.01).toFixed(3)+" mg"},
+        {name:"Atropine", conc:"1mg/1ml", dose:"0.02 mg/kg", calc:w=>(w*0.02).toFixed(3)+" mg"},
+        {name:"Sodium bicarbonate", conc:"1meq/1ml", dose:"1 meq/kg", calc:w=>(w*1).toFixed(3)+" meq", note:"For peripheral use mix 1:1 with water"},
+        {name:"Ca Gluconate 10%", conc:"100mg/1ml", dose:"100 mg/kg", calc:w=>(w*100).toFixed(1)+" mg"},
+        {name:"Lidocaine 1%", conc:"10mg/1ml", dose:"1 mg/kg", calc:w=>(w*1).toFixed(3)+" mg"},
+        {name:"Adenosine", conc:"3mg/ml", dose:"0.1 mg/kg", calc:w=>(w*0.1).toFixed(3)+" mg", note:"Rapid IV push, may increase"}
+    ],
+    intubation: [
+        {name:"Pentotal", conc:"100mg/1ml", dose:"4 mg/kg", calc:w=>(w*4).toFixed(2)+" mg"},
+        {name:"Ketamine", conc:"50mg/1ml", dose:"1 mg/kg", calc:w=>(w*1).toFixed(3)+" mg"},
+        {name:"Atracurium", conc:"10mg/1ml", dose:"0.3 mg/kg", calc:w=>(w*0.3).toFixed(2)+" mg"},
+        {name:"Fentanyl", conc:"50mcg/1ml", dose:"2 mcg/kg", calc:w=>(w*2).toFixed(2)+" mcg"},
+        {name:"Midazolam", conc:"1mg/1ml", dose:"0.1 mg/kg", calc:w=>(w*0.1).toFixed(3)+" mg"},
+        {name:"Rocuronium", conc:"10mg/1ml", dose:"1 mg/kg", calc:w=>(w*1).toFixed(3)+" mg"}
+    ],
+    sedation: [
+        {name:"Fentanyl", conc:"50mcg/1ml", rate:"1 mcg/kg/hr", calc:w=>(w*1/50).toFixed(2)+" ml/hr"},
+        {name:"Morphine", conc:"Dilute 1mg/ml", rate:"0.01-0.04 mg/kg/hr", calc:w=>(w*0.02).toFixed(2)+" ml/hr"},
+        {name:"Remifentanil", conc:"1ml/hr = 0.1mcg/kg/hr", rate:"Increase by 0.3ml/5min", note:"Max 7.4 ml/hr"},
+        {name:"Midazolam", conc:"1mg/1ml", rate:"0.1 mg/kg/hr", calc:w=>(w*0.1).toFixed(2)+" ml/hr"},
+        {name:"Propofol", conc:"10mg/1ml", loading:"1-2 mg/kg", calc:w=>(w*1.5).toFixed(2)+" mg"},
+        {name:"Precedex", conc:"200mcg/50ml", rate:"0.2-0.7 mcg/kg/hr", calc:w=>(w*0.4/4).toFixed(2)+" ml/hr"},
+        {name:"Ketamine", conc:"250mg/50ml", rate:"0.5-2 mg/kg/hr", calc:w=>(w*1/5).toFixed(2)+" ml/hr"},
+        {name:"Esmeron", conc:"10mg/1ml", rate:"1 mg/kg/hr", calc:w=>w.toFixed(2)+" ml/hr"}
+    ],
+    drips: [
+        {name:"Adrenaline", conc:"1.5 mg/50ml", rate:"0.1 mcg/kg/min"},
+        {name:"Noradrenaline", conc:"1.5 mg/50ml", rate:"1ml/hr = 0.1 mcg/kg/min", calc:w=>(w*0.1/30).toFixed(2)+" ml/hr"},
+        {name:"Phenylephrine", conc:"1.5 mg/50ml"},
+        {name:"Dopamine", conc:"15 mg/50ml", rate:"1 mcg/kg/min", calc:w=>(w*1/300).toFixed(2)+" ml/hr"},
+        {name:"Dobutamine", conc:"15 mg/50ml", rate:"1 mcg/kg/min", calc:w=>(w*1/300).toFixed(2)+" ml/hr"},
+        {name:"Vasopressin", conc:"1.5 units/50ml", rate:"1ml/hr = 0.0001 U/kg/min", calc:w=>(w*0.0001).toFixed(3)+" ml/hr"},
+        {name:"Isuprel", conc:"400 mcg/50ml", rate:"0.05-2 mcg/kg/min"},
+        {name:"Milrinone", conc:"5.62 mg/50ml", loading:"50 mcg/kg", rate:"0.375 mcg/kg/min"},
+        {name:"Esmolol", conc:"10mg/1ml", loading:"100 mcg/kg", rate:"50-500 mcg/kg/min"},
+        {name:"Labetalol", conc:"1mg/ml", rate:"0.4-1 mg/kg/hr", calc:w=>(w*0.7).toFixed(1)+" ml/hr"},
+        {name:"Prostaglandin E", conc:"1.5 mg/50ml", rate:"0.1 mcg/kg/min", calc:w=>(w*0.1/30).toFixed(2)+" ml/hr"},
+        {name:"Lidocaine 1%", conc:"150 mg/50ml", rate:"10-50 mcg/kg/min"},
+        {name:"Amiodarone", loading:"24.975 mg", rate:"5-15 mcg/kg/min"}
+    ],
+    various: [
+        {name:"Albumin 20%", dose:"0.5-1 g/kg/dose", calc:w=>(w*0.75).toFixed(2)+" g"},
+        {name:"Aldactone", dose:"2-4 mg/kg/day", calc:w=>(w*3).toFixed(2)+" mg/day"},
+        {name:"Aminophylline", dose:"6 mg/kg/day", calc:w=>(w*6).toFixed(1)+" mg/day"},
+        {name:"Aspirin", dose:"5-10 mg/kg/day (prophylactic)", calc:w=>(w*7.5).toFixed(1)+" mg/day"},
+        {name:"Captopril", dose:"0.5-6 mg/kg/day", calc:w=>(w*2).toFixed(2)+" mg/day"},
+        {name:"Diamox", dose:"5 mg/kg/dose", calc:w=>(w*5).toFixed(1)+" mg"},
+        {name:"Heparin", loading:"50 u/kg", maintenance:"10-25 u/kg/hr", calc:w=>(w*50).toFixed(0)+" units"},
+        {name:"Lasix", conc:"1mg/1ml", rate:"0.1 mg/kg/hr", calc:w=>(w*0.1).toFixed(2)+" ml/hr"},
+        {name:"MgSO4", dose:"25-50 mg/kg/dose", calc:w=>(w*37.5).toFixed(1)+" mg"},
+        {name:"Morphine", dose:"0.05-0.2 mg/kg/dose", calc:w=>(w*0.1).toFixed(2)+" mg"},
+        {name:"Promethazine", dose:"0.1-1 mg/kg/dose", calc:w=>(w*0.5).toFixed(2)+" mg"}
+    ],
+    antibiotics: [
+        {name:"Acyclovir", dose:"30-45 mg/kg/day", calc:w=>(w*37.5).toFixed(1)+" mg/day"},
+        {name:"Amikacin", dose:"22.5 mg/kg/day", calc:w=>(w*22.5).toFixed(1)+" mg/day"},
+        {name:"Ampicillin (mild)", dose:"100-200 mg/kg/day", calc:w=>(w*150).toFixed(0)+" mg/day"},
+        {name:"Ampicillin (severe)", dose:"200-400 mg/kg/day", calc:w=>(w*300).toFixed(0)+" mg/day"},
+        {name:"Augmentin", dose:"75 mg/kg/day", calc:w=>(w*75).toFixed(0)+" mg/day"},
+        {name:"Azithromycin", dose:"10 mg/kg/day", calc:w=>(w*10).toFixed(1)+" mg/day"},
+        {name:"Cefazolin", dose:"50-100 mg/kg/day", calc:w=>(w*75).toFixed(0)+" mg/day"},
+        {name:"Ceftriaxone (Rocephin)", dose:"50-100 mg/kg/day", calc:w=>(w*75).toFixed(0)+" mg/day"},
+        {name:"Clindamycin", dose:"25-40 mg/kg/day", calc:w=>(w*32.5).toFixed(1)+" mg/day"},
+        {name:"Erythromycin", dose:"10-20 mg/kg/day", calc:w=>(w*15).toFixed(1)+" mg/day"},
+        {name:"Flagyl (Metronidazole)", dose:"30 mg/kg/day", calc:w=>(w*30).toFixed(1)+" mg/day"},
+        {name:"Garamycin (Gentamicin)", dose:"5 mg/kg/day", calc:w=>(w*5).toFixed(1)+" mg/day"},
+        {name:"Meropenem", dose:"60-120 mg/kg/day", calc:w=>(w*90).toFixed(0)+" mg/day"},
+        {name:"Orbenin", dose:"100-200 mg/kg/day", calc:w=>(w*150).toFixed(0)+" mg/day"},
+        {name:"Resprim (Co-trimoxazole)", dose:"8-20 mg/kg/day", calc:w=>(w*14).toFixed(1)+" mg/day"},
+        {name:"Tazocin", dose:"200-400 mg/kg/day", calc:w=>(w*300).toFixed(0)+" mg/day"},
+        {name:"Vancomycin", dose:"40-60 mg/kg/day", calc:w=>(w*50).toFixed(0)+" mg/day"},
+        {name:"Zinacef", dose:"75-150 mg/kg/day", calc:w=>(w*100).toFixed(0)+" mg/day"}
+    ]
+};
+
+// ==================== RENDER & CALCULATION ====================
+function calculateBSA(h, w) {
+    return Math.sqrt((h * w) / 3600).toFixed(3);
+}
+
+function renderTable(tableId, list, weight) {
+    const table = document.getElementById(tableId);
+    let html = `<thead><tr><th>Drug</th><th>Dose / Concentration</th><th>Rate / Calculation</th><th>Result for current weight</th><th>Notes</th></tr></thead><tbody>`;
+
+    list.forEach(item => {
+        let result = item.calc ? item.calc(weight) : '—';
+        html += `
+            <tr>
+                <td><strong>${item.name}</strong></td>
+                <td>${item.conc || item.dose || ''}</td>
+                <td>${item.rate || item.loading || item.maintenance || item.dose || ''}</td>
+                <td class="dose-value">${result}</td>
+                <td class="info">${item.note || ''}</td>
+            </tr>`;
+    });
+    html += '</tbody>';
+    table.innerHTML = html;
+}
+
+function updateAll() {
+    const weight = parseFloat(document.getElementById('weight').value) || 5;
+    const height = parseFloat(document.getElementById('height').value) || 65;
+    const bsa = calculateBSA(height, weight);
+
+    document.getElementById('bsaDisplay').textContent = bsa;
+
+    renderTable('resus-table', drugDB.resuscitation, weight);
+    renderTable('intub-table', drugDB.intubation, weight);
+    renderTable('sedation-table', drugDB.sedation, weight);
+    renderTable('drip-table', drugDB.drips, weight);
+    renderTable('various-table', drugDB.various, weight);
+    renderTable('abx-table', drugDB.antibiotics, weight);
+
+    document.getElementById('defib').textContent = (2 * weight).toFixed(1) + " J";
+    document.getElementById('cardio').textContent = (0.5 * weight).toFixed(1) + " J";
+}
+
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+        document.getElementById('tab-' + btn.dataset.tab).style.display = 'block';
+    });
+});
+
+window.onload = updateAll;
+</script>
+</body>
+</html>
