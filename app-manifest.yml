@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-06-02 11:08
+  updated: 2026-06-02 14:35
 
 sections:
   - id: calculators
@@ -29,6 +29,12 @@ sections:
       - id: iv-infusion
         title: "IV Infusion Rates"
         file: books/calculators/iv-infusion.html
+        type: calculator
+        visible: true
+        tags: []
+      - id: pediatric-doses
+        title: "Pediatric Emergency &amp; ICU Drug Calculator"
+        file: books/calculators/pediatric-doses.html
         type: calculator
         visible: true
         tags: []
