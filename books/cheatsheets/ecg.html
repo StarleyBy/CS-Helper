@@ -345,15 +345,237 @@
             margin-top: 3px;
         }
 
-        @media (max-width: 1024px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; position: relative; height: auto; }
-            .main-content { margin-left: 0; padding: 20px; }
-            .grid-2 { grid-template-columns: 1fr; }
+        /* ── MOBILE BOTTOM NAV ── */
+        .mobile-header {
+            display: none;
+        }
+
+        .mobile-bottom-nav {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            /* Hide desktop sidebar entirely */
+            .sidebar {
+                display: none;
+            }
+
+            /* Full-width body, no flex row */
+            body {
+                display: block;
+                min-height: 100vh;
+                overflow-x: hidden;
+            }
+
+            /* Sticky top bar: title + theme toggle */
+            .mobile-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                position: sticky;
+                top: 0;
+                z-index: 200;
+                background: var(--bg-sidebar);
+                padding: 10px 14px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            }
+
+            .mobile-header-title {
+                font-size: 14px;
+                font-weight: 700;
+                color: #f8fafc;
+                letter-spacing: 0.3px;
+            }
+
+            .mobile-header-subtitle {
+                font-size: 10px;
+                color: var(--text-sidebar);
+                margin-top: 1px;
+            }
+
+            .mobile-theme-btn {
+                background: transparent;
+                border: 1px solid rgba(255,255,255,0.3);
+                color: #fff;
+                border-radius: 6px;
+                padding: 6px 10px;
+                font-size: 13px;
+                cursor: pointer;
+                white-space: nowrap;
+            }
+
+            /* Main content: full width, padding accounts for bottom nav */
+            .main-content {
+                margin-left: 0;
+                padding: 16px 12px 80px 12px;
+                max-width: 100%;
+                width: 100%;
+                overflow-x: hidden;
+            }
+
+            /* Section headings */
+            h2 {
+                font-size: 17px;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            /* Single column grid */
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            /* Cards */
+            .card {
+                padding: 14px;
+                margin-bottom: 14px;
+            }
+
+            .card h3 {
+                font-size: 14px;
+                flex-wrap: wrap;
+            }
+
+            /* Tables: horizontal scroll container */
+            table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+
+            th, td {
+                padding: 7px 9px;
+                white-space: normal;
+                min-width: 90px;
+            }
+
+            /* art-block: allow wrap */
+            .art-block {
+                font-size: 11px;
+                overflow-x: auto;
+                white-space: pre-wrap;
+                word-break: break-word;
+            }
+
+            /* tool inputs full width */
+            .tool-field input,
+            .tool-field select {
+                width: 100%;
+                font-size: 16px; /* prevent iOS zoom */
+            }
+
+            .btn-calc {
+                width: 100%;
+                padding: 12px;
+            }
+
+            li {
+                font-size: 13px;
+            }
+
+            .section-desc {
+                font-size: 13px;
+                margin-bottom: 14px;
+            }
+
+            /* Bottom navigation bar */
+            .mobile-bottom-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 300;
+                background: var(--bg-sidebar);
+                border-top: 1px solid rgba(255,255,255,0.1);
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                box-shadow: 0 -2px 12px rgba(0,0,0,0.3);
+            }
+
+            .mobile-bottom-nav::-webkit-scrollbar {
+                display: none;
+            }
+
+            .mobile-bottom-nav a {
+                flex: 0 0 auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 8px 12px;
+                color: var(--text-sidebar);
+                text-decoration: none;
+                font-size: 10px;
+                font-weight: 600;
+                white-space: nowrap;
+                min-width: 56px;
+                border-bottom: 3px solid transparent;
+                transition: color 0.2s, border-color 0.2s;
+            }
+
+            .mobile-bottom-nav a .nav-num {
+                font-size: 13px;
+                font-weight: 700;
+                margin-bottom: 2px;
+            }
+
+            .mobile-bottom-nav a.active,
+            .mobile-bottom-nav a:hover {
+                color: #ffffff;
+                border-bottom-color: var(--primary);
+                background: rgba(255,255,255,0.05);
+            }
+
+            /* mono tags */
+            .mono {
+                font-size: 11px;
+                word-break: break-all;
+            }
+
+            /* tip block */
+            .tip {
+                font-size: 13px;
+                padding: 10px 10px 10px 12px;
+            }
         }
     </style>
 </head>
 <body>
+
+    <!-- Mobile-only top header -->
+    <div class="mobile-header">
+        <div>
+            <div class="mobile-header-title">📊 ECG EXPERT MANUAL</div>
+            <div class="mobile-header-subtitle">Advanced Clinical Toolsuite</div>
+        </div>
+        <button class="mobile-theme-btn" onclick="toggleTheme()">🌓 Theme</button>
+    </div>
+
+    <!-- Mobile-only bottom navigation -->
+    <nav class="mobile-bottom-nav" id="mobileBottomNav">
+        <a href="#sec1" onclick="switchTab(event,'sec1')" class="active"><span class="nav-num">①</span>Foundations</a>
+        <a href="#sec2" onclick="switchTab(event,'sec2')"><span class="nav-num">②</span>Axis</a>
+        <a href="#sec3" onclick="switchTab(event,'sec3')"><span class="nav-num">③</span>Chambers</a>
+        <a href="#sec4" onclick="switchTab(event,'sec4')"><span class="nav-num">④</span>SA/Atrial</a>
+        <a href="#sec5" onclick="switchTab(event,'sec5')"><span class="nav-num">⑤</span>AV Blocks</a>
+        <a href="#sec6" onclick="switchTab(event,'sec6')"><span class="nav-num">⑥</span>Pre-exc.</a>
+        <a href="#sec7" onclick="switchTab(event,'sec7')"><span class="nav-num">⑦</span>SVT</a>
+        <a href="#sec8" onclick="switchTab(event,'sec8')"><span class="nav-num">⑧</span>Wide QRS</a>
+        <a href="#sec9" onclick="switchTab(event,'sec9')"><span class="nav-num">⑨</span>Ventricul.</a>
+        <a href="#sec10" onclick="switchTab(event,'sec10')"><span class="nav-num">⑩</span>OMI</a>
+        <a href="#sec11" onclick="switchTab(event,'sec11')"><span class="nav-num">⑪</span>Q-Waves</a>
+        <a href="#sec12" onclick="switchTab(event,'sec12')"><span class="nav-num">⑫</span>Channel.</a>
+        <a href="#sec13" onclick="switchTab(event,'sec13')"><span class="nav-num">⑬</span>Electrolytes</a>
+        <a href="#sec14" onclick="switchTab(event,'sec14')"><span class="nav-num">⑭</span>Systemic</a>
+        <a href="#sec15" onclick="switchTab(event,'sec15')"><span class="nav-num">⑮</span>Pacing</a>
+        <a href="#sec16" onclick="switchTab(event,'sec16')"><span class="nav-num">⑯</span>Pediatrics</a>
+        <a href="#sectools" onclick="switchTab(event,'sectools')"><span class="nav-num">🛠️</span>Tools</a>
+    </nav>
 
     <div class="sidebar">
         <div class="sidebar-header">
@@ -468,7 +690,7 @@
                     </ul>
                 </div>
                 <div class="card">
-                    <h3>ПЖ и Предсердия Criteria</h3>
+                    <h3>RV & Atrial Enlargement Criteria</h3>
                     <ul>
                         <li><span class="bold">Right Ventricular Hypertrophy (RVH):</span>
                             <ul>
@@ -927,18 +1149,29 @@
         // Tab Navigation Handler
         function switchTab(event, targetId) {
             event.preventDefault();
-            
-            // Remove active classes from navigation menu items
+
+            // Sync sidebar menu
             const menuItems = document.querySelectorAll('.sidebar-menu li');
             menuItems.forEach(item => item.classList.remove('active'));
-            
-            // Highlight current target
-            event.currentTarget.parentElement.classList.add('active');
-            
-            // Display corresponding structural panel
-            const panels = document.querySelectorAll('.section-panel');
-            panels.forEach(panel => panel.classList.remove('active'));
-            
+            menuItems.forEach(item => {
+                const a = item.querySelector('a');
+                if (a && (a.getAttribute('onclick')||'').includes("'" + targetId + "'")) {
+                    item.classList.add('active');
+                }
+            });
+
+            // Sync mobile bottom nav
+            const mobileLinks = document.querySelectorAll('.mobile-bottom-nav a');
+            mobileLinks.forEach(link => {
+                link.classList.remove('active');
+                if ((link.getAttribute('onclick')||'').includes("'" + targetId + "'")) {
+                    link.classList.add('active');
+                    link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
+            });
+
+            // Show target panel
+            document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
             document.getElementById(targetId).classList.add('active');
             window.scrollTo(0, 0);
         }
