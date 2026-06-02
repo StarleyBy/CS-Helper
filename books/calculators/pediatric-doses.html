@@ -779,12 +779,13 @@ function renderTable(tableId, list) {
 
     list.forEach(item => {
         let output = item.calc ? item.calc(calcVars) : '—';
+        let noteText = (typeof item.note === 'function') ? item.note(calcVars) : (item.note || '—');
         html += `
             <tr>
                 <td><strong>${item.name}</strong></td>
                 <td><small style="color:#64748b;">${item.conc || ''}</small><br><b>${item.dose || ''}</b></td>
                 <td><span class="dose-value">${output}</span></td>
-                <td class="info">${item.note || '—'}</td>
+                <td class="info">${noteText}</td>
             </tr>`;
     });
     html += '</tbody>';
