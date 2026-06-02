@@ -155,7 +155,7 @@
         <label>Sex</label>
         <select id="sex" onchange="calc()">
           <option value="0">Male</option>
-          <option value="0.2196303">Female</option>
+          <option value="0.2196434">Female</option>
         </select>
       </div>
     </div>
@@ -188,7 +188,7 @@
           <option value="0">Class I</option>
           <option value="0.107054">Class II</option>
           <option value="0.2958358">Class III</option>
-          <option value="0.5593929">Class IV</option>
+          <option value="0.5597929">Class IV</option>
         </select>
       </div>
       <div class="field-group">
@@ -203,8 +203,8 @@
         <select id="lv" onchange="calc()">
           <option value="0">Good (>50%)</option>
           <option value="0.3150652">Moderate (31-50%)</option>
-          <option value="0.8097619">Poor (21-30%)</option>
-          <option value="1.209197">Very Poor (≤20%)</option>
+          <option value="0.8084096">Poor (21-30%)</option>
+          <option value="0.9346919">Very Poor (≤20%)</option>
         </select>
       </div>
       <div class="field-group">
@@ -230,7 +230,7 @@
         <label>Urgency</label>
         <select id="urgency" onchange="calc()">
           <option value="0">Elective</option>
-          <option value="0.317873">Urgent</option>
+          <option value="0.3174673">Urgent</option>
           <option value="0.7039121">Emergency</option>
           <option value="1.362947">Salvage</option>
         </select>
@@ -239,9 +239,9 @@
         <label>Procedure Weight</label>
         <select id="weight" onchange="calc()">
           <option value="0">Isolated CABG</option>
-          <option value="0.0060029">Single Non-CABG</option>
-          <option value="0.3041887">2 Procedures</option>
-          <option value="0.6109311">3 Procedures</option>
+          <option value="0.0062118">Single Non-CABG</option>
+          <option value="0.5521478">2 Procedures</option>
+          <option value="0.9724533">3 Procedures</option>
         </select>
       </div>
     </div>
@@ -257,7 +257,7 @@
     </table>
     <div class="note">
       Formula: Logistic regression P = e<sup>logit</sup> / (1 + e<sup>logit</sup>)<br>
-      Intercept: -5.32427 | Age coefficient: 0.028511 per year.<br>
+      Intercept: -5.324537 | Age coefficient: 0.028511 per year.<br>
       Published in: Eur J Cardiothorac Surg 2012;41:734-745.
     </div>
   </div>
@@ -265,11 +265,12 @@
 
 <script>
   function calc() {
-    let logit = -5.32427;
+    let logit = -5.324537;
     
     // Age
     let age = parseFloat(document.getElementById('age').value) || 0;
-    logit += age * 0.028511;
+    let agePoints = age <= 60 ? 1 : (age - 59);
+    logit += agePoints * 0.0285181;
 
     // Selects
     logit += parseFloat(document.getElementById('sex').value);
@@ -281,10 +282,10 @@
     logit += parseFloat(document.getElementById('weight').value);
 
     // Checkboxes
-    if (document.getElementById('extracardiac').checked) logit += 0.5360243;
-    if (document.getElementById('mobility').checked) logit += 0.2407186;
+    if (document.getElementById('extracardiac').checked) logit += 0.5360268;
+    if (document.getElementById('mobility').checked) logit += 0.2407181;
     if (document.getElementById('reoperation').checked) logit += 1.118599;
-    if (document.getElementById('lung').checked) logit += 0.1886507;
+    if (document.getElementById('lung').checked) logit += 0.1886564;
     if (document.getElementById('endocarditis').checked) logit += 0.6194522;
     if (document.getElementById('critical').checked) logit += 1.086517;
     if (document.getElementById('diabetes').checked) logit += 0.3542749;
