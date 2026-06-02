@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-06-02 17:50
+  updated: 2026-06-02 17:52
 
 sections:
   - id: calculators
@@ -161,7 +161,7 @@ sections:
         visible: true
         tags: [liver, cirrhosis, hepatology]
       - id: ecg
-        title: "ECG Cheat Sheet – LITFL based | Advanced"
+        title: "Expert ECG Reference Manual & Clinical Toolsuite"
         file: books/cheatsheets/ecg.html
         type: cheatsheet
         visible: true
