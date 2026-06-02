@@ -414,7 +414,7 @@ const drugDB = {
         {
             name: "Precedex", conc: "200mcg / 50ml", dose: "0.2 - 0.7 mcg/kg/hr",
             calc: (v) => `Min: ${excelRound(0.2 * v.w / 4, 3).toFixed(2)} ml/hr<br>Max: ${excelRound(0.7 * v.w / 4, 3).toFixed(2)} ml/hr`,
-            note: "May load 1mcg/kg -> Vol: " + excelRound(1 * v.w / 4, 2).toFixed(2) + " ml"
+            note: (v) => "May load 1mcg/kg -> Vol: " + excelRound(1 * v.w / 4, 2).toFixed(2) + " ml"
         },
         {
             name: "Ketamine Infusion", conc: "250mg / 50ml", dose: "0.5 - 2 mg/kg/hr",
@@ -469,7 +469,7 @@ const drugDB = {
                 let mg = v.w <= 50 ? excelRound(1125 * v.w / 1000, 2) : 50;
                 return `Mix ${mg.toFixed(2)} mg into 50ml`;
             },
-            note: "Loading dose: " + excelRound(v.w * 50, 1).toFixed(0) + " mcg over 15 min"
+            note: (v) => "Loading dose: " + excelRound(v.w * 50, 1).toFixed(0) + " mcg over 15 min"
         },
         {
             name: "Esmolol Infusion", conc: "10mg/1ml", dose: "LD: 100mcg/kg over 1 min | MD: 50-500mcg/kg/min",
@@ -592,7 +592,7 @@ const drugDB = {
             }
         },
         { name: "Halidol", conc: "Max 0.15mg/kg/d", dose: "0.075 - 0.15 mg/kg/day", calc: (v) => `Min: ${excelRound(0.025 * v.w * 3, 2).toFixed(2)}<br>Max: ${excelRound(0.05 * v.w * 3, 2).toFixed(2)} mg/day` },
-        { name: "Ketamine (Bolus)", conc: "i.v.", dose: "1 - 2 mg/kg/dose", calc: (v) => `Min: ${excelRound(v.w, 1).toFixed(1)}<br>Max: ${excelRound(v.w * 2, 1).toFixed(1)} mg/dose` },
+        { name: "Ketamine (Bolus)", conc: "i.v.", dose: "1 - 2 mg/kg/dose", calc: (v) => `Min: ${excelRound(v.w, 1).toFixed(1)}<br>Max: ${excelRound(v.w * 2, 1).toFixed(1)} mcg/dose` },
         {
             name: "Lorivan", conc: "i.v. / p.o.", dose: "0.05 - 0.1 mg/kg/dose",
             calc: (v) => {
@@ -657,7 +657,8 @@ const drugDB = {
         { name: "Amikacin", conc: "I.V.", dose: "22.5 mg/kg/day qd", calc: (v) => `${excelRound((v.w * 22.5 < 1500 ? v.w * 22.5 : 1500), 1).toFixed(1)} mg/day` },
         {
             name: "Amphothericin", conc: "I.V. Test Dose", dose: "0.1 mg/kg",
-            calc: (v) => `${excelRound(0.1 * v.w, 2).toFixed(2)} mg`, note: "Usual therapeutic: " + excelRound(1.5 * v.w, 1).toFixed(1) + " mg/day qd"
+            calc: (v) => `${excelRound(0.1 * v.w, 2).toFixed(2)} mg`, 
+            note: (v) => "Usual therapeutic: " + excelRound(1.5 * v.w, 1).toFixed(1) + " mg/day qd"
         },
         {
             name: "Ampiciliin (Mild/Mod)", conc: "I.V.", dose: "100 - 200 mg/kg/day",
