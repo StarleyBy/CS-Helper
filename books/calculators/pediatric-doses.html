@@ -42,6 +42,7 @@
             border: 1px solid #cbd5e1;
             border-radius: 12px;
             font-size: 15px;
+            font-weight: 600;
         }
         input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
         .main-content {
@@ -64,20 +65,32 @@
             border-bottom: 2px solid #bfdbfe;
         }
         table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
-        th { background: #f8fafc; font-weight: 600; }
-        .dose-value { font-weight: 700; color: #1e40af; font-family: monospace; }
-        .info { font-size: 12.5px; color: #64748b; line-height: 1.3; }
-        .bsa-value { font-size: 32px; font-weight: 800; color: #1e40af; }
+        th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background: #f8fafc; font-weight: 600; color: #475569; }
+        .dose-value { 
+            font-weight: 700; 
+            color: #16a34a; 
+            font-family: monospace; 
+            background: #f0fdf4; 
+            padding: 6px 12px; 
+            border-radius: 8px; 
+            display: inline-block;
+            line-height: 1.4;
+        }
+        .info { font-size: 12.5px; color: #64748b; line-height: 1.4; }
+        .bsa-value { font-size: 28px; font-weight: 800; color: #1e40af; line-height: 1; }
         .tab-btn {
-            padding: 8px 16px;
+            padding: 10px 18px;
             border-radius: 9999px;
             background: #f1f5f9;
             border: none;
-            font-weight: 500;
+            font-weight: 600;
+            color: #475569;
             cursor: pointer;
+            transition: all 0.15s;
         }
         .tab-btn.active { background: #1e40af; color: white; }
+        .tab-btn:hover:not(.active) { background: #e2e8f0; color: #1e40af; }
         @media (max-width: 1100px) { .main-content { grid-template-columns: 1fr; } }
     </style>
 </head>
@@ -85,7 +98,7 @@
 <div class="container">
     <div class="header">
         <h1>🩺 Pediatric Emergency &amp; ICU Drug Calculator</h1>
-        <p style="opacity:0.9; margin-top:8px;">Complete data from your Excel file • Real-time calculations</p>
+        <p style="opacity:0.9; margin-top:8px;">Precise Rounding Protocols • Fixed Range &amp; Split-Dose Calculations</p>
     </div>
 
     <div class="patient-info">
@@ -117,10 +130,10 @@
 
         <div>
             <div class="calculator-panel">
-                <h3>Quick Defibrillation / Cardioversion</h3>
-                <table>
-                    <tr><td><strong>VF / Pulseless VT</strong></td><td class="dose-value" id="defib">—</td></tr>
-                    <tr><td><strong>Cardioversion (Sync)</strong></td><td class="dose-value" id="cardio">—</td></tr>
+                <h3 style="margin-bottom: 12px; color: #1e3a8a;">Quick Defibrillation / Cardioversion</h3>
+                <table style="width: 100%;">
+                    <tr><td><strong>VF / Pulseless VT (2 J/kg)</strong></td><td class="dose-value" id="defib">—</td></tr>
+                    <tr><td style="border: none;"><strong>Cardioversion (0.5 J/kg)</strong></td><td class="dose-value" style="border: none;" id="cardio">—</td></tr>
                 </table>
             </div>
         </div>
@@ -128,30 +141,42 @@
 </div>
 
 <script>
-// ==================== FULL DATABASE WITH ADVANCED CALCS ====================
+// ==================== CONFIGURABLE DATABASE WITH EXACT ROUNDING ====================
 const drugDB = {
     resuscitation: [
         {name:"Adrenaline", conc:"1mg/10ml", dose:"0.01 mg/kg", calc:w=>`${(w*0.01).toFixed(3)} mg (${(w*0.1).toFixed(2)} ml)`},
-        {name:"Atropine", conc:"1mg/1ml", dose:"0.02 mg/kg", calc:w=>`${(w*0.02).toFixed(3)} mg (${(w*0.02).toFixed(2)} ml)`},
-        {name:"Sodium bicarbonate", conc:"1meq/1ml", dose:"1 meq/kg", calc:w=>`${(w*1).toFixed(2)} meq (ml)`, note:"For peripheral use mix 1:1 with water"},
-        {name:"Ca Gluconate 10%", conc:"100mg/1ml", dose:"100 mg/kg", calc:w=>`${(w*100).toFixed(1)} mg (${(w*1).toFixed(2)} ml)`},
+        {
+            name:"Atropine", 
+            conc:"1mg/1ml", 
+            dose:"Conditional Formula", 
+            calc:w=>{
+                let val;
+                if (w < 5) val = 0.1;
+                else if (w < 25) val = Math.round(w * 0.02 * 100) / 100;
+                else if (w < 50) val = 0.5;
+                else val = 1.0;
+                return `${val.toFixed(2)} mg (${val.toFixed(2)} ml)`;
+            }
+        },
+        {name:"Sodium bicarbonate", conc:"1meq/1ml", dose:"1 meq/kg", calc:w=>`${(w*1).toFixed(2)} meq (${(w*1).toFixed(2)} ml)`, note:"For peripheral use mix 1:1 with water"},
+        {name:"Ca Gluconate 10%", conc:"100mg/1ml", dose:"100 mg/kg", calc:w=>`${Math.round(w*100).toFixed(0)} mg (${(w*1).toFixed(2)} ml)`},
         {name:"Lidocaine 1%", conc:"10mg/1ml", dose:"1 mg/kg", calc:w=>`${(w*1).toFixed(2)} mg (${(w*0.1).toFixed(2)} ml)`},
         {name:"Adenosine", conc:"3mg/ml", dose:"0.1 mg/kg", calc:w=>`${(w*0.1).toFixed(3)} mg (${(w*0.1/3).toFixed(3)} ml)`, note:"Rapid IV push, may increase"}
     ],
     intubation: [
-        {name:"Pentotal", conc:"100mg/1ml", dose:"4 mg/kg", calc:w=>`${(w*4).toFixed(2)} mg`},
-        {name:"Ketamine", conc:"50mg/1ml", dose:"1 mg/kg", calc:w=>`${(w*1).toFixed(2)} mg`},
+        {name:"Pentotal", conc:"100mg/1ml", dose:"4 mg/kg", calc:w=>`${(w*4).toFixed(1)} mg`},
+        {name:"Ketamine", conc:"50mg/1ml", dose:"1 mg/kg", calc:w=>`${(w*1).toFixed(1)} mg`},
         {name:"Atracurium", conc:"10mg/1ml", dose:"0.3 mg/kg", calc:w=>`${(w*0.3).toFixed(2)} mg`},
-        {name:"Fentanyl", conc:"50mcg/1ml", dose:"2 mcg/kg", calc:w=>`${(w*2).toFixed(2)} mcg`},
+        {name:"Fentanyl", conc:"50mcg/1ml", dose:"2 mcg/kg", calc:w=>`${(w*2).toFixed(1)} mcg`},
         {name:"Midazolam", conc:"1mg/1ml", dose:"0.1 mg/kg", calc:w=>`${(w*0.1).toFixed(2)} mg`},
-        {name:"Rocuronium", conc:"10mg/1ml", dose:"1 mg/kg", calc:w=>`${(w*1).toFixed(2)} mg`}
+        {name:"Rocuronium", conc:"10mg/1ml", dose:"1 mg/kg", calc:w=>`${(w*1).toFixed(1)} mg`}
     ],
     sedation: [
         {name:"Fentanyl", conc:"50mcg/1ml", rate:"1 mcg/kg/hr", calc:w=>`${(w*1/50).toFixed(2)} ml/hr`},
         {name:"Morphine", conc:"Dilute 1mg/ml", rate:"0.01 - 0.04 mg/kg/hr", calc:w=>`Min: ${(w*0.01).toFixed(2)} ml/hr<br>Max: ${(w*0.04).toFixed(2)} ml/hr`},
         {name:"Remifentanil", conc:"1ml/hr = 0.1mcg/kg/hr", rate:"Increase by 0.3ml/5min", note:"Max 7.4 ml/hr", calc:w=>"Calculated by protocol"},
         {name:"Midazolam", conc:"1mg/1ml", rate:"0.1 mg/kg/hr", calc:w=>`${(w*0.1).toFixed(2)} ml/hr`},
-        {name:"Propofol", conc:"10mg/1ml", loading:"1 - 2 mg/kg", rate:"Infusion varies", calc:w=>`Loading Min: ${(w*1).toFixed(1)} mg<br>Loading Max: ${(w*2).toFixed(1)} mg`},
+        {name:"Propofol", conc:"10mg/1ml", rate:"LD: 1-2 mg/kg; Infusion varies", calc:w=>`LD Min: ${(w*1).toFixed(1)} mg<br>LD Max: ${(w*2).toFixed(1)} mg`},
         {name:"Precedex", conc:"200mcg/50ml", rate:"0.2 - 0.7 mcg/kg/hr", calc:w=>`Min: ${(w*0.2/4).toFixed(2)} ml/hr<br>Max: ${(w*0.7/4).toFixed(2)} ml/hr`},
         {name:"Ketamine", conc:"250mg/50ml", rate:"0.5 - 2 mg/kg/hr", calc:w=>`Min: ${(w*0.5/5).toFixed(2)} ml/hr<br>Max: ${(w*2/5).toFixed(2)} ml/hr`},
         {name:"Esmeron", conc:"10mg/1ml", rate:"1 mg/kg/hr", calc:w=>`${w.toFixed(2)} ml/hr`}
@@ -164,65 +189,65 @@ const drugDB = {
         {name:"Dobutamine", conc:"15 mg/50ml", rate:"1 - 20 mcg/kg/min", calc:w=>`Min (1 mcg): ${(w*1/5).toFixed(2)} ml/hr<br>Max (20 mcg): ${(w*20/5).toFixed(2)} ml/hr`},
         {name:"Vasopressin", conc:"1.5 units/50ml", rate:"0.0001 - 0.0008 U/kg/min", calc:w=>`Min: ${(w*0.0001/0.0005).toFixed(2)} ml/hr<br>Max: ${(w*0.0008/0.0005).toFixed(2)} ml/hr`},
         {name:"Isuprel", conc:"400 mcg/50ml", rate:"0.05 - 2 mcg/kg/min", calc:w=>`Min: ${(w*0.05/0.133).toFixed(2)} ml/hr<br>Max: ${(w*2/0.133).toFixed(2)} ml/hr`},
-        {name:"Milrinone", conc:"5.62 mg/50ml", loading:"50 mcg/kg", rate:"0.375 - 0.75 mcg/kg/min", calc:w=>`LD: ${(w*50/112.4).toFixed(2)} ml over 10m<br>MD Min: ${(w*0.375/1.873).toFixed(2)} ml/hr<br>MD Max: ${(w*0.75/1.873).toFixed(2)} ml/hr`},
-        {name:"Esmolol", conc:"10mg/1ml", loading:"500 mcg/kg over 1m", rate:"50 - 300 mcg/kg/min", calc:w=>`LD: ${(w*500/1000).toFixed(2)} mg<br>Infusion Min: ${(w*50*60/10000).toFixed(2)} ml/hr<br>Infusion Max: ${(w*300*60/10000).toFixed(2)} ml/hr`},
+        {name:"Milrinone", conc:"5.62 mg/50ml", rate:"LD: 50 mcg/kg; MD: 0.375 - 0.75 mcg/kg/min", calc:w=>`LD: ${(w*50/112.4).toFixed(2)} ml over 10m<br>MD Min: ${(w*0.375/1.873).toFixed(2)} ml/hr<br>MD Max: ${(w*0.75/1.873).toFixed(2)} ml/hr`},
+        {name:"Esmolol", conc:"10mg/1ml", rate:"LD: 500 mcg/kg; MD: 50 - 300 mcg/kg/min", calc:w=>`LD: ${(w*500/1000).toFixed(1)} mg<br>Infusion Min: ${(w*50*60/10000).toFixed(2)} ml/hr<br>Infusion Max: ${(w*300*60/10000).toFixed(2)} ml/hr`},
         {name:"Labetalol", conc:"1mg/ml", rate:"0.4 - 1 mg/kg/hr", calc:w=>`Min: ${(w*0.4).toFixed(1)} ml/hr<br>Max: ${(w*1.0).toFixed(1)} ml/hr`},
         {name:"Prostaglandin E", conc:"1.5 mg/50ml", rate:"0.01 - 0.1 mcg/kg/min", calc:w=>`Min: ${(w*0.01/0.5).toFixed(2)} ml/hr<br>Max: ${(w*0.1/0.5).toFixed(2)} ml/hr`},
         {name:"Lidocaine 1%", conc:"150 mg/50ml", rate:"20 - 50 mcg/kg/min", calc:w=>`Min: ${(w*20*60/3000).toFixed(2)} ml/hr<br>Max: ${(w*50*60/3000).toFixed(2)} ml/hr`},
-        {name:"Amiodarone", conc:"Dilution varies", loading:"5 mg/kg over 20m", rate:"5 - 15 mcg/kg/min", calc:w=>`LD: ${(w*5).toFixed(2)} mg<br>MD Min: ${(w*5).toFixed(2)} mcg/min<br>MD Max: ${(w*15).toFixed(2)} mcg/min`}
+        {name:"Amiodarone", conc:"Dilution varies", rate:"LD: 5 mg/kg; MD: 5 - 15 mcg/kg/min", calc:w=>`LD: ${(w*5).toFixed(1)} mg<br>MD Min: ${(w*5).toFixed(1)} mcg/min<br>MD Max: ${(w*15).toFixed(1)} mcg/min`}
     ],
     various: [
-        {name:"Albumin 20%", dose:"0.5 - 1 g/kg/dose", calc:w=>`Min: ${(w*0.5).toFixed(2)} g (${(w*2.5).toFixed(1)} ml)<br>Max: ${(w*1.0).toFixed(2)} g (${(w*5.0).toFixed(1)} ml)`},
+        {name:"Albumin 20%", dose:"0.5 - 1 g/kg/dose", calc:w=>`Min: ${(w*0.5).toFixed(1)} g (${(w*2.5).toFixed(1)} ml)<br>Max: ${(w*1.0).toFixed(1)} g (${(w*5.0).toFixed(1)} ml)`},
         {name:"Aldactone", dose:"2 - 4 mg/kg/day", calc:w=>`Min: ${(w*2).toFixed(1)} mg/day<br>Max: ${(w*4).toFixed(1)} mg/day`},
         {name:"Aminophylline", dose:"6 mg/kg/day", calc:w=>`${(w*6).toFixed(1)} mg/day`},
         {name:"Aspirin", dose:"5 - 10 mg/kg/day", calc:w=>`Min: ${(w*5).toFixed(1)} mg/day<br>Max: ${(w*10).toFixed(1)} mg/day`},
         {name:"Captopril", dose:"0.5 - 6 mg/kg/day", calc:w=>`Min: ${(w*0.5).toFixed(2)} mg/day<br>Max: ${(w*6).toFixed(1)} mg/day`},
         {name:"Diamox", dose:"5 mg/kg/dose", calc:w=>`${(w*5).toFixed(1)} mg/dose`},
-        {name:"Heparin", loading:"50 u/kg", maintenance:"10 - 25 u/kg/hr", calc:w=>`LD: ${(w*50).toFixed(0)} units<br>MD Min: ${(w*10).toFixed(0)} u/hr<br>MD Max: ${(w*25).toFixed(0)} u/hr`},
+        {name:"Heparin", dose:"LD: 50 u/kg; MD: 10 - 25 u/kg/hr", calc:w=>`LD: ${Math.round(w*50).toFixed(0)} units<br>MD Min: ${Math.round(w*10).toFixed(0)} u/hr<br>MD Max: ${Math.round(w*25).toFixed(0)} u/hr`},
         {name:"Lasix", conc:"1mg/1ml", rate:"0.1 - 1 mg/kg/hr", calc:w=>`Min: ${(w*0.1).toFixed(2)} ml/hr<br>Max: ${(w*1.0).toFixed(2)} ml/hr`},
-        {name:"MgSO4", dose:"25 - 50 mg/kg/dose", calc:w=>`Min: ${(w*25).toFixed(1)} mg<br>Max: ${(w*50).toFixed(1)} mg`},
+        {name:"MgSO4", dose:"25 - 50 mg/kg/dose", calc:w=>`Min: ${(w*25).toFixed(0)} mg<br>Max: ${(w*50).toFixed(0)} mg`},
         {name:"Morphine", dose:"0.05 - 0.2 mg/kg/dose", calc:w=>`Min: ${(w*0.05).toFixed(2)} mg<br>Max: ${(w*0.2).toFixed(2)} mg`},
         {name:"Promethazine", dose:"0.1 - 1 mg/kg/dose", calc:w=>`Min: ${(w*0.1).toFixed(2)} mg<br>Max: ${(w*1.0).toFixed(2)} mg`}
     ],
     antibiotics: [
-        {name:"Acyclovir", dose:"30 - 45 mg/kg/day", calc:w=>`Min: ${(w*30).toFixed(1)} mg/day<br>Max: ${(w*45).toFixed(1)} mg/day`},
+        {name:"Acyclovir", dose:"30 - 45 mg/kg/day", calc:w=>`Min: ${Math.round(w*30).toFixed(0)} mg/day<br>Max: ${Math.round(w*45).toFixed(0)} mg/day`},
         {name:"Amikacin", dose:"22.5 mg/kg/day", calc:w=>`${(w*22.5).toFixed(1)} mg/day`},
-        {name:"Ampicillin (mild)", dose:"100 - 200 mg/kg/day", calc:w=>`Min: ${(w*100).toFixed(0)} mg/day<br>Max: ${(w*200).toFixed(0)} mg/day`},
-        {name:"Ampicillin (severe)", dose:"200 - 400 mg/kg/day", calc:w=>`Min: ${(w*200).toFixed(0)} mg/day<br>Max: ${(w*400).toFixed(0)} mg/day`},
-        {name:"Augmentin", dose:"75 mg/kg/day", calc:w=>`${(w*75).toFixed(0)} mg/day`},
-        {name:"Azithromycin", dose:"10 mg/kg/day", calc:w=>`${(w*10).toFixed(1)} mg/day`},
-        {name:"Cefazolin", dose:"50 - 100 mg/kg/day", calc:w=>`Min: ${(w*50).toFixed(0)} mg/day<br>Max: ${(w*100).toFixed(0)} mg/day`},
-        {name:"Ceftriaxone (Rocephin)", dose:"50 - 100 mg/kg/day", calc:w=>`Min: ${(w*50).toFixed(0)} mg/day<br>Max: ${(w*100).toFixed(0)} mg/day`},
-        {name:"Clindamycin", dose:"25 - 40 mg/kg/day", calc:w=>`Min: ${(w*25).toFixed(1)} mg/day<br>Max: ${(w*40).toFixed(1)} mg/day`},
-        {name:"Erythromycin", dose:"10 - 20 mg/kg/day", calc:w=>`Min: ${(w*10).toFixed(1)} mg/day<br>Max: ${(w*20).toFixed(1)} mg/day`},
-        {name:"Flagyl (Metronidazole)", dose:"30 mg/kg/day", calc:w=>`${(w*30).toFixed(1)} mg/day`},
+        {name:"Ampicillin (mild)", dose:"100 - 200 mg/kg/day", calc:w=>`Min: ${Math.round(w*100).toFixed(0)} mg/day<br>Max: ${Math.round(w*200).toFixed(0)} mg/day`},
+        {name:"Ampicillin (severe)", dose:"200 - 400 mg/kg/day", calc:w=>`Min: ${Math.round(w*200).toFixed(0)} mg/day<br>Max: ${Math.round(w*400).toFixed(0)} mg/day`},
+        {name:"Augmentin", dose:"75 mg/kg/day", calc:w=>`${Math.round(w*75).toFixed(0)} mg/day`},
+        {name:"Azithromycin", dose:"10 mg/kg/day", calc:w=>`${Math.round(w*10).toFixed(0)} mg/day`},
+        {name:"Cefazolin", dose:"50 - 100 mg/kg/day", calc:w=>`Min: ${Math.round(w*50).toFixed(0)} mg/day<br>Max: ${Math.round(w*100).toFixed(0)} mg/day`},
+        {name:"Ceftriaxone (Rocephin)", dose:"50 - 100 mg/kg/day", calc:w=>`Min: ${Math.round(w*50).toFixed(0)} mg/day<br>Max: ${Math.round(w*100).toFixed(0)} mg/day`},
+        {name:"Clindamycin", dose:"25 - 40 mg/kg/day", calc:w=>`Min: ${Math.round(w*25).toFixed(0)} mg/day<br>Max: ${Math.round(w*40).toFixed(0)} mg/day`},
+        {name:"Erythromycin", dose:"10 - 20 mg/kg/day", calc:w=>`Min: ${Math.round(w*10).toFixed(0)} mg/day<br>Max: ${Math.round(w*20).toFixed(0)} mg/day`},
+        {name:"Flagyl (Metronidazole)", dose:"30 mg/kg/day", calc:w=>`${Math.round(w*30).toFixed(0)} mg/day`},
         {name:"Garamycin (Gentamicin)", dose:"5 mg/kg/day", calc:w=>`${(w*5).toFixed(1)} mg/day`},
-        {name:"Meropenem", dose:"60 - 120 mg/kg/day", calc:w=>`Min: ${(w*60).toFixed(0)} mg/day<br>Max: ${(w*120).toFixed(0)} mg/day`},
-        {name:"Orbenin", dose:"100 - 200 mg/kg/day", calc:w=>`Min: ${(w*100).toFixed(0)} mg/day<br>Max: ${(w*200).toFixed(0)} mg/day`},
+        {name:"Meropenem", dose:"60 - 120 mg/kg/day", calc:w=>`Min: ${Math.round(w*60).toFixed(0)} mg/day<br>Max: ${Math.round(w*120).toFixed(0)} mg/day`},
+        {name:"Orbenin", dose:"100 - 200 mg/kg/day", calc:w=>`Min: ${Math.round(w*100).toFixed(0)} mg/day<br>Max: ${Math.round(w*200).toFixed(0)} mg/day`},
         {name:"Resprim (Co-trimoxazole)", dose:"8 - 20 mg/kg/day", calc:w=>`Min: ${(w*8).toFixed(1)} mg/day<br>Max: ${(w*20).toFixed(1)} mg/day`},
-        {name:"Tazocin", dose:"200 - 400 mg/kg/day", calc:w=>`Min: ${(w*200).toFixed(0)} mg/day<br>Max: ${(w*400).toFixed(0)} mg/day`},
-        {name:"Vancomycin", dose:"40 - 60 mg/kg/day", calc:w=>`Min: ${(w*40).toFixed(0)} mg/day<br>Max: ${(w*60).toFixed(0)} mg/day`},
-        {name:"Zinacef", dose:"75 - 150 mg/kg/day", calc:w=>`Min: ${(w*75).toFixed(0)} mg/day<br>Max: ${(w*150).toFixed(0)} mg/day`}
+        {name:"Tazocin", dose:"200 - 400 mg/kg/day", calc:w=>`Min: ${Math.round(w*200).toFixed(0)} mg/day<br>Max: ${Math.round(w*400).toFixed(0)} mg/day`},
+        {name:"Vancomycin", dose:"40 - 60 mg/kg/day", calc:w=>`Min: ${Math.round(w*40).toFixed(0)} mg/day<br>Max: ${Math.round(w*60).toFixed(0)} mg/day`},
+        {name:"Zinacef", dose:"75 - 150 mg/kg/day", calc:w=>`Min: ${Math.round(w*75).toFixed(0)} mg/day<br>Max: ${Math.round(w*150).toFixed(0)} mg/day`}
     ]
 };
 
-// ==================== RENDER & CALCULATION ENGINE ====================
+// ==================== RUNTIME CORE ====================
 function calculateBSA(h, w) {
     return Math.sqrt((h * w) / 3600).toFixed(3);
 }
 
 function renderTable(tableId, list, weight) {
     const table = document.getElementById(tableId);
-    let html = `<thead><tr><th>Drug</th><th>Concentration</th><th>Standard Dose / Rate</th><th>Result for ${weight} kg</th><th>Notes</th></tr></thead><tbody>`;
+    let html = `<thead><tr><th>Drug</th><th>Dose / Concentration</th><th>Rate / Calculation Order</th><th>Result for ${weight} kg</th><th>Notes</th></tr></thead><tbody>`;
 
     list.forEach(item => {
         let result = item.calc ? item.calc(weight) : '—';
         html += `
             <tr>
                 <td><strong>${item.name}</strong></td>
-                <td>${item.conc || '—'}</td>
-                <td>${item.rate || item.loading || item.dose || '—'}</td>
-                <td class="dose-value">${result}</td>
+                <td>${item.conc || item.dose || '—'}</td>
+                <td>${item.rate || item.dose || '—'}</td>
+                <td><span class="dose-value">${result}</span></td>
                 <td class="info">${item.note || '—'}</td>
             </tr>`;
     });
@@ -231,10 +256,10 @@ function renderTable(tableId, list, weight) {
 }
 
 function updateAll() {
-    const weight = parseFloat(document.getElementById('weight').value) || 5;
-    const height = parseFloat(document.getElementById('height').value) || 65;
-    const bsa = calculateBSA(height, weight);
-
+    const weight = parseFloat(document.getElementById('weight').value) || 0;
+    const height = parseFloat(document.getElementById('height').value) || 0;
+    
+    const bsa = (weight > 0 && height > 0) ? calculateBSA(height, weight) : "0.000";
     document.getElementById('bsaDisplay').textContent = bsa;
 
     renderTable('resus-table', drugDB.resuscitation, weight);
@@ -244,18 +269,24 @@ function updateAll() {
     renderTable('various-table', drugDB.various, weight);
     renderTable('abx-table', drugDB.antibiotics, weight);
 
-    document.getElementById('defib').textContent = (2 * weight).toFixed(1) + " J";
-    document.getElementById('cardio').textContent = (0.5 * weight).toFixed(1) + " J";
+    if (weight > 0) {
+        document.getElementById('defib').textContent = (2 * weight).toFixed(1) + " J";
+        document.getElementById('cardio').textContent = (0.5 * weight).toFixed(1) + " J";
+    } else {
+        document.getElementById('defib').textContent = "—";
+        document.getElementById('cardio').textContent = "—";
+    }
 }
 
-// Tab switching logic
-document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
+// Tabs setup
+document.getElementById('tabs').addEventListener('click', (e) => {
+    if (e.target.classList.contains('tab-btn')) {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        e.target.classList.add('active');
+        
         document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-        document.getElementById('tab-' + btn.dataset.tab).style.display = 'block';
-    });
+        document.getElementById('tab-' + e.target.dataset.tab).style.display = 'block';
+    }
 });
 
 window.onload = updateAll;
