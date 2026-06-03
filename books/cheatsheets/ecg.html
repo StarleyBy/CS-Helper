@@ -506,6 +506,38 @@
                     </table>
                 </div>
             </div>
+
+            <div class="card">
+                <h3>📈 Clinical Rate Calculation Methodologies</h3>
+                <p class="section-desc" style="margin-bottom: 15px;">Choosing the optimal methodology based on rhythm frequency and regularity.</p>
+                <div class="grid-2" style="margin-bottom: 0;">
+                    <div>
+                        <p style="margin-bottom: 8px;"><span class="bold">1. Large Square Method</span> <span class="badge badge-primary">Regular Rhythms</span></p>
+                        <p style="font-size: 13px; line-height: 1.4;">Recall that 300 large squares represent 1 minute (at 25mm/s). Divide 300 by the number of large squares between R-R intervals.</p>
+                        <div class="art-block" style="text-align: center; font-weight: 800; font-size: 16px; color: var(--primary);">
+                            Rate = 300 / Large Squares
+                        </div>
+                        <p class="info" style="margin-top: 4px;">Standard bedside choice for quick estimation of regular rhythms.</p>
+                    </div>
+                    <div>
+                        <p style="margin-bottom: 8px;"><span class="bold">2. Small Square Method</span> <span class="badge badge-success">Fast / Precise</span></p>
+                        <p style="font-size: 13px; line-height: 1.4;">A more granular approach: divide 1500 (total small squares per minute) by the number of 1mm squares between R waves.</p>
+                        <div class="art-block" style="text-align: center; font-weight: 800; font-size: 16px; color: var(--success);">
+                            Rate = 1500 / Small Squares
+                        </div>
+                        <p class="info" style="margin-top: 4px;">Provides higher precision, especially in tachycardic regular rhythms.</p>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);">
+                    <p style="margin-bottom: 8px;"><span class="bold">3. The 10-Second "R-Wave" Method</span> <span class="badge badge-danger">Irregular / Slow</span></p>
+                    <p style="font-size: 13px; line-height: 1.4;">Count the total number of QRS complexes on a full 10-second rhythm strip and multiply by 6 (10s × 6 = 1 minute).</p>
+                    <div class="art-block" style="text-align: center; font-weight: 800; font-size: 16px; color: var(--danger);">
+                        Rate = (QRS Count in 10s) × 6
+                    </div>
+                    <p class="info" style="margin-top: 4px;">The mandatory gold standard for Atrial Fibrillation or extreme bradycardia where interval math is unreliable.</p>
+                </div>
+            </div>
+
             <div class="card">
                 <h3>⏱️ The QT & QTc Interval Dynamics</h3>
                 <p>Normal upper boundary limits: <span class="mono">♂ &le; 450 ms</span> and <span class="mono">♀ &le; 460 ms</span>. Value crossing <span class="red">&gt; 500 ms</span> marks critical high-vulnerability threshold for inducing automaticity and triggered *Torsades de Pointes* (TdP).</p>
@@ -514,6 +546,19 @@
                     • <span class="bold">Bazett's Formula:</span> <span class="mono">QTc = QT / √RR</span>. Clinically unstable at extreme parameters; severly overcorrects at rapid heart rates and undercorrects during significant bradycardia.<br>
                     • <span class="bold">Fridericia's Formula:</span> <span class="mono">QTc = QT / ∛RR</span>. Highly stable and statistically preferred formula for tachycardic or bradycardic boundaries.
                 </div>
+
+                <div class="img-container">
+                <img src="../assets/Rate1.svg" alt="Large Square Method" style="max-width: 100%; height: auto; display: block; margin: 16px auto 0;">
+        </div>
+
+        <div class="img-container">
+                <img src="../assets/Rate2.svg" alt="Small Square Method" style="max-width: 100%; height: auto; display: block; margin: 16px auto 0;">
+        </div>
+
+        <div class="img-container">
+                <img src="../assets/Rate3.svg" alt="Rate Calculation" style="max-width: 100%; height: auto; display: block; margin: 16px auto 0;">
+        </div>
+
             </div>
         </div>
 
