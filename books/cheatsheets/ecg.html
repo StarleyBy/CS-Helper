@@ -434,7 +434,74 @@
             margin: 16px auto 0;
    }
 
-            </style>
+        
+        /* ── IMAGE CAROUSEL ── */
+        .img-carousel {
+            position: relative;
+            margin: 20px 0 4px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            padding: 12px 44px 16px;
+            box-sizing: border-box;
+        }
+        .carousel-track {
+            display: flex;
+            overflow: hidden;
+        }
+        .carousel-track img {
+            flex: 0 0 100%;
+            max-width: 100%;
+            height: auto;
+            max-height: 440px;
+            object-fit: contain;
+            transition: transform 0.35s ease;
+            pointer-events: none;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 20px;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+            z-index: 10;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+            padding: 0;
+        }
+        .carousel-btn:hover { opacity: 1; }
+        .carousel-btn.prev { left: 6px; }
+        .carousel-btn.next { right: 6px; }
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 7px;
+            margin-top: 10px;
+        }
+        .carousel-dots span {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--border);
+            cursor: pointer;
+            transition: background 0.2s;
+            display: inline-block;
+        }
+        .carousel-dots span.active { background: var(--primary); }
+        .carousel-label {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted, #888);
+            margin-top: 6px;
+        }
+    </style>
 </head>
 <body>
 
@@ -547,17 +614,16 @@
                     • <span class="bold">Fridericia's Formula:</span> <span class="mono">QTc = QT / ∛RR</span>. Highly stable and statistically preferred formula for tachycardic or bradycardic boundaries.
                 </div>
 
-                <div class="img-container">
-                <img src="../assets/Rate1.svg" alt="Large Square Method" style="max-width: 100%; height: auto; display: block; margin: 16px auto 0;">
-        </div>
-
-        <div class="img-container">
-                <img src="../assets/Rate2.svg" alt="Small Square Method" style="max-width: 100%; height: auto; display: block; margin: 16px auto 0;">
-        </div>
-
-        <div class="img-container">
-                <img src="../assets/Rate3.svg" alt="Rate Calculation" style="max-width: 100%; height: auto; display: block; margin: 16px auto 0;">
-        </div>
+                <div class="img-carousel" data-idx="0">
+                    <button class="carousel-btn prev" onclick="carouselNav(this,-1)">&#8249;</button>
+                    <div class="carousel-track">
+                        <img src="../assets/Rate1.svg" alt="Large Square Method">
+                        <img src="../assets/Rate2.svg" alt="Small Square Method">
+                        <img src="../assets/Rate3.svg" alt="Rate Calculation">
+                    </div>
+                    <button class="carousel-btn next" onclick="carouselNav(this,1)">&#8250;</button>
+                    <div class="carousel-dots"></div>
+                </div>
 
             </div>
         </div>
@@ -627,13 +693,15 @@
                     </div>
                 </div>
 
-                <div class="img-container">
-                <img src="../assets/Axis.svg" alt="Axis of the Heart" style="max-width: 100%; height: auto; display: block; margin: 16px auto 0;">
-        </div>
-
-        <div class="img-container">
-                <img src="../assets/Axis2.svg" alt="Axis of the Heart" style="max-width: 100%; height: auto; display: block; margin: 16px auto 0;">
-        </div>
+                <div class="img-carousel" data-idx="0">
+                    <button class="carousel-btn prev" onclick="carouselNav(this,-1)">&#8249;</button>
+                    <div class="carousel-track">
+                        <img src="../assets/Axis.svg" alt="Axis of the Heart">
+                        <img src="../assets/Axis2.svg" alt="Axis 2">
+                    </div>
+                    <button class="carousel-btn next" onclick="carouselNav(this,1)">&#8250;</button>
+                    <div class="carousel-dots"></div>
+                </div>
         
             </div>
         </div>
@@ -1240,6 +1308,42 @@
             }
             resultsDiv.innerHTML = diagnosisText;
         }
+
+        // ── IMAGE CAROUSEL ──
+        function carouselNav(btn, dir) {
+            const c = btn.closest('.img-carousel');
+            const imgs = c.querySelectorAll('.carousel-track img');
+            const dots = c.querySelectorAll('.carousel-dots span');
+            let idx = parseInt(c.dataset.idx || 0) + dir;
+            if (idx < 0) idx = imgs.length - 1;
+            if (idx >= imgs.length) idx = 0;
+            c.dataset.idx = idx;
+            c.querySelector('.carousel-track').style.transform = 'translateX(-' + (idx * 100) + '%)';
+            dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+        }
+
+        function initCarousels() {
+            document.querySelectorAll('.img-carousel').forEach(c => {
+                const imgs = c.querySelectorAll('.carousel-track img');
+                const dotsEl = c.querySelector('.carousel-dots');
+                dotsEl.innerHTML = '';
+                imgs.forEach((img, i) => {
+                    const dot = document.createElement('span');
+                    if (i === 0) dot.classList.add('active');
+                    dot.onclick = function() {
+                        c.dataset.idx = i;
+                        c.querySelector('.carousel-track').style.transform = 'translateX(-' + (i * 100) + '%)';
+                        c.querySelectorAll('.carousel-dots span').forEach((d, j) => d.classList.toggle('active', j === i));
+                    };
+                    dotsEl.appendChild(dot);
+                });
+                // reset position
+                c.dataset.idx = 0;
+                c.querySelector('.carousel-track').style.transform = 'translateX(0)';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initCarousels);
     </script>
 </body>
 </html>
