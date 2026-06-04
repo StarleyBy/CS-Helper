@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Duke Criteria for Infective Endocarditis (2023 ISCVID) | Corrected Grouping + Detailed Minor Criteria</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0f111a;
+            font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+            color: #eef2ff;
+            padding: 24px 20px;
+            transition: background 0.2s;
+        }
+        body.light {
+            background: #f1f5f9;
+            --card-bg: #ffffff;
+            --border: #cbd5e1;
+            --text: #0f172a;
+            --text-muted: #334155;
+            --accent: #2563eb;
+            --accent-light: #dbeafe;
+            --hover-bg: #f8fafc;
+        }
+        :root {
+            --card-bg: #16202e;
+            --border: #2a3a4e;
+            --text: #eef2ff;
+            --text-muted: #9ab3cf;
+            --accent: #3b82f6;
+            --accent-light: #1e3a8a;
+            --hover-bg: #1e293b;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        h1 {
+            font-size: 28px;
+            background: linear-gradient(135deg, #3b82f6, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+        }
+        .subhead {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 20px;
+            transition: 0.1s;
+        }
+        .card-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent);
+            padding-left: 16px;
+        }
+        .group-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 20px 0 12px 0;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .subgroup {
+            background: var(--hover-bg);
+            border-radius: 20px;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            border-left: 3px solid var(--accent);
+        }
+        .subgroup-title {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+        .criteria-item {
+            background: var(--hover-bg);
+            border-radius: 16px;
+            margin-bottom: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: 0.1s;
+            border: 1px solid transparent;
+        }
+        .criteria-item:hover {
+            border-color: var(--accent);
+        }
+        .criteria-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .criteria-header input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--accent);
+        }
+        .criteria-name {
+            font-weight: 600;
+            font-size: 15px;
+        }
+        .criteria-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            margin-left: 32px;
+            line-height: 1.45;
+        }
+        .result-panel {
+            background: var(--accent-light);
+            border-radius: 28px;
+            padding: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .diagnosis {
+            font-size: 36px;
+            font-weight: 800;
+            margin: 16px 0;
+        }
+        .diagnosis.definite { color: #10b981; }
+        .diagnosis.possible { color: #f59e0b; }
+        .diagnosis.rejected { color: #ef4444; }
+        .count-badge {
+            display: inline-block;
+            background: var(--card-bg);
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-family: monospace;
+            margin: 4px;
+        }
+        .note {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 16px;
+            border-top: 1px solid var(--border);
+            padding-top: 12px;
+        }
+        .tooltip-icon {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 11px;
+            line-height: 18px;
+            margin-left: 6px;
+            cursor: help;
+        }
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 100;
+        }
+        @media (max-width: 700px) {
+            .grid-2col { grid-template-columns: 1fr; }
+            .diagnosis { font-size: 28px; }
+        }
+        hr { margin: 12px 0; border-color: var(--border); }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📋 Duke Criteria for Infective Endocarditis</h1>
+        <div class="subhead">2023 ISCVID Update • Major criteria are logically grouped • Detailed minor criteria descriptions</div>
+    </div>
+
+    <div class="result-panel" id="resultPanel">
+        <div style="font-size: 18px; font-weight: 600;">Diagnostic classification</div>
+        <div class="diagnosis" id="diagnosisText">—</div>
+        <div id="scoreDetail" style="font-size: 14px;"></div>
+        <div class="note">
+            <strong>Definite IE:</strong> 2 Major / 1 Major + 3 Minor / 5 Minor<br>
+            <strong>Possible IE:</strong> 1 Major + 1 Minor / 3 Minor<br>
+            <strong>Rejected IE:</strong> Alternative diagnosis, resolution with <4 days antibiotics, no pathological evidence
+        </div>
+    </div>
+
+    <div class="grid-2col">
+        <!-- LEFT COLUMN: MAJOR CRITERIA (grouped) -->
+        <div class="card">
+            <div class="card-title">🔬 Major Criteria (grouped)</div>
+
+            <div class="group-header">🦠 Microbiological evidence</div>
+            <div class="subgroup">
+                <div class="subgroup-title">Select any of the following (one major)</div>
+                <label class="criteria-item">
+                    <div class="criteria-header"><input type="checkbox" id="m_micro_typical"> <span class="criteria-name">Two positive blood cultures for typical IE microorganisms</span></div>
+                    <div class="criteria-desc">Typical pathogens: S. aureus, viridans group streptococci, S. gallolyticus, HACEK group, Enterococcus spp., community‑acquired S. pneumoniae.</div>
+                </label>
+                <label class="criteria-item">
+                    <div class="criteria-header"><input type="checkbox" id="m_micro_coxiella"> <span class="criteria-name">Single positive blood culture for Coxiella burnetii</span></div>
+                    <div class="criteria-desc">Alternatively, phase I IgG antibody titer ≥1:800 (Q fever).</div>
+                </label>
+                <label class="criteria-item">
+                    <div class="criteria-header"><input type="checkbox" id="m_micro_pcr"> <span class="criteria-name">Molecular detection (PCR) from blood or valve tissue</span></div>
+                    <div class="criteria-desc">Broad‑range PCR or specific PCR for pathogens such as Tropheryma whipplei, Bartonella, Legionella.</div>
+                </label>
+            </div>
+
+            <div class="group-header">📷 Imaging evidence</div>
+            <div class="subgroup">
+                <div class="subgroup-title">Select any of the following (one major)</div>
+                <label class="criteria-item">
+                    <div class="criteria-header"><input type="checkbox" id="m_imaging_echo"> <span class="criteria-name">Echocardiography (TTE/TEE) positive</span></div>
+                    <div class="criteria-desc">Vegetation, abscess, pseudoaneurysm, intracardiac fistula, or new partial dehiscence of prosthetic valve.</div>
+                </label>
+                <label class="criteria-item">
+                    <div class="criteria-header"><input type="checkbox" id="m_imaging_pet"> <span class="criteria-name">PET/CT or CT angiography positive</span></div>
+                    <div class="criteria-desc">Abnormal metabolic activity around implanted valve/device (PET/CT) or peri‑prosthetic lesions (CTA).</div>
+                </label>
+            </div>
+
+            <div class="group-header">🔪 Pathological evidence (surgical / autopsy)</div>
+            <div class="subgroup">
+                <div class="subgroup-title">Select any of the following (one major)</div>
+                <label class="criteria-item">
+                    <div class="criteria-header"><input type="checkbox" id="m_path_micro"> <span class="criteria-name">Microorganisms demonstrated by culture or histology</span></div>
+                    <div class="criteria-desc">From vegetation, embolized vegetation, or intracardiac abscess.</div>
+                </label>
+                <label class="criteria-item">
+                    <div class="criteria-header"><input type="checkbox" id="m_path_lesion"> <span class="criteria-name">Active endocarditis lesions (histology)</span></div>
+                    <div class="criteria-desc">Histological evidence of active endocarditis (vegetation/inflammation).</div>
+                </label>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: MINOR CRITERIA (detailed) -->
+        <div class="card">
+            <div class="card-title">🩺 Minor Criteria (detailed)</div>
+            <label class="criteria-item">
+                <div class="criteria-header"><input type="checkbox" id="min_predispose"> <span class="criteria-name">Predisposing heart condition</span></div>
+                <div class="criteria-desc">Valvular heart disease, congenital heart disease, previous infective endocarditis, prosthetic valve, intravenous drug use.</div>
+            </label>
+            <label class="criteria-item">
+                <div class="criteria-header"><input type="checkbox" id="min_fever"> <span class="criteria-name">Fever ≥38°C (100.4°F)</span></div>
+                <div class="criteria-desc">Documented fever of ≥38°C.</div>
+            </label>
+            <label class="criteria-item">
+                <div class="criteria-header"><input type="checkbox" id="min_vascular"> <span class="criteria-name">Vascular phenomena</span></div>
+                <div class="criteria-desc">Includes: arterial emboli (systemic or pulmonary), septic pulmonary infarcts, mycotic aneurysm, intracranial hemorrhage, conjunctival hemorrhage. <strong>Janeway lesions</strong> (painless palmar/plantar erythematous macules, caused by septic microemboli, typical of acute IE).</div>
+            </label>
+            <label class="criteria-item">
+                <div class="criteria-header"><input type="checkbox" id="min_immuno"> <span class="criteria-name">Immunological phenomena</span></div>
+                <div class="criteria-desc">Includes: glomerulonephritis, <strong>Osler nodes</strong> (painful, erythematous nodules on finger pulps – immune complex mediated, more common in subacute IE), <strong>Roth spots</strong> (retinal haemorrhages with pale centre, rare), rheumatoid factor positivity.</div>
+            </label>
+            <label class="criteria-item">
+                <div class="criteria-header"><input type="checkbox" id="min_micro_minor"> <span class="criteria-name">Microbiological evidence (minor)</span></div>
+                <div class="criteria-desc">Single positive blood culture for typical organism not meeting major criteria, or serologic evidence of active infection not meeting major (e.g., Coxiella burnetii phase II IgG ≥1:800).</div>
+            </label>
+            <label class="criteria-item">
+                <div class="criteria-header"><input type="checkbox" id="min_pet_minor"> <span class="criteria-name">Abnormal PET/CT (minor)</span></div>
+                <div class="criteria-desc">Metabolic abnormality not fulfilling major imaging criteria.</div>
+            </label>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">📖 Important clinical notes</div>
+        <div class="note" style="margin-top: 0;">
+            <p><strong>Duke‑ISCVID criteria (2023 update)</strong> – Major criteria are now grouped into three logical categories: Microbiological evidence, Imaging evidence, and Pathological evidence. Each category counts as <strong>one major criterion</strong> regardless of how many sub‑items are fulfilled. This prevents overcounting (e.g., both TTE and PET/CT positive still = 1 major).</p>
+            <hr>
+            <p><strong>Janeway lesions vs Osler nodes:</strong> Janeway lesions are painless, non‑tender, erythematous macules on palms/soles – they represent septic microemboli and are characteristic of <strong>acute</strong> endocarditis (usually S. aureus). Osler nodes are painful, tender, violaceous nodules on finger/toe pulps – they result from immune complex deposition and are typical of <strong>subacute</strong> endocarditis (e.g., viridans streptococci).</p>
+            <p><strong>Roth spots:</strong> Retinal haemorrhages with a pale centre, seen in IE, anaemia, and connective tissue diseases. Rare but highly suggestive when other criteria are present.</p>
+            <p><strong>Vascular phenomena:</strong> The 2023 update emphasizes that conjunctival haemorrhages and mycotic aneurysms are valid minor criteria. Splinter haemorrhages are not specific but are still considered under vascular phenomena if embolic.</p>
+            <p><strong>PET/CT:</strong> Added as both a major (if clearly positive) and minor (equivocal) criterion. It is especially useful in prosthetic valve endocarditis and cardiac device infections.</p>
+        </div>
+    </div>
+
+    <div class="note" style="text-align: center; margin-top: 20px;">
+        Based on: Duke‑ISCVID Criteria (Fowler et al., Clin Infect Dis 2023). Pathological evidence (surgical/autopsy) overrides all and automatically gives Definite IE.
+    </div>
+</div>
+<button class="theme-toggle" id="themeToggle">🌓 Dark / Light</button>
+
+<script>
+    // Major group DOM elements
+    const microChecks = ['m_micro_typical', 'm_micro_coxiella', 'm_micro_pcr'].map(id => document.getElementById(id));
+    const imagingChecks = ['m_imaging_echo', 'm_imaging_pet'].map(id => document.getElementById(id));
+    const pathChecks = ['m_path_micro', 'm_path_lesion'].map(id => document.getElementById(id));
+    
+    // Minor criteria individual checkboxes
+    const minorChecks = [
+        document.getElementById('min_predispose'),
+        document.getElementById('min_fever'),
+        document.getElementById('min_vascular'),
+        document.getElementById('min_immuno'),
+        document.getElementById('min_micro_minor'),
+        document.getElementById('min_pet_minor')
+    ];
+    
+    const diagnosisEl = document.getElementById('diagnosisText');
+    const scoreDetailEl = document.getElementById('scoreDetail');
+    
+    // Helper: any checked in group
+    function isGroupChecked(group) {
+        return group.some(ch => ch && ch.checked);
+    }
+    
+    // Count major (each group max 1)
+    function countMajor() {
+        let count = 0;
+        if (isGroupChecked(microChecks)) count++;
+        if (isGroupChecked(imagingChecks)) count++;
+        if (isGroupChecked(pathChecks)) count++;
+        return count;
+    }
+    
+    // Count minor
+    function countMinor() {
+        return minorChecks.filter(ch => ch && ch.checked).length;
+    }
+    
+    function updateDiagnosis() {
+        const major = countMajor();
+        const minor = countMinor();
+        
+        // Pathological evidence (any of the two) automatically makes it Definite IE (per guidelines)
+        const pathologicalPresent = isGroupChecked(pathChecks);
+        
+        let diagnosis = '';
+        let detail = '';
+        
+        if (pathologicalPresent) {
+            diagnosis = 'Definite Infective Endocarditis';
+            detail = `Pathological evidence (histology or microbiology from surgical/autopsy specimen) → Definite IE.`;
+        } else {
+            if (major >= 2 || (major === 1 && minor >= 3) || minor >= 5) {
+                diagnosis = 'Definite Infective Endocarditis';
+                detail = `${major} Major criterion(s), ${minor} Minor criteria. Meets Definite criteria.`;
+            } else if ((major === 1 && minor >= 1) || minor >= 3) {
+                diagnosis = 'Possible Infective Endocarditis';
+                detail = `${major} Major, ${minor} Minor → Possible IE. Further evaluation (repeat imaging/blood cultures) recommended.`;
+            } else {
+                diagnosis = 'Rejected (or unlikely) IE';
+                detail = `${major} Major, ${minor} Minor → Does not meet diagnostic criteria. Consider alternative diagnosis.`;
+            }
+        }
+        
+        diagnosisEl.textContent = diagnosis;
+        scoreDetailEl.innerHTML = `<span class="count-badge">🔬 Major: ${major}</span> <span class="count-badge">🩺 Minor: ${minor}</span><br>${detail}`;
+        
+        diagnosisEl.classList.remove('definite', 'possible', 'rejected');
+        if (diagnosis.startsWith('Definite')) diagnosisEl.classList.add('definite');
+        else if (diagnosis.startsWith('Possible')) diagnosisEl.classList.add('possible');
+        else diagnosisEl.classList.add('rejected');
+    }
+    
+    // Attach event listeners to all checkboxes
+    const allCheckboxes = [...microChecks, ...imagingChecks, ...pathChecks, ...minorChecks];
+    allCheckboxes.forEach(ch => {
+        if (ch) ch.addEventListener('change', updateDiagnosis);
+    });
+    updateDiagnosis();
+    
+    // Theme toggle
+    const themeBtn = document.getElementById('themeToggle');
+    themeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('light');
+        localStorage.setItem('dukeTheme', document.body.classList.contains('light') ? 'light' : 'dark');
+    });
+    if (localStorage.getItem('dukeTheme') === 'light') document.body.classList.add('light');
+</script>
+</body>
+</html>
