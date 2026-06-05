@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-06-05 05:18
+  updated: 2026-06-05 20:22
 
 sections:
   - id: calculators
@@ -102,6 +102,12 @@ sections:
         type: scale
         visible: true
         tags: [heart failure, NYHA, classification]
+      - id: staging
+        title: "Valvular Heart Disease + CAD Staging | AHA/ACC & ESC Guidelines"
+        file: books/scales/staging.html
+        type: scale
+        visible: true
+        tags: []
 
   - id: protocols
     title: Protocols
