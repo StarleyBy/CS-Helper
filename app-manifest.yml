@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-06-04 11:55
+  updated: 2026-06-05 05:18
 
 sections:
   - id: calculators
@@ -161,7 +161,7 @@ sections:
         visible: true
         tags: [liver, cirrhosis, hepatology]
       - id: duke
-        title: "Duke Criteria for Infective Endocarditis (2023 ISCVID) | Corrected Grouping + Detailed Minor Criteria"
+        title: "Duke Criteria for Infective Endocarditis | 2023 ISCVID vs 2015 Modified Duke"
         file: books/cheatsheets/duke.html
         type: cheatsheet
         visible: true
