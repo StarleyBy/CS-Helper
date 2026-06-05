@@ -3,404 +3,378 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Valvular Heart Disease + CAD Staging | AHA/ACC & ESC Guidelines</title>
+    <title>Staging of Valvular Heart Disease & Coronary Syndromes | AHA/ACC • ESC</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: #0f111a;
-            font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
-            color: #eef2ff;
-            padding: 24px 20px;
-            transition: background 0.2s;
-        }
-        body.light {
-            background: #f1f5f9;
-            --card-bg: #ffffff;
-            --border: #cbd5e1;
-            --text: #0f172a;
-            --text-muted: #334155;
-            --accent: #2563eb;
-            --accent-light: #dbeafe;
-            --hover-bg: #f8fafc;
-        }
         :root {
-            --card-bg: #16202e;
-            --border: #2a3a4e;
-            --text: #eef2ff;
-            --text-muted: #9ab3cf;
-            --accent: #3b82f6;
-            --accent-light: #1e3a8a;
-            --hover-bg: #1e293b;
+            --bg-main: #f4f6f9;
+            --bg-card: #ffffff;
+            --bg-tip: #fffbeb;
+            --text-main: #0f172a;
+            --text-muted: #334155;
+            --primary: #1d4ed8;
+            --primary-light: #dbeafe;
+            --danger: #b91c1c;
+            --danger-light: #fee2e2;
+            --success: #15803d;
+            --success-light: #dcfce7;
+            --warning: #b45309;
+            --border: #cbd5e1;
+            --accent: #0f766e;
+            --mono-bg: #f1f5f9;
+            --nav-bg: #1e293b;
+            --nav-text: #94a3b8;
+            --nav-active: #ffffff;
         }
-        .container {
+
+        [data-theme="dark"] {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --bg-tip: #2d2613;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --primary-light: #1e3a8a;
+            --danger: #ef4444;
+            --danger-light: #7f1d1d;
+            --success: #22c55e;
+            --success-light: #14532d;
+            --warning: #f59e0b;
+            --border: #334155;
+            --accent: #14b8a6;
+            --mono-bg: #334155;
+            --nav-bg: #020617;
+            --nav-text: #64748b;
+            --nav-active: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg-main);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: var(--text-main);
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .top-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .title h1 {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+        }
+        .title p {
+            font-size: 11px;
+            color: var(--nav-text);
+        }
+
+        .btn-toggle {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            border-radius: 30px;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .top-nav {
+            display: flex;
+            overflow-x: auto;
+            gap: 2px;
+            padding: 0 8px;
+            scrollbar-width: thin;
+            background: var(--nav-bg);
+        }
+        .top-nav a {
+            flex: 0 0 auto;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--nav-text);
+            text-decoration: none;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+        .top-nav a.active, .top-nav a:hover {
+            color: var(--nav-active);
+            border-bottom-color: var(--primary);
+        }
+
+        .main-content {
+            padding: 24px 28px;
             max-width: 1300px;
             margin: 0 auto;
         }
-        .header {
-            text-align: center;
-            margin-bottom: 32px;
+
+        .section-panel {
+            display: none;
+            animation: fade 0.2s;
         }
-        h1 {
-            font-size: 28px;
-            background: linear-gradient(135deg, #3b82f6, #a855f7);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 8px;
+        .section-panel.active {
+            display: block;
         }
-        .subhead {
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 28px;
-            padding: 24px;
-            margin-bottom: 28px;
-        }
-        .card-title {
-            font-size: 22px;
-            font-weight: 700;
+        @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+        h2 {
+            font-size: 24px;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 6px;
             margin-bottom: 20px;
-            border-left: 5px solid var(--accent);
-            padding-left: 16px;
         }
-        .selector-group {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin-bottom: 24px;
-        }
-        .selector-btn {
-            background: var(--hover-bg);
-            border: 1px solid var(--border);
-            border-radius: 60px;
-            padding: 10px 24px;
-            cursor: pointer;
-            transition: 0.1s;
-            font-weight: 500;
-        }
-        .selector-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: white;
-        }
-        .pathology-select {
-            margin-bottom: 24px;
-        }
-        select, .radio-group {
-            background: var(--hover-bg);
+
+        .card {
+            background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 10px 16px;
-            font-size: 14px;
-            color: var(--text);
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .card h3 {
+            font-size: 18px;
+            color: var(--accent);
+            margin-bottom: 14px;
+            border-left: 4px solid var(--accent);
+            padding-left: 12px;
+        }
+
+        table {
             width: 100%;
-            max-width: 300px;
-        }
-        .criteria-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 16px;
-            margin: 20px 0;
-        }
-        .criteria-item {
-            background: var(--hover-bg);
-            border-radius: 20px;
-            padding: 14px;
-        }
-        .criteria-item label {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-        }
-        .result-box {
-            background: var(--accent-light);
-            border-radius: 28px;
-            padding: 24px;
-            text-align: center;
-            margin-top: 20px;
-        }
-        .stage {
-            font-size: 36px;
-            font-weight: 800;
-            margin: 12px 0;
-        }
-        .stage.A { color: #10b981; }
-        .stage.B { color: #3b82f6; }
-        .stage.C { color: #f59e0b; }
-        .stage.D { color: #ef4444; }
-        .note {
+            border-collapse: collapse;
             font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 12px;
+            margin: 14px 0;
         }
-        .theme-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--card-bg);
+        th, td {
             border: 1px solid var(--border);
-            border-radius: 40px;
-            padding: 8px 16px;
-            cursor: pointer;
-            font-size: 12px;
-            z-index: 100;
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: top;
         }
+        th {
+            background: var(--mono-bg);
+            font-weight: 700;
+        }
+
+        ul, ol { margin-left: 24px; margin-bottom: 12px; }
+        li { margin-bottom: 4px; font-size: 13px; line-height: 1.4; }
+
+        .badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+        .badge-stage { background: var(--primary-light); color: var(--primary); }
+        .badge-recommend { background: var(--success-light); color: var(--success); }
+
+        .tip {
+            background: var(--bg-tip);
+            border-left: 4px solid var(--warning);
+            padding: 12px 16px;
+            border-radius: 0 12px 12px 0;
+            font-size: 13px;
+            margin: 16px 0;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
         @media (max-width: 700px) {
-            .stage { font-size: 28px; }
+            .main-content { padding: 16px; }
+            .grid-2 { grid-template-columns: 1fr; }
+            h2 { font-size: 18px; }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h1>Valvular Heart Disease & CAD Staging</h1>
-        <div class="subhead">Based on AHA/ACC 2020/2021 and ESC 2021/2019 Guidelines</div>
-    </div>
-
-    <div class="card">
-        <div class="card-title">1. Choose pathology</div>
-        <div class="selector-group" id="pathologySelector">
-            <div class="selector-btn" data-path="as">Aortic Stenosis (AS)</div>
-            <div class="selector-btn" data-path="ar">Aortic Regurgitation (AR)</div>
-            <div class="selector-btn" data-path="mr">Mitral Regurgitation (MR)</div>
-            <div class="selector-btn" data-path="ms">Mitral Stenosis (MS)</div>
-            <div class="selector-btn" data-path="cad">Chronic Coronary Syndromes (CAD)</div>
+<div class="top-header">
+    <div class="top-header-row">
+        <div class="title">
+            <h1>📋 Staging of Valvular Heart Disease & Coronary Syndromes</h1>
+            <p>AHA/ACC 2020/2021 • ESC 2019/2021 • Clinical reference</p>
         </div>
-        <div id="criteriaPanel"></div>
-        <div id="resultPanel" class="result-box">
-            <div style="font-weight: 600;">Stage / Classification</div>
-            <div class="stage" id="stageText">—</div>
-            <div id="managementTip" class="note"></div>
-        </div>
+        <button class="btn-toggle" onclick="toggleTheme()">🌓 Theme</button>
     </div>
-    <div class="note" style="text-align: center;">
-        <strong>Reference:</strong> 2020 AHA/ACC Guideline for Valvular Heart Disease; 2021 ESC/EACTS Guidelines; 2019 ESC CCS Guidelines.
+    <div class="top-nav" id="topNav">
+        <a href="#" onclick="switchTab(event,'tabAS')" class="active">🔴 Aortic Stenosis</a>
+        <a href="#" onclick="switchTab(event,'tabAR')">🔵 Aortic Regurgitation</a>
+        <a href="#" onclick="switchTab(event,'tabMR')">🟢 Mitral Regurgitation</a>
+        <a href="#" onclick="switchTab(event,'tabMS')">🟡 Mitral Stenosis</a>
+        <a href="#" onclick="switchTab(event,'tabCAD')">❤️ Chronic Coronary Syndromes</a>
     </div>
 </div>
-<button class="theme-toggle" id="themeToggle">🌓 Dark / Light</button>
+
+<div class="main-content">
+    <!-- AORTIC STENOSIS -->
+    <div id="tabAS" class="section-panel active">
+        <h2>Aortic Stenosis (AS) – 2020 AHA/ACC Stages</h2>
+        <div class="card">
+            <h3>📊 Stage A → At risk</h3>
+            <ul><li>Bicuspid aortic valve, aortic sclerosis, or other congenital anomaly</li><li>No hemodynamic obstruction (peak velocity &lt;2 m/s, mean gradient &lt;10 mmHg)</li><li><span class="badge badge-recommend">Management:</span> Risk factor modification, echo every 3‑5 years</li></ul>
+        </div>
+        <div class="card">
+            <h3>📈 Stage B → Progressive AS</h3>
+            <ul><li>Mild‑moderate leaflet calcification, Vmax 2‑3.9 m/s, mean ΔP &lt;40 mmHg, AVA &gt;1.5 cm²</li><li>Asymptomatic, LVEF normal</li><li><span class="badge badge-recommend">Management:</span> Echo every 1‑2 years, avoid dehydration</li></ul>
+        </div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>⚠️ Stage C → Severe AS, asymptomatic</h3>
+                <ul><li><strong>C1:</strong> Vmax ≥4 m/s or mean ΔP ≥40 mmHg, AVA ≤1.0 cm², LVEF ≥50%</li>
+                <li><strong>C2:</strong> Same hemodynamics + LVEF &lt;50% or abnormal exercise test</li>
+                <li><span class="badge badge-recommend">AVR indicated for C2; C1 → consider AVR if very severe (Vmax ≥5 m/s) or rapid progression</span></li></ul>
+            </div>
+            <div class="card">
+                <h3>🚨 Stage D → Symptomatic severe AS</h3>
+                <ul><li><strong>D1 (high gradient):</strong> Symptoms + Vmax ≥4 m/s, AVA ≤1.0 cm²</li>
+                <li><strong>D2 (low flow/low gradient):</strong> LVEF &lt;50%, dobutamine stress echo</li>
+                <li><strong>D3 (paradoxical low flow):</strong> LVEF ≥50%, indexed AVA ≤0.6 cm²/m²</li>
+                <li><span class="badge badge-danger">AVR (SAVR or TAVI) Class I recommendation</span></li></ul>
+            </div>
+        </div>
+        <div class="tip">💡 Key thresholds: Vmax ≥4 m/s = severe; mean gradient ≥40 mmHg; AVA ≤1.0 cm². Low‑flow states require dobutamine stress or CT calcium scoring.</div>
+    </div>
+
+    <!-- AORTIC REGURGITATION -->
+    <div id="tabAR" class="section-panel">
+        <h2>Aortic Regurgitation (AR) – 2020 AHA/ACC Stages</h2>
+        <div class="card"><h3>Stage A: At risk</h3><ul><li>Bicuspid valve, aortic root dilation, hypertension</li><li>No or trivial AR, normal LV size/function</li><li>Monitor every 3‑5 years</li></ul></div>
+        <div class="card"><h3>Stage B: Mild‑moderate AR</h3><ul><li>Jet width 25‑64% of LVOT, vena contracta 0.3‑0.6 cm, RVol 30‑59 mL/beat</li><li>LV normal size, LVEF normal, asymptomatic</li><li>Annual echo, treat hypertension (target SBP &lt;130 mmHg)</li></ul></div>
+        <div class="grid-2">
+            <div class="card"><h3>Stage C: Severe AR, asymptomatic</h3><ul><li><strong>C1:</strong> LVEF ≥50%, LVEDD &lt;60 mm (or &lt;35 mm/m²)</li>
+            <li><strong>C2:</strong> LVEF &lt;50% OR LVEDD ≥60 mm (or ≥35 mm/m²)</li>
+            <li>Surgery indicated for C2; C1 if progressive dilation or decline in LVEF</li></ul></div>
+            <div class="card"><h3>Stage D: Symptomatic severe AR</h3><ul><li>NYHA II‑IV, angina, or syncope</li>
+            <li>Any severe AR parameters (vena contracta ≥0.6 cm, regurgitant fraction ≥50%)</li>
+            <li><span class="badge badge-danger">Aortic valve replacement (Class I)</span></li></ul></div>
+        </div>
+        <div class="tip">📌 AR severity: vena contracta ≥0.6 cm, pressure half‑time &lt;200 ms, holodiastolic flow reversal in descending aorta.</div>
+    </div>
+
+    <!-- MITRAL REGURGITATION (primary) -->
+    <div id="tabMR" class="section-panel">
+        <h2>Primary Mitral Regurgitation (MR) – 2020 AHA/ACC Stages</h2>
+        <div class="card"><h3>Stage A: At risk</h3><ul><li>Mitral valve prolapse (MVP) without MR, mild leaflet thickening</li><li>Asymptomatic, normal LV</li><li>Echo every 3‑5 years</li></ul></div>
+        <div class="card"><h3>Stage B: Moderate MR</h3><ul><li>EROA 0.20‑0.39 cm², RVol 30‑59 mL/beat, vena contracta 0.3‑0.69 cm</li><li>LVEF ≥60%, LVESD &lt;40 mm, asymptomatic</li><li>Annual echo, treat hypertension</li></ul></div>
+        <div class="grid-2">
+            <div class="card"><h3>Stage C: Severe MR, asymptomatic</h3><ul><li><strong>C1:</strong> LVEF ≥60%, LVESD &lt;40 mm</li>
+            <li><strong>C2:</strong> LVEF 40‑59% or LVESD ≥40 mm</li>
+            <li>Mitral surgery recommended for C2; consider for C1 if atrial fibrillation or pulmonary hypertension</li></ul></div>
+            <div class="card"><h3>Stage D: Symptomatic severe MR</h3><ul><li>NYHA II‑IV, or acute MR due to chordal rupture</li>
+            <li>EROA ≥0.40 cm², RVol ≥60 mL/beat, vena contracta ≥0.7 cm</li>
+            <li><span class="badge badge-danger">Mitral valve repair (preferred) or replacement Class I</span></li></ul></div>
+        </div>
+        <div class="tip">🔧 Mitral repair recommended over replacement in degenerative MR when feasible (better outcomes).</div>
+    </div>
+
+    <!-- MITRAL STENOSIS -->
+    <div id="tabMS" class="section-panel">
+        <h2>Mitral Stenosis (MS) – 2020 AHA/ACC Stages</h2>
+        <div class="card"><h3>Stage A: At risk</h3><ul><li>Rheumatic heart disease, mild valve thickening without obstruction</li><li>Asymptomatic, normal pressures</li><li>Echo every 3‑5 years</li></ul></div>
+        <div class="card"><h3>Stage B: Moderate MS</h3><ul><li>MVA 1.6‑2.0 cm², mean gradient 5‑10 mmHg, normal PAP</li><li>Asymptomatic</li><li>Echo every 1‑2 years, avoid tachycardia</li></ul></div>
+        <div class="grid-2">
+            <div class="card"><h3>Stage C: Severe MS, asymptomatic</h3><ul><li>MVA ≤1.5 cm², mean gradient &gt;10 mmHg, PAP ≥50 mmHg (at rest or exercise)</li>
+            <li>Consider PMC if valve morphology favourable and PAP ≥50 mmHg</li></ul></div>
+            <div class="card"><h3>Stage D: Symptomatic severe MS</h3><ul><li>NYHA II‑IV with MVA ≤1.5 cm² and favourable anatomy → <strong>Percutaneous mitral commissurotomy (PMC)</strong></li>
+            <li>Unfavourable anatomy or failed PMC → mitral valve surgery</li></ul></div>
+        </div>
+        <div class="tip">🩺 Wilkins score (mobility, thickening, calcification, subvalvular) guides PMC suitability. Class I for symptomatic MS with favourable anatomy.</div>
+    </div>
+
+    <!-- CHRONIC CORONARY SYNDROMES -->
+    <div id="tabCAD" class="section-panel">
+        <h2>Chronic Coronary Syndromes (CCS) – 2019 ESC Classification</h2>
+        <div class="card">
+            <h3>📋 CCS Clinical Categories</h3>
+            <ul>
+                <li><strong>Suspected CAD with “stable” angina/ dyspnoea</strong></li>
+                <li><strong>New‑onset heart failure or LV dysfunction, suspected CAD</strong></li>
+                <li><strong>Asymptomatic or stable symptoms after ACS / revascularisation (>1 year)</strong></li>
+                <li><strong>Angina equivalent with vasospastic / microvascular disease</strong></li>
+                <li><strong>Incidentally found coronary calcification on CT</strong></li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>🫀 Angina CCS Class (Canadian Cardiovascular Society)</h3>
+            <table>
+                <thead><tr><th>Class</th><th>Description</th><th>Management implication</th></tr></thead>
+                <tbody>
+                    <tr><td>0</td><td>Asymptomatic (silent ischemia)</td><td>Risk factor control, aspirin, statin</td></tr>
+                    <tr><td>I</td><td>Angina only with strenuous / prolonged exertion</td><td>Beta‑blocker / CCB, lifestyle modification</td></tr>
+                    <tr><td>II</td><td>Slight limitation (walking &gt;2 blocks, climbing 1 flight)</td><td>Add anti‑anginal therapy; consider functional testing</td></tr>
+                    <tr><td>III</td><td>Marked limitation (walking 1‑2 blocks, &lt;1 flight)</td><td>Intensive medical therapy; consider coronary angiography</td></tr>
+                    <tr><td>IV</td><td>Inability to perform any activity without angina (or angina at rest)</td><td>High‑risk phenotype; urgent revascularisation evaluation</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card">
+            <h3>📊 ESC Risk Stratification (Pre‑test probability)</h3>
+            <ul>
+                <li><strong>Low probability (&lt;15%)</strong> → Rule out with CT coronary calcium score or CT angiography</li>
+                <li><strong>Intermediate (15‑50%)</strong> → Functional imaging (stress echo, CMR, SPECT, PET)</li>
+                <li><strong>High (&gt;50%)</strong> → Direct invasive angiography if symptoms refractory</li>
+            </ul>
+            <div class="tip">💊 Guideline‑directed medical therapy: Aspirin / clopidogrel, statin, beta‑blocker, ACEi/ARB, plus SGLT2i if diabetes or LVEF ≤40%. Revascularisation (PCI/CABG) for left main, multi‑vessel disease, or severe symptoms despite optimal therapy.</div>
+        </div>
+    </div>
+</div>
 
 <script>
-    // ----- Helper for radio/checkbox groups -----
-    let currentPath = 'as';
-    const selectorBtns = document.querySelectorAll('.selector-btn');
-    const criteriaPanel = document.getElementById('criteriaPanel');
-    const stageEl = document.getElementById('stageText');
-    const managementEl = document.getElementById('managementTip');
-
-    function setActivePath(path) {
-        currentPath = path;
-        selectorBtns.forEach(btn => {
-            if (btn.getAttribute('data-path') === path) btn.classList.add('active');
-            else btn.classList.remove('active');
-        });
-        renderCriteria();
+    // Tab switching
+    function switchTab(event, tabId) {
+        event.preventDefault();
+        document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        document.querySelectorAll('.top-nav a').forEach(a => a.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-    function renderCriteria() {
-        if (currentPath === 'as') renderAS();
-        else if (currentPath === 'ar') renderAR();
-        else if (currentPath === 'mr') renderMR();
-        else if (currentPath === 'ms') renderMS();
-        else if (currentPath === 'cad') renderCAD();
-    }
-
-    // ----- AORTIC STENOSIS (AHA/ACC stages A-D) -----
-    function renderAS() {
-        let html = `
-            <div class="card-title">2. Aortic Stenosis criteria (2020 AHA/ACC)</div>
-            <div class="criteria-grid">
-                <div class="criteria-item">
-                    <label><input type="radio" name="as_stage" value="A"> Stage A: At risk (bicuspid valve, sclerosis, no obstruction)</label>
-                </div>
-                <div class="criteria-item">
-                    <label><input type="radio" name="as_stage" value="B"> Stage B: Progressive AS (mild-moderate, Vmax 2-3.9 m/s, asymptomatic)</label>
-                </div>
-                <div class="criteria-item">
-                    <label><input type="radio" name="as_stage" value="C1"> Stage C1: Severe AS, asymptomatic (Vmax ≥4 m/s or mean ΔP ≥40 mmHg, AVA ≤1.0 cm²)</label>
-                </div>
-                <div class="criteria-item">
-                    <label><input type="radio" name="as_stage" value="C2"> Stage C2: Severe AS, asymptomatic but LVEF <50% or abnormal exercise test</label>
-                </div>
-                <div class="criteria-item">
-                    <label><input type="radio" name="as_stage" value="D1"> Stage D1: Severe AS, symptomatic (dyspnea, angina, syncope)</label>
-                </div>
-                <div class="criteria-item">
-                    <label><input type="radio" name="as_stage" value="D2"> Stage D2: Severe AS, symptomatic but low‑flow/low‑gradient (LVEF <50%)</label>
-                </div>
-                <div class="criteria-item">
-                    <label><input type="radio" name="as_stage" value="D3"> Stage D3: Severe AS, paradoxical low‑flow (LVEF ≥50%, indexed AVA ≤0.6 cm²/m²)</label>
-                </div>
-            </div>
-            <button id="asSubmit" style="background: var(--accent); border: none; padding: 10px 24px; border-radius: 40px; margin-top: 8px; cursor: pointer;">Evaluate</button>
-        `;
-        criteriaPanel.innerHTML = html;
-        document.getElementById('asSubmit').addEventListener('click', () => {
-            let selected = document.querySelector('input[name="as_stage"]:checked');
-            if (!selected) { stageEl.innerText = '—'; managementEl.innerText = 'Select a stage.'; return; }
-            let val = selected.value;
-            let stage = '';
-            let management = '';
-            if (val === 'A') { stage = 'Stage A: At risk'; management = 'Risk factor modification, clinical follow‑up every 3‑5 years.'; }
-            else if (val === 'B') { stage = 'Stage B: Progressive AS'; management = 'Yearly echocardiography; avoid dehydration. No intervention. '; }
-            else if (val === 'C1') { stage = 'Stage C1: Severe AS, asymptomatic'; management = 'Exercise stress test if symptoms unclear. Consider AVR if rapid progression or very severe (Vmax ≥5 m/s).'; }
-            else if (val === 'C2') { stage = 'Stage C2: Severe AS, asymptomatic with LVEF <50% or abnormal exercise test'; management = 'AVR indicated (Class I).'; }
-            else if (val === 'D1') { stage = 'Stage D1: Symptomatic severe AS'; management = 'AVR indicated (Class I). TAVI or SAVR based on risk profile.'; }
-            else if (val === 'D2') { stage = 'Stage D2: Low‑flow/low‑gradient severe AS with LVEF <50%'; management = 'AVR indicated after dobutamine stress echo; consider TAVI if high risk.'; }
-            else if (val === 'D3') { stage = 'Stage D3: Paradoxical low‑flow severe AS (LVEF ≥50%)'; management = 'AVR indicated if symptomatic or LVEF declines.'; }
-            stageEl.innerText = stage;
-            managementEl.innerText = management;
-        });
-    }
-
-    // AORTIC REGURGITATION (AHA/ACC stages)
-    function renderAR() {
-        let html = `
-            <div class="card-title">Aortic Regurgitation (2020 AHA/ACC)</div>
-            <div class="criteria-grid">
-                <div class="criteria-item"><label><input type="radio" name="ar_stage" value="A"> Stage A: At risk (bicuspid, aortic root dilation, no AR)</label></div>
-                <div class="criteria-item"><label><input type="radio" name="ar_stage" value="B"> Stage B: Mild‑moderate AR, LV normal, asymptomatic</label></div>
-                <div class="criteria-item"><label><input type="radio" name="ar_stage" value="C1"> Stage C1: Severe AR, asymptomatic, LVEF ≥50% and LVEDD <60mm (or <35mm/m²)</label></div>
-                <div class="criteria-item"><label><input type="radio" name="ar_stage" value="C2"> Stage C2: Severe AR, asymptomatic but LVEF <50% or LVEDD >60mm (or >35mm/m²)</label></div>
-                <div class="criteria-item"><label><input type="radio" name="ar_stage" value="D"> Stage D: Severe AR, symptomatic (dyspnea, angina)</label></div>
-            </div>
-            <button id="arSubmit">Evaluate</button>
-        `;
-        criteriaPanel.innerHTML = html;
-        document.getElementById('arSubmit').addEventListener('click', () => {
-            let selected = document.querySelector('input[name="ar_stage"]:checked');
-            if (!selected) return;
-            let val = selected.value;
-            let stage = '', mgt = '';
-            if (val === 'A') { stage = 'Stage A: At risk'; mgt = 'Monitor every 1‑2 years.'; }
-            else if (val === 'B') { stage = 'Stage B: Mild‑moderate AR'; mgt = 'Annual echo; prevent endocarditis if bicuspid.'; }
-            else if (val === 'C1') { stage = 'Stage C1: Severe AR, asymptomatic, normal LV'; mgt = 'Surgery if LV dilation progresses or patient becomes symptomatic.'; }
-            else if (val === 'C2') { stage = 'Stage C2: Severe AR, asymptomatic LV dysfunction'; mgt = 'Aortic valve replacement indicated (Class I).'; }
-            else if (val === 'D') { stage = 'Stage D: Symptomatic severe AR'; mgt = 'AVR indicated urgently (Class I).'; }
-            stageEl.innerText = stage; managementEl.innerText = mgt;
-        });
-    }
-
-    // MITRAL REGURGITATION (primary)
-    function renderMR() {
-        let html = `
-            <div class="card-title">Primary Mitral Regurgitation (2020 AHA/ACC)</div>
-            <div class="criteria-grid">
-                <div class="criteria-item"><label><input type="radio" name="mr_stage" value="A"> Stage A: At risk (MVP, mild MR, normal LV)</label></div>
-                <div class="criteria-item"><label><input type="radio" name="mr_stage" value="B"> Stage B: Moderate MR, LVEF ≥60%, LVESD <40mm, asymptomatic</label></div>
-                <div class="criteria-item"><label><input type="radio" name="mr_stage" value="C1"> Stage C1: Severe MR, asymptomatic, LVEF ≥60%, LVESD <40mm</label></div>
-                <div class="criteria-item"><label><input type="radio" name="mr_stage" value="C2"> Stage C2: Severe MR, asymptomatic but LVEF 60‑40% or LVESD ≥40mm</label></div>
-                <div class="criteria-item"><label><input type="radio" name="mr_stage" value="D"> Stage D: Severe MR, symptomatic (dyspnea, fatigue)</label></div>
-            </div>
-            <button id="mrSubmit">Evaluate</button>
-        `;
-        criteriaPanel.innerHTML = html;
-        document.getElementById('mrSubmit').addEventListener('click', () => {
-            let selected = document.querySelector('input[name="mr_stage"]:checked');
-            if (!selected) return;
-            let val = selected.value;
-            let stage = '', mgt = '';
-            if (val === 'A') { stage = 'Stage A: At risk'; mgt = 'Observation, echo every 3‑5 years.'; }
-            else if (val === 'B') { stage = 'Stage B: Moderate MR'; mgt = 'Annual echo; treat hypertension.'; }
-            else if (val === 'C1') { stage = 'Stage C1: Severe MR, normal LV'; mgt = 'Surgery if symptoms develop or LV deterioration.'; }
-            else if (val === 'C2') { stage = 'Stage C2: Severe MR with LV dysfunction (LVEF <60% or LVESD ≥40mm)'; mgt = 'Mitral valve surgery indicated (Class I).'; }
-            else if (val === 'D') { stage = 'Stage D: Symptomatic severe MR'; mgt = 'Mitral valve repair/replacement recommended.'; }
-            stageEl.innerText = stage; managementEl.innerText = mgt;
-        });
-    }
-
-    // MITRAL STENOSIS
-    function renderMS() {
-        let html = `
-            <div class="card-title">Mitral Stenosis (2020 AHA/ACC)</div>
-            <div class="criteria-grid">
-                <div class="criteria-item"><label><input type="radio" name="ms_stage" value="A"> Stage A: At risk (rheumatic, mild MS, no symptoms)</label></div>
-                <div class="criteria-item"><label><input type="radio" name="ms_stage" value="B"> Stage B: Moderate MS (MVA 1.6‑2.0 cm², asymptomatic)</label></div>
-                <div class="criteria-item"><label><input type="radio" name="ms_stage" value="C"> Stage C: Severe MS (MVA ≤1.5 cm², asymptomatic)</label></div>
-                <div class="criteria-item"><label><input type="radio" name="ms_stage" value="D"> Stage D: Severe MS, symptomatic (NYHA II‑IV)</label></div>
-            </div>
-            <button id="msSubmit">Evaluate</button>
-        `;
-        criteriaPanel.innerHTML = html;
-        document.getElementById('msSubmit').addEventListener('click', () => {
-            let selected = document.querySelector('input[name="ms_stage"]:checked');
-            if (!selected) return;
-            let val = selected.value;
-            let stage = '', mgt = '';
-            if (val === 'A') { stage = 'Stage A: At risk'; mgt = 'Echo every 3‑5 years; endocarditis prophylaxis if prior episode.'; }
-            else if (val === 'B') { stage = 'Stage B: Moderate MS'; mgt = 'Echo every 1‑2 years; avoid tachycardia.'; }
-            else if (val === 'C') { stage = 'Stage C: Severe MS, asymptomatic'; mgt = 'Consider intervention if pulmonary artery systolic pressure >50 mmHg or new‑onset AF.'; }
-            else if (val === 'D') { stage = 'Stage D: Symptomatic severe MS'; mgt = 'Percutaneous mitral commissurotomy (if suitable) or surgery.'; }
-            stageEl.innerText = stage; managementEl.innerText = mgt;
-        });
-    }
-
-    // CHRONIC CORONARY SYNDROMES (ESC 2019)
-    function renderCAD() {
-        let html = `
-            <div class="card-title">Chronic Coronary Syndromes (ESC 2019)</div>
-            <div class="criteria-grid">
-                <div class="criteria-item"><label><input type="radio" name="cad_stage" value="1"> CCS class 0: No angina (silent ischemia)</label></div>
-                <div class="criteria-item"><label><input type="radio" name="cad_stage" value="2"> CCS class I: Angina with strenuous / rapid / prolonged exertion</label></div>
-                <div class="criteria-item"><label><input type="radio" name="cad_stage" value="3"> CCS class II: Slight limitation (walking >2 blocks or climbing 1 flight)</label></div>
-                <div class="criteria-item"><label><input type="radio" name="cad_stage" value="4"> CCS class III: Marked limitation (walking 1‑2 blocks or climbing <1 flight)</label></div>
-                <div class="criteria-item"><label><input type="radio" name="cad_stage" value="5"> CCS class IV: Inability to perform any physical activity without angina</label></div>
-                <div class="criteria-item"><label><input type="radio" name="cad_stage" value="6"> Post‑revascularization or high‑risk anatomy (left main, multi‑vessel)</label></div>
-            </div>
-            <div class="criteria-grid">
-                <div class="criteria-item"><label><input type="checkbox" id="cad_lvef"> LVEF <50%</label></div>
-                <div class="criteria-item"><label><input type="checkbox" id="cad_dm"> Diabetes mellitus</label></div>
-            </div>
-            <button id="cadSubmit">Evaluate</button>
-        `;
-        criteriaPanel.innerHTML = html;
-        document.getElementById('cadSubmit').addEventListener('click', () => {
-            let selected = document.querySelector('input[name="cad_stage"]:checked');
-            let lvef = document.getElementById('cad_lvef').checked;
-            let dm = document.getElementById('cad_dm').checked;
-            if (!selected) { stageEl.innerText = '—'; managementEl.innerText = 'Select CCS class.'; return; }
-            let val = selected.value;
-            let stage = '', mgt = '';
-            if (val === '1') stage = 'CCS Class 0 (Asymptomatic / silent ischemia)';
-            else if (val === '2') stage = 'CCS Class I (Mild angina, only with strenuous exertion)';
-            else if (val === '3') stage = 'CCS Class II (Slight limitation)';
-            else if (val === '4') stage = 'CCS Class III (Marked limitation)';
-            else if (val === '5') stage = 'CCS Class IV (Angina at rest or minimal exertion)';
-            else stage = 'High‑risk anatomy / post‑revascularization';
-            
-            mgt = 'Guideline‑directed medical therapy (beta‑blocker, aspirin, statin). ';
-            if (lvef) mgt += 'ACEi/ARB, beta‑blocker, SGLT2i if diabetic. ';
-            if (dm) mgt += 'Tight glycemic control, SGLT2i / GLP1‑RA. ';
-            if (val === '4' || val === '5' || (val === '6' && (lvef || dm))) mgt += 'Consider coronary angiography and revascularization.';
-            else mgt += 'Risk factor modification and anti‑ischemic therapy.';
-            
-            stageEl.innerText = stage;
-            managementEl.innerText = mgt;
-        });
-    }
-
-    // Initialization
-    selectorBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            setActivePath(btn.getAttribute('data-path'));
-        });
-    });
-    setActivePath('as');
 
     // Theme toggle
-    const themeBtn = document.getElementById('themeToggle');
-    themeBtn.addEventListener('click', () => {
-        document.body.classList.toggle('light');
-        localStorage.setItem('valveTheme', document.body.classList.contains('light') ? 'light' : 'dark');
-    });
-    if (localStorage.getItem('valveTheme') === 'light') document.body.classList.add('light');
+    function toggleTheme() {
+        const root = document.documentElement;
+        if (root.getAttribute('data-theme') === 'dark')
+            root.removeAttribute('data-theme');
+        else
+            root.setAttribute('data-theme', 'dark');
+    }
+
+    // Set default active tab based on URL hash if needed
+    if (window.location.hash) {
+        let hash = window.location.hash.substring(1);
+        let target = document.getElementById(hash);
+        if (target && target.classList.contains('section-panel')) {
+            document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+            target.classList.add('active');
+            let link = Array.from(document.querySelectorAll('.top-nav a')).find(a => a.getAttribute('onclick')?.includes(hash));
+            if (link) {
+                document.querySelectorAll('.top-nav a').forEach(a => a.classList.remove('active'));
+                link.classList.add('active');
+            }
+        }
+    }
 </script>
 </body>
 </html>
