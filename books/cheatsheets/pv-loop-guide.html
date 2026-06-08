@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pressure–Volume Loop Atlas | Complete Clinical Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ───────────────────────────────────────────────────── */
+:root {
+  --bg:       #070d1a;
+  --bg2:      #0d1627;
+  --bg3:      #111e35;
+  --glass:    rgba(255,255,255,0.03);
+  --rim:      rgba(255,255,255,0.06);
+  --text:     #e2eaf8;
+  --muted:    #7b90b8;
+  --dim:      #4a5a78;
+
+  --gold:     #f0c040;
+  --gold2:    #c99a20;
+  --red:      #e85555;
+  --red-dim:  rgba(232,85,85,0.15);
+  --green:    #42c47a;
+  --green-dim:rgba(66,196,122,0.12);
+  --blue:     #4c9fff;
+  --blue-dim: rgba(76,159,255,0.12);
+  --amber:    #f59e0b;
+  --amber-dim:rgba(245,158,11,0.12);
+  --teal:     #2dd4bf;
+  --teal-dim: rgba(45,212,191,0.12);
+  --purple:   #a78bfa;
+  --purple-dim:rgba(167,139,250,0.12);
+
+  --r: 16px;
+  --r2: 24px;
+  --shadow: 0 4px 32px rgba(0,0,0,0.5);
+}
+
+/* ─── RESET ────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:15px;
+  line-height:1.7;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+::selection{background:rgba(240,192,64,0.3);color:#fff}
+
+/* ─── HEADER ───────────────────────────────────────────────────── */
+.header{
+  position:sticky;top:0;z-index:200;
+  background:rgba(7,13,26,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--rim);
+}
+.header-inner{
+  max-width:1400px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 28px;
+  gap:16px;
+}
+.logo{
+  font-family:'DM Serif Display',serif;
+  font-size:18px;color:var(--gold);
+  white-space:nowrap;
+}
+.logo small{display:block;font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);font-weight:400;margin-top:-2px}
+
+.nav-scroll{
+  flex:1;overflow-x:auto;
+  display:flex;gap:2px;
+  scrollbar-width:none;
+}
+.nav-scroll::-webkit-scrollbar{display:none}
+.nav-btn{
+  flex:0 0 auto;
+  background:none;border:none;
+  color:var(--muted);font-family:'DM Sans',sans-serif;
+  font-size:12px;font-weight:600;
+  padding:7px 14px;border-radius:40px;cursor:pointer;
+  white-space:nowrap;transition:all .18s;letter-spacing:.02em;
+}
+.nav-btn:hover{color:var(--text);background:var(--glass)}
+.nav-btn.active{color:var(--bg);background:var(--gold)}
+
+/* ─── LAYOUT ───────────────────────────────────────────────────── */
+.page{max-width:1400px;margin:0 auto;padding:36px 28px 80px}
+.tab{display:none}.tab.active{display:block}
+
+/* ─── SECTION HEADS ────────────────────────────────────────────── */
+.sec-head{margin-bottom:32px}
+.sec-head h2{
+  font-family:'DM Serif Display',serif;
+  font-size:32px;color:var(--gold);
+  display:flex;align-items:center;gap:14px;
+}
+.sec-head p{color:var(--muted);font-size:14px;margin-top:6px;max-width:720px}
+
+/* ─── GRID HELPERS ─────────────────────────────────────────────── */
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.g12{display:grid;grid-template-columns:1fr 2fr;gap:20px}
+.g21{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+
+/* ─── CARD ──────────────────────────────────────────────────────── */
+.card{
+  background:var(--bg2);
+  border:1px solid var(--rim);
+  border-radius:var(--r2);
+  padding:24px;
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;inset:0;
+  background:var(--glass);pointer-events:none;
+}
+.card-title{
+  font-family:'DM Serif Display',serif;
+  font-size:18px;margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.card-accent-red .card-title{color:var(--red)}
+.card-accent-green .card-title{color:var(--green)}
+.card-accent-blue .card-title{color:var(--blue)}
+.card-accent-amber .card-title{color:var(--amber)}
+.card-accent-teal .card-title{color:var(--teal)}
+.card-accent-purple .card-title{color:var(--purple)}
+.card-accent-gold .card-title{color:var(--gold)}
+
+.card p,.card li{color:var(--muted);font-size:14px;line-height:1.7}
+.card ul,.card ol{padding-left:18px}
+.card li{margin-bottom:5px}
+
+/* Colored top border */
+.card-accent-red{border-top:3px solid var(--red)}
+.card-accent-green{border-top:3px solid var(--green)}
+.card-accent-blue{border-top:3px solid var(--blue)}
+.card-accent-amber{border-top:3px solid var(--amber)}
+.card-accent-teal{border-top:3px solid var(--teal)}
+.card-accent-purple{border-top:3px solid var(--purple)}
+.card-accent-gold{border-top:3px solid var(--gold)}
+
+/* ─── PEARL / TIP ───────────────────────────────────────────────── */
+.pearl{
+  background:rgba(240,192,64,0.07);
+  border:1px solid rgba(240,192,64,0.25);
+  border-left:4px solid var(--gold);
+  border-radius:0 var(--r) var(--r) 0;
+  padding:14px 18px;margin:20px 0;
+  font-size:13.5px;color:var(--text);
+}
+.pearl strong{color:var(--gold)}
+.alert-red{
+  background:var(--red-dim);
+  border-left:4px solid var(--red);
+  border-radius:0 var(--r) var(--r) 0;
+  padding:14px 18px;margin:20px 0;
+  font-size:13.5px;color:var(--text);
+}
+
+/* ─── TABLE ──────────────────────────────────────────────────────── */
+.tbl-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--rim);margin:16px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--bg3);color:var(--gold);font-weight:600;padding:10px 14px;text-align:left;border-bottom:1px solid var(--rim);letter-spacing:.03em}
+td{padding:9px 14px;border-bottom:1px solid var(--rim);color:var(--muted);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,0.02)}
+.up{color:var(--red)}.dn{color:var(--green)}.nc{color:var(--muted)}
+td strong{color:var(--text)}
+
+/* ─── BADGE ──────────────────────────────────────────────────────── */
+.badge{
+  display:inline-block;font-size:10px;font-weight:700;
+  padding:2px 8px;border-radius:40px;letter-spacing:.06em;
+  margin-right:4px;margin-bottom:4px;
+}
+.badge-red{background:var(--red-dim);color:var(--red)}
+.badge-green{background:var(--green-dim);color:var(--green)}
+.badge-blue{background:var(--blue-dim);color:var(--blue)}
+.badge-amber{background:var(--amber-dim);color:var(--amber)}
+.badge-teal{background:var(--teal-dim);color:var(--teal)}
+.badge-gold{background:rgba(240,192,64,0.12);color:var(--gold)}
+
+/* ─── DIVIDER ────────────────────────────────────────────────────── */
+.divider{height:1px;background:var(--rim);margin:32px 0}
+
+/* ─── SVG PV DIAGRAMS ────────────────────────────────────────────── */
+.pv-wrap{position:relative;overflow:hidden}
+.pv-wrap svg{display:block;width:100%;height:auto}
+
+/* ─── INTERACTIVE SIM ────────────────────────────────────────────── */
+.sim-panel{
+  background:var(--bg2);
+  border:1px solid var(--rim);
+  border-radius:var(--r2);
+  padding:24px;
+  margin-bottom:24px;
+}
+.sim-top{
+  display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start;
+}
+.canvas-wrap{
+  background:var(--bg);
+  border:1px solid var(--rim);
+  border-radius:var(--r);
+  overflow:hidden;
+  min-height:280px;
+  display:flex;align-items:center;justify-content:center;
+}
+canvas{display:block;max-width:100%;height:auto}
+
+.sliders{display:flex;flex-direction:column;gap:18px;min-width:220px}
+.sl-row{display:flex;flex-direction:column;gap:6px}
+.sl-label{
+  display:flex;justify-content:space-between;
+  font-size:12px;font-weight:600;color:var(--text);
+}
+.sl-label span:last-child{
+  font-family:'DM Mono',monospace;color:var(--gold)
+}
+.sl-sub{font-size:11px;color:var(--dim);margin-top:-2px}
+input[type=range]{
+  width:100%;accent-color:var(--gold);
+  height:4px;cursor:pointer;
+}
+.sim-metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  margin-top:16px;
+}
+.metric-box{
+  background:var(--bg3);border:1px solid var(--rim);
+  border-radius:var(--r);padding:10px 14px;text-align:center;
+}
+.metric-box .val{
+  font-family:'DM Mono',monospace;font-size:22px;
+  font-weight:500;color:var(--gold);
+}
+.metric-box .lbl{font-size:10px;color:var(--dim);margin-top:2px;letter-spacing:.05em;text-transform:uppercase}
+
+/* ─── PHASE TIMELINE ─────────────────────────────────────────────── */
+.phase-row{
+  display:flex;gap:12px;margin:20px 0;
+  overflow-x:auto;padding-bottom:8px;
+}
+.phase-box{
+  flex:1;min-width:160px;
+  background:var(--bg3);border:1px solid var(--rim);
+  border-radius:var(--r);padding:14px;
+}
+.phase-num{
+  width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;margin-bottom:10px;
+}
+.ph1 .phase-num{background:var(--blue-dim);color:var(--blue)}
+.ph2 .phase-num{background:var(--green-dim);color:var(--green)}
+.ph3 .phase-num{background:var(--amber-dim);color:var(--amber)}
+.ph4 .phase-num{background:var(--purple-dim);color:var(--purple)}
+.phase-box h4{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px}
+.phase-box p{font-size:12px;color:var(--muted);line-height:1.5}
+.phase-box .valves{font-size:11px;font-weight:600;margin-top:8px;padding:4px 8px;border-radius:8px;display:inline-block}
+.ph1 .valves{background:var(--blue-dim);color:var(--blue)}
+.ph2 .valves{background:var(--green-dim);color:var(--green)}
+.ph3 .valves{background:var(--amber-dim);color:var(--amber)}
+.ph4 .valves{background:var(--purple-dim);color:var(--purple)}
+
+/* ─── QUIZ ────────────────────────────────────────────────────────── */
+.quiz-q{
+  background:var(--bg2);border:1px solid var(--rim);
+  border-radius:var(--r2);padding:24px;margin-bottom:20px;
+}
+.quiz-q h4{
+  font-family:'DM Serif Display',serif;
+  font-size:16px;color:var(--text);margin-bottom:16px;
+}
+.quiz-q h4 .qnum{color:var(--gold);margin-right:8px}
+.quiz-options{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{
+  background:var(--bg3);border:1px solid var(--rim);
+  border-radius:var(--r);padding:10px 16px;cursor:pointer;
+  font-size:14px;color:var(--muted);transition:all .15s;
+  text-align:left;width:100%;
+}
+.quiz-opt:hover{border-color:var(--gold);color:var(--text)}
+.quiz-opt.correct{background:var(--green-dim);border-color:var(--green);color:var(--green)}
+.quiz-opt.wrong{background:var(--red-dim);border-color:var(--red);color:var(--red)}
+.quiz-opt.reveal-correct{background:var(--green-dim);border-color:var(--green);color:var(--green)}
+.quiz-opt:disabled{cursor:default}
+.quiz-explain{
+  background:rgba(240,192,64,0.06);
+  border:1px solid rgba(240,192,64,0.2);
+  border-radius:var(--r);padding:14px;
+  font-size:13px;color:var(--text);
+  margin-top:12px;display:none;line-height:1.6;
+}
+.quiz-explain.show{display:block}
+.quiz-explain strong{color:var(--gold)}
+.quiz-score{
+  background:var(--bg3);border:1px solid var(--rim);
+  border-radius:var(--r2);padding:20px 24px;
+  text-align:center;margin-bottom:24px;
+  font-size:14px;color:var(--muted);
+}
+.quiz-score .big{font-size:36px;font-family:'DM Serif Display',serif;color:var(--gold)}
+.quiz-progress{height:6px;background:var(--bg3);border-radius:3px;margin:12px 0 4px;overflow:hidden}
+.quiz-progress-bar{height:100%;background:linear-gradient(90deg,var(--green),var(--teal));border-radius:3px;transition:width .4s ease;width:0%}
+
+/* ─── KEY POINTS LIST ────────────────────────────────────────────── */
+.kp-list{list-style:none;padding:0;margin:0}
+.kp-list li{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:10px 0;border-bottom:1px solid var(--rim);
+  font-size:14px;color:var(--muted);
+}
+.kp-list li:last-child{border-bottom:none}
+.kp-list .dot{
+  width:8px;height:8px;border-radius:50%;
+  flex-shrink:0;margin-top:7px;
+}
+
+/* ─── RELATION DIAGRAM ───────────────────────────────────────────── */
+.rel-diagram{
+  background:var(--bg);
+  border-radius:var(--r);border:1px solid var(--rim);
+  padding:12px;margin:16px 0;
+  overflow-x:auto;
+}
+
+/* ─── FORMULA ────────────────────────────────────────────────────── */
+.formula{
+  font-family:'DM Mono',monospace;
+  background:var(--bg3);border:1px solid var(--rim);
+  border-radius:var(--r);padding:12px 18px;
+  margin:12px 0;font-size:13px;color:var(--teal);
+  display:block;
+}
+
+/* ─── FOOTNOTE ───────────────────────────────────────────────────── */
+.footnote{
+  text-align:center;font-size:12px;color:var(--dim);
+  padding:40px 20px 0;border-top:1px solid var(--rim);
+  margin-top:60px;
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────────── */
+@media(max-width:900px){
+  .g12,.g21{grid-template-columns:1fr}
+  .sim-top{grid-template-columns:1fr}
+  .sliders{flex-direction:row;flex-wrap:wrap;min-width:unset}
+  .sl-row{min-width:180px;flex:1}
+  .sim-metrics{grid-template-columns:repeat(2,1fr)}
+  .header-inner{padding:10px 16px}
+  .page{padding:20px 16px 60px}
+  .sec-head h2{font-size:24px}
+  .phase-row{flex-direction:column}
+}
+
+/* ─── ANATOMY LABELS ─────────────────────────────────────────────── */
+.lbl-txt{font-family:'DM Mono',monospace;font-size:10px}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ HEADER ═══════════════════════════ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      ⟳ PV Loop Atlas
+      <small>Complete Cardiac Physiology Reference</small>
+    </div>
+    <nav class="nav-scroll">
+      <button class="nav-btn active" onclick="goTab(0,this)">① Normal Loop</button>
+      <button class="nav-btn" onclick="goTab(1,this)">② Determinants</button>
+      <button class="nav-btn" onclick="goTab(2,this)">③ Valvular Disease</button>
+      <button class="nav-btn" onclick="goTab(3,this)">④ Cardiomyopathies</button>
+      <button class="nav-btn" onclick="goTab(4,this)">⑤ Heart Failure</button>
+      <button class="nav-btn" onclick="goTab(5,this)">⑥ Clinical Pearls</button>
+      <button class="nav-btn" onclick="goTab(6,this)">⑦ RV Physiology</button>
+      <button class="nav-btn" onclick="goTab(7,this)">⑧ Perioperative</button>
+      <button class="nav-btn" onclick="goTab(8,this)">⑨ Quiz</button>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+
+<!-- ══════════════════════════════════════════════════════════════════
+     TAB 1 — NORMAL PV LOOP
+═══════════════════════════════════════════════════════════════════ -->
+<section class="tab active" id="tab0">
+  <div class="sec-head">
+    <h2>🫀 Normal Pressure–Volume Loop</h2>
+    <p>The PV loop is the fundamental graphical description of left ventricular mechanics during a single cardiac cycle, relating instantaneous chamber pressure to instantaneous chamber volume.</p>
+  </div>
+
+  <!-- Annotated SVG -->
+  <div class="card card-accent-gold" style="margin-bottom:24px">
+    <div class="card-title">📐 Annotated Anatomy of the Normal LV PV Loop</div>
+    <div class="pv-wrap">
+      <svg viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg" style="max-height:420px">
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#7b90b8"/>
+          </marker>
+          <marker id="arr-gold" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#f0c040"/>
+          </marker>
+          <marker id="arr-red" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#e85555"/>
+          </marker>
+          <marker id="arr-green" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#42c47a"/>
+          </marker>
+          <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#4c9fff"/>
+          </marker>
+        </defs>
+
+        <!-- Grid -->
+        <g stroke="#1a2a40" stroke-width="0.5">
+          <line x1="90" y1="30" x2="90" y2="360"/>
+          <line x1="170" y1="30" x2="170" y2="360"/>
+          <line x1="250" y1="30" x2="250" y2="360"/>
+          <line x1="330" y1="30" x2="330" y2="360"/>
+          <line x1="410" y1="30" x2="410" y2="360"/>
+          <line x1="90" y1="360" x2="500" y2="360"/>
+          <line x1="90" y1="280" x2="500" y2="280"/>
+          <line x1="90" y1="200" x2="500" y2="200"/>
+          <line x1="90" y1="120" x2="500" y2="120"/>
+        </g>
+
+        <!-- Axes -->
+        <line x1="90" y1="370" x2="520" y2="370" stroke="#4a5a78" stroke-width="1.5" marker-end="url(#arr)"/>
+        <line x1="80" y1="380" x2="80" y2="20" stroke="#4a5a78" stroke-width="1.5" marker-end="url(#arr)"/>
+
+        <!-- Axis Labels -->
+        <text x="320" y="395" fill="#7b90b8" font-family="DM Mono, monospace" font-size="12" text-anchor="middle">Volume (mL)</text>
+        <text x="20" y="200" fill="#7b90b8" font-family="DM Mono, monospace" font-size="12" text-anchor="middle" transform="rotate(-90,20,200)">Pressure (mmHg)</text>
+
+        <!-- Volume ticks -->
+        <text x="90" y="383" fill="#4a5a78" font-size="9" text-anchor="middle">40</text>
+        <text x="170" y="383" fill="#4a5a78" font-size="9" text-anchor="middle">70</text>
+        <text x="250" y="383" fill="#4a5a78" font-size="9" text-anchor="middle">100</text>
+        <text x="330" y="383" fill="#4a5a78" font-size="9" text-anchor="middle">130</text>
+        <text x="410" y="383" fill="#4a5a78" font-size="9" text-anchor="middle">160</text>
+
+        <!-- Pressure ticks -->
+        <text x="78" y="363" fill="#4a5a78" font-size="9" text-anchor="end">0</text>
+        <text x="78" y="283" fill="#4a5a78" font-size="9" text-anchor="end">40</text>
+        <text x="78" y="203" fill="#4a5a78" font-size="9" text-anchor="end">80</text>
+        <text x="78" y="123" fill="#4a5a78" font-size="9" text-anchor="end">120</text>
+
+        <!-- ESPVR line -->
+        <line x1="90" y1="372" x2="430" y2="110" stroke="#f0c040" stroke-width="1" stroke-dasharray="6,3" opacity="0.5"/>
+        <text x="435" y="108" fill="#f0c040" font-size="10" opacity="0.8">ESPVR (Ees)</text>
+
+        <!-- EDPVR curve (exponential-like) -->
+        <path d="M 90,360 Q 200,358 330,348 Q 370,345 410,340" fill="none" stroke="#a78bfa" stroke-width="1" stroke-dasharray="6,3" opacity="0.5"/>
+        <text x="415" y="344" fill="#a78bfa" font-size="10" opacity="0.8">EDPVR</text>
+
+        <!-- PV Loop - Main path -->
+        <!-- Points: 
+             A = EDV corner (410,340) = 155mL, 8mmHg
+             B = Top-left = (410,105) = 155mL, ~130mmHg  [phase1: isovolumetric contraction]
+             C = ESV corner (175,105) = ~60mL, ~130mmHg  [peak ejection, ESPVR]
+             D = ESV low (175,348) = ~60mL, ~5mmHg [isovolumetric relaxation]
+        -->
+
+        <!-- Phase 1: Isovolumetric contraction - right vertical (blue) -->
+        <line x1="410" y1="340" x2="410" y2="108" stroke="#4c9fff" stroke-width="2.5"/>
+        <!-- Arrow along phase 1 -->
+        <polygon points="410,170 406,182 414,182" fill="#4c9fff"/>
+
+        <!-- Phase 2: Ejection - top horizontal (green) -->
+        <line x1="410" y1="108" x2="175" y2="108" stroke="#42c47a" stroke-width="2.5"/>
+        <polygon points="280,108 292,104 292,112" fill="#42c47a"/>
+
+        <!-- Phase 3: Isovolumetric relaxation - left vertical (amber) -->
+        <line x1="175" y1="108" x2="175" y2="348" stroke="#f59e0b" stroke-width="2.5"/>
+        <polygon points="175,240 171,228 179,228" fill="#f59e0b"/>
+
+        <!-- Phase 4: Filling - bottom horizontal (purple) -->
+        <line x1="175" y1="348" x2="410" y2="340" stroke="#a78bfa" stroke-width="2.5"/>
+        <polygon points="310,344 298,348 298,340" fill="#a78bfa"/>
+
+        <!-- Corner dots -->
+        <circle cx="410" cy="340" r="5" fill="#e2eaf8"/>
+        <circle cx="410" cy="108" r="5" fill="#e2eaf8"/>
+        <circle cx="175" cy="108" r="5" fill="#e2eaf8"/>
+        <circle cx="175" cy="348" r="5" fill="#e2eaf8"/>
+
+        <!-- Corner Labels -->
+        <!-- EDV label -->
+        <line x1="410" y1="340" x2="450" y2="370" stroke="#e2eaf8" stroke-width="0.8" opacity="0.4"/>
+        <text x="455" y="373" fill="#e2eaf8" font-size="11" font-family="DM Mono, monospace">A · EDV≈155mL</text>
+        <text x="455" y="384" fill="#7b90b8" font-size="9" font-family="DM Sans, sans-serif">MV closes → IC starts</text>
+
+        <!-- ESP Top-right label -->
+        <line x1="410" y1="108" x2="450" y2="85" stroke="#e2eaf8" stroke-width="0.8" opacity="0.4"/>
+        <text x="455" y="83" fill="#e2eaf8" font-size="11" font-family="DM Mono, monospace">B · AoV opens</text>
+        <text x="455" y="94" fill="#7b90b8" font-size="9">P=Ao diastolic · Ejection begins</text>
+
+        <!-- ESV Top label -->
+        <line x1="175" y1="108" x2="110" y2="70" stroke="#e2eaf8" stroke-width="0.8" opacity="0.4"/>
+        <text x="20" y="68" fill="#e2eaf8" font-size="11" font-family="DM Mono, monospace">C · ESP/ESV≈60mL</text>
+        <text x="20" y="79" fill="#7b90b8" font-size="9">AoV closes, on ESPVR</text>
+
+        <!-- ESV low label -->
+        <line x1="175" y1="348" x2="110" y2="380" stroke="#e2eaf8" stroke-width="0.8" opacity="0.4"/>
+        <text x="20" y="378" fill="#e2eaf8" font-size="11" font-family="DM Mono, monospace">D · MV opens</text>
+        <text x="20" y="389" fill="#7b90b8" font-size="9">Diastolic filling begins</text>
+
+        <!-- SV arrow -->
+        <line x1="175" y1="400" x2="410" y2="400" stroke="#f0c040" stroke-width="1.5" marker-end="url(#arr-gold)" marker-start="url(#arr-gold)"/>
+        <text x="292" y="413" fill="#f0c040" font-size="10" text-anchor="middle" font-family="DM Mono, monospace">SV = EDV − ESV ≈ 95 mL</text>
+
+        <!-- Phase labels -->
+        <rect x="420" y="210" width="100" height="16" fill="none"/>
+        <text x="415" y="225" fill="#4c9fff" font-size="10" font-weight="700">① IC</text>
+        <text x="280" y="95" fill="#42c47a" font-size="10" font-weight="700">② Ejection</text>
+        <text x="120" y="235" fill="#f59e0b" font-size="10" font-weight="700">③ IR</text>
+        <text x="270" y="365" fill="#a78bfa" font-size="10" font-weight="700">④ Filling</text>
+
+        <!-- SW Area label -->
+        <text x="292" y="230" fill="rgba(255,255,255,0.15)" font-size="28" font-family="DM Serif Display, serif" text-anchor="middle">SW</text>
+      </svg>
+    </div>
+    <div class="pearl">
+      <strong>Stroke Work (SW)</strong> = area enclosed by the PV loop = external work performed by the LV each beat. Normal ≈ 8–10 J. The larger the area, the more energy expended per cycle.
+    </div>
+  </div>
+
+  <!-- Four Phases -->
+  <div style="margin-bottom:24px">
+    <div class="card-title" style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--gold);margin-bottom:16px">Four Phases of the Cardiac Cycle</div>
+    <div class="phase-row">
+      <div class="phase-box ph1">
+        <div class="phase-num">①</div>
+        <h4>Isovolumetric Contraction</h4>
+        <p>Both mitral and aortic valves are closed. Pressure rises rapidly with no change in volume. On the PV loop: <em>right vertical limb</em> (A→B).</p>
+        <span class="valves">MV: closed · AoV: closed</span>
+      </div>
+      <div class="phase-box ph2">
+        <div class="phase-num">②</div>
+        <h4>Rapid Ejection (Systole)</h4>
+        <p>Aortic valve opens when LV pressure exceeds aortic diastolic pressure. Volume falls, pressure peaks at ESP. On loop: <em>top horizontal</em> (B→C), endpoint on ESPVR.</p>
+        <span class="valves">MV: closed · AoV: open</span>
+      </div>
+      <div class="phase-box ph3">
+        <div class="phase-num">③</div>
+        <h4>Isovolumetric Relaxation</h4>
+        <p>Aortic valve closes at ESP. LV pressure drops rapidly with no change in volume. Mitral valve not yet open. On loop: <em>left vertical limb</em> (C→D).</p>
+        <span class="valves">MV: closed · AoV: closed</span>
+      </div>
+      <div class="phase-box ph4">
+        <div class="phase-num">④</div>
+        <h4>Diastolic Filling</h4>
+        <p>Mitral valve opens when LV pressure falls below LA pressure. Volume rises along the EDPVR at low pressure. Ends at EDV. On loop: <em>bottom</em> (D→A).</p>
+        <span class="valves">MV: open · AoV: closed</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key relations -->
+  <div class="g2">
+    <div class="card card-accent-gold">
+      <div class="card-title">📏 ESPVR — End-Systolic Pressure-Volume Relation</div>
+      <p>A straight line connecting all end-systolic points at varying loads. Its slope <strong>Ees</strong> (end-systolic elastance) is the gold-standard index of <strong>intrinsic contractility</strong>, load-independent.</p>
+      <code class="formula">Ees = ESP / (ESV − V₀)   [mmHg/mL]</code>
+      <ul class="kp-list">
+        <li><span class="dot" style="background:var(--green)"></span>Normal Ees ≈ 1.5–2.5 mmHg/mL</li>
+        <li><span class="dot" style="background:var(--red)"></span>↓ Ees = reduced contractility (HFrEF, DCM)</li>
+        <li><span class="dot" style="background:var(--amber)"></span>↑ Ees = hyperdynamic (catecholamines, HCM)</li>
+      </ul>
+    </div>
+    <div class="card card-accent-purple">
+      <div class="card-title">📏 EDPVR — End-Diastolic Pressure-Volume Relation</div>
+      <p>An <strong>exponential</strong> curve reflecting LV diastolic compliance (passive stiffness). Its steepness determines how filling pressure rises with volume.</p>
+      <ul class="kp-list">
+        <li><span class="dot" style="background:var(--purple)"></span>Normal: flat at low volumes, steeper at high volumes</li>
+        <li><span class="dot" style="background:var(--red)"></span>Shifted left/up = diastolic dysfunction, hypertrophy, fibrosis</li>
+        <li><span class="dot" style="background:var(--green)"></span>Shifted right/down = dilated LV, eccentric hypertrophy</li>
+      </ul>
+    </div>
+    <div class="card card-accent-blue">
+      <div class="card-title">🔢 Key Derived Parameters</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Parameter</th><th>Formula / Normal</th><th>Clinical meaning</th></tr></thead>
+          <tbody>
+            <tr><td><strong>EDV</strong></td><td>~120–150 mL</td><td>Preload, ventricular filling</td></tr>
+            <tr><td><strong>ESV</strong></td><td>~40–60 mL</td><td>Residual volume, afterload/contractility index</td></tr>
+            <tr><td><strong>SV</strong></td><td>EDV − ESV ≈ 70–100 mL</td><td>Output per beat</td></tr>
+            <tr><td><strong>EF</strong></td><td>SV/EDV × 100 ≈ 55–70%</td><td>Global systolic function (load-dependent!)</td></tr>
+            <tr><td><strong>CO</strong></td><td>SV × HR ≈ 4–8 L/min</td><td>Global cardiac output</td></tr>
+            <tr><td><strong>Ea</strong></td><td>ESP/SV ≈ 2 mmHg/mL</td><td>Effective arterial elastance (afterload)</td></tr>
+            <tr><td><strong>Ea/Ees</strong></td><td>≈ 0.8–1.2 (optimal)</td><td>Ventriculo-arterial coupling</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card card-accent-teal">
+      <div class="card-title">⚡ Ventriculo-Arterial Coupling</div>
+      <p>The <strong>ratio Ea/Ees</strong> describes efficiency of energy transfer from LV to arterial circulation.</p>
+      <ul class="kp-list">
+        <li><span class="dot" style="background:var(--teal)"></span><strong>Ea/Ees ≈ 1:</strong> Optimal mechanical efficiency (normal)</li>
+        <li><span class="dot" style="background:var(--red)"></span><strong>Ea/Ees &gt; 1.5:</strong> Uncoupling — excess afterload or reduced contractility → energy waste, reduced SW</li>
+        <li><span class="dot" style="background:var(--amber)"></span><strong>Ea/Ees &lt; 0.5:</strong> Hyperdynamic — inotropes, sepsis, thyrotoxicosis</li>
+      </ul>
+      <code class="formula">Coupling ratio = Ea / Ees</code>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     TAB 2 — DETERMINANTS (INTERACTIVE)
+═══════════════════════════════════════════════════════════════════ -->
+<section class="tab" id="tab1">
+  <div class="sec-head">
+    <h2>⚙️ Determinants of the PV Loop</h2>
+    <p>Three independent variables shape every PV loop. Understanding their isolated and combined effects is the foundation of hemodynamic reasoning.</p>
+  </div>
+
+  <!-- Interactive Sim -->
+  <div class="sim-panel">
+    <div style="font-weight:700;font-size:16px;color:var(--gold);margin-bottom:16px">🎮 Interactive PV Loop Simulator</div>
+    <div class="sim-top">
+      <div class="canvas-wrap">
+        <canvas id="simCanvas" width="520" height="340"></canvas>
+      </div>
+      <div class="sliders">
+        <div class="sl-row">
+          <div class="sl-label"><span>📈 Preload (EDV)</span><span id="sEDV">120</span></div>
+          <div class="sl-sub">Venous return / filling pressure</div>
+          <input type="range" id="slEDV" min="60" max="200" value="120" step="1">
+        </div>
+        <div class="sl-row">
+          <div class="sl-label"><span>💪 Contractility (Ees)</span><span id="sEes">1.00×</span></div>
+          <div class="sl-sub">Inotropic state / ESPVR slope</div>
+          <input type="range" id="slEes" min="0.35" max="2.0" value="1.0" step="0.01">
+        </div>
+        <div class="sl-row">
+          <div class="sl-label"><span>🩸 Afterload (Ea)</span><span id="sEa">1.00×</span></div>
+          <div class="sl-sub">Arterial impedance / wall stress</div>
+          <input type="range" id="slEa" min="0.5" max="2.0" value="1.0" step="0.01">
+        </div>
+        <div class="sl-row">
+          <div class="sl-label"><span>📉 Diastolic Stiffness</span><span id="sStiff">1.00×</span></div>
+          <div class="sl-sub">EDPVR slope (compliance)</div>
+          <input type="range" id="slStiff" min="0.5" max="2.5" value="1.0" step="0.01">
+        </div>
+        <button onclick="resetSim()" style="background:var(--bg3);border:1px solid var(--rim);color:var(--muted);border-radius:var(--r);padding:8px 16px;cursor:pointer;font-size:12px;margin-top:4px">↺ Reset to Normal</button>
+      </div>
+    </div>
+    <div class="sim-metrics">
+      <div class="metric-box"><div class="val" id="mEDV">120</div><div class="lbl">EDV (mL)</div></div>
+      <div class="metric-box"><div class="val" id="mESV">50</div><div class="lbl">ESV (mL)</div></div>
+      <div class="metric-box"><div class="val" id="mSV">70</div><div class="lbl">SV (mL)</div></div>
+      <div class="metric-box"><div class="val" id="mEF">58</div><div class="lbl">EF (%)</div></div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="card card-accent-gold" style="margin-bottom:24px">
+    <div class="card-title">📊 Effects on the PV Loop — Summary Table</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Change</th><th>EDV</th><th>ESV</th><th>ESP</th><th>SV</th><th>EF</th><th>ESPVR</th><th>Loop shift</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>↑ Preload</strong><br><span style="color:var(--dim);font-size:11px">Volume loading, fluid, MR/AR</span></td>
+            <td class="up">↑↑</td><td class="nc">→/↑</td><td class="nc">→</td><td class="up">↑</td><td class="nc">→</td>
+            <td class="nc">Unchanged</td><td>Right shift, wider loop</td>
+          </tr>
+          <tr>
+            <td><strong>↑ Afterload</strong><br><span style="color:var(--dim);font-size:11px">HTN, AS, vasoconstriction</span></td>
+            <td class="nc">→/↑</td><td class="up">↑</td><td class="up">↑↑</td><td class="dn">↓</td><td class="dn">↓</td>
+            <td class="nc">Unchanged</td><td>Taller, narrower, left shift of ESP</td>
+          </tr>
+          <tr>
+            <td><strong>↑ Contractility</strong><br><span style="color:var(--dim);font-size:11px">Catecholamines, digoxin, dobutamine</span></td>
+            <td class="nc">→</td><td class="dn">↓↓</td><td class="up">↑</td><td class="up">↑↑</td><td class="up">↑↑</td>
+            <td>Slope ↑ (steeper)</td><td>Left shift, loop wider, ESV ↓</td>
+          </tr>
+          <tr>
+            <td><strong>↓ Contractility</strong><br><span style="color:var(--dim);font-size:11px">MI, DCM, β-blockers overdose</span></td>
+            <td class="up">↑↑</td><td class="up">↑↑</td><td class="dn">↓</td><td class="dn">↓</td><td class="dn">↓↓</td>
+            <td>Slope ↓ (flatter)</td><td>Right shift, loop narrow &amp; low</td>
+          </tr>
+          <tr>
+            <td><strong>↑ Diastolic Stiffness</strong><br><span style="color:var(--dim);font-size:11px">Hypertrophy, fibrosis, HFpEF</span></td>
+            <td class="dn">↓/→</td><td class="nc">→</td><td class="nc">→</td><td class="dn">↓</td><td class="nc">→</td>
+            <td>Unchanged</td><td>Loop narrow, high EDP, EDPVR shifts up</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Detailed cards -->
+  <div class="g2">
+    <div class="card card-accent-blue">
+      <div class="card-title">📈 Preload</div>
+      <p>Defined as LV end-diastolic wall stress (clinically approximated by EDV or EDP). Governed by <strong>Frank-Starling Law</strong>: within physiologic limits, ↑ preload → ↑ SV via increased cross-bridge formation.</p>
+      <ul class="kp-list" style="margin-top:12px">
+        <li><span class="dot" style="background:var(--blue)"></span><strong>Determinants:</strong> venous return, blood volume, heart rate (filling time), atrial contraction</li>
+        <li><span class="dot" style="background:var(--blue)"></span><strong>Loop effect:</strong> right shift, SV ↑, EF unchanged if contractility/afterload normal</li>
+        <li><span class="dot" style="background:var(--blue)"></span><strong>Clinical index:</strong> CVP, PCWP, E/e' ratio on echo</li>
+      </ul>
+      <code class="formula">Frank-Starling: SV ∝ LVEDV (up to optimal preload)</code>
+    </div>
+
+    <div class="card card-accent-red">
+      <div class="card-title">🩸 Afterload</div>
+      <p>The wall stress the LV must overcome during ejection. Best described by <strong>Ea (effective arterial elastance)</strong> = ESP/SV. Clinically: SVR, aortic impedance, valve stenosis.</p>
+      <ul class="kp-list" style="margin-top:12px">
+        <li><span class="dot" style="background:var(--red)"></span><strong>↑ Afterload:</strong> ↑ESV, ↓SV, ↑MVO₂ — loop rises, narrows</li>
+        <li><span class="dot" style="background:var(--red)"></span><strong>LV compensation:</strong> concentric hypertrophy (↑wall thickness, ↓radius, normalizes wall stress by Laplace)</li>
+        <li><span class="dot" style="background:var(--red)"></span><strong>Laplace Law:</strong> σ = P × r / (2h)</li>
+      </ul>
+      <code class="formula">Ea = ESP / SV   [mmHg/mL]   Normal ≈ 2 mmHg/mL</code>
+    </div>
+
+    <div class="card card-accent-green">
+      <div class="card-title">💪 Contractility (Inotropy)</div>
+      <p>The intrinsic force-generating capacity of the myocardium, independent of load. Best measured by <strong>Ees</strong> (ESPVR slope) or Preload Recruitable Stroke Work (PRSW).</p>
+      <ul class="kp-list" style="margin-top:12px">
+        <li><span class="dot" style="background:var(--green)"></span><strong>↑ Inotropy:</strong> catecholamines, Ca²⁺ sensitizers, cardiac glycosides</li>
+        <li><span class="dot" style="background:var(--green)"></span><strong>↓ Inotropy:</strong> ischemia, acidosis, β-blockers, negative inotropes</li>
+        <li><span class="dot" style="background:var(--green)"></span><strong>Mechanism:</strong> increased [Ca²⁺]i → more cross-bridges, faster cycling</li>
+      </ul>
+      <code class="formula">Ees = (ESP − P₀) / (ESV − V₀)   Normal ≈ 1.5–2.5 mmHg/mL</code>
+    </div>
+
+    <div class="card card-accent-amber">
+      <div class="card-title">🫀 Frank-Starling Mechanism</div>
+      <p>The <strong>intrinsic ability of the heart</strong> to adapt its SV to changes in venous return, without neural or humoral input. Operates via:</p>
+      <ul class="kp-list" style="margin-top:12px">
+        <li><span class="dot" style="background:var(--amber)"></span><strong>Sarcomere length:</strong> optimal overlap at ~2.2 µm</li>
+        <li><span class="dot" style="background:var(--amber)"></span><strong>Ca²⁺ sensitivity:</strong> stretch increases myofilament Ca²⁺ sensitivity (titin-based)</li>
+        <li><span class="dot" style="background:var(--amber)"></span><strong>Clinical limit:</strong> in HFrEF, Starling curve is flat and depressed — no reserve</li>
+      </ul>
+      <div class="pearl">The PV loop rightward shift with ↑ preload reflects Frank-Starling: more filling → more SV, until the curve flattens (descending limb).</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     TAB 3 — VALVULAR DISEASE
+═══════════════════════════════════════════════════════════════════ -->
+<section class="tab" id="tab2">
+  <div class="sec-head">
+    <h2>🫁 Valvular Heart Disease</h2>
+    <p>Each valve lesion deforms the PV loop in a characteristic and diagnostically informative way, reflecting its specific hemodynamic consequences.</p>
+  </div>
+
+  <!-- AS -->
+  <div class="g21" style="margin-bottom:24px">
+    <div class="card card-accent-red">
+      <div class="card-title">🔴 Aortic Stenosis — Pressure Overload</div>
+      <p><strong>Pathophysiology:</strong> Fixed obstruction to LV outflow → ↑ afterload (↑ESP). LV compensates with <strong>concentric hypertrophy</strong> (↑wall thickness, preserved cavity size) to normalize wall stress.</p>
+      <div class="tbl-wrap" style="margin:14px 0">
+        <table>
+          <tr><td>EDV</td><td class="nc">→ (normal or ↓ in severe)</td></tr>
+          <tr><td>ESV</td><td class="up">↑ (as EF falls in severe)</td></tr>
+          <tr><td>ESP</td><td class="up">↑↑↑ (main feature)</td></tr>
+          <tr><td>SV</td><td class="dn">↓ (gradient-dependent)</td></tr>
+          <tr><td>EF</td><td class="nc">→ (preserved until late), then ↓</td></tr>
+          <tr><td>Diastolic function</td><td class="up">↓↓ (stiff hypertrophied LV, ↑EDP)</td></tr>
+        </table>
+      </div>
+      <div class="alert-red"><strong>⚠️ Low-flow Low-gradient AS:</strong> severe AS with EF&lt;40% — ESP may not be elevated because SV is too low. Dobutamine stress echo needed to unmask true severity.</div>
+      <div class="badge badge-red">Pressure overload</div>
+      <div class="badge badge-amber">Concentric hypertrophy</div>
+      <div class="badge badge-red">↑ MVO₂</div>
+    </div>
+    <div class="card card-accent-red" style="background:var(--bg)">
+      <div class="card-title" style="font-size:14px;color:var(--muted)">PV Loop: Aortic Stenosis</div>
+      <svg viewBox="0 0 280 220" style="max-height:220px">
+        <!-- Axes -->
+        <line x1="35" y1="195" x2="265" y2="195" stroke="#4a5a78" stroke-width="1"/>
+        <line x1="35" y1="195" x2="35" y2="15" stroke="#4a5a78" stroke-width="1"/>
+        <text x="150" y="210" fill="#4a5a78" font-size="9" text-anchor="middle">Volume</text>
+        <text x="15" y="110" fill="#4a5a78" font-size="9" text-anchor="middle" transform="rotate(-90,15,110)">Pressure</text>
+        <!-- Normal grey reference -->
+        <rect x="100" y="80" width="100" height="105" fill="none" stroke="#2a3a55" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <!-- AS loop: tall narrow, high ESP -->
+        <rect x="110" y="35" width="90" height="150" fill="rgba(232,85,85,0.08)" stroke="var(--red)" stroke-width="2.5"/>
+        <!-- ESPVR steeper -->
+        <line x1="35" y1="198" x2="200" y2="30" stroke="var(--gold)" stroke-width="1" stroke-dasharray="4,2" opacity="0.4"/>
+        <!-- Labels -->
+        <text x="108" y="30" fill="var(--red)" font-size="9">↑↑ESP</text>
+        <text x="205" y="100" fill="var(--muted)" font-size="8">Normal</text>
+        <text x="205" y="112" fill="var(--muted)" font-size="8">(grey)</text>
+        <text x="100" y="210" fill="var(--red)" font-size="8" text-anchor="middle">Small SV</text>
+        <!-- Pressure markers -->
+        <text x="30" y="40" fill="var(--dim)" font-size="8">200</text>
+        <text x="30" y="80" fill="var(--dim)" font-size="8">160</text>
+        <text x="30" y="120" fill="var(--dim)" font-size="8">120</text>
+        <text x="30" y="160" fill="var(--dim)" font-size="8">80</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- AR -->
+  <div class="g21" style="margin-bottom:24px">
+    <div class="card card-accent-green">
+      <div class="card-title">🟢 Aortic Regurgitation — Volume Overload</div>
+      <p><strong>Pathophysiology:</strong> Retrograde flow from aorta during diastole → ↑ LV diastolic volume (↑ preload). LV compensates with <strong>eccentric hypertrophy</strong> (↑cavity, proportional wall thickening) to handle large SV.</p>
+      <div class="tbl-wrap" style="margin:14px 0">
+        <table>
+          <tr><td>EDV</td><td class="up">↑↑↑ (hallmark — dilated LV)</td></tr>
+          <tr><td>ESV</td><td class="up">↑ (proportionally)</td></tr>
+          <tr><td>ESP</td><td class="dn">↓ (reduced diastolic pressure)</td></tr>
+          <tr><td>SV (total)</td><td class="up">↑↑ (but forward SV may be ↓)</td></tr>
+          <tr><td>EF</td><td class="up">↑ or → (hyperdynamic in compensation)</td></tr>
+          <tr><td>Pulse pressure</td><td class="up">↑↑ (wide: ↑SBP, ↓DBP)</td></tr>
+        </table>
+      </div>
+      <div class="pearl">
+        <strong>Chronic vs Acute AR:</strong> Chronic AR allows LV dilation and eccentric hypertrophy → large EDV, normal EDP. <strong>Acute AR</strong> (dissection, endocarditis): abrupt ↑ volume into non-dilated LV → ↑↑EDP, pulmonary edema, small loop.
+      </div>
+      <div class="badge badge-green">Volume overload</div>
+      <div class="badge badge-teal">Eccentric hypertrophy</div>
+      <div class="badge badge-green">Large total SV</div>
+    </div>
+    <div class="card card-accent-green" style="background:var(--bg)">
+      <div class="card-title" style="font-size:14px;color:var(--muted)">PV Loop: Aortic Regurgitation</div>
+      <svg viewBox="0 0 280 220">
+        <line x1="35" y1="195" x2="265" y2="195" stroke="#4a5a78" stroke-width="1"/>
+        <line x1="35" y1="195" x2="35" y2="15" stroke="#4a5a78" stroke-width="1"/>
+        <!-- Normal -->
+        <rect x="100" y="80" width="80" height="105" fill="none" stroke="#2a3a55" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <!-- AR loop: wide, shifted right -->
+        <rect x="80" y="65" width="150" height="125" fill="rgba(66,196,122,0.07)" stroke="var(--green)" stroke-width="2.5"/>
+        <!-- Diastolic filling includes regurgitant volume - extends lower right -->
+        <text x="235" y="198" fill="var(--green)" font-size="8">↑↑EDV</text>
+        <text x="78" y="62" fill="var(--green)" font-size="8">ESP↓</text>
+        <text x="155" y="210" fill="var(--green)" font-size="8" text-anchor="middle">Large SV</text>
+        <text x="180" y="140" fill="var(--muted)" font-size="8">Normal</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- MR -->
+  <div class="g21" style="margin-bottom:24px">
+    <div class="card card-accent-amber">
+      <div class="card-title">🟡 Mitral Regurgitation — Volume Overload + Absent IC Phase</div>
+      <p><strong>Pathophysiology:</strong> During systole, blood flows retrograde into LA (low pressure) in addition to forward into aorta. LV afterload is <strong>reduced</strong> (easy escape route) → hyperdynamic but forward SV may be reduced.</p>
+      <div class="tbl-wrap" style="margin:14px 0">
+        <table>
+          <tr><td>EDV</td><td class="up">↑↑ (eccentric hypertrophy)</td></tr>
+          <tr><td>ESP</td><td class="dn">↓ (low effective afterload)</td></tr>
+          <tr><td>EF</td><td class="up">↑ or → (artificially preserved — EF&gt;60% = actually impaired!)</td></tr>
+          <tr><td>IC phase</td><td class="dn">Absent (MV leaks from onset of systole)</td></tr>
+          <tr><td>Forward SV</td><td class="dn">↓ (variable)</td></tr>
+        </table>
+      </div>
+      <div class="alert-red"><strong>EF paradox in MR:</strong> EF ≥60% does not mean normal contractility. Because afterload is ↓ and the LV unloads into the LA, EF is overestimated. An EF of 50% in MR may indicate significant LV dysfunction — surgery indicated before EF falls below 60% (ESC guidelines).</div>
+    </div>
+    <div class="card card-accent-amber" style="background:var(--bg)">
+      <div class="card-title" style="font-size:14px;color:var(--muted)">PV Loop: Mitral Regurgitation</div>
+      <svg viewBox="0 0 280 220">
+        <line x1="35" y1="195" x2="265" y2="195" stroke="#4a5a78" stroke-width="1"/>
+        <line x1="35" y1="195" x2="35" y2="15" stroke="#4a5a78" stroke-width="1"/>
+        <rect x="100" y="80" width="80" height="105" fill="none" stroke="#2a3a55" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <!-- MR loop: no vertical right limb, lower ESP, wide -->
+        <!-- The right "wall" is oblique because no true IC phase -->
+        <path d="M 90,185 L 90,90 L 210,70 L 210,185 Z" fill="rgba(245,158,11,0.07)" stroke="var(--amber)" stroke-width="2.5"/>
+        <!-- Note oblique left side: instant drop from high volume to ESP without vertical IC -->
+        <text x="210" y="185" fill="var(--amber)" font-size="8">EDV↑↑</text>
+        <text x="88" y="88" fill="var(--amber)" font-size="8">ESP↓</text>
+        <text x="50" y="145" fill="var(--amber)" font-size="8" transform="rotate(-90,50,145)">No IC phase</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- MS -->
+  <div class="g21" style="margin-bottom:24px">
+    <div class="card card-accent-teal">
+      <div class="card-title">🔵 Mitral Stenosis — Impaired LV Filling</div>
+      <p><strong>Pathophysiology:</strong> Obstruction to mitral inflow → ↓ preload → small LV, reduced EDV. LV function itself may be normal (though impaired in ~25% due to fusion of subvalvular apparatus).</p>
+      <div class="tbl-wrap" style="margin:14px 0">
+        <table>
+          <tr><td>EDV</td><td class="dn">↓↓ (reduced filling)</td></tr>
+          <tr><td>ESV</td><td class="dn">↓ (proportional)</td></tr>
+          <tr><td>EDP</td><td class="up">↑ (if concurrent diastolic dysfunction)</td></tr>
+          <tr><td>SV</td><td class="dn">↓↓</td></tr>
+          <tr><td>EF</td><td class="nc">→ (or ↓ due to subvalvular involvement)</td></tr>
+          <tr><td>LA pressure</td><td class="up">↑↑↑ → pulmonary hypertension</td></tr>
+        </table>
+      </div>
+      <div class="pearl"><strong>The LV is a victim, not the culprit</strong> in isolated MS. Primary problem is LA/pulmonary venous hypertension. Loop is small and narrow — low preload, preserved contractility, reduced forward output.</div>
+    </div>
+    <div class="card card-accent-teal" style="background:var(--bg)">
+      <div class="card-title" style="font-size:14px;color:var(--muted)">PV Loop: Mitral Stenosis</div>
+      <svg viewBox="0 0 280 220">
+        <line x1="35" y1="195" x2="265" y2="195" stroke="#4a5a78" stroke-width="1"/>
+        <line x1="35" y1="195" x2="35" y2="15" stroke="#4a5a78" stroke-width="1"/>
+        <rect x="100" y="80" width="80" height="105" fill="none" stroke="#2a3a55" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <!-- MS loop: small, shifted left, higher EDP due to diastolic dysfunction -->
+        <rect x="60" y="75" width="65" height="110" fill="rgba(45,212,191,0.07)" stroke="var(--teal)" stroke-width="2.5"/>
+        <text x="128" y="80" fill="var(--teal)" font-size="8">Small SV</text>
+        <text x="60" y="200" fill="var(--teal)" font-size="8">Small EDV</text>
+        <text x="140" y="140" fill="var(--muted)" font-size="8">Normal ref.</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Comparison table -->
+  <div class="card card-accent-gold">
+    <div class="card-title">📊 Valvular Disease — PV Loop Quick Reference</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Lesion</th><th>Type</th><th>EDV</th><th>ESP</th><th>SV</th><th>EF</th><th>IC phase</th><th>Key loop feature</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Aortic Stenosis</strong></td><td><span class="badge badge-red">P.overload</span></td>
+            <td class="nc">→/↓</td><td class="up">↑↑↑</td><td class="dn">↓</td><td class="nc">→/↓</td><td class="nc">Present</td>
+            <td>Tall, narrow loop; concentric hypertrophy</td></tr>
+          <tr><td><strong>Aortic Regurgitation</strong></td><td><span class="badge badge-green">V.overload</span></td>
+            <td class="up">↑↑↑</td><td class="dn">↓</td><td class="up">↑↑</td><td class="up">↑/→</td><td class="nc">Present</td>
+            <td>Wide loop, right shift, large SV</td></tr>
+          <tr><td><strong>Mitral Regurgitation</strong></td><td><span class="badge badge-green">V.overload</span></td>
+            <td class="up">↑↑</td><td class="dn">↓↓</td><td class="up">↑(total)</td><td class="up">↑(≥60%!)</td><td class="dn">Absent</td>
+            <td>Low ESP, no IC limb; hyperdynamic</td></tr>
+          <tr><td><strong>Mitral Stenosis</strong></td><td><span class="badge badge-teal">Inflow</span></td>
+            <td class="dn">↓↓</td><td class="nc">→</td><td class="dn">↓↓</td><td class="nc">→</td><td class="nc">Present</td>
+            <td>Small narrow loop, leftward shift</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     TAB 4 — CARDIOMYOPATHIES
+═══════════════════════════════════════════════════════════════════ -->
+<section class="tab" id="tab3">
+  <div class="sec-head">
+    <h2>❤️ Cardiomyopathies</h2>
+    <p>Distinct structural and functional alterations of the myocardium produce characteristic PV loop deformations — each reflecting specific systolic and/or diastolic impairments.</p>
+  </div>
+
+  <div class="g2">
+    <!-- DCM -->
+    <div class="card card-accent-red">
+      <div class="card-title">📍 Dilated Cardiomyopathy (DCM)</div>
+      <div class="badge badge-red">Systolic dysfunction</div>
+      <div class="badge badge-red">↓ Contractility</div>
+      <div class="badge badge-amber">Eccentric hypertrophy</div>
+      <p style="margin:12px 0">Myocyte loss, fibrosis, and reduced inotropy lead to LV dilation and global hypokinesis.</p>
+      <ul class="kp-list">
+        <li><span class="dot" style="background:var(--red)"></span><strong>ESPVR:</strong> flattened and shifted right (↓Ees)</li>
+        <li><span class="dot" style="background:var(--red)"></span><strong>EDV/ESV:</strong> both markedly ↑↑</li>
+        <li><span class="dot" style="background:var(--red)"></span><strong>EF:</strong> ↓↓ (&lt;40%, often &lt;25% in severe)</li>
+        <li><span class="dot" style="background:var(--amber)"></span><strong>EDPVR:</strong> shifted right (dilated, compliant LV)</li>
+        <li><span class="dot" style="background:var(--muted)"></span><strong>Loop:</strong> wide, rightward, low and flat</li>
+        <li><span class="dot" style="background:var(--muted)"></span><strong>Causes:</strong> ischemic, viral myocarditis, alcohol, idiopathic, LBBB (LMNA, TTN mutations)</li>
+      </ul>
+      <svg viewBox="0 0 240 160" style="margin-top:14px;max-height:160px">
+        <line x1="30" y1="145" x2="230" y2="145" stroke="#4a5a78" stroke-width="1"/>
+        <line x1="30" y1="145" x2="30" y2="10" stroke="#4a5a78" stroke-width="1"/>
+        <!-- Normal ref -->
+        <rect x="70" y="55" width="70" height="80" fill="none" stroke="#2a3a55" stroke-width="1" stroke-dasharray="3,2"/>
+        <!-- DCM: wide, low, right shifted -->
+        <rect x="95" y="90" width="115" height="48" fill="rgba(232,85,85,0.08)" stroke="var(--red)" stroke-width="2.5"/>
+        <!-- Flat ESPVR -->
+        <line x1="30" y1="148" x2="230" y2="80" stroke="var(--gold)" stroke-width="0.8" stroke-dasharray="4,2" opacity="0.35"/>
+        <text x="215" y="78" fill="var(--gold)" font-size="7">Ees↓</text>
+        <text x="210" y="143" fill="var(--red)" font-size="7">↑↑EDV</text>
+        <text x="93" y="87" fill="var(--red)" font-size="7">↓ESP</text>
+      </svg>
+    </div>
+
+    <!-- HCM -->
+    <div class="card card-accent-amber">
+      <div class="card-title">📍 Hypertrophic Cardiomyopathy (HCM)</div>
+      <div class="badge badge-amber">Diastolic dysfunction</div>
+      <div class="badge badge-green">Preserved EF (↑)</div>
+      <div class="badge badge-amber">LVOTO (obstructive variant)</div>
+      <p style="margin:12px 0">Asymmetric LV hypertrophy (usually septal) → small cavity, impaired relaxation, ± dynamic LVOTO.</p>
+      <ul class="kp-list">
+        <li><span class="dot" style="background:var(--amber)"></span><strong>ESPVR:</strong> steep (↑↑Ees — hyperdynamic)</li>
+        <li><span class="dot" style="background:var(--amber)"></span><strong>EDV:</strong> ↓ (small, stiff LV cavity)</li>
+        <li><span class="dot" style="background:var(--amber)"></span><strong>EDPVR:</strong> shifted up/left (poor compliance, ↑↑EDP)</li>
+        <li><span class="dot" style="background:var(--green)"></span><strong>EF:</strong> ↑↑ (often 70–80%, hypercontractile)</li>
+        <li><span class="dot" style="background:var(--amber)"></span><strong>HCM-obstructive:</strong> dynamic gradient ↑ with Valsalva, dehydration, tachycardia; ↓ with β-blockers</li>
+      </ul>
+      <svg viewBox="0 0 240 160" style="margin-top:14px;max-height:160px">
+        <line x1="30" y1="145" x2="230" y2="145" stroke="#4a5a78" stroke-width="1"/>
+        <line x1="30" y1="145" x2="30" y2="10" stroke="#4a5a78" stroke-width="1"/>
+        <rect x="70" y="55" width="70" height="80" fill="none" stroke="#2a3a55" stroke-width="1" stroke-dasharray="3,2"/>
+        <!-- HCM: small, high, leftward -->
+        <rect x="35" y="30" width="58" height="105" fill="rgba(245,158,11,0.08)" stroke="var(--amber)" stroke-width="2.5"/>
+        <!-- Steep ESPVR -->
+        <line x1="30" y1="148" x2="120" y2="10" stroke="var(--gold)" stroke-width="0.8" stroke-dasharray="4,2" opacity="0.5"/>
+        <text x="122" y="12" fill="var(--gold)" font-size="7">Ees↑↑</text>
+        <text x="35" y="27" fill="var(--amber)" font-size="7">↑↑ESP</text>
+        <text x="93" y="143" fill="var(--amber)" font-size="7">Small EDV</text>
+      </svg>
+    </div>
+
+    <!-- RCM -->
+    <div class="card card-accent-purple">
+      <div class="card-title">📍 Restrictive Cardiomyopathy (RCM)</div>
+      <div class="badge badge-purple">Severe diastolic dysfunction</div>
+      <div class="badge badge-green">Normal EF</div>
+      <div class="badge badge-purple">↑↑ EDP</div>
+      <p style="margin:12px 0">Myocardial infiltration (amyloid, hemochromatosis, sarcoid) → rigid, non-compliant LV. Rapid early filling with abrupt pressure rise.</p>
+      <ul class="kp-list">
+        <li><span class="dot" style="background:var(--purple)"></span><strong>EDPVR:</strong> steep — small volume → ↑↑EDP. "Square root" sign on Cath</li>
+        <li><span class="dot" style="background:var(--purple)"></span><strong>EDV:</strong> normal or ↓</li>
+        <li><span class="dot" style="background:var(--purple)"></span><strong>EF:</strong> often preserved (≥50%)</li>
+        <li><span class="dot" style="background:var(--red)"></span><strong>Amyloid:</strong> worse prognosis; ESPVR also affected in late disease</li>
+        <li><span class="dot" style="background:var(--muted)"></span>Echo: E/A ≫2.0, short DT, E/e' ≫15</li>
+      </ul>
+      <svg viewBox="0 0 240 160" style="margin-top:14px;max-height:160px">
+        <line x1="30" y1="145" x2="230" y2="145" stroke="#4a5a78" stroke-width="1"/>
+        <line x1="30" y1="145" x2="30" y2="10" stroke="#4a5a78" stroke-width="1"/>
+        <rect x="70" y="55" width="70" height="80" fill="none" stroke="#2a3a55" stroke-width="1" stroke-dasharray="3,2"/>
+        <!-- RCM: normal EDV, high EDP, normal EF -->
+        <rect x="60" y="45" width="72" height="90" fill="rgba(167,139,250,0.07)" stroke="var(--purple)" stroke-width="2.5"/>
+        <!-- Steep EDPVR -->
+        <path d="M 30,148 Q 60,145 80,130 Q 90,125 95,135" fill="none" stroke="var(--purple)" stroke-width="0.8" stroke-dasharray="4,2" opacity="0.5"/>
+        <text x="62" y="43" fill="var(--purple)" font-size="7">Normal ESP</text>
+        <text x="50" y="140" fill="var(--purple)" font-size="7">↑↑ EDP</text>
+      </svg>
+    </div>
+
+    <!-- ARVC -->
+    <div class="card card-accent-teal">
+      <div class="card-title">📍 Arrhythmogenic RV Cardiomyopathy (ARVC)</div>
+      <div class="badge badge-teal">Mainly RV</div>
+      <div class="badge badge-amber">Fatty fibrous replacement</div>
+      <p style="margin:12px 0">Fibro-fatty replacement of RV myocardium → RV dilation, aneurysms, arrhythmias. LV PV loop may be relatively preserved in early disease, but biventricular involvement occurs in ~10%.</p>
+      <ul class="kp-list">
+        <li><span class="dot" style="background:var(--teal)"></span><strong>LV loop:</strong> often normal until advanced disease</li>
+        <li><span class="dot" style="background:var(--teal)"></span><strong>RV dysfunction:</strong> ↑RV volume, reduced RV EF, paradoxical septal motion</li>
+        <li><span class="dot" style="background:var(--red)"></span><strong>High risk:</strong> exercise-induced VT/VF in young athletes — SCN5A, DSP, PKP2 mutations</li>
+        <li><span class="dot" style="background:var(--muted)"></span>Diagnosis: Task Force Criteria (CMR, ECG, genetics)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Comparison -->
+  <div class="card card-accent-gold" style="margin-top:8px">
+    <div class="card-title">📊 Cardiomyopathy PV Loop Comparison</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>CMP</th><th>EDV</th><th>ESV</th><th>EF</th><th>Ees (ESPVR)</th><th>EDPVR</th><th>Key lesion</th></tr></thead>
+        <tbody>
+          <tr><td><strong>DCM</strong></td><td class="up">↑↑↑</td><td class="up">↑↑↑</td><td class="dn">↓↓</td><td class="dn">↓↓ (flat)</td><td>R-shifted</td><td>Systolic failure, dilated</td></tr>
+          <tr><td><strong>HCM</strong></td><td class="dn">↓</td><td class="dn">↓↓</td><td class="up">↑↑</td><td class="up">↑↑ (steep)</td><td>L-shifted, steep</td><td>Diastolic failure, hypercontractile</td></tr>
+          <tr><td><strong>RCM</strong></td><td class="nc">→/↓</td><td class="nc">→</td><td class="nc">→</td><td class="nc">→</td><td>Very steep ↑↑EDP</td><td>Infiltration, stiff wall</td></tr>
+          <tr><td><strong>ARVC</strong></td><td class="nc">→ (LV)</td><td class="nc">→ (LV)</td><td class="nc">→ (LV)</td><td class="nc">→ (LV)</td><td>→ (LV)</td><td>RV fibro-fatty, arrhythmia</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     TAB 5 — HEART FAILURE
+═══════════════════════════════════════════════════════════════════ -->
+<section class="tab" id="tab4">
+  <div class="sec-head">
+    <h2>🫀 Heart Failure: HFrEF vs HFpEF</h2>
+    <p>Heart failure represents the clinical syndrome where cardiac output fails to meet metabolic demand. PV loop analysis elegantly distinguishes its two major phenotypes.</p>
+  </div>
+
+  <div class="g2" style="margin-bottom:24px">
+    <!-- HFrEF -->
+    <div class="card card-accent-red">
+      <div class="card-title">⚠️ HFrEF (EF &lt; 40%)</div>
+      <div class="badge badge-red">Systolic failure</div>
+      <div class="badge badge-red">↓ Ees</div>
+      <div class="badge badge-amber">ESPVR shifts right</div>
+      <p style="margin:10px 0"><strong>Mechanism:</strong> Primary myocardial dysfunction → reduced contractility → ↑EDV/ESV, ↓SV, ↓EF. Neurohormonal activation (RAAS, SNS) causes further remodelling.</p>
+      <div class="tbl-wrap">
+        <table>
+          <tr><td>EF</td><td class="up"><strong>&lt;40%</strong></td></tr>
+          <tr><td>EDV</td><td class="up">↑↑ (dilated LV)</td></tr>
+          <tr><td>ESV</td><td class="up">↑↑↑</td></tr>
+          <tr><td>EDP</td><td class="up">↑ (when congested)</td></tr>
+          <tr><td>ESPVR (Ees)</td><td class="dn">↓↓ (flat, rightward)</td></tr>
+          <tr><td>EDPVR</td><td>Shifted right (dilated compliance)</td></tr>
+          <tr><td>Ea/Ees coupling</td><td class="up">↑↑ (uncoupled)</td></tr>
+        </table>
+      </div>
+      <div style="margin:14px 0;font-size:13px;color:var(--text);font-weight:600">🧬 Causes</div>
+      <p style="font-size:13px;color:var(--muted)">Ischemic heart disease (most common), DCM, viral myocarditis, chronic MR/AR, tachycardiomyopathy, alcohol, chemotherapy (anthracyclines), LBBB</p>
+      <div class="divider" style="margin:14px 0"></div>
+      <div style="font-size:13px;color:var(--text);font-weight:600;margin-bottom:8px">💊 GDMT (Guideline-Directed Medical Therapy)</div>
+      <ul style="font-size:13px;color:var(--muted);padding-left:16px;line-height:2">
+        <li><strong>ACEi/ARB/ARNI</strong> (sacubitril/valsartan) — afterload ↓, remodelling prevention</li>
+        <li><strong>β-Blockers</strong> (bisoprolol, carvedilol) — HR ↓, anti-arrhythmic, reverse remodelling</li>
+        <li><strong>MRA</strong> (spironolactone, eplerenone) — aldosterone antagonism</li>
+        <li><strong>SGLT2i</strong> (dapagliflozin, empagliflozin) — osmotic diuresis, cardioprotection</li>
+        <li><strong>ICD</strong> if EF ≤35% despite GDMT ≥3 months</li>
+        <li><strong>CRT</strong> if LBBB + QRS ≥150ms + EF ≤35%</li>
+      </ul>
+    </div>
+
+    <!-- HFpEF -->
+    <div class="card card-accent-amber">
+      <div class="card-title">⚠️ HFpEF (EF ≥ 50%)</div>
+      <div class="badge badge-amber">Diastolic failure</div>
+      <div class="badge badge-green">Normal/↑ Ees</div>
+      <div class="badge badge-amber">EDPVR shifts left</div>
+      <p style="margin:10px 0"><strong>Mechanism:</strong> Impaired LV relaxation and ↑stiffness → ↑ filling pressures at normal EDV. LV systolic function preserved but diastolic compliance severely reduced.</p>
+      <div class="tbl-wrap">
+        <table>
+          <tr><td>EF</td><td class="up"><strong>≥50%</strong></td></tr>
+          <tr><td>EDV</td><td class="nc">→ or ↓ (stiff, small cavity)</td></tr>
+          <tr><td>ESV</td><td class="nc">→</td></tr>
+          <tr><td>EDP</td><td class="up">↑↑↑ (hallmark)</td></tr>
+          <tr><td>ESPVR (Ees)</td><td class="nc">→ or ↑</td></tr>
+          <tr><td>EDPVR</td><td>Steep, shifted left/up</td></tr>
+          <tr><td>Ea/Ees coupling</td><td>May be normal at rest, ↑ on exercise</td></tr>
+        </table>
+      </div>
+      <div style="margin:14px 0;font-size:13px;color:var(--text);font-weight:600">🧬 Causes</div>
+      <p style="font-size:13px;color:var(--muted)">Hypertension (most common), HCM, RCM, aging (LV stiffening), obesity, diabetes, AF, chronic kidney disease, amyloidosis</p>
+      <div class="divider" style="margin:14px 0"></div>
+      <div style="font-size:13px;color:var(--text);font-weight:600;margin-bottom:8px">💊 Treatment (less established)</div>
+      <ul style="font-size:13px;color:var(--muted);padding-left:16px;line-height:2">
+        <li><strong>SGLT2i</strong> (dapagliflozin) — the only drug with proven mortality benefit in HFpEF</li>
+        <li><strong>Diuretics</strong> — symptom relief, ↓ congestion</li>
+        <li><strong>Blood pressure control</strong> — ARBs/ACEi (candesartan shows benefit)</li>
+        <li><strong>Spironolactone</strong> — TOPCAT trial: possible benefit in Americas subgroup</li>
+        <li><strong>HR control</strong> — in AF, rate control important</li>
+        <li><strong>Weight loss</strong> — significant EF improvement in obese HFpEF</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PV Loop Comparison SVG -->
+  <div class="card card-accent-gold" style="margin-bottom:24px">
+    <div class="card-title">📐 PV Loop Comparison: HFrEF vs HFpEF vs Normal</div>
+    <svg viewBox="0 0 640 300" style="max-height:300px">
+      <!-- Axes -->
+      <line x1="50" y1="270" x2="620" y2="270" stroke="#4a5a78" stroke-width="1.5"/>
+      <line x1="50" y1="270" x2="50" y2="15" stroke="#4a5a78" stroke-width="1.5"/>
+      <text x="335" y="290" fill="#7b90b8" font-size="11" text-anchor="middle">Volume (mL)</text>
+      <text x="18" y="145" fill="#7b90b8" font-size="11" text-anchor="middle" transform="rotate(-90,18,145)">Pressure (mmHg)</text>
+      <!-- P ticks -->
+      <text x="46" y="270" fill="#4a5a78" font-size="8" text-anchor="end">0</text>
+      <text x="46" y="215" fill="#4a5a78" font-size="8" text-anchor="end">40</text>
+      <text x="46" y="160" fill="#4a5a78" font-size="8" text-anchor="end">80</text>
+      <text x="46" y="105" fill="#4a5a78" font-size="8" text-anchor="end">120</text>
+      <text x="46" y="50" fill="#4a5a78" font-size="8" text-anchor="end">160</text>
+      <!-- V ticks -->
+      <text x="120" y="282" fill="#4a5a78" font-size="8" text-anchor="middle">50</text>
+      <text x="210" y="282" fill="#4a5a78" font-size="8" text-anchor="middle">90</text>
+      <text x="300" y="282" fill="#4a5a78" font-size="8" text-anchor="middle">130</text>
+      <text x="390" y="282" fill="#4a5a78" font-size="8" text-anchor="middle">170</text>
+      <text x="480" y="282" fill="#4a5a78" font-size="8" text-anchor="middle">210</text>
+      <text x="570" y="282" fill="#4a5a78" font-size="8" text-anchor="middle">250</text>
+
+      <!-- Grid -->
+      <g stroke="#1a2840" stroke-width="0.5">
+        <line x1="120" y1="270" x2="120" y2="25"/><line x1="210" y1="270" x2="210" y2="25"/>
+        <line x1="300" y1="270" x2="300" y2="25"/><line x1="390" y1="270" x2="390" y2="25"/>
+        <line x1="480" y1="270" x2="480" y2="25"/>
+        <line x1="50" y1="215" x2="620" y2="215"/><line x1="50" y1="160" x2="620" y2="160"/>
+        <line x1="50" y1="105" x2="620" y2="105"/><line x1="50" y1="50" x2="620" y2="50"/>
+      </g>
+
+      <!-- ESPVR lines -->
+      <!-- Normal ESPVR -->
+      <line x1="50" y1="275" x2="320" y2="85" stroke="var(--gold)" stroke-width="1" stroke-dasharray="5,3" opacity="0.4"/>
+      <!-- HFrEF ESPVR (flat) -->
+      <line x1="50" y1="275" x2="620" y2="170" stroke="var(--red)" stroke-width="1" stroke-dasharray="5,3" opacity="0.35"/>
+      <!-- HFpEF ESPVR (steep) -->
+      <line x1="50" y1="275" x2="200" y2="30" stroke="var(--amber)" stroke-width="1" stroke-dasharray="5,3" opacity="0.4"/>
+
+      <!-- EDPVR curves -->
+      <!-- Normal -->
+      <path d="M 50,273 Q 200,270 300,262 Q 360,256 390,250" fill="none" stroke="var(--gold)" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.3"/>
+      <!-- HFpEF EDPVR (steep left shift) -->
+      <path d="M 50,273 Q 100,265 130,240 Q 145,225 150,215" fill="none" stroke="var(--amber)" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+
+      <!-- Normal loop (gold) -->
+      <rect x="210" y="100" width="115" height="155" fill="rgba(240,192,64,0.05)" stroke="var(--gold)" stroke-width="2"/>
+      <text x="210" y="96" fill="var(--gold)" font-size="10">NORMAL</text>
+
+      <!-- HFrEF loop (red) - shifted right, low, flat -->
+      <rect x="360" y="165" width="170" height="90" fill="rgba(232,85,85,0.07)" stroke="var(--red)" stroke-width="2.5"/>
+      <text x="362" y="162" fill="var(--red)" font-size="10">HFrEF</text>
+      <text x="362" y="173" fill="var(--red)" font-size="7">EF ↓↓, EDV↑↑</text>
+
+      <!-- HFpEF loop (amber) - left shift, steep, high EDP -->
+      <rect x="120" y="80" width="90" height="155" fill="rgba(245,158,11,0.07)" stroke="var(--amber)" stroke-width="2.5"/>
+      <text x="122" y="77" fill="var(--amber)" font-size="10">HFpEF</text>
+      <text x="122" y="88" fill="var(--amber)" font-size="7">EF normal, ↑↑EDP</text>
+
+      <!-- ESPVR labels -->
+      <text x="325" y="82" fill="var(--gold)" font-size="9" opacity="0.7">ESPVR (normal)</text>
+      <text x="540" y="167" fill="var(--red)" font-size="9" opacity="0.7">ESPVR (HFrEF)</text>
+      <text x="205" y="27" fill="var(--amber)" font-size="9" opacity="0.7">ESPVR (HFpEF)</text>
+    </svg>
+  </div>
+
+  <!-- Exercise haemodynamics -->
+  <div class="card card-accent-teal" style="margin-bottom:24px">
+    <div class="card-title">🏃 Exercise Haemodynamics in HF</div>
+    <p style="margin-bottom:12px">PV loop behaviour during exercise reveals HF subtypes even when resting parameters appear normal (especially in HFpEF).</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Parameter (at peak exercise)</th><th>Normal</th><th>HFrEF</th><th>HFpEF</th></tr></thead>
+        <tbody>
+          <tr><td>EDV change</td><td>↑ (Frank-Starling)</td><td>↑ (further dilation)</td><td>→/↓ (stiff, no reserve)</td></tr>
+          <tr><td>EDP change</td><td>→/↑ modestly</td><td>↑↑</td><td>↑↑↑ (main symptom trigger)</td></tr>
+          <tr><td>SV reserve</td><td>Doubles</td><td>Markedly limited</td><td>Mildly limited</td></tr>
+          <tr><td>ESPVR shift</td><td>Steeper (β-adrenergic)</td><td>Modest steepening</td><td>Often normal or ↑</td></tr>
+          <tr><td>Ea/Ees coupling</td><td>Improves</td><td>Worsens</td><td>Worsens (exercise uncoupling)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pearl"><strong>Exercise echo/haemodynamics:</strong> Key to diagnosing HFpEF — invasive exercise with PCWP ≥25 mmHg at peak exercise confirms diagnosis when resting PCWP is equivocal.</div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     TAB 6 — CLINICAL PEARLS
+═══════════════════════════════════════════════════════════════════ -->
+<section class="tab" id="tab5">
+  <div class="sec-head">
+    <h2>💎 Clinical Pearls & Applied Physiology</h2>
+    <p>High-yield concepts and clinical correlations that connect PV loop theory to bedside practice.</p>
+  </div>
+
+  <div class="g2">
+    <div class="card card-accent-gold">
+      <div class="card-title">💡 EF is Load-Dependent</div>
+      <p>EF is <strong>not</strong> a pure contractility index. It changes with loading conditions independent of inotropy:</p>
+      <ul class="kp-list" style="margin-top:10px">
+        <li><span class="dot" style="background:var(--gold)"></span>↑ Preload → ↑ SV → ↑ EF (without change in Ees)</li>
+        <li><span class="dot" style="background:var(--gold)"></span>↓ Afterload (MR) → ↑ EF despite impaired contractility</li>
+        <li><span class="dot" style="background:var(--gold)"></span>↑ Afterload (AS, HTN) → ↓ EF without change in Ees</li>
+        <li><span class="dot" style="background:var(--gold)"></span><strong>True contractility</strong> = Ees (load-independent)</li>
+      </ul>
+    </div>
+    <div class="card card-accent-red">
+      <div class="card-title">💡 Starling Curve in HFrEF</div>
+      <p>In systolic HF, the Frank-Starling curve is depressed and flat:</p>
+      <ul class="kp-list" style="margin-top:10px">
+        <li><span class="dot" style="background:var(--red)"></span>Compensatory ↑ EDV moves the heart up a flattened curve — small SV gain</li>
+        <li><span class="dot" style="background:var(--red)"></span>Further ↑ preload → congestion without SV benefit</li>
+        <li><span class="dot" style="background:var(--red)"></span>Diuretics reduce EDV → relief of congestion, small SV reduction (often tolerated)</li>
+        <li><span class="dot" style="background:var(--red)"></span>Inotropes shift curve up — restore reserve</li>
+      </ul>
+    </div>
+    <div class="card card-accent-green">
+      <div class="card-title">💡 Cardiac Output in Shock</div>
+      <p>PV loop framework predicts haemodynamic patterns in different shock types:</p>
+      <ul class="kp-list" style="margin-top:10px">
+        <li><span class="dot" style="background:var(--red)"></span><strong>Cardiogenic:</strong> ↓Ees, ↑EDV, ↑EDP, ↓SV — loop right-shifted, narrow, high EDP</li>
+        <li><span class="dot" style="background:var(--green)"></span><strong>Distributive (sepsis):</strong> ↓Ea (vasodilation), ↑SV, ↓ESP — wide loop, low ESP</li>
+        <li><span class="dot" style="background:var(--amber)"></span><strong>Hypovolaemic:</strong> ↓EDV — loop shifts left, narrow</li>
+        <li><span class="dot" style="background:var(--teal)"></span><strong>Obstructive (PE/tamponade):</strong> ↓EDV, ↑RV afterload — LV loop small, underfilled</li>
+      </ul>
+    </div>
+    <div class="card card-accent-blue">
+      <div class="card-title">💡 Cardiac Tamponade</div>
+      <p>Pericardial fluid → ↑ intrapericardial pressure → ↑ chamber-filling pressure → ↓ EDV:</p>
+      <ul class="kp-list" style="margin-top:10px">
+        <li><span class="dot" style="background:var(--blue)"></span>Both RV and LV loops shrink (↓ EDV)</li>
+        <li><span class="dot" style="background:var(--blue)"></span>Ventricular interdependence: RV/LV filling compete within fixed pericardial space</li>
+        <li><span class="dot" style="background:var(--blue)"></span>Inspiration → ↑ RV filling → septal shift left → ↓ LV EDV → pulsus paradoxus</li>
+        <li><span class="dot" style="background:var(--blue)"></span>Physiology = opposite to constrictive pericarditis (equalization of pressures in both)</li>
+      </ul>
+    </div>
+    <div class="card card-accent-amber">
+      <div class="card-title">💡 Laplace Law & LV Hypertrophy</div>
+      <code class="formula">Wall stress σ = (P × r) / (2h)</code>
+      <p style="margin-top:10px">LV responds to chronically ↑ wall stress by hypertrophy:</p>
+      <ul class="kp-list" style="margin-top:10px">
+        <li><span class="dot" style="background:var(--amber)"></span><strong>Concentric (pressure overload — AS, HTN):</strong> ↑h relative to r → normalizes σ at high P</li>
+        <li><span class="dot" style="background:var(--amber)"></span><strong>Eccentric (volume overload — AR, MR):</strong> ↑r proportional ↑h → normalized σ despite large volume</li>
+        <li><span class="dot" style="background:var(--red)"></span>Both → diastolic dysfunction, ↑ MVO₂, ischemia risk</li>
+      </ul>
+    </div>
+    <div class="card card-accent-teal">
+      <div class="card-title">💡 IABP and the PV Loop</div>
+      <p>Intra-aortic balloon pump (counterpulsation) produces characteristic dual effects on the PV loop:</p>
+      <ul class="kp-list" style="margin-top:10px">
+        <li><span class="dot" style="background:var(--teal)"></span><strong>Diastolic augmentation:</strong> balloon inflates → ↑ diastolic aortic P → ↑ coronary perfusion</li>
+        <li><span class="dot" style="background:var(--teal)"></span><strong>Systolic unloading:</strong> balloon deflates before systole → ↓ afterload (Ea ↓) → ↓ ESP → ↓ MVO₂</li>
+        <li><span class="dot" style="background:var(--teal)"></span>Net effect: loop narrows, shifts left — ↓ SW (less cardiac work) + ↑ coronary supply</li>
+        <li><span class="dot" style="background:var(--red)"></span>Contraindicated: severe AR (worsens regurgitation)</li>
+      </ul>
+    </div>
+    <div class="card card-accent-purple">
+      <div class="card-title">💡 Mechanical Circulatory Support</div>
+      <p>LVADs and Impella further modify the PV loop:</p>
+      <ul class="kp-list" style="margin-top:10px">
+        <li><span class="dot" style="background:var(--purple)"></span><strong>LVAD:</strong> direct LV volume unloading → markedly ↓ EDV, loop shrinks dramatically. Effective afterload ↓</li>
+        <li><span class="dot" style="background:var(--purple)"></span><strong>Impella:</strong> continuous axial pump from LV to aorta → ↓ LV EDV and ESP → ↓ MVO₂ → myocardial recovery</li>
+        <li><span class="dot" style="background:var(--purple)"></span><strong>ECMO (VA):</strong> ↑ afterload (Ea ↑) → ↑ LV work if LV doesn't decompress — may need venting!</li>
+      </ul>
+    </div>
+    <div class="card card-accent-green">
+      <div class="card-title">💡 Oxygen Consumption & PV Loop</div>
+      <code class="formula">MVO₂ ∝ Heart Rate × Peak LV Wall Stress</code>
+      <p style="margin-top:10px">Myocardial oxygen demand correlates with:</p>
+      <ul class="kp-list" style="margin-top:10px">
+        <li><span class="dot" style="background:var(--green)"></span><strong>Stroke work (SW)</strong> = area of PV loop ≈ external work</li>
+        <li><span class="dot" style="background:var(--green)"></span><strong>Potential energy (PE)</strong> = area to the left of ESPVR above loop</li>
+        <li><span class="dot" style="background:var(--green)"></span>Total mechanical energy (PVA) = SW + PE ∝ MVO₂</li>
+        <li><span class="dot" style="background:var(--amber)"></span>↑ Afterload → ↑ PE without ↑ SW → ↑ MVO₂ inefficiently</li>
+        <li><span class="dot" style="background:var(--green)"></span>Inotropes → ↑ SW, modest ↑ PE — more efficient than afterload</li>
+      </ul>
+      <code class="formula">PVA = SW + PE = total mechanical energy per beat</code>
+    </div>
+  </div>
+
+  <!-- Key formulas reference -->
+  <div class="card card-accent-gold" style="margin-top:8px">
+    <div class="card-title">🔢 Key Formulas Reference</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Formula</th><th>Expression</th><th>Normal value</th><th>Clinical use</th></tr></thead>
+        <tbody>
+          <tr><td>Stroke Volume</td><td><code>SV = EDV − ESV</code></td><td>60–100 mL</td><td>Beat output</td></tr>
+          <tr><td>Ejection Fraction</td><td><code>EF = SV/EDV × 100</code></td><td>55–70%</td><td>Systolic function (load-dependent)</td></tr>
+          <tr><td>Cardiac Output</td><td><code>CO = SV × HR</code></td><td>4–8 L/min</td><td>Global perfusion</td></tr>
+          <tr><td>Cardiac Index</td><td><code>CI = CO/BSA</code></td><td>2.5–4 L/min/m²</td><td>Normalized output; CI&lt;2.2 = cardiogenic shock</td></tr>
+          <tr><td>Arterial Elastance</td><td><code>Ea = ESP/SV</code></td><td>≈2 mmHg/mL</td><td>Net afterload (includes SVR, HR, arterial compliance)</td></tr>
+          <tr><td>End-systolic elastance</td><td><code>Ees = ESP/(ESV−V₀)</code></td><td>1.5–2.5 mmHg/mL</td><td>Load-independent contractility</td></tr>
+          <tr><td>VA coupling</td><td><code>Ea/Ees</code></td><td>0.8–1.2</td><td>Efficiency; &gt;1.5 = uncoupling</td></tr>
+          <tr><td>Wall stress (Laplace)</td><td><code>σ = P·r/2h</code></td><td>Variable</td><td>Afterload at wall level; drives hypertrophy</td></tr>
+          <tr><td>PVA (total energy)</td><td><code>SW + PE</code></td><td>—</td><td>Proportional to MVO₂</td></tr>
+          <tr><td>SVR</td><td><code>(MAP−CVP)/CO × 80</code></td><td>800–1200 dyn·s/cm⁵</td><td>Systemic vascular afterload</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     TAB 7 — QUIZ
+═══════════════════════════════════════════════════════════════════ -->
+<section class="tab" id="tab6">
+  <div class="sec-head">
+    <h2>🫁 Right Ventricular Physiology & PV Loop</h2>
+    <p>The RV operates under fundamentally different mechanical constraints than the LV. Its PV loop has a distinctive triangular morphology reflecting its unique afterload sensitivity.</p>
+  </div>
+
+  <div class="g2" style="margin-bottom:24px">
+    <div class="card card-accent-teal">
+      <div class="card-title">📐 RV vs LV PV Loop Morphology</div>
+      <svg viewBox="0 0 400 260" style="max-height:260px">
+        <line x1="40" y1="230" x2="380" y2="230" stroke="#4a5a78" stroke-width="1"/>
+        <line x1="40" y1="230" x2="40" y2="20" stroke="#4a5a78" stroke-width="1"/>
+        <text x="210" y="248" fill="#7b90b8" font-size="10" text-anchor="middle">Volume (mL)</text>
+        <text x="14" y="130" fill="#7b90b8" font-size="10" text-anchor="middle" transform="rotate(-90,14,130)">Pressure</text>
+        <!-- LV loop (gold, rectangular) -->
+        <rect x="120" y="60" width="130" height="158" fill="rgba(240,192,64,0.06)" stroke="var(--gold)" stroke-width="2.5"/>
+        <text x="122" y="56" fill="var(--gold)" font-size="10" font-weight="700">LV — Rectangular</text>
+        <text x="192" y="145" fill="rgba(240,192,64,0.3)" font-size="9" text-anchor="middle">ESP ≈ 120 mmHg</text>
+        <!-- RV loop (teal, triangular) -->
+        <path d="M 60,228 L 60,170 L 100,75 L 170,60 L 175,225 Z" fill="rgba(45,212,191,0.06)" stroke="var(--teal)" stroke-width="2.5"/>
+        <text x="58" y="46" fill="var(--teal)" font-size="10" font-weight="700">RV — Triangular</text>
+        <text x="108" y="165" fill="rgba(45,212,191,0.35)" font-size="9" text-anchor="middle">ESP ≈ 25 mmHg</text>
+        <!-- Labels -->
+        <text x="42" y="174" fill="var(--dim)" font-size="8">RV EDP</text>
+        <text x="42" y="228" fill="var(--dim)" font-size="8">~4</text>
+        <text x="34" y="62" fill="var(--dim)" font-size="8">~120</text>
+        <text x="34" y="170" fill="var(--dim)" font-size="8">~25</text>
+      </svg>
+      <p style="margin-top:12px">The RV loop is <strong>triangular</strong> (vs LV rectangular) because the RV lacks a true isovolumetric contraction phase — it begins ejecting while still generating pressure, and the low-impedance pulmonary circuit allows ejection to continue until late in relaxation.</p>
+    </div>
+
+    <div class="card card-accent-teal">
+      <div class="card-title">⚖️ RV vs LV — Key Differences</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Parameter</th><th>LV</th><th>RV</th></tr></thead>
+          <tbody>
+            <tr><td>Wall thickness</td><td>~10 mm</td><td>~3 mm</td></tr>
+            <tr><td>Systolic pressure</td><td>~120 mmHg</td><td>~25 mmHg</td></tr>
+            <tr><td>Afterload (Ea)</td><td>~2 mmHg/mL</td><td>~0.4 mmHg/mL</td></tr>
+            <tr><td>Ees (contractility)</td><td>~1.5 mmHg/mL</td><td>~0.5 mmHg/mL</td></tr>
+            <tr><td>Ea/Ees coupling</td><td>~0.8–1.2</td><td>~0.5–0.8</td></tr>
+            <tr><td>Loop shape</td><td>Rectangular</td><td>Triangular</td></tr>
+            <tr><td>IC phase</td><td>Distinct</td><td>Minimal/absent</td></tr>
+            <tr><td>Response to ↑afterload</td><td>Tolerates well</td><td>Highly sensitive</td></tr>
+            <tr><td>EDV</td><td>~120–150 mL</td><td>~100–160 mL (larger)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card card-accent-red">
+      <div class="card-title">⚠️ Acute RV Failure — PV Loop</div>
+      <p>The RV is exquisitely sensitive to acute increases in afterload (pulmonary vascular resistance). Unlike the LV, it cannot sustain high pressure chronically without decompensation.</p>
+      <ul class="kp-list" style="margin-top:10px">
+        <li><span class="dot" style="background:var(--red)"></span><strong>Acute PE:</strong> sudden ↑ PVR → RV loop becomes rectangular (failed ejection), ↑RV EDP, ↓SV</li>
+        <li><span class="dot" style="background:var(--red)"></span><strong>RV dilation:</strong> septal shift leftward (D-sign on echo) → ↓LV EDV → ↓CO (ventricular interdependence)</li>
+        <li><span class="dot" style="background:var(--red)"></span><strong>RV ischemia:</strong> RCA territory — ST elevation III&gt;II, V4R; RV wall motion abnormality</li>
+        <li><span class="dot" style="background:var(--amber)"></span><strong>Treatment:</strong> optimize RV preload (cautious fluids), ↓PVR (NO, prostacyclins, PDE5i), RV inotropes (dobutamine, levosimendan), avoid ↑ afterload</li>
+      </ul>
+      <div class="pearl"><strong>RV failure after cardiac surgery</strong> is a major cause of post-op mortality. LCOS, high CVP, low CO, ↑TR — PV loop shifts: ↑RV EDV, ↓SV, rectangular loop (failing to eject against elevated PVR post-CPB).</div>
+    </div>
+
+    <div class="card card-accent-purple">
+      <div class="card-title">🫀 Ventricular Interdependence</div>
+      <p>The two ventricles share the pericardium, septum, and myocardial fibers. Changes in one directly affect the other:</p>
+      <ul class="kp-list" style="margin-top:10px">
+        <li><span class="dot" style="background:var(--purple)"></span><strong>RV dilation → LV impairment:</strong> septal shift left → ↓LV compliance → ↓LV EDV → ↓CO</li>
+        <li><span class="dot" style="background:var(--purple)"></span><strong>LV hypertrophy → RV restriction:</strong> shared septum stiffens RV cavity</li>
+        <li><span class="dot" style="background:var(--purple)"></span><strong>Tamponade:</strong> classic interdependence — inspiration ↑RV at expense of LV</li>
+        <li><span class="dot" style="background:var(--purple)"></span><strong>Pericardial constraint:</strong> both loops shrink when intrapericardial P rises</li>
+      </ul>
+      <div class="alert-red"><strong>Clinical implication:</strong> Treating isolated RV failure with aggressive fluid loading can worsen LV output via septal shift — haemodynamic monitoring essential.</div>
+    </div>
+
+    <div class="card card-accent-blue">
+      <div class="card-title">🫁 Pulmonary Hypertension (PAH)</div>
+      <p>Chronic ↑ PVR → chronic RV pressure overload. RV PV loop progressively transforms:</p>
+      <ul class="kp-list" style="margin-top:10px">
+        <li><span class="dot" style="background:var(--blue)"></span><strong>Early:</strong> RV concentric hypertrophy, maintained coupling (Ea/Ees ≈1), loop tallens</li>
+        <li><span class="dot" style="background:var(--blue)"></span><strong>Mid:</strong> RV dilation begins, Ees starts to plateau, Ea/Ees &gt;1</li>
+        <li><span class="dot" style="background:var(--red)"></span><strong>Late:</strong> Severe uncoupling Ea/Ees &gt;2 — loop wide, flat, large EDV, ↓SV → RV failure</li>
+      </ul>
+      <code class="formula">mPAP &gt; 20 mmHg = Pulmonary Hypertension (ESC 2022)</code>
+      <p style="margin-top:10px;font-size:13px;color:var(--muted)">Groups: Group 1 (PAH), Group 2 (left heart disease — most common), Group 3 (lung disease), Group 4 (CTEPH), Group 5 (unclear/multifactorial)</p>
+    </div>
+
+    <div class="card card-accent-amber">
+      <div class="card-title">📊 RV Afterload Sensitivity</div>
+      <p>The RV operates at a much lower Ea/Ees ratio at baseline, meaning it has less reserve against afterload increases:</p>
+      <ul class="kp-list" style="margin-top:10px">
+        <li><span class="dot" style="background:var(--amber)"></span>Doubling PVR in a normal RV → ↓RV SV by ~40% (vs ~15% for LV with equivalent Ea increase)</li>
+        <li><span class="dot" style="background:var(--amber)"></span>RV Ees is 3–4× lower than LV Ees — less contractile reserve to recruit</li>
+        <li><span class="dot" style="background:var(--amber)"></span>This is why massive PE causes immediate cardiovascular collapse: RV cannot acutely hypertrophy</li>
+      </ul>
+      <div class="pearl"><strong>Key principle:</strong> The LV is a pressure-generating pump; the RV is a volume pump. The RV thrives in low-impedance circuits and fails rapidly when PVR rises acutely.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     TAB 8 — PERIOPERATIVE HEMODYNAMICS
+═══════════════════════════════════════════════════════════════════ -->
+<section class="tab" id="tab7">
+  <div class="sec-head">
+    <h2>🏥 Perioperative Hemodynamics & PV Loop</h2>
+    <p>Understanding PV loop mechanics is essential for the cardiac surgery team — from anesthetic induction to post-CPB management and ICU care.</p>
+  </div>
+
+  <div class="g2" style="margin-bottom:24px">
+    <div class="card card-accent-gold">
+      <div class="card-title">💉 Anesthetic Induction Effects</div>
+      <p>Most anesthetic agents alter cardiac mechanics and vascular tone, shifting the PV loop:</p>
+      <div class="tbl-wrap" style="margin:12px 0">
+        <table>
+          <thead><tr><th>Agent</th><th>Inotropy</th><th>Afterload</th><th>Preload</th><th>Loop effect</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Propofol</strong></td><td class="dn">↓</td><td class="dn">↓↓</td><td class="dn">↓</td><td>Loop shrinks, shifts left, low ESP</td></tr>
+            <tr><td><strong>Etomidate</strong></td><td class="nc">→</td><td class="nc">→</td><td class="nc">→</td><td>Minimal loop change — preferred in HF</td></tr>
+            <tr><td><strong>Ketamine</strong></td><td class="up">↑ (indirect)</td><td class="up">↑</td><td class="up">↑</td><td>Loop widens, ↑ESP, ↑HR</td></tr>
+            <tr><td><strong>Volatile (sevoflurane)</strong></td><td class="dn">↓ dose-dep.</td><td class="dn">↓</td><td class="nc">→</td><td>Ees ↓, loop flattens</td></tr>
+            <tr><td><strong>High-dose opioids</strong></td><td class="nc">→</td><td class="nc">→</td><td class="nc">→</td><td>Near-neutral — preferred in cardiac surgery</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pearl"><strong>Induction hypotension</strong> in cardiac surgery most often reflects: ↓ Ea (vasodilation) + ↓ Ees (drug inotropy) + ↓ EDV (preload reduction). PV loop: loop shrinks and shifts left simultaneously — CO drops.</div>
+    </div>
+
+    <div class="card card-accent-blue">
+      <div class="card-title">❄️ Cardiopulmonary Bypass (CPB) Effects</div>
+      <p>During CPB, the native heart is arrested and the PV loop effectively disappears — the machine replaces cardiac function. Post-CPB management targets restoration of optimal loop mechanics:</p>
+      <ul class="kp-list" style="margin-top:10px">
+        <li><span class="dot" style="background:var(--blue)"></span><strong>Post-CPB stunning:</strong> ↓ Ees (transient contractile dysfunction from ischemia-reperfusion), ↑EDV — needs inotropic support</li>
+        <li><span class="dot" style="background:var(--blue)"></span><strong>Systemic inflammatory response:</strong> ↓ SVR → ↓Ea → low ESP despite high CO — needs vasopressors</li>
+        <li><span class="dot" style="background:var(--blue)"></span><strong>Volume status:</strong> CPB priming dilutes blood, fluid shifts — EDV may be low or high depending on management</li>
+        <li><span class="dot" style="background:var(--red)"></span><strong>Post-CPB RV failure:</strong> protamine, air embolism, surgical damage — ↑ PVR, ↓ RV Ees → acute RV loop collapse</li>
+      </ul>
+    </div>
+
+    <div class="card card-accent-green">
+      <div class="card-title">💊 Vasoactive Drugs & PV Loops</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Drug</th><th>Ees (inotropy)</th><th>Ea (afterload)</th><th>EDV (preload)</th><th>Net loop effect</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Norepinephrine</strong></td><td class="nc">→/↑ slightly</td><td class="up">↑↑</td><td class="nc">→</td><td>↑ESP, ↑SV if coupled; ↑ MVO₂</td></tr>
+            <tr><td><strong>Phenylephrine</strong></td><td class="dn">↓ (reflex)</td><td class="up">↑↑</td><td class="up">↑</td><td>↑ESP, ↑EDV; can worsen HF</td></tr>
+            <tr><td><strong>Dobutamine</strong></td><td class="up">↑↑</td><td class="dn">↓ (β2)</td><td class="dn">↓</td><td>↑SV, ↓ESV, steeper ESPVR</td></tr>
+            <tr><td><strong>Levosimendan</strong></td><td class="up">↑ (Ca-sensitizer)</td><td class="dn">↓ (K-ATP)</td><td class="dn">↓</td><td>↑SV, ↓EDV, ↓EDP; RV-specific benefit</td></tr>
+            <tr><td><strong>Milrinone</strong></td><td class="up">↑ (PDE3i)</td><td class="dn">↓↓</td><td class="dn">↓</td><td>↑SV, marked ↓Ea; useful in PH</td></tr>
+            <tr><td><strong>Vasopressin</strong></td><td class="nc">→</td><td class="up">↑ (systemic)</td><td class="nc">→</td><td>↑SVR without ↑PVR — useful in vasodilatory shock + PAH</td></tr>
+            <tr><td><strong>Nitroglycerine</strong></td><td class="nc">→</td><td class="dn">↓ (venous)</td><td class="dn">↓↓</td><td>↓EDV, ↓EDP; useful in HFpEF, ischemia</td></tr>
+            <tr><td><strong>Nitroprusside</strong></td><td class="nc">→</td><td class="dn">↓↓ (art+ven)</td><td class="dn">↓</td><td>↓Ea markedly, ↑SV; useful in acute AR/MR</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card card-accent-red">
+      <div class="card-title">🚨 Low Cardiac Output Syndrome (LCOS)</div>
+      <p>CI &lt; 2.2 L/min/m² post-cardiac surgery. PV loop analysis directs treatment:</p>
+      <ul class="kp-list" style="margin-top:10px">
+        <li><span class="dot" style="background:var(--red)"></span><strong>↓ Ees dominant (systolic failure):</strong> ↑EDV, ↑ESV, flat loop → inotropes (dobutamine, milrinone, levosimendan), consider IABP/Impella</li>
+        <li><span class="dot" style="background:var(--amber)"></span><strong>↑ Ea dominant (vasoconstricton):</strong> high ESP, narrow loop, ↓SV → vasodilators (nitroprusside) if BP tolerates</li>
+        <li><span class="dot" style="background:var(--blue)"></span><strong>↓ EDV dominant (hypovolemia):</strong> small loop, low EDP → cautious fluid loading</li>
+        <li><span class="dot" style="background:var(--purple)"></span><strong>RV failure component:</strong> ↑CVP, ↓PCWP, ↑RAP/PCWP ratio &gt;0.63 → RV-targeted therapy</li>
+      </ul>
+      <div class="alert-red"><strong>Treating LCOS requires identifying the primary loop deformity:</strong> giving inotropes to a hypovolemic patient or fluids to a patient with ↓ Ees will worsen outcomes. Goal-directed therapy based on PV loop principles.</div>
+    </div>
+
+    <div class="card card-accent-amber">
+      <div class="card-title">📊 Hemodynamic Targets Post-Cardiac Surgery</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Parameter</th><th>Target</th><th>PV loop correlate</th></tr></thead>
+          <tbody>
+            <tr><td>MAP</td><td>65–80 mmHg</td><td>Ea (afterload) — relates to ESP/SV</td></tr>
+            <tr><td>CVP</td><td>6–12 mmHg</td><td>RV filling pressure (RV EDP)</td></tr>
+            <tr><td>PCWP</td><td>12–18 mmHg</td><td>LV preload surrogate (LV EDP)</td></tr>
+            <tr><td>CI</td><td>≥ 2.2 L/min/m²</td><td>SV × HR / BSA</td></tr>
+            <tr><td>SvO₂</td><td>≥ 65%</td><td>Global O₂ delivery vs demand</td></tr>
+            <tr><td>Lactate</td><td>&lt; 2 mmol/L (trending ↓)</td><td>Adequacy of CO for tissue perfusion</td></tr>
+            <tr><td>Heart rate</td><td>60–90 bpm (NSR)</td><td>Determines CO from SV</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card card-accent-teal">
+      <div class="card-title">🔄 Mechanical Circulatory Support — Loop Effects</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Device</th><th>Mechanism</th><th>LV EDV</th><th>LV ESP</th><th>MVO₂</th><th>Loop change</th></tr></thead>
+          <tbody>
+            <tr><td><strong>IABP</strong></td><td>Counterpulsation: ↑diastolic P, ↓systolic Ea</td><td class="nc">→/↓</td><td class="dn">↓</td><td class="dn">↓</td><td>Narrows, ↓ESP</td></tr>
+            <tr><td><strong>Impella CP</strong></td><td>Axial LV→Ao pump (2.5–4 L/min)</td><td class="dn">↓↓</td><td class="dn">↓↓</td><td class="dn">↓↓</td><td>Dramatically shrinks</td></tr>
+            <tr><td><strong>LVAD</strong></td><td>Continuous LV unloading</td><td class="dn">↓↓↓</td><td class="dn">↓↓</td><td class="dn">↓↓</td><td>Loop nearly disappears</td></tr>
+            <tr><td><strong>VA-ECMO</strong></td><td>Bypasses heart+lungs, ↑ Ao pressure</td><td class="up">↑ (if LV not venting!)</td><td class="up">↑↑ Ea</td><td class="up">↑↑</td><td>↑ESP paradoxically — needs LV vent!</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pearl"><strong>VA-ECMO paradox:</strong> ECMO retrograde flow ↑ Ea → ↑ LV wall stress → ↑ MVO₂ — the opposite of what's desired in cardiogenic shock. Always consider LV venting (Impella + ECMO = "ECPELLA") in patients with very poor LV function on VA-ECMO.</div>
+    </div>
+  </div>
+
+  <!-- Myocardial Protection -->
+  <div class="card card-accent-purple">
+    <div class="card-title">🧊 Myocardial Protection & Cardioplegia — PV Loop Perspective</div>
+    <p>Cardioplegia arrests the heart in diastole — the PV loop goal on resuming cardiac activity is to restore optimal loop morphology with minimal ischemia-reperfusion injury.</p>
+    <div class="g2" style="margin-top:16px">
+      <div>
+        <div style="font-weight:600;color:var(--text);font-size:13px;margin-bottom:8px">Factors preserving post-arrest loop quality:</div>
+        <ul class="kp-list">
+          <li><span class="dot" style="background:var(--green)"></span>Adequate cardioplegia distribution (antegrade + retrograde)</li>
+          <li><span class="dot" style="background:var(--green)"></span>Short cross-clamp time — minimizes ischemia</li>
+          <li><span class="dot" style="background:var(--green)"></span>Tepid/warm blood cardioplegia — metabolic support</li>
+          <li><span class="dot" style="background:var(--green)"></span>Controlled reperfusion — prevents calcium overload</li>
+          <li><span class="dot" style="background:var(--green)"></span>Substrate enrichment (glutamate/aspartate) in severely impaired LV</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-weight:600;color:var(--text);font-size:13px;margin-bottom:8px">Post-arrest stunning — PV loop effects:</div>
+        <ul class="kp-list">
+          <li><span class="dot" style="background:var(--red)"></span>↓ Ees (transient — resolves in 24–48h with good protection)</li>
+          <li><span class="dot" style="background:var(--red)"></span>↑ EDV (compensatory dilation)</li>
+          <li><span class="dot" style="background:var(--amber)"></span>↑ EDP (diastolic dysfunction, Ca²⁺ overload)</li>
+          <li><span class="dot" style="background:var(--amber)"></span>↓ SV → LCOS risk in first 6–12h post-op</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tab" id="tab8">
+  <div class="sec-head">
+    <h2>📝 Clinical Quiz — PV Loop Mastery</h2>
+    <p>Test your understanding with 10 clinically oriented questions. Each question includes a detailed explanation.</p>
+  </div>
+
+  <div class="quiz-score">
+    <div style="font-size:13px;color:var(--muted);margin-bottom:8px">Correct answers</div>
+    <div class="big" id="scoreDisplay">0 / 10</div>
+    <div class="quiz-progress"><div class="quiz-progress-bar" id="progressBar"></div></div>
+    <div style="font-size:12px;color:var(--dim);margin-bottom:12px" id="scoreMsg">Answer the questions below</div>
+    <button onclick="resetQuiz()" style="background:var(--bg3);border:1px solid var(--rim);color:var(--muted);border-radius:var(--r);padding:8px 20px;cursor:pointer;font-size:13px">↺ Reset Quiz</button>
+  </div>
+
+  <!-- Q1 -->
+  <div class="quiz-q" id="q0">
+    <h4><span class="qnum">Q1.</span> A patient has an EDV of 150 mL and ESV of 90 mL. What is the ejection fraction?</h4>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(0,0)">A. 40%</button>
+      <button class="quiz-opt" onclick="answer(0,1)">B. 60%</button>
+      <button class="quiz-opt" onclick="answer(0,2)">C. 45%</button>
+      <button class="quiz-opt" onclick="answer(0,3)">D. 70%</button>
+    </div>
+    <div class="quiz-explain" id="qe0">
+      <strong>✅ A — 40%</strong><br>
+      EF = SV/EDV × 100 = (EDV−ESV)/EDV × 100 = (150−90)/150 × 100 = 60/150 × 100 = <strong>40%</strong>. This is in the HFrEF range (&lt;40%) — borderline, indicating significantly impaired systolic function.
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="quiz-q" id="q1">
+    <h4><span class="qnum">Q2.</span> On the PV loop, which phase is represented by the LEFT vertical limb (pressure dropping at constant volume)?</h4>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(1,0)">A. Isovolumetric contraction</button>
+      <button class="quiz-opt" onclick="answer(1,1)">B. Rapid ejection</button>
+      <button class="quiz-opt" onclick="answer(1,2)">C. Isovolumetric relaxation</button>
+      <button class="quiz-opt" onclick="answer(1,3)">D. Diastolic filling</button>
+    </div>
+    <div class="quiz-explain" id="qe1">
+      <strong>✅ C — Isovolumetric relaxation</strong><br>
+      After aortic valve closure (end-systole, at ESV), both valves are closed and pressure drops rapidly at constant volume. This is Phase 3 — the <strong>left vertical limb</strong> of the loop, descending from ESP to near zero.
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="quiz-q" id="q2">
+    <h4><span class="qnum">Q3.</span> A 58-year-old man has severe aortic regurgitation. His echo shows EF 68%, EDV 220 mL, ESV 70 mL. Which PV loop change is most characteristic?</h4>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(2,0)">A. Tall narrow loop with high ESP, small EDV</button>
+      <button class="quiz-opt" onclick="answer(2,1)">B. Wide rightward loop, large SV, low ESP</button>
+      <button class="quiz-opt" onclick="answer(2,2)">C. Small left-shifted loop, high EDP, low SV</button>
+      <button class="quiz-opt" onclick="answer(2,3)">D. Flat loop with absent IC phase, high EDV</button>
+    </div>
+    <div class="quiz-explain" id="qe2">
+      <strong>✅ B — Wide rightward loop, large SV, low ESP</strong><br>
+      Aortic regurgitation causes volume overload: ↑↑EDV (220 mL), large total SV (150 mL), hyperdynamic EF, and low effective afterload (diastolic pressure low due to regurgitation). The loop shifts right and widens. Option D describes MR (absent IC). Option A describes AS (pressure overload). Option C describes HFpEF/MS.
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="quiz-q" id="q3">
+    <h4><span class="qnum">Q4.</span> Which of the following BEST represents a load-independent measure of myocardial contractility?</h4>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(3,0)">A. Ejection fraction (EF)</button>
+      <button class="quiz-opt" onclick="answer(3,1)">B. End-systolic elastance (Ees / ESPVR slope)</button>
+      <button class="quiz-opt" onclick="answer(3,2)">C. Stroke volume (SV)</button>
+      <button class="quiz-opt" onclick="answer(3,3)">D. Cardiac output (CO)</button>
+    </div>
+    <div class="quiz-explain" id="qe3">
+      <strong>✅ B — End-systolic elastance (Ees)</strong><br>
+      Ees is the slope of the ESPVR — it defines the relationship between ESP and ESV across multiple loading conditions. It remains constant when preload or afterload changes (load-independent). EF, SV, and CO all change with loading conditions even if intrinsic inotropy is unchanged.
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="quiz-q" id="q4">
+    <h4><span class="qnum">Q5.</span> A patient with mitral regurgitation has EF 55%. Compared to a normal patient, what does this EF tell us?</h4>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(4,0)">A. LV systolic function is completely normal</button>
+      <button class="quiz-opt" onclick="answer(4,1)">B. LV is hyperdynamic — no concern</button>
+      <button class="quiz-opt" onclick="answer(4,2)">C. LV systolic function may already be significantly impaired</button>
+      <button class="quiz-opt" onclick="answer(4,3)">D. Surgery should be delayed until EF falls below 40%</button>
+    </div>
+    <div class="quiz-explain" id="qe4">
+      <strong>✅ C — LV systolic function may already be significantly impaired</strong><br>
+      In MR, afterload is reduced (blood escapes into the low-pressure LA), which artificially elevates EF. An EF of 55% in MR indicates impaired contractility — equivalent to a much lower EF in a patient with normal valve function. ESC guidelines recommend surgery when EF falls to &lt;60% in MR with symptoms, not waiting for &lt;40%.
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="quiz-q" id="q5">
+    <h4><span class="qnum">Q6.</span> Dobutamine is administered to a patient in cardiogenic shock. How does this affect the ESPVR?</h4>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(5,0)">A. ESPVR shifts right, slope decreases</button>
+      <button class="quiz-opt" onclick="answer(5,1)">B. ESPVR slope increases (Ees ↑), loop narrows leftward</button>
+      <button class="quiz-opt" onclick="answer(5,2)">C. ESPVR is unaffected; only preload changes</button>
+      <button class="quiz-opt" onclick="answer(5,3)">D. ESPVR slope decreases, EDV falls</button>
+    </div>
+    <div class="quiz-explain" id="qe5">
+      <strong>✅ B — ESPVR slope increases (Ees ↑), loop shifts left</strong><br>
+      Dobutamine is a positive inotrope (β1-agonist). It increases intracellular Ca²⁺ cycling, increasing contractility → steeper ESPVR (↑Ees). At a given preload/afterload, ESV falls and SV increases. The loop narrows and shifts leftward. This is distinct from afterload reduction (which changes Ea, not Ees).
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="quiz-q" id="q6">
+    <h4><span class="qnum">Q7.</span> In cardiac tamponade, what happens to the LV PV loop?</h4>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(6,0)">A. Loop shifts right with high EDP (diastolic dysfunction)</button>
+      <button class="quiz-opt" onclick="answer(6,1)">B. Loop is small and narrow due to reduced LV filling (↓EDV)</button>
+      <button class="quiz-opt" onclick="answer(6,2)">C. Loop shows absent isovolumetric contraction phase</button>
+      <button class="quiz-opt" onclick="answer(6,3)">D. Loop is tall and narrow with markedly elevated ESP</button>
+    </div>
+    <div class="quiz-explain" id="qe6">
+      <strong>✅ B — Small narrow loop, ↓EDV</strong><br>
+      Tamponade impairs diastolic filling of all chambers due to elevated intrapericardial pressure. LV EDV falls, loop becomes small and leftward-shifted. SV and CO drop, triggering compensatory tachycardia. Classic pulsus paradoxus (≥10 mmHg inspiratory drop in SBP) reflects respiratory variation in LV filling as RV/LV compete within the non-distensible pericardial space.
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="quiz-q" id="q7">
+    <h4><span class="qnum">Q8.</span> Which cardiomyopathy classically produces a STEEP ESPVR (high Ees) with SMALL EDV and very high EDP?</h4>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(7,0)">A. Dilated cardiomyopathy (DCM)</button>
+      <button class="quiz-opt" onclick="answer(7,1)">B. Hypertrophic cardiomyopathy (HCM)</button>
+      <button class="quiz-opt" onclick="answer(7,2)">C. Arrhythmogenic RV cardiomyopathy (ARVC)</button>
+      <button class="quiz-opt" onclick="answer(7,3)">D. Takotsubo cardiomyopathy</button>
+    </div>
+    <div class="quiz-explain" id="qe7">
+      <strong>✅ B — Hypertrophic cardiomyopathy (HCM)</strong><br>
+      HCM produces massive concentric hypertrophy → small LV cavity (↓EDV), hyperdynamic systolic function (↑EF, ↑Ees, steep ESPVR), but severe diastolic dysfunction (↑↑EDP, stiff non-compliant wall). EDPVR shifts steeply leftward. DCM is the opposite (flat Ees, ↑↑EDV). ARVC primarily involves the RV.
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="quiz-q" id="q8">
+    <h4><span class="qnum">Q9.</span> An IABP (intra-aortic balloon pump) is placed in a patient with cardiogenic shock. What is the HEMODYNAMIC EFFECT on the LV PV loop during systole?</h4>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(8,0)">A. Increased ESP and wider loop (more stroke work)</button>
+      <button class="quiz-opt" onclick="answer(8,1)">B. No change to systolic ESP</button>
+      <button class="quiz-opt" onclick="answer(8,2)">C. Decreased ESP (afterload reduction) → loop narrows, MVO₂ ↓</button>
+      <button class="quiz-opt" onclick="answer(8,3)">D. Increased EDV with higher EDP</button>
+    </div>
+    <div class="quiz-explain" id="qe8">
+      <strong>✅ C — Decreased ESP → loop narrows, ↓ MVO₂</strong><br>
+      The IABP deflates just before ventricular systole, creating a vacuum effect in the aorta that reduces the impedance the LV ejects against (↓Ea). This lowers ESP, reduces wall stress, decreases MVO₂, and slightly increases SV. During diastole, the balloon inflates, augmenting diastolic aortic pressure and improving coronary perfusion — this is the 'diastolic augmentation'.
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="quiz-q" id="q9">
+    <h4><span class="qnum">Q10.</span> A patient with HFpEF (EF 62%, E/e' 18, BNP 450 pg/mL) exercises on a bike. What PRIMARILY explains their exertional dyspnea on the PV loop level?</h4>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(9,0)">A. ESPVR flattens dramatically during exercise</button>
+      <button class="quiz-opt" onclick="answer(9,1)">B. EDV fails to increase (no preload reserve) and EDP rises steeply along a shifted EDPVR</button>
+      <button class="quiz-opt" onclick="answer(9,2)">C. Heart rate becomes insufficient to augment CO</button>
+      <button class="quiz-opt" onclick="answer(9,3)">D. Aortic valve opens prematurely during exercise</button>
+    </div>
+    <div class="quiz-explain" id="qe9">
+      <strong>✅ B — No preload reserve; EDP rises steeply</strong><br>
+      In HFpEF, the EDPVR is steep and shifted left. At rest, EDP may be borderline. During exercise, the normal mechanism of ↑EDV (Frank-Starling) is blocked by the stiff LV wall. Instead, any attempt to increase filling results in a steep rise in EDP along the stiff EDPVR → ↑ pulmonary venous pressure → dyspnea. This is the hallmark of HFpEF: <em>exercise-induced diastolic failure</em>. ESPVR (systolic) may be normal or even enhanced.
+    </div>
+  </div>
+
+  <!-- Cheatsheet -->
+  <div class="divider"></div>
+  <div class="card card-accent-gold">
+    <div class="card-title">🗺️ PV Loop Differential Diagnosis — Quick Reference Cheatsheet</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Loop Pattern</th><th>EDV</th><th>ESP</th><th>EF</th><th>EDPVR</th><th>ESPVR</th><th>IC phase</th><th>Think of...</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Tall, narrow, high ESP</strong></td><td class="nc">→/↓</td><td class="up">↑↑↑</td><td class="nc">→</td><td>Normal</td><td>Normal/steep</td><td>Present</td><td>Aortic stenosis, hypertension</td></tr>
+          <tr><td><strong>Wide, right-shifted, large SV</strong></td><td class="up">↑↑↑</td><td class="dn">↓</td><td class="up">↑</td><td>R-shifted</td><td>Normal</td><td>Present</td><td>Aortic regurgitation, chronic volume overload</td></tr>
+          <tr><td><strong>Wide, low ESP, no IC limb</strong></td><td class="up">↑↑</td><td class="dn">↓↓</td><td class="up">↑ (false)</td><td>Normal/R</td><td>Normal</td><td><span style="color:var(--red)">Absent</span></td><td>Mitral regurgitation</td></tr>
+          <tr><td><strong>Small, narrow, left-shifted</strong></td><td class="dn">↓↓</td><td class="nc">→</td><td class="nc">→</td><td>Normal</td><td>Normal</td><td>Present</td><td>Mitral stenosis, hypovolemia, tamponade</td></tr>
+          <tr><td><strong>Wide, flat, rightward, low</strong></td><td class="up">↑↑↑</td><td class="dn">↓</td><td class="dn">↓↓</td><td>R-shifted</td><td>Flat (↓Ees)</td><td>Present</td><td>HFrEF, DCM, massive MI</td></tr>
+          <tr><td><strong>Narrow, tall, steep EDPVR</strong></td><td class="dn">↓/→</td><td class="nc">→</td><td class="nc">→</td><td>L-shifted, steep</td><td>Normal/steep</td><td>Present</td><td>HFpEF, HCM, RCM, hypertension</td></tr>
+          <tr><td><strong>Small, low, minimal SW</strong></td><td class="dn">↓↓</td><td class="dn">↓</td><td class="nc">→</td><td>Normal</td><td>Normal</td><td>Present</td><td>Tamponade, tension pneumothorax, RV failure</td></tr>
+          <tr><td><strong>Normal loop, low Ea/Ees</strong></td><td class="nc">→</td><td class="dn">↓</td><td class="up">↑</td><td>Normal</td><td>Normal/steep</td><td>Present</td><td>Septic shock (vasodilatory), hyperthyroidism</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pearl" style="margin-top:16px"><strong>Diagnostic approach:</strong> (1) Is EDV ↑ or ↓? → defines volume status/preload. (2) Is ESP ↑ or ↓? → defines afterload/ESPVR position. (3) Is EF preserved? → distinguishes systolic from diastolic failure. (4) Is IC phase present? → MR if absent. (5) What is the EDPVR shape? → compliance/diastolic function.</div>
+  </div>
+
+
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     TAB 7 — RV PHYSIOLOGY
+═══════════════════════════════════════════════════════════════════ -->
+<!-- ══ FOOTNOTE ════════════════════════════════════════════════════ -->
+<div class="footnote">
+  📚 Based on: Kass DA (Ees methodology), Braunwald's Heart Disease (12th ed.), Guyton & Hall Medical Physiology (14th ed.), ESC Heart Failure Guidelines 2021, AHA/ACC Valvular Heart Disease Guidelines 2021. Interactive simulation uses simplified linear models for educational purposes only.
+  <br><br>Built for cardiac surgery clinical education · StarleyBy · 2025
+</div>
+
+</main>
+
+<!-- ═══════════════════════════════ SCRIPTS ══════════════════════ -->
+<script>
+// ─── TAB NAVIGATION ──────────────────────────────────────────────
+const tabs = document.querySelectorAll('.tab');
+const navBtns = document.querySelectorAll('.nav-btn');
+function goTab(idx, btn){
+  tabs.forEach(t=>t.classList.remove('active'));
+  navBtns.forEach(b=>b.classList.remove('active'));
+  tabs[idx].classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ─── INTERACTIVE SIMULATOR ────────────────────────────────────────
+const canvas = document.getElementById('simCanvas');
+const ctx = canvas.getContext('2d');
+const W=520, H=340;
+canvas.width=W; canvas.height=H;
+
+const slEDV=document.getElementById('slEDV');
+const slEes=document.getElementById('slEes');
+const slEa =document.getElementById('slEa');
+const slStiff=document.getElementById('slStiff');
+
+function resetSim(){
+  slEDV.value=120; slEes.value=1.0; slEa.value=1.0; slStiff.value=1.0;
+  drawSim();
+}
+
+function clamp(v,mn,mx){return Math.max(mn,Math.min(mx,v))}
+
+function drawSim(){
+  ctx.clearRect(0,0,W,H);
+
+  const PAD={l:60,r:20,t:30,b:40};
+  const iw=W-PAD.l-PAD.r, ih=H-PAD.t-PAD.b;
+
+  // domain
+  const vMin=0, vMax=260, pMin=0, pMax=200;
+  const vx=v=>PAD.l+((v-vMin)/(vMax-vMin))*iw;
+  const py=p=>PAD.t+ih-(((p-pMin)/(pMax-pMin))*ih);
+
+  // grid
+  ctx.strokeStyle='rgba(26,40,64,1)';ctx.lineWidth=0.8;
+  for(let v=0;v<=vMax;v+=40){
+    ctx.beginPath();ctx.moveTo(vx(v),PAD.t);ctx.lineTo(vx(v),PAD.t+ih);ctx.stroke();
+    ctx.fillStyle='#2a3a55';ctx.font='9px DM Mono,monospace';
+    ctx.fillText(v,vx(v)-10,PAD.t+ih+12);
+  }
+  for(let p=0;p<=pMax;p+=40){
+    ctx.beginPath();ctx.moveTo(PAD.l,py(p));ctx.lineTo(PAD.l+iw,py(p));ctx.stroke();
+    ctx.fillStyle='#2a3a55';ctx.font='9px DM Mono,monospace';
+    ctx.fillText(p,PAD.l-24,py(p)+3);
+  }
+
+  // axes
+  ctx.strokeStyle='#4a5a78';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(PAD.l,PAD.t);ctx.lineTo(PAD.l,PAD.t+ih+5);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(PAD.l-5,PAD.t+ih);ctx.lineTo(PAD.l+iw+5,PAD.t+ih);ctx.stroke();
+
+  // axis labels
+  ctx.fillStyle='#7b90b8';ctx.font='10px DM Sans,sans-serif';ctx.textAlign='center';
+  ctx.fillText('Volume (mL)',PAD.l+iw/2,H-5);
+  ctx.save();ctx.translate(14,PAD.t+ih/2);ctx.rotate(-Math.PI/2);
+  ctx.fillText('Pressure (mmHg)',0,0);ctx.restore();
+
+  // ─ Normal reference loop ─
+  const nEDV=120,nESV=50,nESP=110,nEDP=8;
+  ctx.strokeStyle='rgba(74,90,120,0.5)';ctx.lineWidth=1.2;ctx.setLineDash([4,3]);
+  ctx.beginPath();
+  ctx.moveTo(vx(nEDV),py(nEDP));
+  ctx.lineTo(vx(nEDV),py(nESP));
+  ctx.lineTo(vx(nESV),py(nESP));
+  ctx.lineTo(vx(nESV),py(nEDP));
+  ctx.closePath();ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='#4a5a78';ctx.font='9px DM Sans,sans-serif';ctx.textAlign='left';
+  ctx.fillText('Normal ref.',vx(nESV)+4,py(nEDP)+10);
+
+  // ─ Current loop parameters ─
+  const edvBase=parseFloat(slEDV.value);
+  const eesF=parseFloat(slEes.value);
+  const eaF=parseFloat(slEa.value);
+  const stiffF=parseFloat(slStiff.value);
+
+  // Normal baselines
+  const nV0=20;  // volume intercept
+  const nEes=1.8; // mmHg/mL
+  const nEa=2.0;  // mmHg/mL
+
+  const Ees=nEes*eesF;
+  const Ea =nEa*eaF;
+
+  // EDV
+  const EDV=clamp(edvBase,40,240);
+
+  // EDP from EDPVR (exponential approximation)
+  // EDP = A * exp(B*(EDV - EDV0)) where stiffF scales B
+  const A=2, B=0.012*stiffF, EDV0=40;
+  const EDP=clamp(A*Math.exp(B*(EDV-EDV0)),2,50);
+
+  // ESV: found from intersection of Ea line and ESPVR
+  // ESP = Ees*(ESV - V0)
+  // ESP = EDP + Ea*(EDV-ESV)  ... approximation of end-systolic point
+  // Solving: Ees*(ESV-V0) = EDP + Ea*(EDV-ESV)
+  // Ees*ESV - Ees*V0 = EDP + Ea*EDV - Ea*ESV
+  // ESV*(Ees+Ea) = EDP + Ea*EDV + Ees*V0
+  const V0=nV0;
+  const ESV=clamp((EDP + Ea*EDV + Ees*V0)/(Ees+Ea), 15, EDV*0.85);
+  const ESP=clamp(Ees*(ESV-V0), 20, 200);
+  const SV=EDV-ESV;
+  const EF=SV/EDV*100;
+
+  // Update metrics
+  document.getElementById('sEDV').textContent=Math.round(EDV);
+  document.getElementById('sEes').textContent=eesF.toFixed(2)+'×';
+  document.getElementById('sEa').textContent=eaF.toFixed(2)+'×';
+  document.getElementById('sStiff').textContent=stiffF.toFixed(2)+'×';
+  document.getElementById('mEDV').textContent=Math.round(EDV);
+  document.getElementById('mESV').textContent=Math.round(ESV);
+  document.getElementById('mSV').textContent=Math.round(SV);
+  document.getElementById('mEF').textContent=Math.round(EF);
+
+  // ESPVR line
+  ctx.strokeStyle='rgba(240,192,64,0.35)';ctx.lineWidth=1;ctx.setLineDash([6,3]);
+  ctx.beginPath();ctx.moveTo(vx(V0),py(0));ctx.lineTo(vx(V0+pMax/Ees),py(pMax));ctx.stroke();
+  ctx.fillStyle='rgba(240,192,64,0.5)';ctx.font='9px DM Sans,sans-serif';
+  ctx.fillText('ESPVR',vx(V0+140/Ees)+2,py(140)-3);
+
+  // EDPVR curve
+  ctx.strokeStyle='rgba(167,139,250,0.35)';ctx.setLineDash([4,3]);
+  ctx.beginPath();
+  for(let v=V0;v<=240;v+=2){
+    const ep=A*Math.exp(B*(v-EDV0));
+    if(v===V0)ctx.moveTo(vx(v),py(ep));
+    else ctx.lineTo(vx(v),py(ep));
+  }
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // ─ Loop fill ─
+  ctx.fillStyle='rgba(76,159,255,0.06)';
+  ctx.beginPath();
+  ctx.moveTo(vx(EDV),py(EDP));
+  ctx.lineTo(vx(EDV),py(ESP));
+  ctx.lineTo(vx(ESV),py(ESP));
+  ctx.lineTo(vx(ESV),py(EDP));
+  ctx.closePath();ctx.fill();
+
+  // ─ Loop strokes (4 phases) ─
+  const lw=2.5;
+  // Phase 1: IC - right vertical
+  ctx.strokeStyle='#4c9fff';ctx.lineWidth=lw;
+  ctx.beginPath();ctx.moveTo(vx(EDV),py(EDP));ctx.lineTo(vx(EDV),py(ESP));ctx.stroke();
+  // Phase 2: Ejection - top
+  ctx.strokeStyle='#42c47a';
+  ctx.beginPath();ctx.moveTo(vx(EDV),py(ESP));ctx.lineTo(vx(ESV),py(ESP));ctx.stroke();
+  // Phase 3: IR - left vertical
+  ctx.strokeStyle='#f59e0b';
+  ctx.beginPath();ctx.moveTo(vx(ESV),py(ESP));ctx.lineTo(vx(ESV),py(EDP));ctx.stroke();
+  // Phase 4: Filling - bottom
+  ctx.strokeStyle='#a78bfa';
+  ctx.beginPath();ctx.moveTo(vx(ESV),py(EDP));ctx.lineTo(vx(EDV),py(EDP));ctx.stroke();
+
+  // Dots at corners
+  [[EDV,EDP],[EDV,ESP],[ESV,ESP],[ESV,EDP]].forEach(([v,p])=>{
+    ctx.fillStyle='#e2eaf8';
+    ctx.beginPath();ctx.arc(vx(v),py(p),4,0,Math.PI*2);ctx.fill();
+  });
+
+  // SV arrow
+  ctx.strokeStyle='rgba(240,192,64,0.6)';ctx.lineWidth=1.2;
+  ctx.beginPath();ctx.moveTo(vx(ESV),py(0));ctx.lineTo(vx(EDV),py(0));ctx.stroke();
+  ctx.fillStyle='rgba(240,192,64,0.7)';ctx.font='9px DM Mono,monospace';ctx.textAlign='center';
+  ctx.fillText(`SV=${Math.round(SV)}mL`,vx((EDV+ESV)/2),py(0)+16);
+
+  ctx.textAlign='left';
+}
+
+[slEDV,slEes,slEa,slStiff].forEach(s=>s.addEventListener('input',drawSim));
+drawSim();
+
+// ─── QUIZ ──────────────────────────────────────────────────────────
+let scores=new Array(10).fill(null);
+
+// correct answer index for each question (0-based, A=0 B=1 C=2 D=3)
+// Q1: A=40% ✓ → 0
+// Q2: C=IR  ✓ → 2
+// Q3: B=wide right ✓ → 1
+// Q4: B=Ees ✓ → 1
+// Q5: C=impaired ✓ → 2
+// Q6: B=Ees slope↑ ✓ → 1
+// Q7: B=small EDV ✓ → 1
+// Q8: B=HCM ✓ → 1
+// Q9: C=↓ESP ✓ → 2
+// Q10: B=EDP rises ✓ → 1
+const correct=[0,2,1,1,2,1,1,1,2,1];
+
+function answer(qIdx, chosenIdx){
+  if(scores[qIdx]!==null) return;
+  const q=document.getElementById('q'+qIdx);
+  const opts=q.querySelectorAll('.quiz-opt');
+  const explain=document.getElementById('qe'+qIdx);
+  opts.forEach(o=>o.disabled=true);
+
+  const isCorrect = chosenIdx === correct[qIdx];
+  scores[qIdx]=isCorrect;
+  opts[chosenIdx].classList.add(isCorrect?'correct':'wrong');
+  if(!isCorrect) opts[correct[qIdx]].classList.add('reveal-correct');
+  explain.classList.add('show');
+  updateScore();
+}
+
+function updateScore(){
+  const answered=scores.filter(s=>s!==null).length;
+  const right=scores.filter(s=>s===true).length;
+  document.getElementById('scoreDisplay').textContent=right+' / '+answered;
+  document.getElementById('progressBar').style.width=(right/10*100)+'%';
+  const msgs=['Answer the questions below','Keep going!','Good progress!','Almost there!','Excellent work! 🎉'];
+  const idx=Math.min(Math.floor(right/3),4);
+  document.getElementById('scoreMsg').textContent=answered===10?
+    (right>=8?'🏆 Outstanding! '+right+'/10':'✅ Completed: '+right+'/10 — review explanations above'):msgs[idx];
+}
+
+function resetQuiz(){
+  scores=new Array(10).fill(null);
+  document.querySelectorAll('.quiz-opt').forEach(o=>{
+    o.classList.remove('correct','wrong','reveal-correct');
+    o.disabled=false;
+  });
+  document.querySelectorAll('.quiz-explain').forEach(e=>e.classList.remove('show'));
+  document.getElementById('scoreDisplay').textContent='0 / 10';
+  document.getElementById('progressBar').style.width='0%';
+  document.getElementById('scoreMsg').textContent='Answer the questions below';
+}
+</script>
+</body>
+</html>
