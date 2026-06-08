@@ -1,454 +1,1092 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Cardiac Surgery Microbes & Antibiotic Therapy Guide</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: #f0f4f9;
-            font-family: 'Inter', system-ui, 'Segoe UI', 'Roboto', sans-serif;
-            line-height: 1.45;
-            color: #1a2c3e;
-            padding: 32px 24px;
-        }
-        .guide-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 32px;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.08);
-            overflow: hidden;
-        }
-        .header {
-            background: linear-gradient(135deg, #1e3a5f 0%, #0d2a44 100%);
-            padding: 28px 34px;
-            color: white;
-        }
-        .header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-        .badge {
-            background: #ffb74d;
-            color: #0d2a44;
-            padding: 4px 14px;
-            border-radius: 40px;
-            font-size: 14px;
-            font-weight: 700;
-        }
-        .subhead {
-            font-size: 15px;
-            margin-top: 10px;
-            border-left: 3px solid #ffb74d;
-            padding-left: 16px;
-            opacity: 0.9;
-        }
-        .quick-nav {
-            background: #ffffff;
-            border-bottom: 1px solid #e2edf5;
-            padding: 12px 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(12px);
-            background-color: rgba(255,255,255,0.92);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-        }
-        .quick-nav a {
-            background: #ecf5fc;
-            padding: 6px 16px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            color: #1e4a6e;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-        .quick-nav a:hover {
-            background: #cbe4f0;
-            transform: scale(1.02);
-        }
-        .content {
-            padding: 30px 34px;
-        }
-        .section {
-            margin-bottom: 44px;
-            scroll-margin-top: 80px;
-        }
-        .section-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: #1e4a6e;
-            border-bottom: 3px solid #cbe4f0;
-            padding-bottom: 8px;
-            margin-bottom: 24px;
-        }
-        .subsection-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin: 28px 0 16px 0;
-            color: #1e6f8f;
-            padding-left: 8px;
-            border-left: 5px solid #ffb74d;
-        }
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 24px;
-            margin-bottom: 24px;
-        }
-        .card {
-            background: #ffffff;
-            border-radius: 24px;
-            border: 1px solid #e2edf5;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-        }
-        .card-header {
-            background: #ecf5fc;
-            padding: 14px 20px;
-            font-weight: 700;
-            font-size: 18px;
-            border-bottom: 1px solid #d0e2ef;
-            color: #1a607b;
-        }
-        .card-body {
-            padding: 18px 22px;
-        }
-        .param-table, .drug-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13.5px;
-            margin: 14px 0;
-        }
-        .param-table th, .drug-table th {
-            background: #f4f9fe;
-            text-align: left;
-            padding: 10px 12px;
-            font-weight: 700;
-        }
-        .param-table td, .drug-table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid #e6edf4;
-            vertical-align: top;
-        }
-        .warning-box {
-            background: #fff6e5;
-            border-left: 5px solid #f39c12;
-            padding: 14px 18px;
-            border-radius: 18px;
-            margin: 16px 0;
-        }
-        .alert-box {
-            background: #ffeae9;
-            border-left: 5px solid #e74c3c;
-            padding: 14px 18px;
-            border-radius: 18px;
-            margin: 16px 0;
-        }
-        .tip-box {
-            background: #e8f4fd;
-            border-left: 5px solid #2980b9;
-            padding: 14px 18px;
-            border-radius: 18px;
-            margin: 16px 0;
-        }
-        .footnote {
-            font-size: 12px;
-            color: #6c86a3;
-            margin-top: 20px;
-            border-top: 1px solid #dde5ef;
-            padding-top: 14px;
-        }
-        hr {
-            margin: 24px 0;
-            border: none;
-            border-top: 1px solid #dfeaf2;
-        }
-        @media (max-width: 760px) {
-            .content { padding: 20px; }
-            .card-header { font-size: 16px; }
-            .quick-nav { gap: 8px; overflow-x: auto; flex-wrap: nowrap; justify-content: flex-start; padding: 10px 16px; }
-            .quick-nav a { font-size: 11px; white-space: nowrap; }
-        }
-        .microbe-table td:first-child {
-            font-weight: 600;
-            background: #fafdff;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardiac Surgery Infections & Antibiotic Guide | 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06101e;--bg2:#0b1a2e;--bg3:#101f34;--bg4:#162440;
+  --rim:rgba(255,255,255,0.07);--glass:rgba(255,255,255,0.025);
+  --text:#dde8f8;--muted:#7a90b4;--dim:#3d5070;
+  --red:#e85555;--red-d:rgba(232,85,85,0.14);
+  --green:#3ecf7a;--green-d:rgba(62,207,122,0.12);
+  --blue:#4ea8f5;--blue-d:rgba(78,168,245,0.12);
+  --amber:#f5a623;--amber-d:rgba(245,166,35,0.12);
+  --teal:#2dd4bf;--teal-d:rgba(45,212,191,0.12);
+  --purple:#a78bfa;--purple-d:rgba(167,139,250,0.12);
+  --gold:#f0c040;--gold-d:rgba(240,192,64,0.1);
+  --pink:#f472b6;--pink-d:rgba(244,114,182,0.12);
+  --r:14px;--r2:22px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14.5px;line-height:1.7;overflow-x:hidden}
+::selection{background:rgba(240,192,64,.3);color:#fff}
+.hdr{position:sticky;top:0;z-index:300;background:rgba(6,16,30,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--rim)}
+.hdr-top{display:flex;align-items:center;padding:12px 24px;gap:12px}
+.logo{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--gold);line-height:1.1}
+.logo small{display:block;font-family:'DM Sans',sans-serif;font-weight:400;font-size:10px;color:var(--muted)}
+/* TAB GRID */
+.tab-grid-wrap{
+  background:var(--bg2);
+  border-bottom:2px solid var(--rim);
+  padding:14px 20px;
+  position:sticky;top:53px;z-index:200;
+}
+.tab-grid{
+  display:grid;
+  grid-template-columns:repeat(10,1fr);
+  gap:6px;
+  max-width:1440px;
+  margin:0 auto;
+}
+.tg-btn{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:5px;
+  background:var(--bg3);
+  border:1px solid var(--rim);
+  border-radius:12px;
+  padding:10px 6px 8px;
+  cursor:pointer;
+  transition:all .18s;
+  min-height:64px;
+}
+.tg-btn:hover{
+  border-color:rgba(240,192,64,.4);
+  background:rgba(240,192,64,.06);
+}
+.tg-btn.active{
+  background:rgba(240,192,64,.14);
+  border-color:var(--gold);
+  box-shadow:0 0 0 1px var(--gold);
+}
+.tg-icon{font-size:18px;line-height:1}
+.tg-label{
+  font-family:'DM Sans',sans-serif;
+  font-size:9.5px;font-weight:600;
+  color:var(--muted);
+  text-align:center;line-height:1.3;
+  letter-spacing:.01em;
+}
+.tg-btn.active .tg-label{color:var(--gold)}
+.tg-btn:hover .tg-label{color:var(--text)}
+/* MOBILE: 2 rows of 5 */
+@media(max-width:860px){
+  .tab-grid-wrap{
+    padding:10px 12px;
+    top:49px;
+  }
+  .tab-grid{
+    grid-template-columns:repeat(5,1fr);
+    gap:5px;
+  }
+  .tg-btn{
+    padding:8px 4px 6px;
+    min-height:56px;
+    border-radius:10px;
+  }
+  .tg-icon{font-size:16px}
+  .tg-label{font-size:9px}
+}
+@media(max-width:400px){
+  .tab-grid{grid-template-columns:repeat(5,1fr);gap:4px}
+  .tg-btn{min-height:52px;padding:6px 3px}
+  .tg-icon{font-size:15px}
+  .tg-label{font-size:8.5px}
+}
+.page{max-width:1440px;margin:0 auto;padding:28px 24px 80px}
+.tab{display:none}.tab.active{display:block}
+.sh{margin-bottom:28px}
+.sh h2{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--gold);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.sh p{color:var(--muted);font-size:13.5px;margin-top:5px;max-width:800px}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.card{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:20px;position:relative;overflow:hidden}
+.card h3{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:12px}
+.card p,.card li{color:var(--muted);font-size:13.5px;line-height:1.65}
+.card ul,.card ol{padding-left:17px}
+.card li{margin-bottom:4px}
+.card-red{border-top:3px solid var(--red)}.card-red h3{color:var(--red)}
+.card-green{border-top:3px solid var(--green)}.card-green h3{color:var(--green)}
+.card-blue{border-top:3px solid var(--blue)}.card-blue h3{color:var(--blue)}
+.card-amber{border-top:3px solid var(--amber)}.card-amber h3{color:var(--amber)}
+.card-teal{border-top:3px solid var(--teal)}.card-teal h3{color:var(--teal)}
+.card-purple{border-top:3px solid var(--purple)}.card-purple h3{color:var(--purple)}
+.card-gold{border-top:3px solid var(--gold)}.card-gold h3{color:var(--gold)}
+.pearl{background:var(--gold-d);border-left:4px solid var(--gold);border-radius:0 var(--r) var(--r) 0;padding:12px 16px;margin:14px 0;font-size:13px;color:var(--text)}
+.pearl strong{color:var(--gold)}
+.warn{background:var(--amber-d);border-left:4px solid var(--amber);border-radius:0 var(--r) var(--r) 0;padding:12px 16px;margin:14px 0;font-size:13px;color:var(--text)}
+.warn strong{color:var(--amber)}
+.alert{background:var(--red-d);border-left:4px solid var(--red);border-radius:0 var(--r) var(--r) 0;padding:12px 16px;margin:14px 0;font-size:13px;color:var(--text)}
+.alert strong{color:var(--red)}
+.tip{background:var(--blue-d);border-left:4px solid var(--blue);border-radius:0 var(--r) var(--r) 0;padding:12px 16px;margin:14px 0;font-size:13px;color:var(--text)}
+.tip strong{color:var(--blue)}
+.tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--rim);margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:var(--bg3);color:var(--gold);font-weight:700;padding:9px 13px;text-align:left;border-bottom:1px solid var(--rim);letter-spacing:.03em;white-space:nowrap}
+td{padding:8px 13px;border-bottom:1px solid var(--rim);color:var(--muted);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,0.015)}
+td strong{color:var(--text)}
+.bdg{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:40px;margin:2px;letter-spacing:.05em}
+.bdg-r{background:var(--red-d);color:var(--red)}
+.bdg-g{background:var(--green-d);color:var(--green)}
+.bdg-b{background:var(--blue-d);color:var(--blue)}
+.bdg-a{background:var(--amber-d);color:var(--amber)}
+.bdg-t{background:var(--teal-d);color:var(--teal)}
+.bdg-p{background:var(--purple-d);color:var(--purple)}
+.bdg-gold{background:var(--gold-d);color:var(--gold)}
+.fm{font-family:'DM Mono',monospace;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:10px 14px;margin:10px 0;font-size:12.5px;color:var(--teal);display:block}
+.dv{height:1px;background:var(--rim);margin:28px 0}
+.tl-item{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--rim)}
+.tl-item:last-child{border-bottom:none}
+.tl-dot{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-top:2px}
+.tl-content h4{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+.tl-content p{font-size:12.5px;color:var(--muted)}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.stat{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:12px 14px;text-align:center}
+.stat .val{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--gold)}
+.stat .lbl{font-size:10px;color:var(--dim);margin-top:2px;letter-spacing:.05em;text-transform:uppercase}
+.stat .sub{font-size:11px;color:var(--muted);margin-top:2px}
+.algo{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r2);padding:20px;margin:16px 0}
+.algo-step{display:flex;gap:12px;align-items:flex-start;margin:10px 0}
+.algo-num{width:28px;height:28px;border-radius:50%;background:var(--gold-d);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
+.algo-text{font-size:13px;color:var(--muted)}.algo-text strong{color:var(--text)}
+.duke-box{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:14px;margin:10px 0}
+.duke-box h4{font-size:13px;font-weight:700;margin-bottom:8px}
+.qs{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:22px;margin-bottom:18px}
+.qs h4{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px}
+.qs h4 .qn{color:var(--gold);margin-right:8px}
+.qopts{display:flex;flex-direction:column;gap:7px}
+.qo{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:9px 14px;cursor:pointer;font-size:13.5px;color:var(--muted);text-align:left;width:100%;transition:all .14s}
+.qo:hover{border-color:var(--gold);color:var(--text)}
+.qo.correct{background:var(--green-d);border-color:var(--green);color:var(--green)}
+.qo.wrong{background:var(--red-d);border-color:var(--red);color:var(--red)}
+.qo.reveal{background:var(--green-d);border-color:var(--green);color:var(--green)}
+.qo:disabled{cursor:default}
+.qexp{background:var(--gold-d);border:1px solid rgba(240,192,64,.2);border-radius:var(--r);padding:12px 14px;font-size:13px;color:var(--text);margin-top:10px;display:none;line-height:1.6}
+.qexp.show{display:block}.qexp strong{color:var(--gold)}
+.qscore{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r2);padding:18px 22px;text-align:center;margin-bottom:22px}
+.qscore .big{font-family:'Syne',sans-serif;font-size:38px;font-weight:800;color:var(--gold)}
+.qprog{height:5px;background:var(--bg);border-radius:3px;margin:10px 0 4px;overflow:hidden}
+.qpbar{height:100%;background:linear-gradient(90deg,var(--green),var(--teal));border-radius:3px;transition:width .4s;width:0}
+.footnote{text-align:center;font-size:11.5px;color:var(--dim);padding:36px 20px 0;border-top:1px solid var(--rim);margin-top:60px}
+@media(max-width:860px){
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .hdr-top{padding:9px 14px}
+  .page{padding:18px 14px 60px}
+  .sh h2{font-size:22px}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+  .algo{padding:14px}
+  .algo-step{gap:8px}
+}
+</style>
 </head>
 <body>
-<div class="guide-container">
-    <div class="header">
-        <h1>
-            Cardiac Surgery Microbes & Antibiotics<span class="badge">Clinical Guide 2025</span>
-        </h1>
-        <div class="subhead">
-            Comprehensive reference on pathogens in post-cardiac surgery infections, endocarditis (native & prosthetic), and empirical/targeted antibiotic therapy based on 2025 AHA/ESC guidelines.
-        </div>
+<header class="hdr">
+  <div class="hdr-top">
+    <div class="logo">🦠 Infection in Cardiac Surgery
+      <small>Pathogens · Antibiotics · Protocols · 2025</small>
     </div>
-    <div class="quick-nav">
-        <a href="#pathogens">Pathogens & characteristics</a>
-        <a href="#endocarditis">Endocarditis (NVE/PVE)</a>
-        <a href="#mediastinitis">Mediastinitis & sternal infections</a>
-        <a href="#vap">VAP & ICU pathogens</a>
-        <a href="#antibiotics">Antibiotics (by class)</a>
-        <a href="#empirical">Empirical therapy</a>
-        <a href="#reversal">Antidotes & monitoring</a>
-    </div>
-    <div class="content">
-        <!-- SECTION 1: PATHOGENS & CHARACTERISTICS -->
-        <div class="section" id="pathogens">
-            <div class="section-title">Pathogenic flora in cardiac surgery & endocarditis</div>
-            <div class="card">
-                <div class="card-header">Microorganism characteristics – Gram stain, aerobicity, pathogenicity</div>
-                <div class="card-body">
-                    <table class="param-table microbe-table">
-                        <thead>
-                            <tr><th>Pathogen</th><th>Gram / morphology</th><th>Aerobicity</th><th>Key features & resistance</th><th>Typical clinical scenario</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Staphylococcus aureus (MSSA/MRSA)</td><td>Gram-positive cocci (clusters)</td><td>Facultative anaerobic</td><td>Biofilm producer, MRSA endemic worldwide. TSST-1 causes toxic shock.</td><td>Acute native valve endocarditis, sternal wound infection, sepsis.</td></tr>
-                            <tr><td>Coagulase-negative staphylococci (CoNS, e.g., S. epidermidis)</td><td>Gram-positive cocci (clusters)</td><td>Facultative anaerobic</td><td>Biofilm on foreign material; high methicillin resistance (>70%).</td><td>Prosthetic valve endocarditis (PVE), mediastinitis, CIED infections.</td></tr>
-                            <tr><td>Viridans group streptococci (S. mitis, S. sanguinis, etc.)</td><td>Gram-positive cocci (chains)</td><td>Facultative anaerobic</td><td>Low virulence, subacute endocarditis on damaged valves.</td><td>Native valve IE (oral flora), often community-acquired.</td></tr>
-                            <tr><td>Enterococcus faecalis / faecium</td><td>Gram-positive cocci (pairs/chains)</td><td>Facultative anaerobic</td><td>Intrinsic low-level aminoglycoside resistance; VRE emerging.</td><td>Healthcare-associated IE, urinary source, biliary sepsis.</td></tr>
-                            <tr><td>HACEK group (Haemophilus, Aggregatibacter, Cardiobacterium, Eikenella, Kingella)</td><td>Gram-negative coccobacilli / bacilli</td><td>Facultative anaerobic (fastidious)</td><td>Slow-growing, oral flora. Up to 5% of NVE. Often culture-negative.</td><td>Native & prosthetic valve IE, especially with poor dentition.</td></tr>
-                            <tr><td>Non-HACEK Gram-negatives (E. coli, Klebsiella, Enterobacter, Pseudomonas, Acinetobacter)</td><td>Gram-negative rods</td><td>Facultative anaerobic (Pseudomonas aerobic)</td><td>ESBL, carbapenemase, MDR/XDR. Acinetobacter baumannii highly resistant.</td><td>Early PVE, mediastinitis (18-38%), VAP, post-op sepsis.</td></tr>
-                            <tr><td>Mycoplasma hominis</td><td>No cell wall (Gram-indeterminate)</td><td>Facultative anaerobic</td><td>Does not stain, requires special media, resistant to beta-lactams.</td><td>Mediastinitis, sternal osteitis after cardiac surgery, often culture-negative.</td></tr>
-                            <tr><td>Gordonia bronchialis</td><td>Gram-positive rod (weakly acid-fast)</td><td>Aerobic</td><td>Environmental actinomycete; misidentified; requires prolonged therapy.</td><td>Rare sternal osteomyelitis, deep sternal wound infection.</td></tr>
-                            <tr><td>Nocardia farcinica</td><td>Gram-positive filamentous branching rod (acid-fast)</td><td>Aerobic</td><td>Ubiquitous in soil, may be resistant to TMP-SMX; susceptibility testing.</td><td>Superficial sternal wound infection, especially in diabetic/immunocompromised.</td></tr>
-                        </tbody>
-                    </table>
-                    <div class="tip-box">
-                        Clinical pearl: Culture-negative endocarditis occurs in up to 15-30% of cases – consider HACEK, Mycoplasma, Bartonella, Coxiella burnetii (Q fever), and fungi (Candida, Aspergillus) when routine cultures are negative.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECTION 2: ENDOCARDITIS NATIVE VS PROSTHETIC -->
-        <div class="section" id="endocarditis">
-            <div class="section-title">Infective endocarditis (IE) – native valve (NVE) vs prosthetic valve (PVE)</div>
-            <div class="card-grid">
-                <div class="card">
-                    <div class="card-header">Native valve endocarditis (NVE)</div>
-                    <div class="card-body">
-                        <p><strong>Common pathogens:</strong> Viridans streptococci (40-60%), Staphylococcus aureus (25-35%), Enterococci, HACEK group (up to 5%).</p>
-                        <p><strong>Empirical regimen (before culture results):</strong><br> Benzylpenicillin 1.8 g IV q4h + Flucloxacillin 2 g IV q4h + Gentamicin (synergistic dose).</p>
-                        <p><strong>Targeted therapy (guideline-based):</strong></p>
-                        <ul>
-                            <li>Penicillin-susceptible viridans streptococci: Penicillin G or Ceftriaxone for 4 weeks.</li>
-                            <li>MRSA / MSSA severe: Nafcillin/oxacillin (or vancomycin if MRSA) + gentamicin for first 3-5 days.</li>
-                            <li>Enterococci: Ampicillin + gentamicin or ceftriaxone + ampicillin (for gentamicin-resistant strains).</li>
-                        </ul>
-                        <div class="tip-box">Duration: 4 weeks for NVE, 6 weeks for PVE and complicated cases.</div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">Prosthetic valve endocarditis (PVE)</div>
-                    <div class="card-body">
-                        <p><strong>Common pathogens (early PVE, <12 months post-op):</strong> CoNS (~30-40%), S. aureus, enterococci, Gram-negative rods, fungi (Candida). Late PVE (>12 months) similar to NVE.</p>
-                        <p><strong>Empirical regimen (high MRSA / MDR risk):</strong> Vancomycin 30 mg/kg/day IV + Rifampin 900 mg/day + Gentamicin (first 2 weeks).</p>
-                        <p><strong>Targeted therapy:</strong></p>
-                        <ul>
-                            <li>MSSA: Nafcillin or oxacillin 12 g/24h + Rifampin 900 mg/24h + Gentamicin (first 2 weeks).</li>
-                            <li>MRSA / CoNS (resistant): Vancomycin + Rifampin + Gentamicin (first 2 weeks).</li>
-                            <li>HACEK PVE: Ceftriaxone 2 g/24h IV for 6 weeks. Gentamicin NOT recommended due to nephrotoxicity.</li>
-                        </ul>
-                        <div class="alert-box">Rifampin resistance warning: CoNS may develop rifampin resistance during therapy; repeat susceptibility testing if relapse occurs.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECTION 3: MEDIASTINITIS & STERNAL WOUND INFECTION -->
-        <div class="section" id="mediastinitis">
-            <div class="section-title">Post-sternotomy mediastinitis & deep sternal wound infection</div>
-            <div class="card">
-                <div class="card-body">
-                    <p><strong>Epidemiology:</strong> Incidence 0.5-4%; Gram-negative bacteria cause 18-38% of cases, often polymicrobial (20-44%) and earlier onset than Gram-positive mediastinitis. Mortality higher when initial antibiotic therapy is inappropriate.</p>
-                    <p><strong>Common pathogens:</strong> S. aureus, CoNS, Pseudomonas aeruginosa, Enterobacteriaceae (E. coli, Klebsiella), Acinetobacter baumannii, Mycoplasma hominis (rare but critical).</p>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 16px 0;">
-                        <div>
-                            <strong>Culture-directed therapy examples:</strong>
-                            <ul>
-                                <li>MSSA: Nafcillin/oxacillin + debridement</li>
-                                <li>MRSA / CoNS: Vancomycin, linezolid, or daptomycin</li>
-                                <li>Pseudomonas: Piperacillin-tazobactam, meropenem, or ceftazidime</li>
-                                <li>ESBL producers: Carbapenems (meropenem, imipenem)</li>
-                                <li>Acinetobacter: Colistin + tigecycline or sulbactam combinations</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <strong>Special pathogens:</strong>
-                            <ul>
-                                <li>Mycoplasma hominis: No cell wall → resistant to beta-lactams; treat with moxifloxacin, doxycycline, or clindamycin.</li>
-                                <li>Gordonia bronchialis: Prolonged therapy (>=6 weeks); susceptibility test-driven (fluoroquinolones, carbapenems, linezolid).</li>
-                                <li>Nocardia farcinica: TMP-SMX, amikacin, or linezolid; surgical debridement essential.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="warning-box">
-                        Management principle: Culture-directed antimicrobial therapy + early extensive surgical debridement (immediate or delayed sternal closure) is mandatory. Inappropriate initial antibiotics are associated with significantly higher mortality in Gram-negative mediastinitis.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECTION 4: VAP & ICU-ACQUIRED INFECTIONS -->
-        <div class="section" id="vap">
-            <div class="section-title">Ventilator-associated pneumonia (VAP) & MDR pathogens in cardiac ICU</div>
-            <div class="card">
-                <div class="card-body">
-                    <p><strong>Microbiology of VAP after cardiac surgery:</strong> Gram-negative bacilli dominate (approx 90%). Most common isolates: Acinetobacter baumannii (40%), Pseudomonas aeruginosa, Klebsiella pneumoniae (ESBL producers), Enterobacter spp. Multidrug-resistant organisms (MDRO) cause >55% of VAP episodes after cardiac surgery.</p>
-                    <p><strong>Risk factors for MDRO VAP:</strong> Pre-op renal impairment, CPB time >=151 min, postoperative AKI, and nasal feeding.</p>
-                    <div class="card-grid" style="margin-top: 16px;">
-                        <div class="card">
-                            <div class="card-header">Empirical VAP therapy (early, within 1h)</div>
-                            <div class="card-body">
-                                <ul>
-                                    <li>Non-critically ill, low MDR risk: Piperacillin-tazobactam 4.5 g q6h OR Ceftazidime 2 g q8h OR Levofloxacin 750 mg daily.</li>
-                                    <li>High MDR risk / septic shock: Combination therapy: anti-pseudomonal beta-lactam (meropenem 1 g q8h, piperacillin-tazobactam) + second agent (ciprofloxacin, levofloxacin, or aminoglycoside). For MRSA risk, add vancomycin or linezolid.</li>
-                                    <li>Acinetobacter / carbapenem-resistant (XDR): Colistin + tigecycline + meropenem high-dose or sulbactam combination.</li>
-                                </ul>
-                                <div class="tip-box">De-escalate based on culture & sensitivity; avoid prolonged unnecessary double coverage to prevent resistance.</div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">MDRO & resistance patterns</div>
-                            <div class="card-body">
-                                <ul>
-                                    <li>ESBL (Klebsiella, E. coli): Carbapenems (meropenem, imipenem) or ceftazidime-avibactam.</li>
-                                    <li>Carbapenem-resistant Acinetobacter: Colistin (+/- tigecycline, +/- high-dose sulbactam).</li>
-                                    <li>DTR Pseudomonas: Ceftolozane-tazobactam, ceftazidime-avibactam, or imipenem-relebactam.</li>
-                                </ul>
-                                <div class="alert-box">Prolonged ICU stay, prior broad-spectrum antibiotics, and re-intubation are strong predictors of MDR VAP. Perform routine surveillance cultures.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECTION 5: ANTIBIOTICS BY CLASS -->
-        <div class="section" id="antibiotics">
-            <div class="section-title">Antibiotics by class – spectrum, dosing & limitations in cardiac surgery setting</div>
-            <div class="card">
-                <div class="card-body">
-                    <table class="drug-table">
-                        <thead><tr><th>Drug class & examples</th><th>Spectrum / main indication</th><th>Typical IV adult dose</th><th>Key considerations / toxicity</th></tr></thead>
-                        <tbody>
-                            <tr><td>Penicillins (Nafcillin, Oxacillin, Ampicillin)</td><td>MSSA, streptococci, enterococci (ampicillin)</td><td>Nafcillin 12 g/24h in 6 divided doses</td><td>Neutropenia, interstitial nephritis; avoid in penicillin allergy.</td></tr>
-                            <tr><td>Anti-staphylococcal cephalosporins (Cefazolin, Cefuroxime)</td><td>MSSA, streptococci</td><td>Cefazolin 2 g q8h (surgical prophylaxis), ceftriaxone 2 g q24h for HACEK</td><td>Low nephrotoxicity; ceftriaxone (good CSF penetration).</td></tr>
-                            <tr><td>Carbapenems (Meropenem, Imipenem)</td><td>ESBL Gram-negatives, Pseudomonas, anaerobes</td><td>Meropenem 1-2 g q8h (MDR: extended infusion)</td><td>Seizure risk (imipenem). Use for severe HAP/VAP or febrile neutropenia.</td></tr>
-                            <tr><td>Glycopeptides (Vancomycin)</td><td>MRSA, CoNS, enterococci (not VRE)</td><td>30 mg/kg/24h (trough 10-20 mcg/mL)</td><td>Monitor renal function; ototoxicity.</td></tr>
-                            <tr><td>Oxazolidinones (Linezolid)</td><td>MRSA, VRE, MDR streptococci</td><td>600 mg IV q12h</td><td>Myelosuppression, serotonin syndrome (avoid with SSRIs).</td></tr>
-                            <tr><td>Lipopeptides (Daptomycin)</td><td>MRSA, VRE (not pneumonia)</td><td>6-12 mg/kg IV daily</td><td>Inactivated by pulmonary surfactant → not for pneumonia.</td></tr>
-                            <tr><td>Aminoglycosides (Gentamicin, Amikacin)</td><td>Synergy for enterococci/streptococci, severe Gram-negatives</td><td>Gentamicin 3 mg/kg/24h (synergy, short course)</td><td>Nephrotoxicity, ototoxicity; therapeutic drug monitoring essential.</td></tr>
-                            <tr><td>Fluoroquinolones (Levofloxacin, Ciprofloxacin, Moxifloxacin)</td><td>Pseudomonas, HACEK, Mycoplasma, Legionella</td><td>Levo 750 mg daily; Cipro 400 mg q8h</td><td>QT prolongation; tendon rupture; avoid in <18 years.</td></tr>
-                            <tr><td>Polymyxins (Colistin)</td><td>Carbapenem-resistant Acinetobacter / Pseudomonas</td><td>9 million IU loading → 4.5 MU q12h</td><td>Nephrotoxicity (dose-limiting), neurotoxicity.</td></tr>
-                            <tr><td>Rifampin</td><td>Biofilm infections (prosthetic valves, orthopaedic hardware)</td><td>900 mg/24h in 2-3 divided doses (IV/oral)</td><td>Potent CYP450 inducer; drug interactions (warfarin, DOACs).</td></tr>
-                        </tbody>
-                    </table>
-                    <div class="tip-box">
-                        Rifampin rationale in PVE: Effective against staphylococci adherent to foreign material. Never use rifampin as monotherapy – always in combination with a cell-wall agent.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECTION 6: EMPIRICAL THERAPY RECOMMENDATIONS -->
-        <div class="section" id="empirical">
-            <div class="section-title">Empirical antibiotic therapy recommendations (2025)</div>
-            <div class="card-grid">
-                <div class="card">
-                    <div class="card-header">Native valve endocarditis (NVE) empirical</div>
-                    <div class="card-body">
-                        <ul>
-                            <li>Community-acquired, no risk factors for MRSA: Ampicillin 2 g IV q4h + Ceftriaxone 2 g IV daily (or Flucloxacillin + gentamicin).</li>
-                            <li>Healthcare-associated / MRSA risk: Vancomycin 30 mg/kg/day + Ceftriaxone (or ampicillin-sulbactam).</li>
-                            <li>Culture-negative suspicion (HACEK, Brucella, Bartonella): Ceftriaxone + doxycycline (or levofloxacin).</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">Prosthetic valve endocarditis (PVE) empirical</div>
-                    <div class="card-body">
-                        <ul>
-                            <li>Early PVE (<12 months) / late PVE but high MRSA/MDR risk: Vancomycin + Rifampin + Gentamicin (first 2 weeks).</li>
-                            <li>Late PVE (>12 months) with low resistance: Ampicillin + Ceftriaxone (enterococcus + HACEK coverage) ± gentamicin if synergism needed.</li>
-                            <li>If fungal PVE suspected (Candida, Aspergillus): Add liposomal amphotericin B or an echinocandin pending cultures.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">Post-cardiac surgery sepsis (unknown source)</div>
-                    <div class="card-body">
-                        <ul>
-                            <li>High MDR / ESBL risk (ICU, long hospital stay): Meropenem 1-2 g q8h + Vancomycin (if MRSA risk).</li>
-                            <li>Pseudomonas coverage (VAP, sternal wound): Piperacillin-tazobactam 4.5 g q6h OR Cefepime 2 g q8h + ciprofloxacin or tobramycin.</li>
-                            <li>Acinetobacter / CRGNB (prior colonisation): Colistin + meropenem + tigecycline.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECTION 7: MONITORING, REVERSAL AGENTS -->
-        <div class="section" id="reversal">
-            <div class="section-title">Monitoring, reversal agents, and special considerations</div>
-            <div class="card">
-                <div class="card-body">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-                        <div>
-                            <strong>Therapeutic drug monitoring (TDM):</strong>
-                            <ul>
-                                <li>Vancomycin: trough 10-15 mg/L (simple infection) or 15-20 (severe/MRSA).</li>
-                                <li>Aminoglycosides: peak/trough for synergy or once-daily dosing.</li>
-                                <li>Rifampin: not routinely monitored but assess drug interactions (warfarin, immunosuppressants).</li>
-                                <li>Linezolid: monitor CBC weekly (thrombocytopenia after 14 days).</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <strong>Reversal / management of adverse effects:</strong>
-                            <ul>
-                                <li>Bleeding on rifampin + anticoagulation: Monitor INR closely; consider temporary VKA reduction.</li>
-                                <li>Nephrotoxicity (aminoglycosides, colistin): Hold or substitute (ceftazidime-avibactam, fosfomycin).</li>
-                                <li>Clostridioides difficile: Avoid unnecessary broad-spectrum antibiotics; oral vancomycin or fidaxomicin if severe.</li>
-                                <li>Anaphylaxis / severe allergy: Desensitisation protocols for beta-lactams in IE.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="footnote" style="margin-top: 20px;">
-                        Key take-home messages for cardiac surgery:
-                        - Early and appropriate empirical therapy reduces mortality in Gram-negative mediastinitis and endocarditis.
-                        - Biofilm-associated infections (prosthetic valves, sternal wires) require rifampin combination and often surgical intervention.
-                        - Multidrug-resistant pathogens (ESBL, CR-Acinetobacter, MRSA) are increasingly common – follow local antibiogram and de-escalate.
-                        - In culture-negative cases after cardiac surgery always consider Mycoplasma, Nocardia, Gordonia, and fungi.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="footnote">
-            Sources & guidelines: 2025 AHA/ESC Infective Endocarditis Guidelines; 2023 ESC Guidelines (updated 2025); STS/IDSA mediastinitis management statements; WHO surgical site infection prevention; clinical reviews on Gram-negative PSM (Curr Opin Infect Dis 2021); MDR VAP risk factors after cardiac surgery (BMC Cardiovasc Disord 2022); Practical endocarditis therapy (PraxisMed 2025). Always consult local microbiological data and ID specialist.
-        </div>
-    </div>
+  </div>
+</header>
+<div class="tab-grid-wrap">
+  <div class="tab-grid" id="tabGrid">
+    <button class="tg-btn active" onclick="gt(0,this)">
+      <span class="tg-icon">🦠</span>
+      <span class="tg-label">Pathogens</span>
+    </button>
+    <button class="tg-btn" onclick="gt(1,this)">
+      <span class="tg-icon">🫀</span>
+      <span class="tg-label">Endocarditis NVE/PVE</span>
+    </button>
+    <button class="tg-btn" onclick="gt(2,this)">
+      <span class="tg-icon">📋</span>
+      <span class="tg-label">Duke Criteria</span>
+    </button>
+    <button class="tg-btn" onclick="gt(3,this)">
+      <span class="tg-icon">🦴</span>
+      <span class="tg-label">Mediastinitis</span>
+    </button>
+    <button class="tg-btn" onclick="gt(4,this)">
+      <span class="tg-icon">💨</span>
+      <span class="tg-label">VAP &amp; ICU</span>
+    </button>
+    <button class="tg-btn" onclick="gt(5,this)">
+      <span class="tg-icon">⚡</span>
+      <span class="tg-label">CIED &amp; LVAD</span>
+    </button>
+    <button class="tg-btn" onclick="gt(6,this)">
+      <span class="tg-icon">💊</span>
+      <span class="tg-label">Antibiotics</span>
+    </button>
+    <button class="tg-btn" onclick="gt(7,this)">
+      <span class="tg-icon">📊</span>
+      <span class="tg-label">TDM &amp; Monitoring</span>
+    </button>
+    <button class="tg-btn" onclick="gt(8,this)">
+      <span class="tg-icon">🗺️</span>
+      <span class="tg-label">Empirical Protocols</span>
+    </button>
+    <button class="tg-btn" onclick="gt(9,this)">
+      <span class="tg-icon">📝</span>
+      <span class="tg-label">Quiz</span>
+    </button>
+  </div>
 </div>
+<main class="page">
+
+<!-- ═══ TAB 0: PATHOGENS ═══ -->
+<section class="tab active" id="t0">
+  <div class="sh">
+    <h2>🦠 Pathogenic Flora in Cardiac Surgery</h2>
+    <p>Microorganisms responsible for infection span Gram-positive cocci, Gram-negative rods, atypical bacteria, and fungi — each with distinct virulence, resistance profiles, and clinical scenarios.</p>
+  </div>
+  <div class="stat-row">
+    <div class="stat"><div class="val">0.5–4%</div><div class="lbl">Mediastinitis incidence</div><div class="sub">Post-sternotomy</div></div>
+    <div class="stat"><div class="val">15–30%</div><div class="lbl">Culture-negative IE</div><div class="sub">All-cause</div></div>
+    <div class="stat"><div class="val">&gt;55%</div><div class="lbl">MDR VAP</div><div class="sub">Post-cardiac surgery</div></div>
+    <div class="stat"><div class="val">20–44%</div><div class="lbl">Polymicrobial</div><div class="sub">Mediastinitis</div></div>
+    <div class="stat"><div class="val">18–38%</div><div class="lbl">Gram-negative</div><div class="sub">Mediastinitis isolates</div></div>
+    <div class="stat"><div class="val">25–35%</div><div class="lbl">S. aureus</div><div class="sub">NVE etiology</div></div>
+  </div>
+  <div class="card card-gold" style="margin-bottom:18px">
+    <h3>📋 Complete Pathogen Reference Table</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Pathogen</th><th>Gram / morphology</th><th>Aerobicity</th><th>Resistance profile</th><th>Virulence factors</th><th>Typical cardiac scenario</th></tr></thead>
+        <tbody>
+          <tr><td><strong>S. aureus (MSSA/MRSA)</strong></td><td>Gram+ cocci, clusters</td><td>Facultative anaerobe</td><td>MRSA (mecA/mecC), VISA, VRSA (rare); biofilm on foreign material</td><td>TSST-1, leukocidin, protein A, biofilm matrix</td><td>Acute NVE, sternal wound, CIED pocket, early PVE, septic emboli</td></tr>
+          <tr><td><strong>CoNS (S. epidermidis, S. haemolyticus)</strong></td><td>Gram+ cocci, clusters</td><td>Facultative anaerobe</td><td>&gt;70% methicillin-resistant; multi-drug resistant; key: biofilm production</td><td>Slime layer (PIA), biofilm, icaABCD locus</td><td>Early PVE (#1 cause), CIED infections, late sternal wound</td></tr>
+          <tr><td><strong>Viridans Streptococci</strong><br><small>S. mitis, S. sanguinis, S. gordonii</small></td><td>Gram+ cocci, chains</td><td>Facultative anaerobe</td><td>Usually penicillin-susceptible; reduced susceptibility S. mitis group emerging</td><td>FimA adhesin, dextran, platelet aggregation</td><td>Subacute NVE (oral flora); 40–60% of community NVE</td></tr>
+          <tr><td><strong>Enterococcus faecalis / faecium</strong></td><td>Gram+ cocci, pairs/chains</td><td>Facultative anaerobe</td><td>VRE (vanA/vanB); intrinsic aminoglycoside resistance; E. faecium more resistant</td><td>Aggregation substance, cytolysin, gelatinase</td><td>Healthcare IE; urinary/biliary source; 3rd most common NVE</td></tr>
+          <tr><td><strong>HACEK group</strong><br><small>Haemophilus, Aggregatibacter, Cardiobacterium, Eikenella, Kingella</small></td><td>Gram− coccobacilli/rods (fastidious)</td><td>Facultative anaerobe</td><td>Increasingly β-lactamase producing; ceftriaxone first-line</td><td>Slow-growing, delayed culture positive 5–7 days</td><td>5% of NVE; poor dentition; culture-negative IE suspicion</td></tr>
+          <tr><td><strong>Pseudomonas aeruginosa</strong></td><td>Gram− rod</td><td>Obligate aerobe</td><td>AmpC, ESBL, carbapenemase (KPC, MBL, OXA); efflux pumps; MDR/XDR/DTR</td><td>Exotoxin A, pyocyanin, alginate biofilm, flagella</td><td>VAP #2 after Acinetobacter, mediastinitis, LVAD infections</td></tr>
+          <tr><td><strong>Acinetobacter baumannii</strong></td><td>Gram− coccobacillus</td><td>Obligate aerobe</td><td>OXA-23/48, KPC carbapenemase; XDR/PDR; survives on surfaces 3 weeks</td><td>OMPs, biofilm, iron sequestration</td><td>VAP post-cardiac surgery (~40%); ICU outbreaks; LVAD pump pockets</td></tr>
+          <tr><td><strong>Klebsiella pneumoniae</strong></td><td>Gram− rod, encapsulated</td><td>Facultative anaerobe</td><td>ESBL (CTX-M), KPC carbapenemase; hypervirulent (hvKp) with hypermucoviscosity</td><td>Polysaccharide capsule, siderophores (aerobactin)</td><td>ESBL-mediastinitis, VAP, post-op sepsis, early PVE</td></tr>
+          <tr><td><strong>Mycoplasma hominis</strong></td><td>No cell wall (pleomorphic)</td><td>Facultative anaerobe</td><td>Intrinsically resistant to all β-lactams (no cell wall target); FQ resistance possible</td><td>Adhesins, immune evasion, no cell wall</td><td>Culture-negative mediastinitis/sternal osteitis post-cardiac surgery</td></tr>
+          <tr><td><strong>Gordonia bronchialis</strong></td><td>Gram+ rod (weakly acid-fast)</td><td>Aerobe</td><td>Variable; environmental actinomycete; requires prolonged combination therapy</td><td>Lipid-rich cell wall (mycolic acids); biofilm</td><td>Rare deep sternal wound infection, sternal osteomyelitis</td></tr>
+          <tr><td><strong>Nocardia farcinica</strong></td><td>Gram+ filamentous branching (acid-fast)</td><td>Aerobe</td><td>Resistant to TMP-SMX in N. farcinica; linezolid/amikacin active</td><td>Virulence plasmid; CNS/lung dissemination</td><td>Sternal wound in diabetic/immunocompromised; dissemination risk</td></tr>
+          <tr><td><strong>Candida spp.</strong><br><small>C. albicans, C. parapsilosis, C. glabrata</small></td><td>Yeast / pseudohyphae</td><td>Facultative anaerobe</td><td>Azole resistance emerging; C. glabrata/krusei intrinsic fluconazole resistance</td><td>Biofilm, hyphae invasion, proteases</td><td>Fungal PVE, CIED infection, mediastinitis in immunocompromised/TPN</td></tr>
+          <tr><td><strong>Bartonella henselae / quintana</strong></td><td>Gram− rod (intracellular)</td><td>Aerobe (fastidious)</td><td>Susceptible to doxycycline, rifampin, gentamicin; poor β-lactam response alone</td><td>Angiogenesis induction, intraerythrocytic survival</td><td>Culture-negative NVE; cat scratch history; serology/PCR required</td></tr>
+          <tr><td><strong>Coxiella burnetii (Q-fever)</strong></td><td>Obligate intracellular</td><td>—</td><td>Phase I/II antigen serology; PCR on valve tissue; acid-stable small cell variant</td><td>Survives phagolysosomes; persistent infection</td><td>Culture-negative NVE; chronic Q-fever; valvulopathy predisposition</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pearl"><strong>Culture-negative IE:</strong> Up to 30% of cases. Request serology for Bartonella, Coxiella (Q-fever Phase I IgG &gt;1:800 = major Duke criterion), Brucella, Mycoplasma. PCR on excised valve tissue (16S rRNA + metagenomic NGS) gives etiology in ~70% of unresolved culture-negative IE.</div>
+  </div>
+  <div class="g2">
+    <div class="card card-blue">
+      <h3>🔵 Gram-Positive Organisms</h3>
+      <ul>
+        <li><strong>Cocci in clusters:</strong> Staphylococci (S. aureus, CoNS)</li>
+        <li><strong>Cocci in chains:</strong> Streptococci, Enterococci</li>
+        <li><strong>Non-acid-fast rods:</strong> Listeria (rare cardiac)</li>
+        <li><strong>Weakly acid-fast rods:</strong> Nocardia, Gordonia, Mycobacteria</li>
+        <li><strong>Filamentous branching:</strong> Nocardia, Actinomyces</li>
+      </ul>
+      <div class="tip" style="margin-top:10px"><strong>Cell wall:</strong> Thick peptidoglycan — targets of β-lactams (penicillins, cephalosporins, carbapenems) and glycopeptides (vancomycin, teicoplanin).</div>
+    </div>
+    <div class="card card-red">
+      <h3>🔴 Gram-Negative Organisms</h3>
+      <ul>
+        <li><strong>Enterobacterales:</strong> E. coli, Klebsiella, Enterobacter, Serratia, Proteus</li>
+        <li><strong>Non-fermenters:</strong> Pseudomonas, Acinetobacter, Stenotrophomonas</li>
+        <li><strong>Coccobacilli:</strong> Haemophilus, HACEK group, Brucella</li>
+        <li><strong>No cell wall:</strong> Mycoplasma (Gram-indeterminate — invisible on Gram stain)</li>
+      </ul>
+      <div class="alert" style="margin-top:10px"><strong>Outer membrane (LPS):</strong> Makes Gram-negatives intrinsically resistant to many Gram-positive-targeted drugs. Porins, efflux pumps, and β-lactamases drive acquired resistance.</div>
+    </div>
+    <div class="card card-amber">
+      <h3>⚡ Resistance Mechanisms — Quick Reference</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Mechanism</th><th>Key pathogens</th><th>Antibiotics affected</th></tr></thead>
+          <tbody>
+            <tr><td><strong>MRSA (mecA/mecC)</strong></td><td>S. aureus, CoNS</td><td>All β-lactams</td></tr>
+            <tr><td><strong>ESBL (CTX-M, SHV, TEM)</strong></td><td>Klebsiella, E. coli, Enterobacter</td><td>Most cephalosporins, penicillins</td></tr>
+            <tr><td><strong>KPC carbapenemase</strong></td><td>Klebsiella, E. coli, Enterobacter</td><td>All β-lactams incl. carbapenems</td></tr>
+            <tr><td><strong>MBL (NDM, VIM, IMP)</strong></td><td>Pseudomonas, Klebsiella, Acinetobacter</td><td>Carbapenems (NOT aztreonam)</td></tr>
+            <tr><td><strong>OXA-23/48</strong></td><td>Acinetobacter, Klebsiella</td><td>Carbapenems</td></tr>
+            <tr><td><strong>AmpC (inducible)</strong></td><td>Enterobacter, Pseudomonas, Serratia</td><td>Cephalosporins (not cefepime/carbapenems)</td></tr>
+            <tr><td><strong>VRE (vanA/vanB)</strong></td><td>Enterococcus faecium</td><td>Vancomycin, teicoplanin</td></tr>
+            <tr><td><strong>Efflux pumps (MexAB-OprM)</strong></td><td>Pseudomonas</td><td>β-lactams, fluoroquinolones, macrolides</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card card-purple">
+      <h3>🍄 Fungal Pathogens in Cardiac Surgery</h3>
+      <ul>
+        <li><strong>Candida albicans:</strong> Most common; biofilm on prosthetic valves; fluconazole susceptible</li>
+        <li><strong>C. parapsilosis:</strong> CIED/LVAD biofilm; may have reduced echinocandin susceptibility</li>
+        <li><strong>C. glabrata (Nakaseomyces):</strong> Azole-resistant; echinocandin first-line</li>
+        <li><strong>Aspergillus:</strong> Rare but fatal PVE; angio-invasive; voriconazole + surgery</li>
+        <li><strong>Risk factors:</strong> TPN, broad-spectrum antibiotics, immunosuppression, prolonged ICU/ventilation, renal replacement therapy</li>
+      </ul>
+      <div class="pearl"><strong>Fungal PVE:</strong> Mortality &gt;50%. Surgical valve replacement mandatory in most cases combined with antifungal therapy (echinocandin or liposomal AmB). Lifelong secondary prophylaxis often required.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TAB 1: ENDOCARDITIS ═══ -->
+<section class="tab" id="t1">
+  <div class="sh">
+    <h2>🫀 Infective Endocarditis — NVE vs PVE</h2>
+    <p>IE carries 15–30% in-hospital mortality. Early diagnosis, appropriate antibiotics, and timely surgical decision-making are the pillars of management.</p>
+  </div>
+  <div class="g2" style="margin-bottom:18px">
+    <div class="card card-blue">
+      <h3>Native Valve Endocarditis (NVE)</h3>
+      <div class="bdg bdg-b">Community-acquired</div><div class="bdg bdg-r">Healthcare-associated</div>
+      <div class="tw" style="margin-top:12px">
+        <table>
+          <thead><tr><th>Pathogen</th><th>Frequency</th><th>Source</th></tr></thead>
+          <tbody>
+            <tr><td>Viridans streptococci</td><td>40–60%</td><td>Oral cavity, dental procedures</td></tr>
+            <tr><td>S. aureus (MSSA/MRSA)</td><td>25–35%</td><td>Skin, IV access, IVDU</td></tr>
+            <tr><td>Enterococcus spp.</td><td>~10%</td><td>GI/GU tract, nosocomial</td></tr>
+            <tr><td>HACEK group</td><td>~5%</td><td>Oral/respiratory flora</td></tr>
+            <tr><td>Streptococcus bovis/gallolyticus</td><td>5–8%</td><td>GI tract (colon neoplasia!)</td></tr>
+            <tr><td>Culture-negative</td><td>5–15%</td><td>Prior antibiotics, Bartonella, Coxiella</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pearl"><strong>S. bovis/gallolyticus:</strong> Always order colonoscopy — strong association with colorectal neoplasia (adenoma/carcinoma).</div>
+    </div>
+    <div class="card card-red">
+      <h3>Prosthetic Valve Endocarditis (PVE)</h3>
+      <div class="bdg bdg-r">Early &lt;12 months</div><div class="bdg bdg-a">Late &gt;12 months</div>
+      <div class="tw" style="margin-top:12px">
+        <table>
+          <thead><tr><th>Timing</th><th>Main pathogens</th><th>Prognosis</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Very early (&lt;2 mo)</strong></td><td>S. aureus, Gram-negatives, fungi</td><td>Worst; mortality 40–80%</td></tr>
+            <tr><td><strong>Early (2–12 mo)</strong></td><td>CoNS (#1), S. aureus, Enterococcus</td><td>Mortality 20–40%</td></tr>
+            <tr><td><strong>Late (&gt;12 mo)</strong></td><td>Viridans streptococci, S. aureus</td><td>Mortality 10–20%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="alert"><strong>Early PVE surgical urgency:</strong> Paravalvular abscess, dehiscence, fistula, persistent bacteremia, new heart block — all indicate emergency reoperation.</div>
+    </div>
+  </div>
+  <div class="card card-gold" style="margin-bottom:18px">
+    <h3>💊 Targeted Antibiotic Regimens — ESC/AHA 2023–2025</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Pathogen</th><th>NVE regimen</th><th>PVE regimen</th><th>Duration NVE</th><th>Duration PVE</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Penicillin-susceptible Streptococci</strong><br><small>MIC ≤0.125 mg/L</small></td><td>Benzylpenicillin 12–18 MU/24h continuous infusion OR Ceftriaxone 2 g IV q24h</td><td>Penicillin/Ceftriaxone + Gentamicin 3 mg/kg/24h (first 2 wks)</td><td>4 weeks</td><td>6 weeks</td></tr>
+          <tr><td><strong>Penicillin-tolerant Streptococci</strong><br><small>MIC 0.125–2 mg/L</small></td><td>Penicillin 24 MU/24h + Gentamicin 3 mg/kg/24h × 2 wks, then penicillin alone</td><td>Same + extend gentamicin to 4 wks</td><td>4 weeks</td><td>6 weeks</td></tr>
+          <tr><td><strong>MSSA S. aureus</strong></td><td>Flucloxacillin 12 g/24h (or Nafcillin) ± Gentamicin (3–5 days synergy only)</td><td>Flucloxacillin 12 g/24h + Rifampin 900 mg/24h + Gentamicin × 2 weeks</td><td>4–6 weeks</td><td>≥6 weeks</td></tr>
+          <tr><td><strong>MRSA / MR-CoNS</strong></td><td>Vancomycin 30–60 mg/kg/24h (AUC/MIC target 400–600)</td><td>Vancomycin + Rifampin 900 mg/24h + Gentamicin × 2 weeks</td><td>6 weeks</td><td>≥6 weeks</td></tr>
+          <tr><td><strong>Enterococcus faecalis</strong><br><small>penicillin-susceptible</small></td><td>Ampicillin 12 g/24h + Ceftriaxone 4 g/24h OR Ampicillin + Gentamicin (if susceptible)</td><td>Same as NVE; avoid gentamicin if high-level resistance</td><td>4–6 weeks</td><td>6 weeks</td></tr>
+          <tr><td><strong>VRE E. faecium</strong></td><td>Linezolid 600 mg IV q12h or Daptomycin 10–12 mg/kg/24h</td><td>Linezolid or Daptomycin ± Rifampin if susceptible</td><td>≥6 weeks</td><td>≥8 weeks</td></tr>
+          <tr><td><strong>HACEK organisms</strong></td><td>Ceftriaxone 2 g IV q24h (avoid gentamicin — nephrotoxicity)</td><td>Ceftriaxone 2 g IV q24h</td><td>4 weeks</td><td>6 weeks</td></tr>
+          <tr><td><strong>Candida / Fungal PVE</strong></td><td>Micafungin 150 mg/24h or Liposomal AmB 3–5 mg/kg/24h</td><td>Echinocandin (step-down to fluconazole if susceptible) + surgical replacement</td><td>≥6 weeks + surgery</td><td>Lifelong secondary prophylaxis</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card card-red">
+    <h3>🔪 Surgical Indications in IE (ESC Class I — Emergency/Urgent)</h3>
+    <div class="g2" style="margin-top:12px">
+      <div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--red-d);color:var(--red)">!</div><div class="tl-content"><h4>Heart failure (HF) — operate within 24h</h4><p>Acute severe AR or MR from valve destruction → pulmonary edema, cardiogenic shock. Most common indication.</p></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--red-d);color:var(--red)">!</div><div class="tl-content"><h4>Uncontrolled infection</h4><p>Paravalvular abscess, intracardiac fistula, prosthetic valve dehiscence. PVE not responding to antibiotics &gt;1 week.</p></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--amber-d);color:var(--amber)">↺</div><div class="tl-content"><h4>Embolism prevention</h4><p>Mobile vegetation &gt;10 mm (especially anterior mitral leaflet). Recurrent emboli despite antibiotics — operate within 48h.</p></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--amber-d);color:var(--amber)">↺</div><div class="tl-content"><h4>Fungal / MDR PVE</h4><p>Candida, Aspergillus PVE: antibiotic-alone cure rate &lt;50%. Surgery + antifungal mandatory.</p></div></div>
+      </div>
+      <div>
+        <strong style="color:var(--text)">High-risk features mandating early surgery:</strong>
+        <ul style="margin-top:8px;font-size:13px;color:var(--muted)">
+          <li style="padding:6px 0;border-bottom:1px solid var(--rim)">🔴 S. aureus PVE (mortality without surgery ~70%)</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--rim)">🔴 Periannular extension — abscess, pseudoaneurysm, fistula</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--rim)">🟡 New AV block / conduction abnormality (septal extension)</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--rim)">🟡 Persistent bacteremia &gt;5–7 days on appropriate antibiotics</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--rim)">🟡 Vegetation &gt;10 mm after first embolic event</li>
+          <li style="padding:6px 0">🟠 EuroSCORE II / STS score for operative risk quantification</li>
+        </ul>
+        <div class="pearl" style="margin-top:10px"><strong>Endocarditis Team (ESC 2023 Class I):</strong> Multidisciplinary team — cardiologist, cardiac surgeon, microbiologist, ID specialist, neurologist, imaging expert — mandatory for all IE cases managed at an endocarditis centre.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ TAB 2: DUKE CRITERIA ═══ -->
+<section class="tab" id="t2">
+  <div class="sh">
+    <h2>📋 Modified Duke Criteria — IE Diagnosis</h2>
+    <p>Sensitivity ~80% for definite IE in native valves. Lower for PVE, CIED-IE, and culture-negative cases. Always combine with clinical judgment and advanced imaging.</p>
+  </div>
+  <div class="g2" style="margin-bottom:18px">
+    <div class="card card-red">
+      <h3>🔴 Major Criteria</h3>
+      <div class="duke-box">
+        <h4 style="color:var(--red)">1. Positive Blood Cultures</h4>
+        <ul style="font-size:13px;color:var(--muted);padding-left:16px">
+          <li>Typical organism in ≥2 separate cultures: S. aureus, S. viridans, S. gallolyticus, HACEK, Enterococcus (community-acquired, no primary focus)</li>
+          <li>Persistently positive cultures (same organism) ≥12h apart, OR 3 of 3 (or majority of ≥4) BCs drawn &gt;1h apart</li>
+          <li>Single positive culture for Coxiella burnetii OR anti-Phase I IgG titre &gt;1:800</li>
+        </ul>
+      </div>
+      <div class="duke-box">
+        <h4 style="color:var(--red)">2. Evidence of Endocardial Involvement</h4>
+        <ul style="font-size:13px;color:var(--muted);padding-left:16px">
+          <li><strong>Echo:</strong> Vegetation, abscess, pseudoaneurysm, intracardiac fistula, valve perforation/aneurysm, new prosthetic valve dehiscence</li>
+          <li><strong>New valvular regurgitation</strong> (worsening of pre-existing murmur is NOT sufficient)</li>
+          <li><strong>Abnormal ¹⁸F-FDG PET/CT</strong> around prosthetic valve implanted &gt;3 months</li>
+          <li><strong>Para-prosthetic leak on cardiac CT</strong></li>
+          <li><strong>Leukocyte SPECT/CT</strong> showing abnormal activity (alternative to PET)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card card-blue">
+      <h3>🔵 Minor Criteria</h3>
+      <div class="duke-box">
+        <ul style="font-size:13px;color:var(--muted);padding-left:16px;line-height:1.9">
+          <li><strong>Predisposition:</strong> Underlying cardiac condition (valvulopathy, prosthesis, CHD, previous IE, CIED) OR IV drug use</li>
+          <li><strong>Fever:</strong> Temperature &gt;38°C</li>
+          <li><strong>Vascular phenomena:</strong> Arterial emboli, septic pulmonary infarcts, mycotic aneurysm, intracranial hemorrhage, conjunctival hemorrhages, Janeway lesions</li>
+          <li><strong>Immunological phenomena:</strong> Glomerulonephritis, Osler nodes, Roth spots, rheumatoid factor positive</li>
+          <li><strong>Microbiological evidence:</strong> Positive BC not meeting major criterion, or serology of active infection consistent with IE</li>
+          <li><strong>New 2023 additions:</strong> ¹⁸F-FDG PET/CT body uptake (non-prosthetic), MRI/CT embolic lesions, peripheral culture positive for IE pathogen</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card card-gold" style="margin-bottom:18px">
+    <h3>📊 Duke Classification Thresholds</h3>
+    <div class="g3" style="margin-top:12px">
+      <div class="stat" style="border:2px solid var(--red)">
+        <div class="val" style="color:var(--red)">DEFINITE</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6">2 Major<br>OR 1 Major + 3 Minor<br>OR 5 Minor<br>OR Pathology/surgery confirms</div>
+      </div>
+      <div class="stat" style="border:2px solid var(--amber)">
+        <div class="val" style="color:var(--amber)">POSSIBLE</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6">1 Major + 1 Minor<br>OR 3 Minor alone</div>
+      </div>
+      <div class="stat" style="border:2px solid var(--green)">
+        <div class="val" style="color:var(--green)">REJECTED</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6">Firm alternative diagnosis<br>OR Resolution ≤4d antibiotics<br>OR No pathologic evidence</div>
+      </div>
+    </div>
+    <div class="warn" style="margin-top:16px"><strong>Limitations:</strong> Duke criteria miss ~20% of definite IE. PVE, CIED-IE, right-sided IE, Coxiella/Bartonella IE all have reduced sensitivity. Clinical judgment and multimodality imaging are essential adjuncts.</div>
+  </div>
+  <div class="g2">
+    <div class="card card-teal">
+      <h3>🔬 Diagnostic Imaging in IE — 2025</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Modality</th><th>Sensitivity</th><th>Best use</th></tr></thead>
+          <tbody>
+            <tr><td><strong>TTE (Transthoracic Echo)</strong></td><td>50–70% NVE</td><td>First-line all suspected IE; LV function, complications</td></tr>
+            <tr><td><strong>TEE (Transesophageal Echo)</strong></td><td>85–95%</td><td>Gold standard; PVE, abscess, fistula, pre-surgery</td></tr>
+            <tr><td><strong>¹⁸F-FDG PET/CT</strong></td><td>73–82% PVE</td><td>PVE/CIED-IE with equivocal echo; systemic emboli; device &gt;3 months</td></tr>
+            <tr><td><strong>Cardiac CT angiography</strong></td><td>85–92% abscess</td><td>Paravalvular abscess, pseudoaneurysm, coronary anatomy pre-op</td></tr>
+            <tr><td><strong>WBC SPECT/CT</strong></td><td>64–89%</td><td>CIED-IE, PVE if PET unavailable</td></tr>
+            <tr><td><strong>Brain MRI (DWI)</strong></td><td>High</td><td>Silent emboli (30–80% of IE); mycotic aneurysm; pre-surgery neuro assessment</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card card-amber">
+      <h3>🔬 Blood Culture Protocol for IE</h3>
+      <div class="algo">
+        <div class="algo-step"><div class="algo-num">1</div><div class="algo-text"><strong>Draw 3 sets</strong> from 3 separate venipuncture sites — before any antibiotics</div></div>
+        <div class="algo-step"><div class="algo-num">2</div><div class="algo-text"><strong>Timing:</strong> Sets ≥1 hour apart (if stable) to document sustained bacteremia</div></div>
+        <div class="algo-step"><div class="algo-num">3</div><div class="algo-text"><strong>Volume:</strong> 10 mL per bottle (aerobic + anaerobic); 20 mL/set — critical for sensitivity</div></div>
+        <div class="algo-step"><div class="algo-num">4</div><div class="algo-text"><strong>If negative at 5 days:</strong> Subculture enriched media; HACEK-specific protocol; Bartonella serology; Coxiella Phase I/II IgG</div></div>
+        <div class="algo-step"><div class="algo-num">5</div><div class="algo-text"><strong>PCR on valve (surgery):</strong> 16S rRNA PCR + metagenomic NGS on excised tissue — etiology in ~70% of culture-negative IE</div></div>
+      </div>
+      <div class="pearl"><strong>Never delay surgery</strong> for culture results if haemodynamic instability, abscess, or refractory HF — operate and send tissue for PCR.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TAB 3: MEDIASTINITIS ═══ -->
+<section class="tab" id="t3">
+  <div class="sh">
+    <h2>🦴 Post-Sternotomy Mediastinitis & Sternal Wound Infection</h2>
+    <p>Deep sternal wound infection (DSWI) incidence 0.5–4%; mortality 10–50% with MDRO. Requires combined surgical debridement + targeted antibiotics ≥4–6 weeks.</p>
+  </div>
+  <div class="stat-row">
+    <div class="stat"><div class="val">0.5–4%</div><div class="lbl">Incidence post-sternotomy</div></div>
+    <div class="stat"><div class="val">10–50%</div><div class="lbl">Mortality (MDRO)</div></div>
+    <div class="stat"><div class="val">18–38%</div><div class="lbl">Gram-negative etiology</div></div>
+    <div class="stat"><div class="val">20–44%</div><div class="lbl">Polymicrobial cases</div></div>
+    <div class="stat"><div class="val">&lt;14d</div><div class="lbl">Median onset post-op</div></div>
+  </div>
+  <div class="card card-gold" style="margin-bottom:18px">
+    <h3>📊 El-Oakley Classification</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Type</th><th>Classification</th><th>Characteristics</th><th>Surgical approach</th></tr></thead>
+        <tbody>
+          <tr><td><strong>I</strong></td><td>Superficial wound infection</td><td>Skin &amp; subcutaneous only, sternum intact</td><td>Wound care, IV antibiotics, closed drainage</td></tr>
+          <tr><td><strong>II</strong></td><td>Deep sternal wound (no mediastinitis)</td><td>Sternum involved (wire dehiscence), no mediastinal infection</td><td>Resternal fixation + antibiotics</td></tr>
+          <tr><td><strong>IIIa</strong></td><td>Mediastinitis, early — no IMA graft</td><td>True mediastinal infection &lt;2 weeks post-op</td><td>Debridement + primary closure or VAC + antibiotics 4–6 wks</td></tr>
+          <tr><td><strong>IIIb</strong></td><td>Mediastinitis, early — IMA graft used</td><td>More complex; risk of graft devascularization</td><td>Debridement + omentoplasty or muscle flap + antibiotics</td></tr>
+          <tr><td><strong>IVa</strong></td><td>Mediastinitis + prior re-operation</td><td>Post-reoperation mediastinitis</td><td>Aggressive debridement + flap reconstruction</td></tr>
+          <tr><td><strong>IVb</strong></td><td>Mediastinitis + prior re-op + IMA</td><td>Highest complexity</td><td>Multistage surgery + prolonged antibiotics + NPWT</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="g2" style="margin-bottom:18px">
+    <div class="card card-blue">
+      <h3>💊 Antibiotic Therapy by Pathogen</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Pathogen</th><th>Drug of choice</th><th>Alternative</th><th>Duration</th></tr></thead>
+          <tbody>
+            <tr><td>MSSA</td><td>Flucloxacillin 12 g/24h IV</td><td>Cefazolin 2 g q8h</td><td>4–6 wks</td></tr>
+            <tr><td>MRSA</td><td>Vancomycin (AUC 400–600)</td><td>Linezolid 600 mg q12h</td><td>6 wks</td></tr>
+            <tr><td>CoNS (MR)</td><td>Vancomycin + Rifampin</td><td>Linezolid or Daptomycin</td><td>6 wks</td></tr>
+            <tr><td>Pseudomonas</td><td>Pip-Tazo 4.5 g q6h or Meropenem 1 g q8h</td><td>Cefepime + ciprofloxacin</td><td>4–6 wks</td></tr>
+            <tr><td>ESBL Klebsiella/E.coli</td><td>Meropenem 1–2 g q8h</td><td>Ceftazidime-avibactam (KPC)</td><td>4–6 wks</td></tr>
+            <tr><td>XDR Acinetobacter</td><td>Colistin + Meropenem HD + Tigecycline</td><td>Sulbactam-based combinations</td><td>≥6 wks</td></tr>
+            <tr><td>Mycoplasma hominis</td><td>Moxifloxacin 400 mg/24h IV</td><td>Doxycycline 100 mg q12h or Clindamycin</td><td>4–6 wks</td></tr>
+            <tr><td>Gordonia bronchialis</td><td>Levofloxacin + Amikacin (susceptibility-guided)</td><td>Linezolid or Carbapenems</td><td>≥6 wks</td></tr>
+            <tr><td>Nocardia farcinica</td><td>TMP-SMX (high-dose) + Amikacin</td><td>Linezolid or Imipenem</td><td>6–12 months</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="alert"><strong>Mycoplasma hominis warning:</strong> Does NOT grow on standard blood/wound agar — no cell wall, invisible on Gram stain. Requires Mycoplasma-specific broth culture incubated 7–14 days. Always request in culture-negative post-cardiac surgery mediastinitis.</div>
+    </div>
+    <div class="card card-amber">
+      <h3>⚕️ Risk Factors &amp; Prevention</h3>
+      <strong style="color:var(--text);font-size:13px">Modifiable risk factors:</strong>
+      <ul style="margin-top:8px">
+        <li>Diabetes mellitus (HbA1c &gt;7%) — doubles mediastinitis risk</li>
+        <li>Obesity (BMI &gt;35) — deadspace, impaired wound healing</li>
+        <li>Bilateral IMA harvest — devascularises sternum</li>
+        <li>Re-sternotomy / redo surgery</li>
+        <li>Prolonged CPB time (&gt;150 min)</li>
+        <li>Postoperative low-output state</li>
+        <li>Emergency surgery, large transfusion volume</li>
+      </ul>
+      <strong style="color:var(--text);font-size:13px;display:block;margin-top:14px">Prevention bundle (STS/WHO):</strong>
+      <ul>
+        <li>Preoperative nasal MRSA decolonization (mupirocin + chlorhexidine bath × 5 days)</li>
+        <li>2% chlorhexidine-gluconate skin prep (superior to povidone-iodine)</li>
+        <li>Cefazolin within 60 min before incision; re-dose q4h if prolonged; vancomycin if MRSA carrier</li>
+        <li>Glycaemic control — target 140–180 mg/dL intraoperatively and postoperatively</li>
+        <li>Sternal wound dressing protocol; sternal stability assessment at extubation</li>
+      </ul>
+      <div class="pearl"><strong>Prophylaxis duration:</strong> Single dose or 24h cefazolin (STS guidelines). Prolonged prophylaxis does NOT reduce DSWI rates and drives MDR organism selection.</div>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <h3>🔪 Surgical Management — Key Principles</h3>
+    <div class="g2" style="margin-top:12px">
+      <div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--teal-d);color:var(--teal)">1</div><div class="tl-content"><h4>Aggressive debridement</h4><p>Remove ALL infected/necrotic sternal bone, wires, cartilage. Completeness of debridement is the primary determinant of outcome.</p></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--teal-d);color:var(--teal)">2</div><div class="tl-content"><h4>NPWT (VAC therapy)</h4><p>Negative pressure wound therapy — reduces edema, promotes granulation, controls contamination. Bridge to definitive reconstruction.</p></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--teal-d);color:var(--teal)">3</div><div class="tl-content"><h4>Reconstruction</h4><p>Pectoralis major flap (most common); omental transposition (excellent vascularity + antibacterial); rectus abdominis flap (large defects). Primary rewiring for limited cases.</p></div></div>
+      </div>
+      <div>
+        <strong style="color:var(--text)">Outcome predictors:</strong>
+        <ul style="margin-top:8px;font-size:13px;color:var(--muted)">
+          <li>Time to diagnosis &amp; debridement — every 24h delay worsens outcome</li>
+          <li>Gram-negative / polymicrobial → higher mortality</li>
+          <li>Completeness of debridement</li>
+          <li>Flap viability and choice</li>
+          <li>Minimum 4–6 weeks IV antibiotics post-debridement</li>
+        </ul>
+        <div class="warn" style="margin-top:12px"><strong>Key principle:</strong> Inappropriate initial antibiotics (wrong spectrum or delayed initiation) in Gram-negative mediastinitis is independently associated with increased in-hospital mortality. Empirical coverage MUST include anti-pseudomonal and MRSA activity until cultures return.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TAB 4: VAP ═══ -->
+<section class="tab" id="t4">
+  <div class="sh">
+    <h2>💨 VAP &amp; ICU-Acquired Infections</h2>
+    <p>VAP is the leading infectious cause of death in the cardiac ICU. Gram-negative MDR organisms dominate after cardiac surgery — Acinetobacter baumannii accounts for ~40% of isolates.</p>
+  </div>
+  <div class="stat-row">
+    <div class="stat"><div class="val">~90%</div><div class="lbl">Gram-negative VAP</div><div class="sub">After cardiac surgery</div></div>
+    <div class="stat"><div class="val">40%</div><div class="lbl">Acinetobacter</div><div class="sub">Cardiac ICU VAP</div></div>
+    <div class="stat"><div class="val">&gt;55%</div><div class="lbl">MDR organisms</div><div class="sub">Post-cardiac surgery VAP</div></div>
+    <div class="stat"><div class="val">≥48h</div><div class="lbl">VAP definition</div><div class="sub">Ventilation before onset</div></div>
+  </div>
+  <div class="g2" style="margin-bottom:18px">
+    <div class="card card-red">
+      <h3>🦠 VAP Pathogens &amp; MDR Risk Stratification</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Pathogen</th><th>Frequency (cardiac ICU)</th><th>MDR concern</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Acinetobacter baumannii</strong></td><td>~40%</td><td>XDR/PDR; OXA-23/48 carbapenemase; surface persistence 3 weeks</td></tr>
+            <tr><td><strong>Pseudomonas aeruginosa</strong></td><td>~25%</td><td>MDR/XDR/DTR; MBL, efflux pumps (MexAB-OprM)</td></tr>
+            <tr><td><strong>Klebsiella pneumoniae</strong></td><td>~15%</td><td>ESBL, KPC; hypervirulent strains (hvKp)</td></tr>
+            <tr><td><strong>Enterobacter spp.</strong></td><td>~10%</td><td>Inducible AmpC; carbapenem may be needed for ESBL variants</td></tr>
+            <tr><td><strong>S. aureus (MRSA)</strong></td><td>~10%</td><td>MRSA — add vancomycin or linezolid</td></tr>
+            <tr><td><strong>Stenotrophomonas maltophilia</strong></td><td>~5%</td><td>Intrinsic carbapenem resistance; TMP-SMX drug of choice</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <strong style="color:var(--text);font-size:13px;display:block;margin-top:12px">MDR VAP Risk Factors (cardiac ICU):</strong>
+      <ul style="margin-top:6px">
+        <li>Prior broad-spectrum antibiotics (&lt;90 days)</li>
+        <li>CPB duration ≥151 minutes</li>
+        <li>Postoperative AKI / renal replacement therapy</li>
+        <li>Prolonged mechanical ventilation (&gt;72h)</li>
+        <li>Nasogastric tube feeding; re-intubation; tracheostomy</li>
+        <li>MDR organism colonization on surveillance cultures</li>
+      </ul>
+    </div>
+    <div class="card card-green">
+      <h3>💊 Empirical VAP Therapy Algorithm</h3>
+      <div class="algo">
+        <div class="algo-step"><div class="algo-num">★</div><div class="algo-text"><strong>Start within 1 hour</strong> of VAP diagnosis. Obtain BAL/tracheal aspirate cultures FIRST.</div></div>
+        <div class="algo-step"><div class="algo-num">1</div><div class="algo-text"><strong>Low MDR risk, early VAP (&lt;5d ventilation):</strong><br>Pip-Tazo 4.5 g q6h IV<br>OR Ceftazidime 2 g q8h<br>OR Levofloxacin 750 mg/24h</div></div>
+        <div class="algo-step"><div class="algo-num">2</div><div class="algo-text"><strong>High MDR risk / septic shock:</strong><br>Meropenem 1–2 g q8h (extended 3h infusion for MDR) + Ciprofloxacin 400 mg q8h or Amikacin 15–20 mg/kg/24h<br>+ ADD Vancomycin or Linezolid if MRSA risk (nasal screen+, prior MRSA, ICU outbreak)</div></div>
+        <div class="algo-step"><div class="algo-num">3</div><div class="algo-text"><strong>XDR Acinetobacter / CRGNB:</strong><br>Colistin 9 MU loading → 4.5 MU q12h + Meropenem 2 g q8h extended infusion + Tigecycline 100 mg → 50 mg q12h<br>OR Sulbactam-based combinations ± inhaled colistin as adjunct</div></div>
+        <div class="algo-step"><div class="algo-num">↓</div><div class="algo-text"><strong>De-escalate at 48–72h</strong> based on cultures/sensitivities. Target 7–8 days duration (non-fermenter or immunocompromised: 10–14 days).</div></div>
+      </div>
+      <div class="pearl"><strong>Inhaled antibiotics (adjunct):</strong> Colistin or tobramycin nebulization in MDR VAP improves local airway concentrations. NOT a replacement for systemic therapy.</div>
+    </div>
+  </div>
+  <div class="card card-amber" style="margin-bottom:18px">
+    <h3>🛡️ VAP Prevention Bundle</h3>
+    <div class="g2" style="margin-top:12px">
+      <div>
+        <strong style="color:var(--text)">Mandatory bundle (IHI / SHEA):</strong>
+        <ul style="margin-top:8px">
+          <li>Head-of-bed elevation 30–45° continuously</li>
+          <li>Daily sedation interruption + spontaneous breathing trial</li>
+          <li>Oral decontamination: 0.12% chlorhexidine q6h (especially post-cardiac surgery — reduces VAP ~35%)</li>
+          <li>Subglottic secretion drainage (endotracheal tubes with SSD port)</li>
+          <li>Minimise circuit changes; avoid unnecessary acid suppression</li>
+        </ul>
+      </div>
+      <div>
+        <strong style="color:var(--text)">Selective decontamination (SDD/SOD):</strong>
+        <ul style="margin-top:8px">
+          <li>SDD: oral paste + enteral non-absorbable antibiotics + short systemic course — reduces VAP and mortality in cardiac ICU; NNT ~15</li>
+          <li>SOD (selective oral only): safer alternative in high-MDR settings</li>
+          <li>Controversial: may select resistance in high-MDR-prevalence units</li>
+        </ul>
+        <div class="warn" style="margin-top:10px"><strong>Surveillance cultures:</strong> Weekly tracheal aspirates in ventilated cardiac ICU patients detect MDR colonization before clinical infection — enables rapid appropriate empirical coverage.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card card-purple">
+    <h3>🏥 Other ICU-Acquired Infections in Cardiac Surgery</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Infection</th><th>Common pathogens</th><th>Key points</th><th>Treatment focus</th></tr></thead>
+        <tbody>
+          <tr><td><strong>CLABSI</strong></td><td>CoNS, S. aureus, Candida, Enterococcus</td><td>All central lines; femoral &gt; IJ/SC risk; daily review necessity of line</td><td>Remove line; Vancomycin ± antifungal; MRSA SAB: 14d from first negative BC</td></tr>
+          <tr><td><strong>CAUTI</strong></td><td>E. coli, Klebsiella, Pseudomonas, Candida</td><td>Remove catheter ASAP; never treat asymptomatic bacteriuria</td><td>Remove catheter; treat only if symptomatic/febrile</td></tr>
+          <tr><td><strong>Surgical site infection</strong></td><td>S. aureus, CoNS (superficial); Gram-neg (deep)</td><td>Superficial vs deep classification drives management</td><td>Open wound + debridement + targeted antibiotics</td></tr>
+          <tr><td><strong>C. difficile CDI</strong></td><td>Clostridioides difficile</td><td>After broad-spectrum antibiotics; check toxin A/B PCR; PPIs increase risk</td><td>Stop offending antibiotics; oral vancomycin 125 mg q6h or fidaxomicin 200 mg q12h × 10d</td></tr>
+          <tr><td><strong>Mediastinal re-exploration BSI</strong></td><td>S. epidermidis, S. aureus</td><td>Post-re-exploration contamination; check all line cultures</td><td>Vancomycin empirically pending cultures</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TAB 5: CIED & LVAD ═══ -->
+<section class="tab" id="t5">
+  <div class="sh">
+    <h2>⚡ CIED &amp; LVAD Infections</h2>
+    <p>CIED infections range from superficial pocket infections to life-threatening lead endocarditis. Complete device extraction is mandatory in most cases — antibiotics alone have &lt;25% cure rate.</p>
+  </div>
+  <div class="g2" style="margin-bottom:18px">
+    <div class="card card-blue">
+      <h3>📟 CIED Infection Classification</h3>
+      <div class="tl-item"><div class="tl-dot" style="background:var(--green-d);color:var(--green)">1</div><div class="tl-content"><h4>Pocket infection (local)</h4><p>Erythema, swelling, discharge at generator site. No lead involvement. Pathogens: S. aureus, CoNS. Requires complete extraction + reimplantation at new site.</p></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:var(--amber-d);color:var(--amber)">2</div><div class="tl-content"><h4>CIED-related bacteremia</h4><p>Positive blood cultures without alternative source + CIED present. S. aureus bacteremia = extraction indicated unless definitive alternative source. TEE + PET to evaluate lead vegetation.</p></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:var(--red-d);color:var(--red)">3</div><div class="tl-content"><h4>CIED lead endocarditis (CDIE)</h4><p>Vegetation on pacemaker/ICD lead or tricuspid valve. Duke criteria apply. Mortality 10–30%. Complete system extraction mandatory — TLE or surgical if vegetation &gt;25 mm.</p></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:var(--red-d);color:var(--red)">4</div><div class="tl-content"><h4>Erosion / Chronic sinus</h4><p>Device erosion through skin or chronic sinus tract = always infected. Never treat antibiotics alone. Extraction + prolonged antibiotics required.</p></div></div>
+    </div>
+    <div class="card card-red">
+      <h3>💊 CIED Infection — Antibiotic Regimens</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Pathogen</th><th>Regimen</th><th>Duration post-extraction</th></tr></thead>
+          <tbody>
+            <tr><td>CoNS (MR)</td><td>Vancomycin ± Rifampin</td><td>10–14d (pocket); 4–6 wks (lead/CDIE)</td></tr>
+            <tr><td>S. aureus (MSSA)</td><td>Flucloxacillin 12 g/24h or Nafcillin</td><td>≥2 wks (bacteremia); 6 wks (CDIE)</td></tr>
+            <tr><td>S. aureus (MRSA)</td><td>Vancomycin AUC 400–600 mg·h/L</td><td>≥2 wks (bacteremia); 6 wks (CDIE)</td></tr>
+            <tr><td>Gram-negative</td><td>Based on susceptibility (ceftriaxone, pip-tazo)</td><td>4–6 wks</td></tr>
+            <tr><td>Culture-negative</td><td>Vancomycin + Ceftriaxone</td><td>4–6 wks</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="alert" style="margin-top:10px"><strong>Extraction approach:</strong> Transvenous lead extraction (TLE) preferred if leads &lt;1 year old or vegetation &lt;25 mm. Surgical extraction if: failed TLE, vegetation &gt;25 mm, severe valve involvement, haemodynamic compromise.</div>
+      <div class="pearl"><strong>Reimplantation timing:</strong> Delay ≥72h (pocket infection) to ≥14 days (bacteremia/CDIE) after first negative blood culture. Temporary pacing if pacemaker-dependent.</div>
+    </div>
+  </div>
+  <div class="card card-purple">
+    <h3>🤖 LVAD-Specific Infections (ISHLT Classification)</h3>
+    <div class="g2" style="margin-top:12px">
+      <div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--green-d);color:var(--green)">L1</div><div class="tl-content"><h4>Driveline infection</h4><p>Localised infection at exit site — most common LVAD infection. Pathogens: S. aureus (#1), Pseudomonas. Local wound care + targeted systemic antibiotics.</p></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--amber-d);color:var(--amber)">L2</div><div class="tl-content"><h4>Pump pocket infection</h4><p>Generator/pump pocket infection. More serious. Often requires device exchange at transplant. Prolonged suppressive antibiotics.</p></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--red-d);color:var(--red)">L3</div><div class="tl-content"><h4>Pump / cannula endocarditis</h4><p>Vegetation on LVAD pump, cannula, or inflow/outflow conduit. Mortality &gt;50%. Device exchange or urgent transplant.</p></div></div>
+      </div>
+      <div>
+        <strong style="color:var(--text)">LVAD infection management principles:</strong>
+        <ul style="margin-top:8px">
+          <li>Prolonged suppressive antibiotics required in non-transplant candidates (unable to remove device)</li>
+          <li>Anti-biofilm strategy: Rifampin combinations, EDTA driveline flushes</li>
+          <li>Fungal LVAD infection (Candida): Echinocandin + device exchange at transplant</li>
+          <li>High-risk organisms: S. aureus and Pseudomonas — associated with pump thrombosis, stroke, death</li>
+          <li>Weekly driveline wound inspection; blood cultures if febrile</li>
+        </ul>
+        <div class="warn" style="margin-top:10px"><strong>VA-ECMO + infection:</strong> ECMO circuits are highly susceptible to biofilm colonization. Candida and CoNS are most common. Weekly surveillance cultures from circuit ports. Persistent bacteremia on ECMO requires source control — all removable catheters and lines should be replaced.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TAB 6: ANTIBIOTICS ═══ -->
+<section class="tab" id="t6">
+  <div class="sh">
+    <h2>💊 Antibiotics by Class — Dosing, Spectrum &amp; Cardiac Considerations</h2>
+    <p>Complete reference with cardiac-specific dosing, PK/PD targets, monitoring requirements, and key drug interactions relevant to the cardiac surgery setting.</p>
+  </div>
+  <div class="card card-gold" style="margin-bottom:18px">
+    <h3>📋 Complete Antibiotic Reference</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Class / Drug</th><th>Spectrum</th><th>IV dose (adult)</th><th>PK/PD target</th><th>Cardiac considerations &amp; toxicity</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Anti-staphylococcal Penicillins</strong><br>Flucloxacillin, Nafcillin, Oxacillin</td><td>MSSA, streptococci — superior to vancomycin for MSSA IE</td><td>Flucloxacillin 2 g q4h IV (12 g/24h total); Nafcillin 12 g/24h in 6 divided doses</td><td>%fT&gt;MIC; continuous infusion for MSSA IE optimises exposure</td><td>Preferred over vancomycin for confirmed MSSA — lower mortality. Nafcillin: hyponatraemia, hepatotoxicity. Avoid in penicillin anaphylaxis.</td></tr>
+          <tr><td><strong>Aminopenicillins + Inhibitors</strong><br>Ampicillin-sulbactam, Pip-Tazo</td><td>Ampicillin: streptococci, enterococci, HACEK. Pip-Tazo: adds Pseudomonas, anaerobes, ESBL (unreliable)</td><td>Ampicillin 2 g q4h; Pip-Tazo 4.5 g q6h IV (MDR: extended 4h infusion)</td><td>%fT&gt;MIC (aim 100%)</td><td>Pip-Tazo + vancomycin: ↑↑ nephrotoxicity (AKI 2–3× vs vancomycin alone) — use cefepime as alternative Gram-neg cover. Sulbactam (amp-sulbactam): intrinsic Acinetobacter activity.</td></tr>
+          <tr><td><strong>3rd/4th Gen Cephalosporins</strong><br>Ceftriaxone, Cefepime, Ceftazidime</td><td>Ceftriaxone: HACEK, streptococci, Gram-neg (no Pseudomonas). Cefepime/Ceftazidime: Pseudomonas</td><td>Ceftriaxone 2 g q24h; Cefepime 2 g q8h; Ceftazidime 2 g q8h</td><td>%fT&gt;MIC (100% for serious infections)</td><td>Cefepime: neurotoxicity/seizures in AKI — dose-reduce when eGFR &lt;50. Ceftriaxone: biliary sludge, drug interactions (warfarin minimal, but monitor).</td></tr>
+          <tr><td><strong>Carbapenems</strong><br>Meropenem, Imipenem, Ertapenem</td><td>ESBL Gram-negatives, Pseudomonas (NOT ertapenem), anaerobes — broadest β-lactam spectrum</td><td>Meropenem 1–2 g q8h (MDR: 2 g over 3h q8h extended); Imipenem 500 mg q6h; Ertapenem 1 g q24h</td><td>%fT&gt;MIC; extended infusion achieves &gt;80% fT&gt;MIC for MDR pathogens</td><td>Imipenem: ↑ seizure risk especially with AKI — prefer meropenem. Ertapenem: NO Pseudomonas coverage — contraindicated in VAP/mediastinitis. Reserve carbapenems — overuse drives KPC/MBL emergence.</td></tr>
+          <tr><td><strong>Novel β-lactam/inhibitor combos</strong><br>Ceftazidime-avibactam (CZA), Ceftolozane-tazobactam (C/T), Imipenem-relebactam, Cefiderocol</td><td>KPC/OXA-48 Klebsiella (CZA), DTR Pseudomonas (C/T), MBL organisms (cefiderocol)</td><td>CZA 2.5 g q8h; C/T 1.5 g q8h; Cefiderocol 2 g q8h (all renally adjusted)</td><td>%fT&gt;MIC; TDM emerging for CZA</td><td>Reserve for confirmed carbapenem-resistance. CZA: resistance can emerge (KPC mutation). Cefiderocol: siderophore-conjugated — active against most MDRO including MBL. ID consultation mandatory.</td></tr>
+          <tr><td><strong>Glycopeptides</strong><br>Vancomycin, Teicoplanin</td><td>MRSA, MR-CoNS, Enterococcus (not VRE vanA), C. difficile (oral vancomycin)</td><td>Vancomycin: 25–30 mg/kg loading → AUC-guided dosing q8–12h or continuous infusion. Teicoplanin: 6 mg/kg q12h × 3 doses, then q24h</td><td>AUC₂₄/MIC 400–600 mg·h/L (NOT trough alone — outdated)</td><td>Nephrotoxicity (dose-related, ↑ with pip-tazo). Red man syndrome (infusion rate — not allergy). Ototoxicity (rare). Teicoplanin: once-daily, less nephrotoxic; use in long-term outpatient IE therapy.</td></tr>
+          <tr><td><strong>Oxazolidinones</strong><br>Linezolid, Tedizolid</td><td>MRSA, VRE, MDR streptococci; excellent lung penetration (VAP option)</td><td>Linezolid 600 mg IV q12h (100% oral bioavailability → PO when tolerating); Tedizolid 200 mg q24h</td><td>AUC/MIC &gt;100; time-dependent</td><td>Myelosuppression (thrombocytopenia &gt;14 days) — CBC weekly. Serotonin syndrome with SSRIs/MAOIs — STOP serotonergic drugs first. Peripheral neuropathy (prolonged use). Lactic acidosis (rare). Preferred over vancomycin in MRSA VAP (superior lung penetration).</td></tr>
+          <tr><td><strong>Lipopeptides</strong><br>Daptomycin</td><td>MRSA, VRE, endocarditis; NOT pneumonia — inactivated by pulmonary surfactant</td><td>Bacteremia: 6 mg/kg q24h; IE/severe MRSA: 8–12 mg/kg q24h</td><td>Cmax/MIC &gt;60–70; AUC/MIC</td><td>Inactivated by surfactant — never for pneumonia. CPK monitoring weekly (myopathy — ↑ risk with statins; hold statins). Eosinophilic pneumonia (rare). Resistance: combine with fosfomycin or β-lactam in high-inoculum infections.</td></tr>
+          <tr><td><strong>Aminoglycosides</strong><br>Gentamicin, Tobramycin, Amikacin</td><td>Synergy vs Gram-positive (enterococci, streptococci); monotherapy Gram-negative (not preferred); amikacin active vs gentamicin-resistant strains</td><td>Gentamicin synergy: 3 mg/kg/24h (short course ≤5d); Amikacin MDR: 15–20 mg/kg/24h</td><td>Cmax/MIC ≥8–10 (once-daily); peak/trough for synergy dosing</td><td>Nephrotoxicity (proximal tubule, dose-dependent) — avoid in AKI/CKD; limit synergy courses to ≤5 days. Ototoxicity (vestibular &gt; cochlear). Hartford nomogram for once-daily dosing. TDM mandatory.</td></tr>
+          <tr><td><strong>Fluoroquinolones</strong><br>Ciprofloxacin, Levofloxacin, Moxifloxacin</td><td>Pseudomonas (cipro, levo); HACEK; atypicals (Legionella, Mycoplasma, Nocardia); moxifloxacin adds anaerobes</td><td>Cipro 400 mg q8h IV; Levo 750 mg q24h; Moxi 400 mg q24h</td><td>AUC/MIC &gt;125 Gram-neg; Cmax/MIC &gt;10</td><td>QT prolongation (moxi &gt; levo &gt; cipro) — AVOID with amiodarone, sotalol, other QTc-prolonging drugs; monitor ECG. Tendon rupture (elderly + corticosteroids). High Pseudomonas resistance — always check susceptibility. C. diff risk.</td></tr>
+          <tr><td><strong>Polymyxins</strong><br>Colistin (polymyxin E), Polymyxin B</td><td>XDR/PDR Gram-negatives (Acinetobacter, Pseudomonas, Klebsiella) — last resort</td><td>Colistin: 9 MU loading → 4.5 MU q12h (CBA-based renal adjustment). Polymyxin B: 1.5–2.5 mg/kg/24h in 2 doses</td><td>fAUC/MIC; concentration-dependent</td><td>Nephrotoxicity 30–60% (dose-limiting). Neurotoxicity (paraesthesia, NMJ blockade). Polymyxin B less nephrotoxic than colistin. ALWAYS in combination (never monotherapy) — prevents resistance. Monitor renal function daily.</td></tr>
+          <tr><td><strong>Rifampin</strong></td><td>Staphylococci on biofilm (prosthetic valves, CIED); always in combination</td><td>900 mg/24h IV/PO in 2–3 divided doses</td><td>Combination only — monotherapy causes immediate resistance</td><td>Potent CYP3A4/2C9 inducer: ↑ warfarin metabolism → ↓INR → thrombosis risk on mechanical valves. ↓ DOAC levels 50–75% — avoid combination (use VKA). ↓ Amiodarone, tacrolimus, cyclosporine. Orange secretions. Hepatotoxicity. Monitor INR daily when starting/stopping.</td></tr>
+          <tr><td><strong>Antifungals — Echinocandins</strong><br>Micafungin, Caspofungin, Anidulafungin</td><td>Candida (all species including C. glabrata, C. krusei); NOT Aspergillus (not first-line); NOT Cryptococcus</td><td>Micafungin 150 mg q24h (IE); Caspofungin 70 mg loading → 50 mg q24h; Anidulafungin 200 mg → 100 mg q24h</td><td>AUC/MIC; concentration-independent</td><td>Well tolerated; monitor LFTs. C. parapsilosis: may have reduced echinocandin susceptibility — MIC testing important. Preferred first-line for invasive candidiasis including Candida PVE (step-down to fluconazole if susceptible after clinical stability).</td></tr>
+          <tr><td><strong>Antifungals — Azoles</strong><br>Fluconazole, Voriconazole, Isavuconazole</td><td>Fluconazole: C. albicans, C. tropicalis (step-down). Voriconazole: Aspergillus (first-line). Isavuconazole: Aspergillus, Mucor</td><td>Fluconazole 400–800 mg q24h; Voriconazole 6 mg/kg q12h × 2 → 4 mg/kg q12h; Isavuconazole 200 mg q8h × 6 → q24h</td><td>Voriconazole trough 1–6 mg/L; Posaconazole trough &gt;0.7 mg/L (prophylaxis)</td><td>Voriconazole: visual disturbances, QTc prolongation, hepatotoxicity, CYP2C19 variability. ABSOLUTE CONTRAINDICATION: voriconazole + rifampin (96% reduction in vori levels). Major interactions: tacrolimus (↑↑ levels), cyclosporine.</td></tr>
+          <tr><td><strong>Liposomal Amphotericin B (L-AmB)</strong></td><td>Candida, Aspergillus, Mucor, Cryptococcus — broad spectrum fungicidal</td><td>3–5 mg/kg/24h IV (Aspergillus); 5–10 mg/kg/24h (Mucor)</td><td>Concentration-dependent; tissue accumulation</td><td>Nephrotoxicity (less than conventional AmB but significant); premedicate (paracetamol, antihistamine, hydrocortisone). Hypokalaemia, hypomagnesaemia — aggressive repletion. Preferred for biofilm-associated Candida infections (PVE, CIED) where high local concentrations needed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <h3>🎯 Spectrum — Rapid Orientation Grid</h3>
+    <div class="g4" style="margin-top:12px">
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:14px">
+        <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:8px;letter-spacing:.05em">MRSA COVERAGE</div>
+        <span class="bdg bdg-g">Vancomycin</span><span class="bdg bdg-g">Linezolid</span><span class="bdg bdg-g">Daptomycin</span><span class="bdg bdg-g">Tedizolid</span><span class="bdg bdg-a">Ceftaroline</span><span class="bdg" style="background:var(--red-d);color:var(--red)">Cefazolin ✗</span><span class="bdg" style="background:var(--red-d);color:var(--red)">Carbapenems ✗</span>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:14px">
+        <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:8px;letter-spacing:.05em">PSEUDOMONAS</div>
+        <span class="bdg bdg-g">Pip-Tazo</span><span class="bdg bdg-g">Ceftazidime</span><span class="bdg bdg-g">Cefepime</span><span class="bdg bdg-g">Meropenem</span><span class="bdg bdg-g">Ciprofloxacin</span><span class="bdg bdg-g">C/T</span><span class="bdg bdg-g">Colistin</span><span class="bdg" style="background:var(--red-d);color:var(--red)">Ertapenem ✗</span><span class="bdg" style="background:var(--red-d);color:var(--red)">Ceftriaxone ✗</span>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:14px">
+        <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:8px;letter-spacing:.05em">ESBL ORGANISMS</div>
+        <span class="bdg bdg-g">Meropenem</span><span class="bdg bdg-g">Ertapenem</span><span class="bdg bdg-g">CZA</span><span class="bdg bdg-a">Pip-Tazo*</span><span class="bdg" style="background:var(--red-d);color:var(--red)">Cephalosporins ✗</span><span class="bdg" style="background:var(--red-d);color:var(--red)">Penicillins ✗</span>
+        <div style="font-size:10px;color:var(--dim);margin-top:6px">*Only if MIC ≤1 mg/L</div>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:14px">
+        <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:8px;letter-spacing:.05em">VRE COVERAGE</div>
+        <span class="bdg bdg-g">Linezolid</span><span class="bdg bdg-g">Daptomycin</span><span class="bdg bdg-g">Tedizolid</span><span class="bdg bdg-a">Tigecycline</span><span class="bdg" style="background:var(--red-d);color:var(--red)">Vancomycin ✗</span><span class="bdg" style="background:var(--red-d);color:var(--red)">Penicillins ✗</span><span class="bdg" style="background:var(--red-d);color:var(--red)">Cephalosporins ✗</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TAB 7: TDM ═══ -->
+<section class="tab" id="t7">
+  <div class="sh">
+    <h2>📊 TDM &amp; Drug Monitoring</h2>
+    <p>Modern Bayesian-guided dosing supersedes traditional trough-only monitoring. TDM optimises efficacy, minimises toxicity, and is particularly critical in cardiac surgery patients with dynamic PK (fluid shifts, CPB, AKI, RRT).</p>
+  </div>
+  <div class="card card-gold" style="margin-bottom:18px">
+    <h3>🎯 TDM Targets — Complete Reference</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Drug</th><th>PK/PD parameter</th><th>Target (standard)</th><th>Target (IE/severe)</th><th>Sample timing</th><th>Method</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Vancomycin</strong></td><td>AUC₂₄/MIC</td><td>AUC 400–600 mg·h/L</td><td>Same target (not higher)</td><td>2 levels: 1–2h post-dose + pre-dose → Bayesian calculation</td><td>Bayesian adaptive dosing software (preferred). Abandon trough-only monitoring — outdated and inaccurate.</td></tr>
+          <tr><td><strong>Aminoglycosides (once-daily)</strong></td><td>Cmax/MIC</td><td>Peak ≥10× MIC; 8h level per Hartford nomogram</td><td>Cmax/MIC ≥10; extend interval in AKI</td><td>8h post-dose (Hartford nomogram); pre-dose if accumulation suspected</td><td>Hartford nomogram; individual PK modelling for renal impairment. Amikacin peak target: 56–64 mg/L (20 mg/kg dose)</td></tr>
+          <tr><td><strong>Aminoglycosides (synergy IE)</strong></td><td>Cmax/MIC</td><td>Gentamicin peak 3–5 mg/L; trough &lt;1 mg/L</td><td>Short course ≤5 days; avoid if AKI</td><td>30 min post-dose (peak) + pre-dose (trough)</td><td>Traditional peak/trough for synergy dosing. Stop if AKI develops.</td></tr>
+          <tr><td><strong>Meropenem (extended infusion, MDR)</strong></td><td>%fT&gt;MIC</td><td>&gt;40% fT&gt;MIC (susceptible organisms)</td><td>&gt;80% fT&gt;MIC for MIC 2–8 mg/L (MDR): 2 g over 3h q8h</td><td>Mid-infusion + trough (specialist centres, LC-MS/MS)</td><td>TDM in specialist centres for confirmed MDR with borderline MICs</td></tr>
+          <tr><td><strong>Linezolid</strong></td><td>AUC₂₄/MIC</td><td>AUC/MIC &gt;100; trough &gt;2 mg/L</td><td>Monitor if prolonged use (&gt;14d), obese, or AKI</td><td>Trough (pre-dose) if AUC not available</td><td>TDM reduces myelosuppression and neuropathy in prolonged courses</td></tr>
+          <tr><td><strong>Daptomycin</strong></td><td>AUC/MIC + Cmax/MIC</td><td>Cmax/MIC &gt;60–70; trough &lt;24.3 mg/L</td><td>Higher doses (8–12 mg/kg) for IE; monitor CPK weekly</td><td>Trough pre-dose + peak if available</td><td>CPK monitoring weekly mandatory regardless of dose</td></tr>
+          <tr><td><strong>Voriconazole</strong></td><td>Trough (Cmin)</td><td>1–6 mg/L</td><td>&gt;2 mg/L for invasive aspergillosis</td><td>Trough after steady-state (day 4–5)</td><td>High interpatient variability (CYP2C19 polymorphism); dose-adjust accordingly. &gt;6 mg/L: hepatotoxicity, neuro toxicity risk.</td></tr>
+          <tr><td><strong>Posaconazole</strong></td><td>Trough (Cmin)</td><td>&gt;0.7 mg/L (prophylaxis)</td><td>&gt;1.5 mg/L (aspergillosis treatment)</td><td>Trough at steady state (day 5–7)</td><td>IR tablets: gastric pH-dependent — give with fatty food; prefer delayed-release or IV for reliable levels</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="g2" style="margin-bottom:18px">
+    <div class="card card-red">
+      <h3>⚠️ Critical Drug-Drug Interactions</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Antibiotic</th><th>Cardiac drug</th><th>Interaction</th><th>Management</th></tr></thead>
+          <tbody>
+            <tr><td>Rifampin</td><td>Warfarin</td><td>↑ CYP2C9 → ↓ warfarin → ↓ INR → thrombosis on mechanical valve</td><td>Monitor INR daily; ↑ warfarin dose 2–5×. Reverse on stopping rifampin (INR rises sharply).</td></tr>
+            <tr><td>Rifampin</td><td>DOACs (apixaban, rivaroxaban)</td><td>↑ P-gp/CYP3A4 → ↓ DOAC levels 50–75%</td><td>Avoid combination; use warfarin (VKA) if anticoagulation needed</td></tr>
+            <tr><td>Rifampin</td><td>Amiodarone</td><td>↓ Amiodarone levels → arrhythmia risk</td><td>Monitor amiodarone levels; consider alternative antibiotics</td></tr>
+            <tr><td>Fluoroquinolones (moxi, levo)</td><td>Amiodarone, sotalol</td><td>QTc prolongation → Torsades de Pointes risk</td><td>Avoid combination; if unavoidable: ECG monitoring, correct K⁺/Mg²⁺</td></tr>
+            <tr><td>Vancomycin + Pip-Tazo</td><td>—</td><td>↑↑ Nephrotoxicity (AKI risk 2–3×)</td><td>Substitute cefepime for pip-tazo where possible; monitor creatinine daily</td></tr>
+            <tr><td>Linezolid</td><td>SSRIs, SNRIs, tramadol</td><td>Serotonin syndrome (fever, myoclonus, confusion)</td><td>Stop serotonergic drugs before starting linezolid (24h for SSRIs; 14d for MAOIs)</td></tr>
+            <tr><td>Daptomycin</td><td>Statins (simvastatin, atorvastatin)</td><td>↑ CPK → myopathy / rhabdomyolysis</td><td>Hold statins for the entire daptomycin course; restart after completion</td></tr>
+            <tr><td>Voriconazole</td><td>Rifampin</td><td>↓ voriconazole levels by 96% — complete loss of efficacy</td><td><strong>ABSOLUTE CONTRAINDICATION</strong> — never co-administer</td></tr>
+            <tr><td>Voriconazole</td><td>Tacrolimus / Cyclosporine</td><td>↑↑ Calcineurin inhibitor levels (CYP3A4 inhibition)</td><td>Reduce immunosuppressant dose 50–75%; TDM q48h</td></tr>
+            <tr><td>Azithromycin / Clarithromycin</td><td>Amiodarone, digoxin</td><td>QTc prolongation + ↑ digoxin levels (P-gp/CYP3A4)</td><td>Monitor ECG + digoxin levels; prefer doxycycline for atypical coverage</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card card-amber">
+      <h3>🔬 Dose Adjustment in AKI &amp; RRT</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Drug</th><th>AKI (no RRT)</th><th>IHD</th><th>CVVH/CVVHDF</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Vancomycin</strong></td><td>↑ Interval; AUC-guided</td><td>Loading dose; supplement post-HD</td><td>AUC-guided; often q24–48h</td></tr>
+            <tr><td><strong>Meropenem</strong></td><td>↓ Dose (eGFR-based)</td><td>500 mg q12h + post-HD supplement</td><td>1–2 g q12h depending on CRRT flow rate</td></tr>
+            <tr><td><strong>Pip-Tazo</strong></td><td>Max 2.25 g q6h if eGFR &lt;20</td><td>2.25 g q8h + supplement post-HD</td><td>4.5 g q8h (standard dose often achievable)</td></tr>
+            <tr><td><strong>Colistin</strong></td><td>↓↓ Dose; complex — consult pharmacy</td><td>Supplement post-HD required</td><td>Complex PK — consult pharmacist + TDM if available</td></tr>
+            <tr><td><strong>Daptomycin</strong></td><td>Extend interval if eGFR &lt;30</td><td>6–10 mg/kg post-HD × 3/week</td><td>Standard dose; CPK + TDM</td></tr>
+            <tr><td><strong>Linezolid</strong></td><td>No dose adjustment needed</td><td>Supplement 200 mg post-HD</td><td>Standard dose (metabolites accumulate — monitor CBC)</td></tr>
+            <tr><td><strong>Fluconazole</strong></td><td>↓ Dose 50% if eGFR &lt;50</td><td>Full dose post-HD</td><td>400–800 mg q24h (standard dose)</td></tr>
+            <tr><td><strong>Ceftriaxone</strong></td><td>No adjustment needed</td><td>No adjustment</td><td>No adjustment (hepatic metabolism predominates)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pearl"><strong>CVVH filter variability:</strong> High-flux membranes clear vancomycin, meropenem, and colistin variably depending on effluent rate. Always involve clinical pharmacist for CRRT dosing — use population PK models with Bayesian update from TDM levels.</div>
+    </div>
+  </div>
+  <div class="card card-green">
+    <h3>🏥 Adverse Effects — Recognition &amp; Management</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Adverse effect</th><th>Causative drugs</th><th>Detection</th><th>Management</th></tr></thead>
+        <tbody>
+          <tr><td>Nephrotoxicity</td><td>Vancomycin, aminoglycosides, colistin, amphotericin B, pip-tazo + vanco</td><td>Daily creatinine; urine output; urinalysis</td><td>Reduce dose/frequency; adequate hydration; switch to less nephrotoxic agent</td></tr>
+          <tr><td>QTc prolongation</td><td>Fluoroquinolones (moxi), azithromycin, voriconazole, azoles, halofantrine</td><td>ECG at baseline and 48h; QTc &gt;500 ms or ↑ &gt;60 ms = discontinue</td><td>Stop drug; correct K⁺/Mg²⁺; avoid co-QT-prolonging drugs (amiodarone)</td></tr>
+          <tr><td>Myelosuppression (thrombocytopenia)</td><td>Linezolid (after ≥14d), TMP-SMX, flucytosine, ganciclovir</td><td>CBC weekly (linezolid); twice-weekly if prolonged; platelets &lt;100 → consider switch</td><td>Switch to alternative (daptomycin, tedizolid); G-CSF for neutropenia if needed</td></tr>
+          <tr><td>Serotonin syndrome</td><td>Linezolid (MAO-A inhibitor) + SSRIs/SNRIs/tramadol/meperidine</td><td>Hunter criteria: clonus, agitation, hyperthermia, diaphoresis</td><td>Stop all serotonergic agents; cyproheptadine; benzodiazepines; ICU monitoring</td></tr>
+          <tr><td>Hepatotoxicity</td><td>Rifampin, azole antifungals, pip-tazo (cholestasis), isoniazid</td><td>LFTs baseline then weekly; ALT &gt;3× ULN → assess symptoms; &gt;5× ULN → stop</td><td>Discontinue offending drug; supportive care; rechallenge with alternative if critical infection</td></tr>
+          <tr><td>C. difficile CDI</td><td>Any antibiotic (esp. fluoroquinolones, carbapenems, clindamycin, cephalosporins)</td><td>Stool toxin A/B PCR; WBC &gt;15, creatinine ×1.5 = severe CDI; CT for fulminant</td><td>Stop offending antibiotics; oral vancomycin 125 mg q6h × 10d or fidaxomicin 200 mg q12h × 10d</td></tr>
+          <tr><td>Hypokalaemia / hypomagnesaemia</td><td>Amphotericin B (tubular toxicity), pip-tazo, gentamicin</td><td>Daily electrolytes; ECG for QTc effect</td><td>Aggressive IV repletion; switch to echinocandin (fungal) or less toxic regimen</td></tr>
+          <tr><td>CPK elevation / myopathy</td><td>Daptomycin + statins; colistin</td><td>CPK weekly on daptomycin; CPK &gt;5× ULN or symptoms → stop</td><td>Stop daptomycin + statins; IV hydration; switch to linezolid for MRSA coverage</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TAB 8: EMPIRICAL PROTOCOLS ═══ -->
+<section class="tab" id="t8">
+  <div class="sh">
+    <h2>🗺️ Empirical Antibiotic Protocols — 2025</h2>
+    <p>Empirical protocols by clinical syndrome. Integrate with local antibiogram. Always de-escalate at 48–72h based on culture results and clinical response.</p>
+  </div>
+  <div class="card card-gold" style="margin-bottom:18px">
+    <h3>⚡ Unknown-Source Sepsis — Decision Algorithm</h3>
+    <div class="algo">
+      <div class="algo-step"><div class="algo-num">?</div><div class="algo-text"><strong>Assess MDR risk:</strong> Prior antibiotics (&lt;90d), prolonged ICU (&gt;5d), MDRO colonisation, prior MDRO infection, CPB &gt;150 min, AKI, re-intubation, nasal feeding → <strong>HIGH MDR risk</strong> if ≥2 factors present</div></div>
+      <div class="algo-step"><div class="algo-num">1</div><div class="algo-text"><strong>LOW MDR risk + haemodynamically stable:</strong><br>Pip-Tazo 4.5 g q6h IV + Vancomycin if MRSA risk (nasal screen+, CIED, prior MRSA)<br>OR Cefepime 2 g q8h ± Vancomycin</div></div>
+      <div class="algo-step"><div class="algo-num">2</div><div class="algo-text"><strong>HIGH MDR risk OR septic shock:</strong><br>Meropenem 2 g q8h IV (extended 3h infusion) + Vancomycin (AUC-guided) + Consider Amikacin 20 mg/kg if Pseudomonas/Acinetobacter suspected<br>Add antifungal (micafungin 150 mg) if: TPN, immunocompromised, Candida multi-site colonisation, ≥7d prior broad-spectrum AB</div></div>
+      <div class="algo-step"><div class="algo-num">3</div><div class="algo-text"><strong>CRGNB (Carbapenem-resistant GNB) suspicion:</strong><br>CZA 2.5 g q8h (KPC) OR Cefiderocol 2 g q8h (MBL/OXA-48) + Colistin (local protocol) + ID specialist consultation MANDATORY</div></div>
+      <div class="algo-step"><div class="algo-num">↓</div><div class="algo-text"><strong>At 48–72h:</strong> Review cultures. DE-ESCALATE to narrowest effective spectrum. Remove redundant agents. Reassess antifungal necessity.</div></div>
+    </div>
+  </div>
+  <div class="g2" style="margin-bottom:18px">
+    <div class="card card-red">
+      <h3>🫀 IE Empirical Regimens</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Scenario</th><th>Regimen</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><strong>NVE — community-acquired, low MRSA</strong></td><td>Ampicillin 2 g q4h + Flucloxacillin 2 g q4h + Gentamicin 3 mg/kg/24h</td><td>Covers streptococci, MSSA, enterococci; stop gentamicin at 5 days</td></tr>
+            <tr><td><strong>NVE — healthcare / MRSA risk</strong></td><td>Vancomycin 30 mg/kg/24h + Ceftriaxone 2 g q24h</td><td>Ceftriaxone adds HACEK + enterococcal coverage</td></tr>
+            <tr><td><strong>PVE early (&lt;12 months) — high CoNS/MRSA risk</strong></td><td>Vancomycin + Rifampin 900 mg/24h + Gentamicin × 2 weeks</td><td>Triple therapy; adjust to culture when available</td></tr>
+            <tr><td><strong>PVE late (&gt;12 months) — low MDR risk</strong></td><td>Ampicillin + Ceftriaxone ± Gentamicin</td><td>Similar to NVE; omit gentamicin if nephrotoxic risk</td></tr>
+            <tr><td><strong>Culture-negative IE — HACEK/Bartonella/Coxiella suspicion</strong></td><td>Ceftriaxone 2 g/24h + Doxycycline 100 mg q12h</td><td>Send Bartonella serology; Coxiella Phase I/II IgG; request valve PCR if surgery</td></tr>
+            <tr><td><strong>Fungal PVE suspected</strong></td><td>Micafungin 150 mg/24h OR Liposomal AmB 3 mg/kg/24h</td><td>Surgical consultation mandatory; prolonged antifungal + surgery</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card card-blue">
+      <h3>🦴 Mediastinitis Empirical Regimens</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Scenario</th><th>Regimen</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Early DSWI (&lt;7d), low MDR risk</strong></td><td>Cefazolin 2 g q8h + Vancomycin if MRSA risk</td><td>Gram+ coverage; de-escalate if Gram-neg excluded</td></tr>
+            <tr><td><strong>MDR/ICU-onset mediastinitis</strong></td><td>Vancomycin + Pip-Tazo 4.5 g q6h OR Meropenem 1 g q8h</td><td>Covers MRSA + ESBL + Pseudomonas empirically</td></tr>
+            <tr><td><strong>Culture-negative (Mycoplasma risk)</strong></td><td>Moxifloxacin 400 mg/24h IV + Vancomycin</td><td>Request specific Mycoplasma culture + PCR on wound tissue</td></tr>
+            <tr><td><strong>XDR Acinetobacter (prior colonisation)</strong></td><td>Colistin + Meropenem 2 g q8h extended + Tigecycline</td><td>Sulbactam combinations as alternative; ID consultation</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card card-amber">
+      <h3>💨 VAP Empirical Regimens</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Risk group</th><th>Regimen</th><th>Duration</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Early VAP (&lt;5d), no MDR risk</strong></td><td>Pip-Tazo 4.5 g q6h OR Ceftazidime 2 g q8h OR Levo 750 mg/24h</td><td>7–8 days if clinical improvement</td></tr>
+            <tr><td><strong>Late VAP / high MDR risk</strong></td><td>Meropenem 1–2 g q8h + Amikacin 20 mg/kg/24h ± Vancomycin (MRSA screen+)</td><td>8–14 days depending on pathogen</td></tr>
+            <tr><td><strong>XDR Acinetobacter</strong></td><td>Colistin systemic + Colistin/Tobramycin inhaled + Meropenem HD + Tigecycline</td><td>14+ days; ID consultation mandatory</td></tr>
+            <tr><td><strong>Stenotrophomonas maltophilia</strong></td><td>TMP-SMX 15 mg/kg/24h IV/PO (SMX component) + Levofloxacin</td><td>10–14 days (intrinsic carbapenem resistance)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card card-teal">
+      <h3>🏥 Surgical Prophylaxis Protocol</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Scenario</th><th>Drug</th><th>Dose</th><th>Timing &amp; redosing</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Standard cardiac surgery</strong></td><td>Cefazolin</td><td>2 g IV (3 g if &gt;120 kg)</td><td>Within 60 min pre-incision; repeat q4h intraop; STOP at 24h</td></tr>
+            <tr><td><strong>MRSA carrier (nasal screen+)</strong></td><td>Cefazolin + Vancomycin</td><td>Cef 2 g + Vanco 15–20 mg/kg</td><td>Vanco over 90 min starting 2h pre-incision; cefazolin 60 min pre</td></tr>
+            <tr><td><strong>Penicillin allergy (non-anaphylactic)</strong></td><td>Cefuroxime or Cefazolin</td><td>1.5 g or 2 g IV</td><td>Cross-reactivity &lt;2% — cephalosporins generally safe</td></tr>
+            <tr><td><strong>Severe penicillin allergy (anaphylaxis)</strong></td><td>Vancomycin ± Gentamicin</td><td>Vanco 15 mg/kg + Gent 1.5 mg/kg</td><td>Vanco over 90 min; gentamicin 30 min pre-incision</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pearl"><strong>Duration:</strong> Single dose or 24h maximum (STS guidelines). Longer prophylaxis does NOT reduce SSI rates and selects MDR organisms.</div>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <h3>🗺️ Quick Reference — Which Antibiotic for Which Bug</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Pathogen</th><th>Drug of choice</th><th>Alternative</th><th>NEVER use</th></tr></thead>
+        <tbody>
+          <tr><td><strong>MSSA</strong></td><td>Flucloxacillin / Nafcillin</td><td>Cefazolin; Vancomycin (allergy only)</td><td>Vancomycin if MSSA confirmed (inferior outcomes in RCTs)</td></tr>
+          <tr><td><strong>MRSA</strong></td><td>Vancomycin (AUC-guided)</td><td>Linezolid, Daptomycin (not pneumonia), Ceftaroline</td><td>Cephalosporins, carbapenems alone</td></tr>
+          <tr><td><strong>CoNS (MR) — PVE</strong></td><td>Vancomycin + Rifampin + Gentamicin × 2 wks</td><td>Linezolid + Rifampin if susceptible</td><td>Rifampin monotherapy (resistance emerges in days)</td></tr>
+          <tr><td><strong>Streptococcus (penicillin-susceptible)</strong></td><td>Penicillin G / Ceftriaxone</td><td>Vancomycin (allergy)</td><td>Aminoglycosides alone</td></tr>
+          <tr><td><strong>Enterococcus (non-VRE)</strong></td><td>Ampicillin + Ceftriaxone</td><td>Vancomycin + Gentamicin</td><td>Cephalosporins (intrinsic resistance)</td></tr>
+          <tr><td><strong>VRE (E. faecium)</strong></td><td>Linezolid</td><td>Daptomycin (high-dose 10–12 mg/kg)</td><td>Vancomycin, penicillins, cephalosporins</td></tr>
+          <tr><td><strong>HACEK</strong></td><td>Ceftriaxone 2 g/24h × 4–6 wks</td><td>Ampicillin (if β-lactamase negative) or Fluoroquinolone</td><td>Aminoglycosides alone (nephrotoxic, inferior outcomes)</td></tr>
+          <tr><td><strong>ESBL Klebsiella / E. coli</strong></td><td>Meropenem</td><td>CZA (KPC), Ertapenem (no Pseudomonas risk)</td><td>Cephalosporins (resistant), Pip-Tazo (unreliable for ESBL)</td></tr>
+          <tr><td><strong>Pseudomonas (MDR)</strong></td><td>Ceftolozane-tazobactam OR CZA + activity</td><td>Cefepime + aminoglycoside; Colistin (last resort)</td><td>Ertapenem (intrinsic resistance)</td></tr>
+          <tr><td><strong>XDR Acinetobacter</strong></td><td>Colistin + Meropenem HD + Tigecycline</td><td>Sulbactam-based; Cefiderocol</td><td>Monotherapy with any agent</td></tr>
+          <tr><td><strong>Candida (systemic / PVE)</strong></td><td>Micafungin / Caspofungin</td><td>L-AmB (biofilm); Fluconazole (if susceptible — step-down only)</td><td>Fluconazole for C. glabrata/krusei; azoles for C. auris</td></tr>
+          <tr><td><strong>Aspergillus</strong></td><td>Voriconazole + L-AmB (combo in severe)</td><td>Isavuconazole; L-AmB monotherapy</td><td>Fluconazole (no Aspergillus activity); echinocandins alone</td></tr>
+          <tr><td><strong>Mycoplasma hominis</strong></td><td>Moxifloxacin 400 mg/24h</td><td>Doxycycline, Clindamycin</td><td>All β-lactams (no cell wall target)</td></tr>
+          <tr><td><strong>Coxiella burnetii (Q-fever IE)</strong></td><td>Doxycycline 200 mg/24h + Hydroxychloroquine 600 mg/24h × ≥18 months</td><td>Fluoroquinolone + Doxycycline</td><td>Monotherapy; β-lactams alone</td></tr>
+          <tr><td><strong>Bartonella IE</strong></td><td>Doxycycline + Gentamicin × 2 wks, then Doxycycline + Rifampin × 3 months</td><td>Azithromycin (less evidence)</td><td>Cephalosporins alone; β-lactams alone</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TAB 9: QUIZ ═══ -->
+<section class="tab" id="t9">
+  <div class="sh">
+    <h2>📝 Clinical Quiz — Infection Mastery</h2>
+    <p>12 clinically oriented questions spanning microbiology, Duke criteria, antibiotic selection, drug interactions, and MDR management in the cardiac surgery setting.</p>
+  </div>
+  <div class="qscore">
+    <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Correct answers</div>
+    <div class="big" id="qscr">0 / 12</div>
+    <div class="qprog"><div class="qpbar" id="qpbar"></div></div>
+    <div style="font-size:12px;color:var(--dim);margin-bottom:10px" id="qmsg">Answer the questions below</div>
+    <button onclick="qreset()" style="background:var(--bg3);border:1px solid var(--rim);color:var(--muted);border-radius:var(--r);padding:7px 18px;cursor:pointer;font-size:12px">↺ Reset Quiz</button>
+  </div>
+
+  <div class="qs" id="q0"><h4><span class="qn">Q1.</span> S. aureus prosthetic valve endocarditis — cultures grow MSSA. Drug of CHOICE (not alternative)?</h4><div class="qopts"><button class="qo" onclick="qa(0,0)">A. Vancomycin 30 mg/kg/24h</button><button class="qo" onclick="qa(0,1)">B. Flucloxacillin 12 g/24h + Rifampin + Gentamicin</button><button class="qo" onclick="qa(0,2)">C. Daptomycin 10 mg/kg/24h</button><button class="qo" onclick="qa(0,3)">D. Linezolid 600 mg q12h</button></div><div class="qexp" id="qe0"><strong>✅ B — Flucloxacillin + Rifampin + Gentamicin</strong><br>For confirmed MSSA PVE, anti-staphylococcal penicillins (flucloxacillin/nafcillin) are Class I recommended — superior to vancomycin in randomised trials: lower mortality, faster bacteremia clearance, less nephrotoxicity. Rifampin is added for biofilm penetration on the prosthetic valve. Gentamicin given for first 2 weeks only (synergy, not prolonged). Vancomycin is reserved for penicillin allergy or confirmed MRSA.</div></div>
+
+  <div class="qs" id="q1"><h4><span class="qn">Q2.</span> #1 cause of early prosthetic valve endocarditis (&lt;12 months post-implant)?</h4><div class="qopts"><button class="qo" onclick="qa(1,0)">A. Viridans streptococci</button><button class="qo" onclick="qa(1,1)">B. S. aureus (MRSA)</button><button class="qo" onclick="qa(1,2)">C. Coagulase-negative staphylococci (CoNS)</button><button class="qo" onclick="qa(1,3)">D. Enterococcus faecalis</button></div><div class="qexp" id="qe1"><strong>✅ C — CoNS (predominantly S. epidermidis)</strong><br>CoNS cause 30–40% of early PVE. They contaminate at implantation and adhere via icaABCD-mediated biofilm (polysaccharide intercellular adhesin — PIA). Over 70% are methicillin-resistant. Late PVE (&gt;12 months) has a pathogen distribution similar to NVE, with streptococci and S. aureus predominating.</div></div>
+
+  <div class="qs" id="q2"><h4><span class="qn">Q3.</span> A farmer with cattle contact has culture-negative endocarditis. Priority organism to test for?</h4><div class="qopts"><button class="qo" onclick="qa(2,0)">A. Bartonella henselae (cat scratch)</button><button class="qo" onclick="qa(2,1)">B. HACEK organisms (slow cultures)</button><button class="qo" onclick="qa(2,2)">C. Coxiella burnetii (Q-fever)</button><button class="qo" onclick="qa(2,3)">D. Mycoplasma pneumoniae</button></div><div class="qexp" id="qe2"><strong>✅ C — Coxiella burnetii (Q-fever)</strong><br>Cattle, sheep, and goats are the primary reservoirs for Coxiella burnetii. It is an obligate intracellular organism — does NOT grow on standard blood cultures. Diagnosis: Phase I IgG titre &gt;1:800 = Major Duke criterion in the 2023 ESC guidelines. Treatment: Doxycycline 200 mg/24h + Hydroxychloroquine 600 mg/24h for ≥18 months (chronic Q-fever IE). Bartonella is linked to cat/flea contact (B. henselae) or louse contact/homelessness (B. quintana).</div></div>
+
+  <div class="qs" id="q3"><h4><span class="qn">Q4.</span> Daptomycin is prescribed for MRSA PVE. Which co-medication must be HELD?</h4><div class="qopts"><button class="qo" onclick="qa(3,0)">A. Amiodarone 200 mg/24h</button><button class="qo" onclick="qa(3,1)">B. Atorvastatin 40 mg/24h</button><button class="qo" onclick="qa(3,2)">C. Ceftriaxone 2 g/24h</button><button class="qo" onclick="qa(3,3)">D. Metoprolol 50 mg q12h</button></div><div class="qexp" id="qe3"><strong>✅ B — Statins (Atorvastatin)</strong><br>Daptomycin causes myopathy/rhabdomyolysis — a risk significantly potentiated by HMG-CoA reductase inhibitors (statins). Hold ALL statins for the entire daptomycin course. Additionally: (1) Daptomycin is inactivated by pulmonary surfactant — never use for pneumonia; (2) Use higher doses for IE (8–12 mg/kg/24h vs 6 mg/kg for bacteremia alone); (3) Monitor CPK weekly — stop if CPK &gt;5× ULN or symptomatic myopathy.</div></div>
+
+  <div class="qs" id="q4"><h4><span class="qn">Q5.</span> Post-cardiac surgery mediastinitis — cultures negative on standard agar for 7 days. Organism most likely missed and required action?</h4><div class="qopts"><button class="qo" onclick="qa(4,0)">A. MRSA — standard culture always detects it</button><button class="qo" onclick="qa(4,1)">B. Mycoplasma hominis — request specific Mycoplasma broth culture + treat with moxifloxacin</button><button class="qo" onclick="qa(4,2)">C. Pseudomonas — request MacConkey agar specifically</button><button class="qo" onclick="qa(4,3)">D. Gordonia — requires Ziehl-Neelsen acid-fast stain only</button></div><div class="qexp" id="qe4"><strong>✅ B — Mycoplasma hominis</strong><br>Mycoplasma hominis: (1) lacks a cell wall → not visible on Gram stain; (2) does NOT grow on blood/chocolate/MacConkey agar; (3) intrinsically resistant to all β-lactams (no cell wall target); (4) requires Mycoplasma-specific liquid broth incubated 7–14 days under microaerophilic conditions. Treatment: Moxifloxacin 400 mg/24h IV (best evidence) or Doxycycline 100 mg q12h for 4–6 weeks. Always request specific Mycoplasma culture in culture-negative post-sternotomy mediastinitis.</div></div>
+
+  <div class="qs" id="q5"><h4><span class="qn">Q6.</span> Which is a MAJOR Duke criterion per 2023 ESC modified guidelines?</h4><div class="qopts"><button class="qo" onclick="qa(5,0)">A. Fever &gt;38°C</button><button class="qo" onclick="qa(5,1)">B. IV drug use history</button><button class="qo" onclick="qa(5,2)">C. Abnormal ¹⁸F-FDG PET/CT activity around a prosthetic valve implanted &gt;3 months ago</button><button class="qo" onclick="qa(5,3)">D. Janeway lesions on examination</button></div><div class="qexp" id="qe5"><strong>✅ C — ¹⁸F-FDG PET/CT (prosthetic valve)</strong><br>The 2015 and 2023 ESC guidelines elevated abnormal ¹⁸F-FDG PET/CT activity around a prosthetic valve (implanted &gt;3 months) to a MAJOR Duke criterion. Leukocyte SPECT/CT is also now recognised as a major criterion alternative. This is particularly valuable in PVE where echocardiography is limited by prosthetic acoustic shadowing. Fever, IV drug use, Janeway lesions, Osler nodes, Roth spots, and rheumatoid factor are all MINOR criteria.</div></div>
+
+  <div class="qs" id="q6"><h4><span class="qn">Q7.</span> Rifampin added to vancomycin for MRSA PVE. Patient deteriorates at 3 weeks. Most likely explanation?</h4><div class="qopts"><button class="qo" onclick="qa(6,0)">A. Vancomycin nephrotoxicity — drug failure due to AKI</button><button class="qo" onclick="qa(6,1)">B. Rifampin resistance emerged in CoNS/S. aureus during therapy</button><button class="qo" onclick="qa(6,2)">C. Rifampin auto-induced its own CYP metabolism — levels fell</button><button class="qo" onclick="qa(6,3)">D. Wrong choice — linezolid should have been used</button></div><div class="qexp" id="qe6"><strong>✅ B — Rifampin resistance emergence</strong><br>CoNS (and S. aureus) can develop rifampin resistance via rpoB mutations (RNA polymerase β subunit) during therapy — this is precisely why rifampin must NEVER be used as monotherapy. The combination with vancomycin reduces but does not eliminate this risk. On clinical deterioration: repeat susceptibility testing for rifampin resistance. If confirmed: switch to linezolid + daptomycin combination or consult ID for salvage regimen.</div></div>
+
+  <div class="qs" id="q7"><h4><span class="qn">Q8.</span> Patient with mechanical valve on warfarin starts rifampin for PVE. What happens to INR?</h4><div class="qopts"><button class="qo" onclick="qa(7,0)">A. INR increases — warfarin effect enhanced (thrombotic events less likely)</button><button class="qo" onclick="qa(7,1)">B. INR decreases — rifampin induces warfarin metabolism → thrombosis risk on mechanical valve</button><button class="qo" onclick="qa(7,2)">C. No significant change — rifampin does not interact with warfarin</button><button class="qo" onclick="qa(7,3)">D. INR fluctuates unpredictably but usually increases after 1 week</button></div><div class="qexp" id="qe7"><strong>✅ B — INR decreases (thrombosis risk)</strong><br>Rifampin is a potent inducer of CYP2C9 (warfarin's primary metabolic enzyme) and P-glycoprotein. This accelerates warfarin clearance, reducing anticoagulant effect — INR falls, increasing thrombosis risk on a mechanical valve. Management: Monitor INR daily when starting rifampin; increase warfarin dose (sometimes 2–5× normal required). Critical warning: when rifampin is STOPPED, CYP2C9 induction fades over 1–2 weeks — INR rises sharply. Monitor INR daily for ≥2 weeks after rifampin discontinuation and reduce warfarin dose proactively.</div></div>
+
+  <div class="qs" id="q8"><h4><span class="qn">Q9.</span> Which carbapenem is CONTRAINDICATED for Pseudomonas aeruginosa VAP?</h4><div class="qopts"><button class="qo" onclick="qa(8,0)">A. Meropenem</button><button class="qo" onclick="qa(8,1)">B. Ertapenem</button><button class="qo" onclick="qa(8,2)">C. Imipenem-cilastatin</button><button class="qo" onclick="qa(8,3)">D. Doripenem</button></div><div class="qexp" id="qe8"><strong>✅ B — Ertapenem</strong><br>Ertapenem has NO activity against Pseudomonas aeruginosa. This is because: (1) Pseudomonas lacks the specific outer membrane porin (OprD) that ertapenem requires for entry; (2) Pseudomonas possesses AmpC β-lactamase and MexAB-OprM efflux pumps that further exclude ertapenem. Ertapenem should NEVER be used for Pseudomonas infections, VAP, or mediastinitis. Meropenem, imipenem, doripenem, piperacillin-tazobactam, ceftazidime, cefepime, and ciprofloxacin all have anti-pseudomonal activity (subject to local susceptibility).</div></div>
+
+  <div class="qs" id="q9"><h4><span class="qn">Q10.</span> Modern vancomycin monitoring target (not trough alone)?</h4><div class="qopts"><button class="qo" onclick="qa(9,0)">A. Trough concentration 15–20 mg/L (traditional target)</button><button class="qo" onclick="qa(9,1)">B. AUC₂₄/MIC ratio of 400–600 mg·h/L (ASHP/IDSA 2020 guideline)</button><button class="qo" onclick="qa(9,2)">C. Peak concentration &gt;40 mg/L</button><button class="qo" onclick="qa(9,3)">D. Trough &gt;10 mg/L is sufficient for all indications</button></div><div class="qexp" id="qe9"><strong>✅ B — AUC₂₄/MIC 400–600 mg·h/L</strong><br>The 2020 ASHP/IDSA/SIDP joint consensus guideline replaced trough-only monitoring with AUC/MIC-guided dosing. Rationale: (1) trough alone poorly predicts both efficacy AND nephrotoxicity; (2) patients can have "therapeutic" troughs with toxic AUC or sub-therapeutic AUC. Practice: collect 2 blood samples (1–2h post-dose + pre-dose) → use Bayesian software for AUC calculation. Target AUC/MIC 400–600 for S. aureus with MIC 1 mg/L (most MRSA). Trough-only monitoring should be abandoned.</div></div>
+
+  <div class="qs" id="q10"><h4><span class="qn">Q11.</span> Patient with MRSA bacteremia has a permanent pacemaker implanted 2 years ago. Correct management?</h4><div class="qopts"><button class="qo" onclick="qa(10,0)">A. Vancomycin 6 weeks — antibiotics alone sufficient, preserve device</button><button class="qo" onclick="qa(10,1)">B. Complete device extraction (lead + generator) + antibiotics; reimplant after ≥14 days negative cultures</button><button class="qo" onclick="qa(10,2)">C. Remove generator only (pocket), leave leads — adequate for bacteremia treatment</button><button class="qo" onclick="qa(10,3)">D. Observation with TEE at 1 week — extract only if vegetation found</button></div><div class="qexp" id="qe10"><strong>✅ B — Complete extraction + antibiotics; delayed reimplant</strong><br>S. aureus bacteremia with a CIED mandates complete system extraction (generator + ALL leads) because: (1) S. aureus seeds pacemaker leads in &gt;50% of cases; (2) antibiotics-alone cure rate &lt;25% due to biofilm; (3) persistent/relapsed bacteremia is life-threatening. Antibiotic duration: ≥2 weeks from first negative blood culture (uncomplicated bacteremia); ≥6 weeks if CDIE confirmed. Reimplantation: ≥14 days after first negative blood culture at a new anatomical site. Use transvenous lead extraction (TLE) if feasible; surgical extraction for vegetations &gt;25 mm or failed TLE.</div></div>
+
+  <div class="qs" id="q11"><h4><span class="qn">Q12.</span> Which drug combination is an ABSOLUTE contraindication due to near-complete pharmacokinetic abolition?</h4><div class="qopts"><button class="qo" onclick="qa(11,0)">A. Vancomycin + Piperacillin-tazobactam</button><button class="qo" onclick="qa(11,1)">B. Voriconazole + Rifampin</button><button class="qo" onclick="qa(11,2)">C. Linezolid + Vancomycin</button><button class="qo" onclick="qa(11,3)">D. Meropenem + Colistin</button></div><div class="qexp" id="qe11"><strong>✅ B — Voriconazole + Rifampin</strong><br>Rifampin induces CYP2C19 and CYP3A4 — the primary enzymes metabolising voriconazole — reducing plasma voriconazole levels by &gt;96%, rendering it completely ineffective (undetectable plasma levels). This is an ABSOLUTE CONTRAINDICATION in all prescribing information. If simultaneous antifungal (Aspergillus) + rifampin (biofilm staphylococci) treatment is required: use isavuconazole (less CYP interaction) or liposomal amphotericin B instead of voriconazole. Vancomycin + pip-tazo significantly increases AKI risk but is not absolutely contraindicated; meropenem + colistin is an established combination for XDR GNB.</div></div>
+</section>
+
+<div class="footnote">
+  📚 Sources: ESC Guidelines on Infective Endocarditis 2023; AHA/IDSA Scientific Statements 2025; IDSA VAP/HAP Guidelines 2016; ASHP/IDSA/SIDP Vancomycin Consensus 2020; ISHLT LVAD Infection Guidelines 2020; WHO Global AMR Action Plan; STS SSI Prevention Guidelines; Braunwald's Heart Disease 12th ed.; Mandell, Douglas &amp; Bennett's Infectious Diseases 9th ed. Always integrate local antibiogram data and consult Infectious Disease specialist for complex cases.
+  <br><br>Built for cardiac surgery clinical education · StarleyBy · 2025
+</div>
+
+<script>
+const tabs=document.querySelectorAll('.tab');
+const tgBtns=document.querySelectorAll('.tg-btn');
+function gt(i,b){
+  tabs.forEach(t=>t.classList.remove('active'));
+  tgBtns.forEach(n=>n.classList.remove('active'));
+  tabs[i].classList.add('active');
+  b.classList.add('active');
+  // scroll to content start (below sticky nav)
+  const page=document.querySelector('.page');
+  if(page){const y=page.getBoundingClientRect().top+window.scrollY-10;window.scrollTo({top:y,behavior:'smooth'});}
+  else{window.scrollTo({top:0,behavior:'smooth'});}
+}
+const TOTAL=12;
+let sc=new Array(TOTAL).fill(null);
+// correct answer indices (0=A,1=B,2=C,3=D)
+// Q1:B=1, Q2:C=2, Q3:C=2, Q4:B=1, Q5:B=1, Q6:C=2, Q7:B=1, Q8:B=1, Q9:B=1, Q10:B=1, Q11:B=1, Q12:B=1
+const correct=[1,2,2,1,1,2,1,1,1,1,1,1];
+function qa(qi,ci){
+  if(sc[qi]!==null)return;
+  const q=document.getElementById('q'+qi);
+  const opts=q.querySelectorAll('.qo');
+  const exp=document.getElementById('qe'+qi);
+  opts.forEach(o=>o.disabled=true);
+  const ok=ci===correct[qi];
+  sc[qi]=ok;
+  opts[ci].classList.add(ok?'correct':'wrong');
+  if(!ok)opts[correct[qi]].classList.add('reveal');
+  exp.classList.add('show');
+  qupdate();
+}
+function qupdate(){
+  const ans=sc.filter(s=>s!==null).length;
+  const right=sc.filter(s=>s===true).length;
+  document.getElementById('qscr').textContent=right+' / '+ans;
+  document.getElementById('qpbar').style.width=(right/TOTAL*100)+'%';
+  const msgs=['Answer the questions below','Keep going!','Good progress!','Well done!','Excellent! 🏆'];
+  document.getElementById('qmsg').textContent=ans===TOTAL?
+    (right>=10?'🏆 Outstanding! '+right+'/'+TOTAL:'✅ Complete: '+right+'/'+TOTAL+' — review explanations above'):
+    msgs[Math.min(Math.floor(right/3),4)];
+}
+function qreset(){
+  sc=new Array(TOTAL).fill(null);
+  document.querySelectorAll('.qo').forEach(o=>{o.classList.remove('correct','wrong','reveal');o.disabled=false});
+  document.querySelectorAll('.qexp').forEach(e=>e.classList.remove('show'));
+  document.getElementById('qscr').textContent='0 / 12';
+  document.getElementById('qpbar').style.width='0';
+  document.getElementById('qmsg').textContent='Answer the questions below';
+}
+</script>
 </body>
 </html>
