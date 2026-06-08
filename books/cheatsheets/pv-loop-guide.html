@@ -4,85 +4,46 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pressure–Volume Loop Atlas | Complete Clinical Guide</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ─── TOKENS ───────────────────────────────────────────────────── */
 :root {
-  --bg:       #070d1a;
-  --bg2:      #0d1627;
-  --bg3:      #111e35;
-  --glass:    rgba(255,255,255,0.03);
-  --rim:      rgba(255,255,255,0.06);
-  --text:     #e2eaf8;
-  --muted:    #7b90b8;
-  --dim:      #4a5a78;
+  --bg:#070d1a;--bg2:#0d1627;--bg3:#111e35;--bg4:#162440;
+  --rim:rgba(255,255,255,0.07);--glass:rgba(255,255,255,0.025);
+  --text:#e2eaf8;--muted:#7b90b8;--dim:#4a5a78;
 
-  --gold:     #f0c040;
-  --gold2:    #c99a20;
-  --red:      #e85555;
-  --red-dim:  rgba(232,85,85,0.15);
-  --green:    #42c47a;
-  --green-dim:rgba(66,196,122,0.12);
-  --blue:     #4c9fff;
-  --blue-dim: rgba(76,159,255,0.12);
-  --amber:    #f59e0b;
-  --amber-dim:rgba(245,158,11,0.12);
-  --teal:     #2dd4bf;
-  --teal-dim: rgba(45,212,191,0.12);
-  --purple:   #a78bfa;
-  --purple-dim:rgba(167,139,250,0.12);
+  --gold:#f0c040;--gold2:#c99a20;
+  --red:#e85555;--red-dim:rgba(232,85,85,0.15);
+  --green:#42c47a;--green-dim:rgba(66,196,122,0.12);
+  --blue:#4c9fff;--blue-dim:rgba(76,159,255,0.12);
+  --amber:#f59e0b;--amber-dim:rgba(245,158,11,0.12);
+  --teal:#2dd4bf;--teal-dim:rgba(45,212,191,0.12);
+  --purple:#a78bfa;--purple-dim:rgba(167,139,250,0.12);
 
-  --r: 16px;
-  --r2: 24px;
-  --shadow: 0 4px 32px rgba(0,0,0,0.5);
+  --r:14px;--r2:22px;
 }
-
-/* ─── RESET ────────────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'DM Sans',sans-serif;
-  font-size:15px;
-  line-height:1.7;
-  min-height:100vh;
-  overflow-x:hidden;
-}
-::selection{background:rgba(240,192,64,0.3);color:#fff}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14.5px;line-height:1.7;overflow-x:hidden}
+::selection{background:rgba(240,192,64,.3);color:#fff}
 
-/* ─── HEADER ───────────────────────────────────────────────────── */
-.header{
-  position:sticky;top:0;z-index:300;
-  background:rgba(7,13,26,0.92);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--rim);
-}
-.header-inner{
-  max-width:1400px;margin:0 auto;
-  display:flex;align-items:center;
-  padding:12px 28px;
-  gap:16px;
-}
-.logo{
-  font-family:'DM Serif Display',serif;
-  font-size:18px;color:var(--gold);
-  white-space:nowrap;
-}
-.logo small{display:block;font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);font-weight:400;margin-top:-2px}
+.hdr{position:sticky;top:0;z-index:300;background:rgba(7,13,26,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--rim)}
+.hdr-top{display:flex;align-items:center;padding:12px 24px;gap:12px}
+.logo{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--gold);line-height:1.1}
+.logo small{display:block;font-family:'DM Sans',sans-serif;font-weight:400;font-size:10px;color:var(--muted)}
 
 /* TAB GRID */
 .tab-grid-wrap{
   background:var(--bg2);
   border-bottom:2px solid var(--rim);
   padding:14px 20px;
-  position:sticky;top:54px;z-index:200;
+  position:sticky;top:53px;z-index:200;
 }
 .tab-grid{
   display:grid;
   grid-template-columns:repeat(9,1fr);
   gap:6px;
-  max-width:1400px;
+  max-width:1440px;
   margin:0 auto;
 }
 .tg-btn{
@@ -120,7 +81,7 @@ body{
 @media(max-width:860px){
   .tab-grid-wrap{
     padding:10px 12px;
-    top:50px;
+    top:49px;
   }
   .tab-grid{
     grid-template-columns:repeat(5,1fr);
@@ -135,24 +96,18 @@ body{
   .tg-label{font-size:9px}
 }
 @media(max-width:400px){
-  .tab-grid{grid-template-columns:repeat(3,1fr);gap:4px}
+  .tab-grid{grid-template-columns:repeat(5,1fr);gap:4px}
   .tg-btn{min-height:52px;padding:6px 3px}
   .tg-icon{font-size:15px}
   .tg-label{font-size:8.5px}
 }
 
-/* ─── LAYOUT ───────────────────────────────────────────────────── */
-.page{max-width:1400px;margin:0 auto;padding:36px 28px 80px}
+.page{max-width:1440px;margin:0 auto;padding:28px 24px 80px}
 .tab{display:none}.tab.active{display:block}
 
-/* ─── SECTION HEADS ────────────────────────────────────────────── */
-.sec-head{margin-bottom:32px}
-.sec-head h2{
-  font-family:'DM Serif Display',serif;
-  font-size:32px;color:var(--gold);
-  display:flex;align-items:center;gap:14px;
-}
-.sec-head p{color:var(--muted);font-size:14px;margin-top:6px;max-width:720px}
+.sh{margin-bottom:28px}
+.sh h2{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--gold);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.sh p{color:var(--muted);font-size:13.5px;margin-top:5px;max-width:800px}
 
 /* ─── GRID HELPERS ─────────────────────────────────────────────── */
 .g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px}
@@ -432,39 +387,39 @@ input[type=range]{
 
 <div class="tab-grid-wrap">
   <div class="tab-grid" id="tabGrid">
-    <button class="tg-btn active" onclick="goTab(0,this)">
+    <button class="tg-btn active" onclick="gt(0,this)">
       <span class="tg-icon">🫀</span>
       <span class="tg-label">Normal Loop</span>
     </button>
-    <button class="tg-btn" onclick="goTab(1,this)">
+    <button class="tg-btn" onclick="gt(1,this)">
       <span class="tg-icon">⚙️</span>
       <span class="tg-label">Determinants</span>
     </button>
-    <button class="tg-btn" onclick="goTab(2,this)">
+    <button class="tg-btn" onclick="gt(2,this)">
       <span class="tg-icon">🫁</span>
       <span class="tg-label">Valvular Disease</span>
     </button>
-    <button class="tg-btn" onclick="goTab(3,this)">
+    <button class="tg-btn" onclick="gt(3,this)">
       <span class="tg-icon">❤️</span>
       <span class="tg-label">Cardiomyopathies</span>
     </button>
-    <button class="tg-btn" onclick="goTab(4,this)">
+    <button class="tg-btn" onclick="gt(4,this)">
       <span class="tg-icon">⚠️</span>
       <span class="tg-label">Heart Failure</span>
     </button>
-    <button class="tg-btn" onclick="goTab(5,this)">
+    <button class="tg-btn" onclick="gt(5,this)">
       <span class="tg-icon">💎</span>
       <span class="tg-label">Clinical Pearls</span>
     </button>
-    <button class="tg-btn" onclick="goTab(6,this)">
+    <button class="tg-btn" onclick="gt(6,this)">
       <span class="tg-icon">⚖️</span>
       <span class="tg-label">RV Physiology</span>
     </button>
-    <button class="tg-btn" onclick="goTab(7,this)">
+    <button class="tg-btn" onclick="gt(7,this)">
       <span class="tg-icon">🏥</span>
       <span class="tg-label">Perioperative</span>
     </button>
-    <button class="tg-btn" onclick="goTab(8,this)">
+    <button class="tg-btn" onclick="gt(8,this)">
       <span class="tg-icon">📝</span>
       <span class="tg-label">Quiz</span>
     </button>
@@ -476,8 +431,8 @@ input[type=range]{
 <!-- ══════════════════════════════════════════════════════════════════
      TAB 1 — NORMAL PV LOOP
 ═══════════════════════════════════════════════════════════════════ -->
-<section class="tab active" id="tab0">
-  <div class="sec-head">
+<section class="tab active" id="t0">
+  <div class="sh">
     <h2>🫀 Normal Pressure–Volume Loop</h2>
     <p>The PV loop is the fundamental graphical description of left ventricular mechanics during a single cardiac cycle, relating instantaneous chamber pressure to instantaneous chamber volume.</p>
   </div>
@@ -1881,13 +1836,21 @@ input[type=range]{
 <script>
 // ─── TAB NAVIGATION ──────────────────────────────────────────────
 const tabs = document.querySelectorAll('.tab');
-const navBtns = document.querySelectorAll('.nav-btn');
+const tgBtns = document.querySelectorAll('.tg-btn');
 function goTab(idx, btn){
   tabs.forEach(t=>t.classList.remove('active'));
-  navBtns.forEach(b=>b.classList.remove('active'));
+  tgBtns.forEach(b=>b.classList.remove('active'));
   tabs[idx].classList.add('active');
   btn.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
+  
+  // scroll to content start (below sticky nav)
+  const page = document.querySelector('.page');
+  if(page){
+    const y = page.getBoundingClientRect().top + window.scrollY - 10;
+    window.scrollTo({top:y, behavior:'smooth'});
+  } else {
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
 }
 
 // ─── INTERACTIVE SIMULATOR ────────────────────────────────────────
