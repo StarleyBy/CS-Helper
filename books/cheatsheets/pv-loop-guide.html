@@ -427,19 +427,49 @@ input[type=range]{
       ⟳ PV Loop Atlas
       <small>Complete Cardiac Physiology Reference</small>
     </div>
-    <nav class="nav-scroll">
-      <button class="nav-btn active" onclick="goTab(0,this)">① Normal Loop</button>
-      <button class="nav-btn" onclick="goTab(1,this)">② Determinants</button>
-      <button class="nav-btn" onclick="goTab(2,this)">③ Valvular Disease</button>
-      <button class="nav-btn" onclick="goTab(3,this)">④ Cardiomyopathies</button>
-      <button class="nav-btn" onclick="goTab(4,this)">⑤ Heart Failure</button>
-      <button class="nav-btn" onclick="goTab(5,this)">⑥ Clinical Pearls</button>
-      <button class="nav-btn" onclick="goTab(6,this)">⑦ RV Physiology</button>
-      <button class="nav-btn" onclick="goTab(7,this)">⑧ Perioperative</button>
-      <button class="nav-btn" onclick="goTab(8,this)">⑨ Quiz</button>
-    </nav>
   </div>
 </header>
+
+<div class="tab-grid-wrap">
+  <div class="tab-grid" id="tabGrid">
+    <button class="tg-btn active" onclick="goTab(0,this)">
+      <span class="tg-icon">🫀</span>
+      <span class="tg-label">Normal Loop</span>
+    </button>
+    <button class="tg-btn" onclick="goTab(1,this)">
+      <span class="tg-icon">⚙️</span>
+      <span class="tg-label">Determinants</span>
+    </button>
+    <button class="tg-btn" onclick="goTab(2,this)">
+      <span class="tg-icon">🫁</span>
+      <span class="tg-label">Valvular Disease</span>
+    </button>
+    <button class="tg-btn" onclick="goTab(3,this)">
+      <span class="tg-icon">❤️</span>
+      <span class="tg-label">Cardiomyopathies</span>
+    </button>
+    <button class="tg-btn" onclick="goTab(4,this)">
+      <span class="tg-icon">⚠️</span>
+      <span class="tg-label">Heart Failure</span>
+    </button>
+    <button class="tg-btn" onclick="goTab(5,this)">
+      <span class="tg-icon">💎</span>
+      <span class="tg-label">Clinical Pearls</span>
+    </button>
+    <button class="tg-btn" onclick="goTab(6,this)">
+      <span class="tg-icon">⚖️</span>
+      <span class="tg-label">RV Physiology</span>
+    </button>
+    <button class="tg-btn" onclick="goTab(7,this)">
+      <span class="tg-icon">🏥</span>
+      <span class="tg-label">Perioperative</span>
+    </button>
+    <button class="tg-btn" onclick="goTab(8,this)">
+      <span class="tg-icon">📝</span>
+      <span class="tg-label">Quiz</span>
+    </button>
+  </div>
+</div>
 
 <main class="page">
 
