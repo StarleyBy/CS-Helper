@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-06-07 22:15
+  updated: 2026-06-08 10:34
 
 sections:
   - id: calculators
@@ -191,7 +191,7 @@ sections:
         visible: true
         tags: []
       - id: infection
-        title: "Cardiac Surgery Microbes & Antibiotic Therapy Guide"
+        title: "Cardiac Surgery Infections & Antibiotic Guide | 2025"
         file: books/cheatsheets/infection.html
         type: cheatsheet
         visible: true
