@@ -1837,7 +1837,7 @@ input[type=range]{
 // ─── TAB NAVIGATION ──────────────────────────────────────────────
 const tabs = document.querySelectorAll('.tab');
 const tgBtns = document.querySelectorAll('.tg-btn');
-function goTab(idx, btn){
+function gt(idx, btn){
   tabs.forEach(t=>t.classList.remove('active'));
   tgBtns.forEach(b=>b.classList.remove('active'));
   tabs[idx].classList.add('active');
