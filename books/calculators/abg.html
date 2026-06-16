@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABG Interpreter | Arterial Blood Gas Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #080f1a;
+  --bg2:     #0d1826;
+  --bg3:     #111f30;
+  --bg4:     #162438;
+  --rim:     rgba(255,255,255,0.07);
+  --glass:   rgba(255,255,255,0.03);
+  --text:    #d8e8f8;
+  --muted:   #6a88a8;
+  --dim:     #3a5068;
+  --cyan:    #00c8e0;
+  --cyan-d:  rgba(0,200,224,0.12);
+  --cyan-b:  rgba(0,200,224,0.25);
+  --red:     #f05060;
+  --red-d:   rgba(240,80,96,0.13);
+  --blue:    #4090f0;
+  --blue-d:  rgba(64,144,240,0.13);
+  --green:   #30c880;
+  --green-d: rgba(48,200,128,0.12);
+  --amber:   #f0a030;
+  --amber-d: rgba(240,160,48,0.13);
+  --purple:  #a060f0;
+  --purple-d:rgba(160,96,240,0.13);
+  --mono:    'Space Mono', monospace;
+  --sans:    'Space Grotesk', sans-serif;
+  --r:       12px;
+  --r2:      20px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;overflow-x:hidden;min-height:100vh}
+::selection{background:rgba(0,200,224,.3)}
+
+/* ── HEADER ── */
+.hdr{
+  background:linear-gradient(135deg,#060d18 0%,#0a1830 50%,#0d2040 100%);
+  border-bottom:1px solid var(--rim);
+  padding:18px 20px 14px;
+  text-align:center;
+  position:relative;
+}
+.hdr::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% -20%,rgba(0,200,224,.15) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hdr-title{
+  font-family:var(--mono);font-size:22px;font-weight:700;
+  letter-spacing:.06em;color:var(--cyan);
+  text-shadow:0 0 30px rgba(0,200,224,.4);
+}
+.hdr-title span{color:var(--text);opacity:.7}
+.hdr-sub{font-size:12px;color:var(--muted);margin-top:4px;letter-spacing:.04em}
+
+/* ── TAB GRID NAV ── */
+.tab-grid-wrap{
+  background:var(--bg2);
+  border-bottom:1px solid var(--rim);
+  padding:12px 14px;
+  position:sticky;top:0;z-index:200;
+}
+.tab-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  max-width:700px;
+  margin:0 auto;
+}
+.tg{
+  display:flex;flex-direction:column;align-items:center;
+  gap:4px;background:var(--bg3);
+  border:1px solid var(--rim);border-radius:var(--r);
+  padding:9px 4px 7px;cursor:pointer;
+  transition:all .16s;
+}
+.tg:hover{border-color:var(--cyan-b);background:var(--cyan-d)}
+.tg.active{background:var(--cyan-d);border-color:var(--cyan);box-shadow:0 0 0 1px var(--cyan)}
+.tg-icon{font-size:18px;line-height:1}
+.tg-lbl{
+  font-size:10px;font-weight:600;color:var(--muted);
+  text-align:center;line-height:1.25;letter-spacing:.02em;
+}
+.tg.active .tg-lbl{color:var(--cyan)}
+.tg:hover .tg-lbl{color:var(--text)}
+
+/* ── LAYOUT ── */
+.page{max-width:900px;margin:0 auto;padding:20px 16px 60px}
+.tab{display:none}.tab.active{display:block}
+
+/* ── SECTION HEADS ── */
+.sh{margin-bottom:18px}
+.sh h2{
+  font-family:var(--mono);font-size:17px;font-weight:700;
+  color:var(--cyan);letter-spacing:.04em;
+  display:flex;align-items:center;gap:10px;
+}
+.sh p{color:var(--muted);font-size:13px;margin-top:5px}
+
+/* ── CARDS ── */
+.card{
+  background:var(--bg2);border:1px solid var(--rim);
+  border-radius:var(--r2);padding:18px;margin-bottom:14px;
+}
+.card h3{
+  font-size:14px;font-weight:700;margin-bottom:10px;
+  display:flex;align-items:center;gap:8px;
+}
+.card p,.card li{color:var(--muted);font-size:13px;line-height:1.6}
+.card ul,.card ol{padding-left:16px}
+.card li{margin-bottom:4px}
+.card li strong{color:var(--text)}
+
+/* ── GRID ── */
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+
+/* ── NORMAL VALUES BLOCKS ── */
+.nv-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:8px;margin:12px 0;
+}
+.nv{
+  background:var(--bg3);border:1px solid var(--rim);
+  border-radius:var(--r);padding:10px 12px;text-align:center;
+}
+.nv .val{
+  font-family:var(--mono);font-size:18px;font-weight:700;
+  color:var(--cyan);display:block;
+}
+.nv .lbl{font-size:10.5px;color:var(--muted);margin-top:2px;letter-spacing:.04em}
+.nv .unit{font-size:10px;color:var(--dim);display:block}
+
+/* ── CALLOUTS ── */
+.box{border-radius:var(--r);padding:11px 14px;margin:10px 0;font-size:13px;line-height:1.6;color:var(--text)}
+.box-cyan  {background:var(--cyan-d); border-left:3px solid var(--cyan)}
+.box-red   {background:var(--red-d);  border-left:3px solid var(--red)}
+.box-blue  {background:var(--blue-d); border-left:3px solid var(--blue)}
+.box-green {background:var(--green-d);border-left:3px solid var(--green)}
+.box-amber {background:var(--amber-d);border-left:3px solid var(--amber)}
+.box-purple{background:var(--purple-d);border-left:3px solid var(--purple)}
+.box strong{color:inherit;font-weight:700}
+
+/* ── BADGES ── */
+.bdg{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:30px;margin:1px;letter-spacing:.04em}
+.bdg-c{background:var(--cyan-d);color:var(--cyan)}
+.bdg-r{background:var(--red-d);color:var(--red)}
+.bdg-b{background:var(--blue-d);color:var(--blue)}
+.bdg-g{background:var(--green-d);color:var(--green)}
+.bdg-a{background:var(--amber-d);color:var(--amber)}
+.bdg-p{background:var(--purple-d);color:var(--purple)}
+
+/* ── TABLE ── */
+.tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--rim);margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:var(--bg3);color:var(--cyan);font-weight:700;padding:8px 11px;
+   text-align:left;border-bottom:1px solid var(--rim);letter-spacing:.04em;white-space:nowrap}
+td{padding:7px 11px;border-bottom:1px solid var(--rim);color:var(--muted);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(0,200,224,.04)}
+td strong{color:var(--text)}
+
+/* ── DIVIDER ── */
+.dv{height:1px;background:var(--rim);margin:20px 0}
+
+/* ── FOOTNOTE ── */
+.footnote{text-align:center;font-size:11px;color:var(--dim);padding:24px 0 0;border-top:1px solid var(--rim);margin-top:32px}
+
+@media(max-width:500px){
+  .hdr-title{font-size:18px}
+  .nv-grid{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-title">ABG <span>/</span> ACID-BASE ANALYSIS</div>
+  <div class="hdr-sub">Arterial Blood Gas · Interpretation · Calculator · Quiz · Cardiac Surgery Reference</div>
+</div>
+
+<div class="tab-grid-wrap">
+  <div class="tab-grid">
+    <button class="tg active" onclick="gt(0,this)"><span class="tg-icon">📖</span><span class="tg-lbl">Reference</span></button>
+    <button class="tg" onclick="gt(1,this)"><span class="tg-icon">🧮</span><span class="tg-lbl">Calculator</span></button>
+    <button class="tg" onclick="gt(2,this)"><span class="tg-icon">🔬</span><span class="tg-lbl">Conditions</span></button>
+    <button class="tg" onclick="gt(3,this)"><span class="tg-icon">📝</span><span class="tg-lbl">Quiz</span></button>
+  </div>
+</div>
+
+<main class="page">
+
+<!-- ══════════════════════ TAB 0: REFERENCE ══════════════════════ -->
+<section class="tab active" id="t0">
+  <div class="sh">
+    <h2>📖 Normal Values & Parameters</h2>
+    <p>Arterial blood gas reference ranges and clinical significance of each parameter.</p>
+  </div>
+
+  <!-- Normal values grid -->
+  <div class="card">
+    <h3 style="color:var(--cyan)">🎯 Normal Arterial Blood Gas Values</h3>
+    <div class="nv-grid">
+      <div class="nv"><span class="val">7.35–7.45</span><span class="lbl">pH</span><span class="unit">unitless</span></div>
+      <div class="nv"><span class="val">35–45</span><span class="lbl">PaCO₂</span><span class="unit">mmHg</span></div>
+      <div class="nv"><span class="val">22–26</span><span class="lbl">HCO₃⁻</span><span class="unit">mEq/L</span></div>
+      <div class="nv"><span class="val">−2 to +2</span><span class="lbl">Base Excess</span><span class="unit">mEq/L</span></div>
+      <div class="nv"><span class="val">80–100</span><span class="lbl">PaO₂</span><span class="unit">mmHg</span></div>
+      <div class="nv"><span class="val">95–100%</span><span class="lbl">SaO₂</span><span class="unit">%</span></div>
+      <div class="nv"><span class="val">7–13</span><span class="lbl">A-a Gradient</span><span class="unit">mmHg (age adj.)</span></div>
+      <div class="nv"><span class="val">3–11</span><span class="lbl">Anion Gap</span><span class="unit">mEq/L</span></div>
+      <div class="nv"><span class="val">136–145</span><span class="lbl">Na⁺</span><span class="unit">mEq/L</span></div>
+      <div class="nv"><span class="val">2.0–2.5</span><span class="lbl">Lactate</span><span class="unit">mmol/L</span></div>
+    </div>
+  </div>
+
+  <!-- Parameters explained -->
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--cyan)">pH</h3>
+      <p>Negative logarithm of [H⁺] concentration. Reflects net acid-base balance of the body.</p>
+      <div class="tw"><table>
+        <tr><th>Range</th><th>Interpretation</th></tr>
+        <tr><td><strong>&lt;6.80</strong></td><td>Incompatible with life</td></tr>
+        <tr><td><strong>6.80–7.10</strong></td><td>Severe acidosis</td></tr>
+        <tr><td><strong>7.10–7.35</strong></td><td>Acidosis</td></tr>
+        <tr><td><strong style="color:var(--green)">7.35–7.45</strong></td><td style="color:var(--green)">Normal</td></tr>
+        <tr><td><strong>7.45–7.60</strong></td><td>Alkalosis</td></tr>
+        <tr><td><strong>&gt;7.60</strong></td><td>Severe alkalosis</td></tr>
+        <tr><td><strong>&gt;7.80</strong></td><td>Incompatible with life</td></tr>
+      </table></div>
+      <div class="box box-cyan"><strong>Key:</strong> pH &lt;7.35 = acidemia. pH &gt;7.45 = alkalemia. The condition causing it = acidosis/alkalosis. A patient can have acidosis + alkalosis simultaneously with normal pH.</div>
+    </div>
+
+    <div class="card">
+      <h3 style="color:var(--blue)">PaCO₂ — Respiratory Component</h3>
+      <p>Partial pressure of arterial CO₂. Controlled by alveolar ventilation. Primary respiratory variable.</p>
+      <div class="tw"><table>
+        <tr><th>Value</th><th>Interpretation</th></tr>
+        <tr><td><strong>&lt;35 mmHg</strong></td><td>Hypocarbia → Respiratory alkalosis (hyperventilation)</td></tr>
+        <tr><td><strong style="color:var(--green)">35–45 mmHg</strong></td><td style="color:var(--green)">Normal ventilation</td></tr>
+        <tr><td><strong>&gt;45 mmHg</strong></td><td>Hypercarbia → Respiratory acidosis (hypoventilation)</td></tr>
+        <tr><td><strong>&gt;60 mmHg</strong></td><td>Severe respiratory failure</td></tr>
+        <tr><td><strong>&gt;80 mmHg</strong></td><td>Critical hypercapnia — acute respiratory failure</td></tr>
+      </table></div>
+      <div class="box box-blue"><strong>Rule:</strong> CO₂ moves opposite to pH. ↑PaCO₂ → ↓pH (acidosis). ↓PaCO₂ → ↑pH (alkalosis). CO₂ = "respiratory acid."</div>
+    </div>
+
+    <div class="card">
+      <h3 style="color:var(--amber)">HCO₃⁻ — Metabolic Component</h3>
+      <p>Serum bicarbonate. Primary metabolic buffer. Regulated by kidneys (hours to days). Calculated from Henderson-Hasselbalch equation in most ABG analyzers.</p>
+      <div class="tw"><table>
+        <tr><th>Value</th><th>Interpretation</th></tr>
+        <tr><td><strong>&lt;18 mEq/L</strong></td><td>Metabolic acidosis</td></tr>
+        <tr><td><strong>18–22 mEq/L</strong></td><td>Low-normal / mild metabolic acidosis</td></tr>
+        <tr><td><strong style="color:var(--green)">22–26 mEq/L</strong></td><td style="color:var(--green)">Normal</td></tr>
+        <tr><td><strong>26–30 mEq/L</strong></td><td>High-normal / mild metabolic alkalosis</td></tr>
+        <tr><td><strong>&gt;30 mEq/L</strong></td><td>Metabolic alkalosis</td></tr>
+        <tr><td><strong>&gt;40 mEq/L</strong></td><td>Severe metabolic alkalosis</td></tr>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <h3 style="color:var(--green)">Base Excess (BE)</h3>
+      <p>Amount of acid or base (in mEq/L) needed to titrate 1 L of blood to pH 7.40 at PaCO₂ 40 mmHg, 37°C. A pure metabolic index — independent of respiratory component.</p>
+      <div class="tw"><table>
+        <tr><th>BE range</th><th>Interpretation</th></tr>
+        <tr><td><strong>&lt; −10</strong></td><td>Severe metabolic acidosis (massive base deficit)</td></tr>
+        <tr><td><strong>−2 to −10</strong></td><td>Metabolic acidosis (base deficit)</td></tr>
+        <tr><td><strong style="color:var(--green)">−2 to +2</strong></td><td style="color:var(--green)">Normal</td></tr>
+        <tr><td><strong>+2 to +10</strong></td><td>Metabolic alkalosis (base excess)</td></tr>
+        <tr><td><strong>&gt; +10</strong></td><td>Severe metabolic alkalosis</td></tr>
+      </table></div>
+      <div class="box box-green"><strong>Clinical use:</strong> Base deficit in trauma = volume of bicarbonate to give: HCO₃ (mEq) = 0.3 × weight (kg) × |BE|. In cardiac surgery: BE &lt;−5 = significant metabolic acidosis requiring source control.</div>
+    </div>
+
+    <div class="card">
+      <h3 style="color:var(--red)">Anion Gap (AG)</h3>
+      <p>Calculated difference between measured cations and anions. Reveals unmeasured anions (lactate, ketoacids, toxins, uremia).</p>
+      <div class="box box-amber" style="margin-bottom:10px">
+        <strong>Formula:</strong><br>
+        AG = Na⁺ − (Cl⁻ + HCO₃⁻)<br>
+        Normal: 8–12 mEq/L (or 3–11 if albumin-corrected)<br>
+        <strong>Albumin correction:</strong> AG<sub>corrected</sub> = AG + 2.5 × (4 − albumin g/dL)
+      </div>
+      <div class="tw"><table>
+        <tr><th>AG</th><th>Cause of metabolic acidosis</th></tr>
+        <tr><td><strong style="color:var(--green)">&lt;12</strong></td><td>Normal AG (hyperchloremic) — diarrhea, RTA, saline excess</td></tr>
+        <tr><td><strong style="color:var(--amber)">12–20</strong></td><td>Mildly elevated — lactic acidosis (early), ketoacidosis (mild)</td></tr>
+        <tr><td><strong style="color:var(--red)">&gt;20</strong></td><td>High AG — MUDPILES (see below)</td></tr>
+        <tr><td><strong style="color:var(--red)">&gt;30</strong></td><td>Almost always organic acidosis (lactic, keto, toxic)</td></tr>
+      </table></div>
+      <div class="box box-red"><strong>MUDPILES mnemonic:</strong> Methanol · Uremia · Diabetic ketoacidosis · Propylene glycol / Paracetamol · Isoniazid / Iron · Lactic acidosis · Ethylene glycol · Salicylates</div>
+    </div>
+
+    <div class="card">
+      <h3 style="color:var(--purple)">PaO₂ &amp; Oxygenation</h3>
+      <div class="tw"><table>
+        <tr><th>PaO₂</th><th>Severity</th><th>SaO₂ approx.</th></tr>
+        <tr><td>&gt;100 mmHg</td><td>Hyperoxia (on O₂)</td><td>~100%</td></tr>
+        <tr><td style="color:var(--green)">80–100</td><td style="color:var(--green)">Normal (room air)</td><td>96–99%</td></tr>
+        <tr><td>60–80</td><td>Mild hypoxemia</td><td>90–95%</td></tr>
+        <tr><td>40–60</td><td>Moderate hypoxemia</td><td>75–90%</td></tr>
+        <tr><td>&lt;40</td><td>Severe hypoxemia</td><td>&lt;75%</td></tr>
+      </table></div>
+      <div class="box box-purple">
+        <strong>A-a Gradient</strong> = PAO₂ − PaO₂<br>
+        PAO₂ = (FiO₂ × [Patm − PH₂O]) − PaCO₂/RQ<br>
+        Normal on room air: Age/4 + 4 (e.g. age 40 → normal &lt;14 mmHg)<br>
+        <strong>↑A-a gradient</strong> = V/Q mismatch, shunt, diffusion impairment<br>
+        <strong>Normal A-a gradient + hypoxemia</strong> = hypoventilation or low FiO₂
+      </div>
+    </div>
+  </div>
+
+  <!-- Compensation rules -->
+  <div class="card" style="margin-top:4px">
+    <h3 style="color:var(--cyan)">⚖️ Compensation Formulas (Expected Compensation)</h3>
+    <div class="tw"><table>
+      <thead><tr><th>Primary Disorder</th><th>Expected Compensation</th><th>Time to full compensation</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Metabolic Acidosis</strong></td><td>PaCO₂ = 1.5 × HCO₃⁻ + 8 ± 2<br><small>(Winter's formula)</small></td><td>12–24 hours (lungs)</td></tr>
+        <tr><td><strong>Metabolic Alkalosis</strong></td><td>PaCO₂ = 0.7 × HCO₃⁻ + 21 ± 2<br><small>Or: ↑PaCO₂ by 0.7 per mEq/L ↑HCO₃⁻</small></td><td>12–24 hours</td></tr>
+        <tr><td><strong>Acute Resp. Acidosis</strong></td><td>HCO₃⁻ ↑ 1 mEq/L per 10 mmHg ↑PaCO₂</td><td>Minutes (buffering)</td></tr>
+        <tr><td><strong>Chronic Resp. Acidosis</strong></td><td>HCO₃⁻ ↑ 3.5 mEq/L per 10 mmHg ↑PaCO₂</td><td>3–5 days (kidneys)</td></tr>
+        <tr><td><strong>Acute Resp. Alkalosis</strong></td><td>HCO₃⁻ ↓ 2 mEq/L per 10 mmHg ↓PaCO₂</td><td>Minutes</td></tr>
+        <tr><td><strong>Chronic Resp. Alkalosis</strong></td><td>HCO₃⁻ ↓ 5 mEq/L per 10 mmHg ↓PaCO₂</td><td>3–5 days</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box box-amber"><strong>Key principle:</strong> If measured compensation ≠ expected → mixed disorder. Compensation never over-corrects pH. Over-compensation = additional primary disorder.</div>
+  </div>
+
+  <!-- Step-by-step -->
+  <div class="card">
+    <h3 style="color:var(--cyan)">📐 5-Step Systematic Interpretation</h3>
+    <div style="display:flex;flex-direction:column;gap:0">
+      <div style="display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--rim)">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--cyan-d);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--cyan);flex-shrink:0">1</div>
+        <div><strong style="color:var(--text)">Is pH acidemic or alkalemic?</strong><br><span style="color:var(--muted);font-size:13px">pH &lt;7.35 = acidemia · pH &gt;7.45 = alkalemia · pH 7.35–7.45 = normal (may still have disorder)</span></div>
+      </div>
+      <div style="display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--rim)">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--cyan-d);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--cyan);flex-shrink:0">2</div>
+        <div><strong style="color:var(--text)">Identify primary disorder</strong><br><span style="color:var(--muted);font-size:13px">Acidemia + ↑CO₂ = Resp. acidosis · Acidemia + ↓HCO₃⁻ = Met. acidosis<br>Alkalemia + ↓CO₂ = Resp. alkalosis · Alkalemia + ↑HCO₃⁻ = Met. alkalosis</span></div>
+      </div>
+      <div style="display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--rim)">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--cyan-d);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--cyan);flex-shrink:0">3</div>
+        <div><strong style="color:var(--text)">Is compensation appropriate?</strong><br><span style="color:var(--muted);font-size:13px">Apply compensation formulas. If not appropriate → mixed disorder.</span></div>
+      </div>
+      <div style="display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--rim)">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--cyan-d);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--cyan);flex-shrink:0">4</div>
+        <div><strong style="color:var(--text)">Calculate Anion Gap (if metabolic acidosis)</strong><br><span style="color:var(--muted);font-size:13px">AG = Na⁺ − (Cl⁻ + HCO₃⁻). If elevated → MUDPILES. If normal → HARDUP (hyperchloremic).</span></div>
+      </div>
+      <div style="display:flex;gap:12px;padding:11px 0">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--cyan-d);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--cyan);flex-shrink:0">5</div>
+        <div><strong style="color:var(--text)">Delta-delta ratio (if high AG acidosis)</strong><br><span style="color:var(--muted);font-size:13px">Δ/Δ = (AG − 12) / (24 − HCO₃⁻). &lt;0.4: hyperchloremic co-existing. 0.4–1: mixed high AG + normal AG. 1–2: pure high AG acidosis. &gt;2: high AG + concurrent metabolic alkalosis.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ══════════════════════ TAB 1: CALCULATOR ══════════════════════ -->
+<section class="tab" id="t1">
+  <div class="sh">
+    <h2>🧮 ABG Interpreter / Calculator</h2>
+    <p>Enter pH, PaCO₂, and HCO₃⁻. Optional fields improve accuracy. Instant stepwise interpretation.</p>
+  </div>
+
+  <div class="card" id="calcCard">
+    <h3 style="color:var(--cyan)">Enter ABG Values</h3>
+
+    <!-- Required -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px">
+      <div>
+        <label style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.04em;display:block;margin-bottom:4px">pH <span style="color:var(--red)">*</span></label>
+        <input id="inp-ph" type="number" step="0.01" min="6.5" max="8" placeholder="7.40"
+          style="width:100%;background:var(--bg3);border:1px solid var(--rim);border-radius:8px;padding:9px 11px;color:var(--text);font-family:var(--mono);font-size:15px;outline:none">
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.04em;display:block;margin-bottom:4px">PaCO₂ (mmHg) <span style="color:var(--red)">*</span></label>
+        <input id="inp-co2" type="number" step="0.1" min="10" max="120" placeholder="40"
+          style="width:100%;background:var(--bg3);border:1px solid var(--rim);border-radius:8px;padding:9px 11px;color:var(--text);font-family:var(--mono);font-size:15px;outline:none">
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.04em;display:block;margin-bottom:4px">HCO₃⁻ (mEq/L) <span style="color:var(--red)">*</span></label>
+        <input id="inp-hco3" type="number" step="0.1" min="5" max="55" placeholder="24"
+          style="width:100%;background:var(--bg3);border:1px solid var(--rim);border-radius:8px;padding:9px 11px;color:var(--text);font-family:var(--mono);font-size:15px;outline:none">
+      </div>
+    </div>
+
+    <!-- Optional -->
+    <details style="margin-bottom:14px">
+      <summary style="cursor:pointer;font-size:12px;color:var(--muted);font-weight:600;padding:6px 0;user-select:none">⊕ Optional values (improve accuracy)</summary>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:10px">
+        <div>
+          <label style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.04em;display:block;margin-bottom:4px">Na⁺ (mEq/L)</label>
+          <input id="inp-na" type="number" step="0.1" min="100" max="180" placeholder="140"
+            style="width:100%;background:var(--bg3);border:1px solid var(--rim);border-radius:8px;padding:8px 10px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.04em;display:block;margin-bottom:4px">Cl⁻ (mEq/L)</label>
+          <input id="inp-cl" type="number" step="0.1" min="70" max="140" placeholder="104"
+            style="width:100%;background:var(--bg3);border:1px solid var(--rim);border-radius:8px;padding:8px 10px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.04em;display:block;margin-bottom:4px">PaO₂ (mmHg)</label>
+          <input id="inp-po2" type="number" step="0.1" min="20" max="600" placeholder="90"
+            style="width:100%;background:var(--bg3);border:1px solid var(--rim);border-radius:8px;padding:8px 10px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.04em;display:block;margin-bottom:4px">Albumin (g/dL)</label>
+          <input id="inp-alb" type="number" step="0.1" min="1" max="6" placeholder="4.0"
+            style="width:100%;background:var(--bg3);border:1px solid var(--rim);border-radius:8px;padding:8px 10px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.04em;display:block;margin-bottom:4px">Lactate (mmol/L)</label>
+          <input id="inp-lac" type="number" step="0.1" min="0" max="20" placeholder=""
+            style="width:100%;background:var(--bg3);border:1px solid var(--rim);border-radius:8px;padding:8px 10px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.04em;display:block;margin-bottom:4px">FiO₂ (0.21–1.0)</label>
+          <input id="inp-fio2" type="number" step="0.01" min="0.21" max="1" placeholder="0.21"
+            style="width:100%;background:var(--bg3);border:1px solid var(--rim);border-radius:8px;padding:8px 10px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.04em;display:block;margin-bottom:4px">K⁺ (mEq/L)</label>
+          <input id="inp-k" type="number" step="0.1" min="2" max="8" placeholder=""
+            style="width:100%;background:var(--bg3);border:1px solid var(--rim);border-radius:8px;padding:8px 10px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.04em;display:block;margin-bottom:4px">SaO₂ (%)</label>
+          <input id="inp-sao2" type="number" step="0.1" min="50" max="100" placeholder=""
+            style="width:100%;background:var(--bg3);border:1px solid var(--rim);border-radius:8px;padding:8px 10px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+        </div>
+      </div>
+    </details>
+
+    <button id="calcBtn" onclick="runCalc()"
+      style="width:100%;background:var(--cyan-d);border:1px solid var(--cyan);border-radius:10px;
+             padding:12px;color:var(--cyan);font-family:var(--mono);font-size:14px;font-weight:700;
+             cursor:pointer;letter-spacing:.06em;transition:all .16s">
+      ▶ INTERPRET ABG
+    </button>
+  </div>
+
+  <!-- Results area -->
+  <div id="calcResult" style="display:none"></div>
+</section>
+
+<!-- ══════════════════════ TAB 2: CONDITIONS ══════════════════════ -->
+<section class="tab" id="t2">
+  <div class="sh">
+    <h2>🔬 Acid-Base Conditions</h2>
+    <p>Complete reference for all primary and mixed acid-base disorders with causes, compensation, and clinical context.</p>
+  </div>
+
+  <!-- Respiratory Acidosis -->
+  <div class="card">
+    <h3 style="color:var(--red)">🔴 Respiratory Acidosis</h3>
+    <p>pH &lt;7.35 · PaCO₂ &gt;45 mmHg · HCO₃⁻ normal (acute) or elevated (chronic)</p>
+    <div class="g2" style="margin-top:12px">
+      <div>
+        <div class="box box-red"><strong>Mechanism:</strong> Inadequate alveolar ventilation → CO₂ retention → ↑H₂CO₃ → ↑H⁺ → ↓pH</div>
+        <strong style="color:var(--text);font-size:13px">Causes:</strong>
+        <ul style="margin-top:6px">
+          <li><strong>CNS depression:</strong> opioids, benzos, anesthesia, stroke, head trauma</li>
+          <li><strong>Neuromuscular:</strong> NMJ blockers, GBS, myasthenia, cervical cord injury</li>
+          <li><strong>Airway obstruction:</strong> COPD exacerbation, severe asthma, foreign body</li>
+          <li><strong>Chest wall:</strong> flail chest, kyphoscoliosis, morbid obesity</li>
+          <li><strong>Pulmonary:</strong> severe pneumonia, ARDS, pulmonary edema</li>
+          <li><strong>Post-CS:</strong> residual NMJ blockade, phrenic nerve injury, pain splinting, obesity</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tw"><table>
+          <tr><th>Type</th><th>pH</th><th>PaCO₂</th><th>HCO₃⁻</th></tr>
+          <tr><td>Acute</td><td>&lt;7.35</td><td>↑↑</td><td>↑ 1/10 mmHg</td></tr>
+          <tr><td>Chronic</td><td>7.33–7.40</td><td>↑↑</td><td>↑ 3.5/10 mmHg</td></tr>
+        </table></div>
+        <div class="box box-amber"><strong>Treatment:</strong><br>• Acute: ↑ventilation (intubation/MV/NIV, reverse sedation)<br>• Chronic: treat underlying cause; avoid over-correction (post-hypercapnic alkalosis)<br>• Post-CS: ensure adequate reversal of NMJ blockade, analgesia, early mobilization</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Respiratory Alkalosis -->
+  <div class="card">
+    <h3 style="color:var(--blue)">🔵 Respiratory Alkalosis</h3>
+    <p>pH &gt;7.45 · PaCO₂ &lt;35 mmHg · HCO₃⁻ normal (acute) or decreased (chronic)</p>
+    <div class="g2" style="margin-top:12px">
+      <div>
+        <div class="box box-blue"><strong>Mechanism:</strong> Hyperventilation → excessive CO₂ washout → ↓H⁺ → ↑pH</div>
+        <strong style="color:var(--text);font-size:13px">Causes:</strong>
+        <ul style="margin-top:6px">
+          <li><strong>Hypoxia-driven:</strong> PE, pulmonary edema, high altitude, severe anemia</li>
+          <li><strong>CNS:</strong> anxiety/panic, pain, fever, CNS disease, hepatic encephalopathy</li>
+          <li><strong>Mechanical ventilation:</strong> excessive minute volume (post-CS most common)</li>
+          <li><strong>Pregnancy:</strong> progesterone-driven physiological hyperventilation</li>
+          <li><strong>Sepsis (early):</strong> hyperdynamic phase → hyperventilation</li>
+          <li><strong>Drugs:</strong> salicylates (early), methylxanthines, progesterone</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tw"><table>
+          <tr><th>Type</th><th>HCO₃⁻ fall</th></tr>
+          <tr><td>Acute</td><td>↓2 mEq/L per 10 mmHg ↓CO₂</td></tr>
+          <tr><td>Chronic</td><td>↓5 mEq/L per 10 mmHg ↓CO₂</td></tr>
+        </table></div>
+        <div class="box box-blue"><strong>Treatment:</strong><br>• Identify and treat underlying cause<br>• MV: ↓respiratory rate and/or tidal volume<br>• Permissive hypercapnia if needed<br>• Treat pain/anxiety<br>• Alkalosis &gt;7.55: risk of arrhythmias, ↓ionized Ca²⁺, cerebral vasoconstriction</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Metabolic Acidosis -->
+  <div class="card">
+    <h3 style="color:var(--amber)">🟡 Metabolic Acidosis</h3>
+    <p>pH &lt;7.35 · HCO₃⁻ &lt;22 mEq/L · PaCO₂ ↓ (compensatory)</p>
+    <div class="g2" style="margin-top:12px">
+      <div>
+        <div class="box box-amber"><strong>Mechanism:</strong> Gain of H⁺ or loss of HCO₃⁻ → ↓pH. Lungs compensate: Kussmaul breathing (↑RR, ↑VT) → ↓CO₂</div>
+        <strong style="color:var(--text);font-size:13px">High AG causes — MUDPILES:</strong>
+        <ul style="margin-top:4px">
+          <li><strong>Lactic acidosis</strong> (L) — most common in ICU (↓O₂ delivery, sepsis, shock, post-CPB)</li>
+          <li><strong>Ketoacidosis</strong> — DKA, alcoholic, starvation</li>
+          <li><strong>Uremic acidosis</strong> — AKI, CKD end-stage</li>
+          <li><strong>Toxic ingestions</strong> — methanol, ethylene glycol, salicylates, isoniazid, metformin</li>
+        </ul>
+        <strong style="color:var(--text);font-size:13px;display:block;margin-top:10px">Normal AG (hyperchloremic) — HARDUP:</strong>
+        <ul style="margin-top:4px">
+          <li><strong>H</strong>yperalimentation · <strong>A</strong>cetazolamide · <strong>R</strong>enal tubular acidosis</li>
+          <li><strong>D</strong>iarrhea · <strong>U</strong>reterosigmoidostomy · <strong>P</strong>ancreatic fistula</li>
+          <li>Saline excess (dilutional) — common post-CPB with large NS volumes</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tw"><table>
+          <tr><th>AG</th><th>Type</th><th>Key cause</th></tr>
+          <tr><td>Normal (8–12)</td><td>Hyperchloremic</td><td>Diarrhea, RTA, NS</td></tr>
+          <tr><td>High (&gt;12)</td><td>Organic/toxic</td><td>Lactic, keto, uremia</td></tr>
+          <tr><td>&gt;20</td><td>High AG</td><td>Organic acid accumulation</td></tr>
+          <tr><td>&gt;30</td><td>Severe</td><td>Almost always organic</td></tr>
+        </table></div>
+        <div class="box box-amber"><strong>Expected PaCO₂ (Winter's formula):</strong><br>PaCO₂ = 1.5 × HCO₃⁻ + 8 ± 2<br>If measured CO₂ &gt; expected → additional respiratory acidosis<br>If measured CO₂ &lt; expected → additional respiratory alkalosis</div>
+        <div class="box box-red"><strong>Post-cardiac surgery lactic acidosis:</strong> Most common cause of metabolic acidosis in cardiac ICU. Type A: ↓oxygen delivery (↓CO, tamponade, graft occlusion). Type B: hepatic dysfunction, metformin, epinephrine (β₂). Lactate &gt;10 mmol/L = very high mortality.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Metabolic Alkalosis -->
+  <div class="card">
+    <h3 style="color:var(--green)">🟢 Metabolic Alkalosis</h3>
+    <p>pH &gt;7.45 · HCO₃⁻ &gt;26 mEq/L · PaCO₂ ↑ (compensatory hypoventilation)</p>
+    <div class="g2" style="margin-top:12px">
+      <div>
+        <div class="box box-green"><strong>Mechanism:</strong> Loss of H⁺ or gain of HCO₃⁻. Respiratory compensation: hypoventilation → ↑CO₂ to ↓pH (limited — hypoxia is a brake on hypoventilation)</div>
+        <strong style="color:var(--text);font-size:13px">Causes by chloride responsiveness:</strong>
+        <ul style="margin-top:4px">
+          <li><strong>Chloride-responsive (Ur Cl⁻ &lt;20):</strong> vomiting, NGT suction, diuretics (loop/thiazide), post-hypercapnic alkalosis (common post-MV weaning in COPD), contraction alkalosis</li>
+          <li><strong>Chloride-resistant (Ur Cl⁻ &gt;20):</strong> hyperaldosteronism, Cushing's, Bartter/Gitelman, severe hypokalemia, exogenous mineralocorticoids</li>
+          <li><strong>Post-cardiac surgery:</strong> massive blood transfusion (citrate → HCO₃⁻), diuresis, NGT suction, excessive IV NaHCO₃</li>
+        </ul>
+      </div>
+      <div>
+        <div class="box box-green"><strong>Expected PaCO₂ compensation:</strong><br>PaCO₂ = 0.7 × HCO₃⁻ + 21 (±2)<br>Max compensation ≈ 55–60 mmHg (hypoxia limits hypoventilation)</div>
+        <div class="box box-green"><strong>Treatment:</strong><br>• Chloride-responsive: IV NaCl, correct hypokalemia, stop diuretics<br>• Severe (pH &gt;7.60): acetazolamide 250–500 mg IV (↑renal HCO₃⁻ excretion)<br>• HCl 0.1N infusion (very severe, refractory cases)<br>• Post-CS: avoid excess NaHCO₃ administration; diuresis with acetazolamide</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mixed Disorders -->
+  <div class="card">
+    <h3 style="color:var(--purple)">🟣 Mixed Acid-Base Disorders</h3>
+    <p>Two or more simultaneous primary disorders. Compensation never over-corrects — if it does, suspect mixed disorder.</p>
+    <div class="tw"><table>
+      <thead><tr><th>Mixed Disorder</th><th>pH</th><th>PaCO₂</th><th>HCO₃⁻</th><th>Clue</th><th>Common scenario</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Met. Acidosis + Resp. Acidosis</strong></td><td>↓↓ (severe)</td><td>↑↑</td><td>↓</td><td>CO₂ higher than expected (Winter's)</td><td>Cardiac arrest, respiratory failure + sepsis</td></tr>
+        <tr><td><strong>Met. Acidosis + Resp. Alkalosis</strong></td><td>≈ normal</td><td>↓↓</td><td>↓↓</td><td>CO₂ lower than Winter's prediction</td><td>Sepsis early (resp alkalosis) + lactic acidosis; salicylate poisoning</td></tr>
+        <tr><td><strong>Met. Alkalosis + Resp. Acidosis</strong></td><td>≈ normal / ↑</td><td>↑↑</td><td>↑↑</td><td>pH more normal than expected for CO₂; HCO₃⁻ elevated beyond compensation</td><td>COPD + vomiting/diuretics; post-MV COPD</td></tr>
+        <tr><td><strong>Met. Alkalosis + Resp. Alkalosis</strong></td><td>↑↑ (severe)</td><td>↓↓</td><td>↑</td><td>Opposite compensation direction: both CO₂↓ and HCO₃⁻↑</td><td>Liver failure (hyperventilation) + vomiting/diuretics; post-CS hyperventilation + NGT suction</td></tr>
+        <tr><td><strong>Met. Acidosis + Met. Alkalosis</strong></td><td>≈ normal</td><td>≈ normal</td><td>≈ normal</td><td>High AG + Δ/Δ &gt;2; or multiple causes</td><td>DKA + vomiting; lactic acidosis + aggressive NaHCO₃ therapy</td></tr>
+        <tr><td><strong>Triple disorder</strong></td><td>Variable</td><td>Variable</td><td>Variable</td><td>Delta-delta abnormal + compensation mismatch</td><td>COPD + diuretics + sepsis (most common triple)</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Special conditions -->
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--red)">🚨 Lactic Acidosis</h3>
+      <div class="box box-red"><strong>Type A (tissue hypoxia):</strong> Shock (cardiogenic, septic, hypovolemic), cardiac arrest, severe anemia, CO poisoning, limb ischemia</div>
+      <div class="box box-amber"><strong>Type B (no hypoxia):</strong> Metformin, liver failure, thiamine deficiency, malignancy, epinephrine infusion, mitochondrial disease</div>
+      <strong style="color:var(--text);font-size:13px;display:block;margin:8px 0 4px">Severity (lactate mmol/L):</strong>
+      <ul>
+        <li><strong>2–4:</strong> Mild — identify cause, monitor</li>
+        <li><strong>4–8:</strong> Significant — aggressive resuscitation</li>
+        <li><strong>8–15:</strong> Severe — high mortality (&gt;50%)</li>
+        <li><strong>&gt;15:</strong> Critical — &gt;80% mortality without MCS</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--amber)">⚡ Post-CPB Acid-Base Patterns</h3>
+      <ul>
+        <li><strong>Dilutional metabolic acidosis:</strong> Hemodilution with non-bicarbonate prime → ↓HCO₃⁻, normal AG</li>
+        <li><strong>Respiratory alkalosis:</strong> Overzealous mechanical ventilation post-bypass</li>
+        <li><strong>Metabolic alkalosis:</strong> Massive transfusion (citrate), loop diuretics, NGT</li>
+        <li><strong>High-AG lactic acidosis:</strong> ↓CO, graft failure, vasoconstriction → tissue hypoperfusion</li>
+        <li><strong>Hyperchloremic acidosis:</strong> Large volumes of normal saline during/after bypass</li>
+        <li><strong>Mixed disorders:</strong> Multiple concurrent mechanisms — common in complex cases</li>
+      </ul>
+      <div class="box box-amber">Normalization of lactate &lt;2 mmol/L within 24h is a key prognostic marker post-CS. Persistent lactate &gt;4 mmol/L at 24h = consider tamponade, graft failure, ECMO/IABP.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ TAB 3: QUIZ ══════════════════════ -->
+<section class="tab" id="t3">
+  <div class="sh">
+    <h2>📝 ABG Quiz — 35 Clinical Cases</h2>
+    <p>Identify the acid-base disorder, compensation, and etiology. Detailed explanations for every question.</p>
+  </div>
+
+  <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:20px;padding:16px 18px;margin-bottom:16px;text-align:center">
+    <div style="font-family:var(--mono);font-size:32px;font-weight:700;color:var(--cyan)" id="qscr">0 / 35</div>
+    <div style="height:5px;background:var(--bg3);border-radius:3px;margin:10px 0 4px;overflow:hidden">
+      <div id="qpbar" style="height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:3px;transition:width .4s;width:0"></div>
+    </div>
+    <div style="font-size:11px;color:var(--dim);margin-bottom:10px" id="qmsg">Answer the clinical cases below</div>
+    <button onclick="qreset()" style="background:var(--bg3);border:1px solid var(--rim);color:var(--muted);border-radius:8px;padding:6px 16px;cursor:pointer;font-size:12px">↺ Reset All</button>
+  </div>
+
+  <div id="quizContainer"></div>
+
+  <div class="footnote" style="margin-top:16px">Based on clinical ABG interpretation per ACCP, ATS, and established emergency/critical care guidelines. Values at 37°C, sea level.</div>
+</section>
+
+<div class="footnote" id="mainFooter" style="max-width:900px;margin:0 auto;padding:16px 16px 24px">
+  Based on: Marino PL — The ICU Book 4th ed.; Berend K et al. — NEJM ABG review; Bojar RM — Manual of Perioperative Care in Adult Cardiac Surgery 6th ed.; Rose BD — Clinical Physiology of Acid-Base and Electrolyte Disorders. For educational purposes only.
+</div>
+
+<script>
+// ── TAB NAVIGATION ──────────────────────────────────────────────
+const tabs = document.querySelectorAll('.tab');
+const tgs  = document.querySelectorAll('.tg');
+function gt(i, b) {
+  tabs.forEach(t => t.classList.remove('active'));
+  tgs.forEach(n => n.classList.remove('active'));
+  tabs[i].classList.add('active');
+  b.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── CALCULATOR ──────────────────────────────────────────────────
+function v(id) {
+  const val = parseFloat(document.getElementById(id).value);
+  return isNaN(val) ? null : val;
+}
+
+function runCalc() {
+  const pH   = v('inp-ph');
+  const co2  = v('inp-co2');
+  const hco3 = v('inp-hco3');
+  if (!pH || !co2 || !hco3) {
+    alert('Please enter pH, PaCO₂, and HCO₃⁻');
+    return;
+  }
+  const na   = v('inp-na');
+  const cl   = v('inp-cl');
+  const po2  = v('inp-po2');
+  const alb  = v('inp-alb');
+  const lac  = v('inp-lac');
+  const fio2 = v('inp-fio2');
+  const k    = v('inp-k');
+  const sao2 = v('inp-sao2');
+
+  // ── CALCULATIONS ──
+  const acidemia = pH < 7.35;
+  const alkalemia = pH > 7.45;
+  const normalPH = !acidemia && !alkalemia;
+
+  let primary = '';
+  let mixedNotes = [];
+  let disorders = [];
+  let severity = '';
+
+  // 1. Primary disorder
+  const respAcidosis  = co2 > 45;
+  const respAlkalosis = co2 < 35;
+  const metAcidosis   = hco3 < 22;
+  const metAlkalosis  = hco3 > 26;
+
+  if (acidemia && respAcidosis)  { primary = 'Respiratory Acidosis'; disorders.push('resp-acid'); }
+  else if (acidemia && metAcidosis)  { primary = 'Metabolic Acidosis'; disorders.push('met-acid'); }
+  else if (alkalemia && respAlkalosis) { primary = 'Respiratory Alkalosis'; disorders.push('resp-alk'); }
+  else if (alkalemia && metAlkalosis)  { primary = 'Metabolic Alkalosis'; disorders.push('met-alk'); }
+  else if (normalPH) {
+    // Mixed or normal
+    if (metAcidosis && respAlkalosis) { primary = 'Mixed: Metabolic Acidosis + Respiratory Alkalosis'; disorders = ['met-acid','resp-alk']; }
+    else if (metAlkalosis && respAcidosis) { primary = 'Mixed: Metabolic Alkalosis + Respiratory Acidosis'; disorders = ['met-alk','resp-acid']; }
+    else if (!metAcidosis && !metAlkalosis && !respAcidosis && !respAlkalosis) { primary = 'Normal ABG'; disorders = ['normal']; }
+    else { primary = 'Mixed Disorder — Normal pH'; disorders = ['mixed']; }
+  }
+
+  // pH severity
+  if (pH < 7.10) severity = '🔴 CRITICAL acidemia';
+  else if (pH < 7.20) severity = '🟠 Severe acidemia';
+  else if (pH < 7.35) severity = '🟡 Acidemia';
+  else if (pH > 7.60) severity = '🔴 CRITICAL alkalemia';
+  else if (pH > 7.55) severity = '🟠 Severe alkalemia';
+  else if (pH > 7.45) severity = '🟡 Alkalemia';
+  else severity = '🟢 Normal pH';
+
+  // 2. Acute vs Chronic
+  let acuteVsChronic = '';
+  if (disorders.includes('resp-acid')) {
+    const expectedAcute = 24 + (co2 - 40) * 0.1;
+    const expectedChronic = 24 + (co2 - 40) * 0.35;
+    if (Math.abs(hco3 - expectedAcute) < Math.abs(hco3 - expectedChronic)) {
+      acuteVsChronic = 'Likely ACUTE (HCO₃⁻ ~' + expectedAcute.toFixed(1) + ' expected for acute, ' + expectedChronic.toFixed(1) + ' for chronic)';
+    } else {
+      acuteVsChronic = 'Likely CHRONIC (renal compensation with HCO₃⁻ ~' + expectedChronic.toFixed(1) + ' expected)';
+    }
+  }
+  if (disorders.includes('resp-alk')) {
+    const expectedAcute = 24 - (40 - co2) * 0.2;
+    const expectedChronic = 24 - (40 - co2) * 0.5;
+    if (Math.abs(hco3 - expectedAcute) < Math.abs(hco3 - expectedChronic)) {
+      acuteVsChronic = 'Likely ACUTE (HCO₃⁻ ~' + Math.max(expectedAcute, 15).toFixed(1) + ' expected for acute)';
+    } else {
+      acuteVsChronic = 'Likely CHRONIC (HCO₃⁻ ~' + Math.max(expectedChronic, 15).toFixed(1) + ' expected for chronic)';
+    }
+  }
+
+  // 3. Compensation check
+  let compLines = [];
+  let compMixed = '';
+  if (disorders.includes('met-acid')) {
+    const expectedCO2 = 1.5 * hco3 + 8;
+    compLines.push('Expected PaCO₂ (Winter\'s): ' + (expectedCO2 - 2).toFixed(1) + '–' + (expectedCO2 + 2).toFixed(1) + ' mmHg');
+    if (co2 > expectedCO2 + 2) compMixed = '⚠️ PaCO₂ higher than expected → Additional RESPIRATORY ACIDOSIS superimposed';
+    else if (co2 < expectedCO2 - 2) compMixed = '⚠️ PaCO₂ lower than expected → Additional RESPIRATORY ALKALOSIS superimposed';
+    else compMixed = '✅ Compensation appropriate — simple metabolic acidosis';
+  }
+  if (disorders.includes('met-alk')) {
+    const expectedCO2 = 0.7 * hco3 + 21;
+    compLines.push('Expected PaCO₂: ' + (expectedCO2 - 2).toFixed(1) + '–' + (expectedCO2 + 2).toFixed(1) + ' mmHg');
+    if (co2 > expectedCO2 + 2) compMixed = '⚠️ PaCO₂ higher than expected → Additional RESPIRATORY ACIDOSIS';
+    else if (co2 < expectedCO2 - 2) compMixed = '⚠️ PaCO₂ lower than expected → Additional RESPIRATORY ALKALOSIS';
+    else compMixed = '✅ Compensation appropriate — simple metabolic alkalosis';
+  }
+  if (disorders.includes('resp-acid')) {
+    const expAcute = 24 + (co2 - 40) * 0.1;
+    const expChronic = 24 + (co2 - 40) * 0.35;
+    compLines.push('Expected HCO₃⁻ (acute): ' + expAcute.toFixed(1) + ' mEq/L · (chronic): ' + expChronic.toFixed(1) + ' mEq/L');
+    if (hco3 > expChronic + 2) compMixed = '⚠️ HCO₃⁻ exceeds chronic compensation → Additional METABOLIC ALKALOSIS';
+    else if (hco3 < expAcute - 2) compMixed = '⚠️ HCO₃⁻ below acute compensation → Additional METABOLIC ACIDOSIS';
+    else compMixed = '✅ Compensation within expected range';
+  }
+  if (disorders.includes('resp-alk')) {
+    const expAcute = 24 - (40 - co2) * 0.2;
+    const expChronic = 24 - (40 - co2) * 0.5;
+    compLines.push('Expected HCO₃⁻ (acute): ' + Math.max(expAcute, 15).toFixed(1) + ' · (chronic): ' + Math.max(expChronic, 15).toFixed(1) + ' mEq/L');
+    if (hco3 < Math.max(expChronic, 15) - 2) compMixed = '⚠️ HCO₃⁻ below chronic compensation → Additional METABOLIC ACIDOSIS';
+    else if (hco3 > Math.max(expAcute, 15) + 2) compMixed = '⚠️ HCO₃⁻ above acute compensation → Additional METABOLIC ALKALOSIS';
+    else compMixed = '✅ Compensation within expected range';
+  }
+
+  // 4. Anion Gap
+  let agSection = '';
+  let agCorr = null;
+  let ag = null;
+  let ddRatio = '';
+  if (na !== null && cl !== null) {
+    ag = na - (cl + hco3);
+    agCorr = alb !== null ? (ag + 2.5 * (4 - alb)).toFixed(1) : null;
+    const agDisplay = agCorr ? ag.toFixed(1) + ' (corrected: ' + agCorr + ')' : ag.toFixed(1);
+    let agInterp = ag < 12 ? '🟢 Normal AG — hyperchloremic/normal AG acidosis' : ag < 20 ? '🟡 Elevated AG — possible organic acidosis' : '🔴 High AG — MUDPILES';
+    agSection = `<div class="box box-amber"><strong>Anion Gap:</strong> ${agDisplay} mEq/L &nbsp;·&nbsp; ${agInterp}</div>`;
+
+    // Delta-delta
+    if (disorders.includes('met-acid') && ag > 12) {
+      const dd = (ag - 12) / (24 - hco3);
+      ddRatio = `<div class="box box-purple"><strong>Delta-Delta ratio:</strong> ${dd.toFixed(2)}<br>` +
+        (dd < 0.4 ? '→ Hyperchloremic normal AG acidosis (± high AG co-existing)' :
+         dd < 1   ? '→ Mixed high-AG + normal-AG metabolic acidosis' :
+         dd < 2   ? '→ Pure high-AG metabolic acidosis (appropriate HCO₃⁻ fall)' :
+                    '→ High-AG acidosis + concurrent METABOLIC ALKALOSIS (HCO₃⁻ higher than expected for AG)') + '</div>';
+    }
+  } else if (disorders.includes('met-acid')) {
+    agSection = '<div class="box box-amber">💡 Enter Na⁺ and Cl⁻ to calculate Anion Gap and Delta-Delta ratio for more precise interpretation.</div>';
+  }
+
+  // 5. Oxygenation
+  let o2Section = '';
+  if (po2 !== null) {
+    let hypox = '';
+    if (po2 < 40) hypox = '🔴 CRITICAL hypoxemia';
+    else if (po2 < 60) hypox = '🟠 Severe hypoxemia';
+    else if (po2 < 80) hypox = '🟡 Mild-moderate hypoxemia';
+    else hypox = '🟢 Adequate oxygenation';
+
+    if (fio2 !== null && fio2 > 0.21) {
+      const pao2 = fio2 * (760 - 47) - co2 / 0.8;
+      const aag = pao2 - po2;
+      const normalAAG = 7 + 0.1 * Math.min(70, 40); // simplified
+      const aaInterp = aag < 15 ? '🟢 Normal A-a gradient — hypoventilation or ↓FiO₂ cause' : aag < 30 ? '🟡 Mildly elevated — V/Q mismatch' : aag < 50 ? '🟠 Moderately elevated — significant V/Q mismatch or shunt' : '🔴 Markedly elevated — large shunt or diffusion impairment';
+      const pfi = (po2 / fio2).toFixed(0);
+      let pfiInterp = pfi > 400 ? '🟢 Normal P/F ratio' : pfi > 300 ? '🟡 Mild impairment' : pfi > 200 ? '🟠 Moderate — ARDS criteria (Berlin)' : pfi > 100 ? '🔴 Severe — ARDS' : '🔴 CRITICAL — Severe ARDS';
+      o2Section = `<div class="box box-purple"><strong>PaO₂:</strong> ${po2} mmHg — ${hypox}<br><strong>A-a gradient:</strong> ${aag.toFixed(1)} mmHg — ${aaInterp}<br><strong>P/F ratio:</strong> ${pfi} — ${pfiInterp}</div>`;
+    } else {
+      o2Section = `<div class="box box-purple"><strong>PaO₂:</strong> ${po2} mmHg — ${hypox}</div>`;
+    }
+  }
+
+  // 6. Lactate note
+  let lacSection = '';
+  if (lac !== null) {
+    const lacInterp = lac < 2 ? '🟢 Normal' : lac < 4 ? '🟡 Mildly elevated — monitor closely' : lac < 8 ? '🟠 Significantly elevated — source control, resuscitation' : '🔴 Severely elevated — high mortality, consider MCS';
+    lacSection = `<div class="box box-red"><strong>Lactate:</strong> ${lac} mmol/L — ${lacInterp}</div>`;
+  }
+
+  // 7. Base Excess estimate
+  const be = hco3 - 24 + 16 * (pH - 7.40);
+  const beInterp = be > 2 ? '↑ Base excess → metabolic alkalosis contribution' : be < -2 ? '↓ Base deficit → metabolic acidosis contribution' : '≈ Normal base excess';
+
+  // ── BUILD RESULT ──
+  const primaryColor = disorders.includes('resp-acid') ? 'var(--red)' :
+                       disorders.includes('resp-alk')  ? 'var(--blue)' :
+                       disorders.includes('met-acid')  ? 'var(--amber)' :
+                       disorders.includes('met-alk')   ? 'var(--green)' :
+                       disorders.includes('normal')    ? 'var(--cyan)' : 'var(--purple)';
+
+  const html = `
+<div class="card" style="border-top:3px solid ${primaryColor}">
+  <h3 style="color:${primaryColor};font-size:18px">🩸 ${primary}</h3>
+  <div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:14px;display:flex;flex-wrap:wrap;gap:12px">
+    <span>pH: <strong style="color:var(--text)">${pH}</strong></span>
+    <span>PaCO₂: <strong style="color:var(--text)">${co2}</strong> mmHg</span>
+    <span>HCO₃⁻: <strong style="color:var(--text)">${hco3}</strong> mEq/L</span>
+    ${na?'<span>Na⁺: <strong style="color:var(--text)">'+na+'</strong></span>':''}
+    ${cl?'<span>Cl⁻: <strong style="color:var(--text)">'+cl+'</strong></span>':''}
+  </div>
+
+  <div class="box" style="background:rgba(0,200,224,.08);border-left:3px solid var(--cyan)">
+    <strong>pH Status:</strong> ${severity}<br>
+    ${be !== null ? `<strong>Estimated Base Excess:</strong> ${be.toFixed(1)} mEq/L — ${beInterp}` : ''}
+    ${acuteVsChronic ? '<br><strong>Acuity:</strong> ' + acuteVsChronic : ''}
+  </div>
+
+  ${compLines.length ? `<div class="box box-blue"><strong>Compensation analysis:</strong><br>${compLines.join('<br>')}<br>${compMixed}</div>` : ''}
+  ${agSection}
+  ${ddRatio}
+  ${o2Section}
+  ${lacSection}
+
+  <div class="box" style="background:var(--bg3);border-left:3px solid var(--dim)">
+    <strong style="color:var(--muted)">💡 Clinical interpretation complete.</strong>
+    <span style="color:var(--dim);font-size:12px"> Always correlate with clinical context. This tool is for educational purposes.</span>
+  </div>
+</div>`;
+
+  document.getElementById('calcResult').style.display = 'block';
+  document.getElementById('calcResult').innerHTML = html;
+}
+
+// ── QUIZ DATA (35 questions) ──────────────────────────────────────
+const QDATA = [
+  {
+    q: 'pH 7.22 · PaCO₂ 28 mmHg · HCO₃⁻ 11 mEq/L · Na⁺ 140 · Cl⁻ 104. 65-year-old diabetic, vomiting for 3 days, Kussmaul breathing.',
+    opts: ['Metabolic alkalosis with respiratory compensation','Metabolic acidosis with appropriate respiratory compensation','Respiratory acidosis with metabolic compensation','Mixed metabolic and respiratory acidosis'],
+    ans: 1,
+    exp: '<strong>Metabolic acidosis with appropriate respiratory compensation.</strong> pH 7.22 = acidemia. HCO₃⁻ 11 = metabolic acidosis. Winter\'s formula: expected PaCO₂ = 1.5×11+8 = 24.5±2. Measured PaCO₂ 28 is within range → appropriate compensation. AG = 140−(104+11) = 25 → High AG. Kussmaul breathing = classic compensatory hyperventilation. Likely DKA — high AG metabolic acidosis. Kussmaul is the respiratory compensation for metabolic acidosis.'
+  },
+  {
+    q: 'pH 7.49 · PaCO₂ 30 mmHg · HCO₃⁻ 23 mEq/L. Anxious 28-year-old female, panic attack, breathing rapidly.',
+    opts: ['Acute respiratory alkalosis','Chronic respiratory alkalosis','Metabolic alkalosis','Mixed metabolic alkalosis + respiratory alkalosis'],
+    ans: 0,
+    exp: '<strong>Acute respiratory alkalosis.</strong> pH 7.49 = alkalemia. PaCO₂ 30 = hyperventilation → respiratory alkalosis. HCO₃⁻ 23 = near normal (minimal buffering — acute). Expected HCO₃⁻ drop (acute): 24 − (40−30)×0.2 = 22. HCO₃⁻ 23 ≈ 22 → acute. Chronic would show HCO₃⁻ ~19. Classic panic attack hyperventilation. No metabolic component — simple acute respiratory alkalosis.'
+  },
+  {
+    q: 'pH 7.30 · PaCO₂ 60 mmHg · HCO₃⁻ 29 mEq/L. COPD patient post-intubation on controlled ventilation, rate set too low.',
+    opts: ['Acute respiratory acidosis','Chronic respiratory acidosis with appropriate compensation','Metabolic alkalosis','Mixed respiratory and metabolic acidosis'],
+    ans: 1,
+    exp: '<strong>Chronic respiratory acidosis with appropriate compensation.</strong> pH 7.30 = acidemia. PaCO₂ 60 = respiratory acidosis. Expected HCO₃⁻ for chronic: 24 + (60−40)×0.35 = 31 mEq/L. Measured 29 ≈ 31 → chronic compensation present (renal HCO₃⁻ retention over days). Acute would show HCO₃⁻ ~26. The COPD patient has pre-existing chronic respiratory acidosis — the ventilator is not correcting the CO₂ adequately. Avoid over-correcting CO₂ — rapid CO₂ drop in chronic hypercapnia → post-hypercapnic alkalosis.'
+  },
+  {
+    q: 'pH 7.52 · PaCO₂ 48 mmHg · HCO₃⁻ 38 mEq/L. Post-op cardiac surgery patient, 2 days on diuretics + NGT suction.',
+    opts: ['Respiratory acidosis','Acute respiratory alkalosis','Metabolic alkalosis with appropriate respiratory compensation','Mixed metabolic alkalosis + respiratory acidosis'],
+    ans: 2,
+    exp: '<strong>Metabolic alkalosis with appropriate respiratory compensation.</strong> pH 7.52 = alkalemia. HCO₃⁻ 38 = metabolic alkalosis. Expected PaCO₂: 0.7×38+21 = 47.6±2. Measured CO₂ 48 ≈ 47.6 → appropriate compensation. Classic post-cardiac surgery metabolic alkalosis: loop diuretics (↑H⁺ excretion, ↑HCO₃⁻ retention) + NGT suction (HCl loss) → contraction alkalosis. Treatment: correct volume and K⁺/Cl⁻ deficiency, stop or reduce diuretics.'
+  },
+  {
+    q: 'pH 7.38 · PaCO₂ 60 mmHg · HCO₃⁻ 35 mEq/L. 55-year-old COPD, stable outpatient.',
+    opts: ['Chronic respiratory acidosis with full compensation','Metabolic alkalosis','Mixed metabolic alkalosis + respiratory acidosis','Respiratory acidosis without compensation'],
+    ans: 0,
+    exp: '<strong>Chronic respiratory acidosis — fully compensated.</strong> pH 7.38 = within normal range (compensated). PaCO₂ 60 = respiratory acidosis. HCO₃⁻ 35: expected for chronic = 24 + (60−40)×0.35 = 31. Measured 35 is slightly above — could indicate early mixed metabolic alkalosis from diuretics (common in COPD) but pH is normal. Full renal compensation in chronic COPD elevates HCO₃⁻ to nearly normal pH. This is a stable, compensated state — the patient\'s baseline.'
+  },
+  {
+    q: 'pH 7.18 · PaCO₂ 70 mmHg · HCO₃⁻ 26 mEq/L. Unresponsive patient, fentanyl OD, breathing 4/min.',
+    opts: ['Metabolic acidosis','Acute respiratory acidosis without compensation','Chronic respiratory acidosis','Mixed metabolic + respiratory acidosis'],
+    ans: 1,
+    exp: '<strong>Acute respiratory acidosis without compensation.</strong> pH 7.18 = severe acidemia. PaCO₂ 70 = marked hypoventilation (opioid-induced). HCO₃⁻ 26 = essentially normal. Expected HCO₃⁻ (acute respiratory): 24 + (70−40)×0.1 = 27. Measured 26 ≈ 27 → pure acute compensation (no chronic renal adaptation). pH 7.18 from acute CO₂ 70 = dramatic — needs immediate reversal with naloxone + assisted ventilation. No metabolic component.'
+  },
+  {
+    q: 'pH 7.35 · PaCO₂ 22 mmHg · HCO₃⁻ 12 mEq/L · Na⁺ 138 · Cl⁻ 108 · Lactate 8.5 mmol/L. Septic shock.',
+    opts: ['Pure metabolic acidosis','Metabolic acidosis + respiratory alkalosis (mixed)','Respiratory alkalosis only','Normal ABG with respiratory compensation'],
+    ans: 1,
+    exp: '<strong>Mixed metabolic acidosis + respiratory alkalosis.</strong> pH 7.35 = low-normal (almost acidemia). HCO₃⁻ 12 = metabolic acidosis. PaCO₂ 22: Winter\'s expected = 1.5×12+8 = 26±2. Measured PaCO₂ 22 &lt; 24 → additional respiratory alkalosis (hyperventilation beyond compensation). AG = 138−(108+12) = 18 → elevated. Lactate 8.5 → lactic acidosis. Classic early sepsis: metabolic acidosis from lactic acid + respiratory alkalosis from sepsis-driven hyperventilation. pH near-normal despite two opposing disorders.'
+  },
+  {
+    q: 'pH 7.55 · PaCO₂ 24 mmHg · HCO₃⁻ 21 mEq/L. Young woman, 26 weeks pregnant.',
+    opts: ['Pathological respiratory alkalosis','Metabolic alkalosis','Physiological respiratory alkalosis of pregnancy','Mixed metabolic alkalosis + respiratory alkalosis'],
+    ans: 2,
+    exp: '<strong>Physiological respiratory alkalosis of pregnancy.</strong> Progesterone directly stimulates the respiratory centre → chronic hyperventilation → PaCO₂ 28–32 mmHg (normal in pregnancy). Renal compensation: HCO₃⁻ falls to 18–22. pH 7.44–7.47 is normal in pregnancy. This patient has slightly more alkalosis (pH 7.55) — could indicate mild superimposed pathology (fever, anxiety) but the base pattern is physiological. Normal PaCO₂ in pregnancy = 38–42 would be relative HYPOVENTILATION.'
+  },
+  {
+    q: 'pH 7.10 · PaCO₂ 25 mmHg · HCO₃⁻ 8 mEq/L. Type 1 DM, stopped insulin, glucose 480 mg/dL.',
+    opts: ['Metabolic acidosis with appropriate compensation','Respiratory alkalosis primary','Mixed metabolic and respiratory alkalosis','Triple acid-base disorder'],
+    ans: 0,
+    exp: '<strong>Metabolic acidosis with appropriate respiratory compensation — DKA.</strong> pH 7.10 = severe acidemia. HCO₃⁻ 8 = severe metabolic acidosis. Winter\'s formula: expected PaCO₂ = 1.5×8+8 = 20±2. Measured PaCO₂ 25 is within range (23 is lower limit). Appropriate compensation — pure metabolic acidosis from DKA (ketoacid accumulation). AG would be elevated (glucose 480 + ketones). Treatment: insulin drip, IV fluids (NS → LR after Na⁺ correction), K⁺ replacement (insulin will drive K⁺ into cells).'
+  },
+  {
+    q: 'pH 7.45 · PaCO₂ 40 mmHg · HCO₃⁻ 28 mEq/L · Na⁺ 142 · Cl⁻ 88. Post-op day 2, on IV furosemide.',
+    opts: ['Normal ABG','Mild metabolic alkalosis, compensated','Mild respiratory alkalosis','Uncompensated metabolic alkalosis'],
+    ans: 1,
+    exp: '<strong>Mild metabolic alkalosis — compensated at upper normal pH.</strong> pH 7.45 = high-normal. HCO₃⁻ 28 = metabolic alkalosis. PaCO₂ 40: expected = 0.7×28+21 = 40.6. Perfect match → appropriate hypoventilation compensation. AG = 142−(88+28) = 26 → high. But corrected: hypoalbuminemia? Check albumin. High AG here may partly reflect low chloride. Classic diuretic-induced hypochloremic metabolic alkalosis. Na⁺ 142 with Cl⁻ only 88 → chloride-depleted state. Treatment: IV NaCl + KCl supplementation.'
+  },
+  {
+    q: 'pH 7.42 · PaCO₂ 68 mmHg · HCO₃⁻ 44 mEq/L. Morbidly obese (BMI 55) patient, stable.',
+    opts: ['Chronic respiratory acidosis fully compensated','Metabolic alkalosis with respiratory compensation','Mixed respiratory acidosis + metabolic alkalosis','Acute respiratory acidosis'],
+    ans: 0,
+    exp: '<strong>Chronic respiratory acidosis — fully compensated.</strong> pH 7.42 = normal. PaCO₂ 68 = CO₂ retention from obesity hypoventilation syndrome (OHS). Expected HCO₃⁻ chronic: 24 + (68−40)×0.35 = 33.8. Measured HCO₃⁻ 44 > 33.8 → exceeds expected. This suggests additional metabolic alkalosis (common with concurrent diuretic use in OHS). So strictly: mixed chronic respiratory acidosis + metabolic alkalosis. But primary diagnosis is OHS with chronic CO₂ retention. The patient is compensated — this is baseline.'
+  },
+  {
+    q: 'pH 7.28 · PaCO₂ 50 mmHg · HCO₃⁻ 23 mEq/L. 75-year-old post-CABG day 1, on controlled ventilation, sedated.',
+    opts: ['Respiratory acidosis without adequate compensation','Metabolic acidosis with respiratory compensation','Mixed metabolic + respiratory acidosis','Chronic respiratory acidosis'],
+    ans: 0,
+    exp: '<strong>Respiratory acidosis without adequate compensation (likely acute).</strong> pH 7.28 = acidemia. PaCO₂ 50 = respiratory acidosis. HCO₃⁻ 23 = normal (kidneys haven\'t had time to compensate). Expected HCO₃⁻ (acute): 24 + (50−40)×0.1 = 25. Measured 23 is slightly below — within range. This is acute respiratory acidosis (inadequate ventilation on MV). Action: ↑respiratory rate or ↑tidal volume on the ventilator. Check for: auto-PEEP, pneumothorax, ET tube displacement, bronchospasm.'
+  },
+  {
+    q: 'pH 7.32 · PaCO₂ 38 mmHg · HCO₃⁻ 19 mEq/L · Na⁺ 140 · Cl⁻ 115. Post-op receiving 3L normal saline.',
+    opts: ['High anion gap metabolic acidosis','Normal AG (hyperchloremic) metabolic acidosis','Respiratory acidosis','Metabolic alkalosis'],
+    ans: 1,
+    exp: '<strong>Normal anion gap (hyperchloremic) metabolic acidosis — dilutional/saline-induced.</strong> pH 7.32 = acidemia. HCO₃⁻ 19 = metabolic acidosis. PaCO₂ 38 is below compensated range (Winter\'s expected: 1.5×19+8 = 36.5±2, measured 38 is at upper limit — borderline). AG = 140−(115+19) = 6 → NORMAL anion gap. Hyperchloremia from normal saline → dilutional metabolic acidosis + ↑Cl⁻. This is a well-known complication of large-volume NS resuscitation. Solution: switch to lactated Ringer\'s or Plasma-Lyte for further resuscitation.'
+  },
+  {
+    q: 'pH 7.20 · PaCO₂ 55 mmHg · HCO₃⁻ 21 mEq/L. Drowning victim, 10 min CPR, just intubated.',
+    opts: ['Pure respiratory acidosis','Mixed respiratory and metabolic acidosis','Metabolic acidosis with respiratory compensation','Chronic respiratory acidosis'],
+    ans: 1,
+    exp: '<strong>Mixed respiratory + metabolic acidosis.</strong> pH 7.20 = severe acidemia. PaCO₂ 55 = respiratory acidosis. HCO₃⁻ 21 = also below normal → metabolic acidosis component. Expected HCO₃⁻ (acute for this CO₂): 24 + (55−40)×0.1 = 25.5. Measured 21 &lt; 25.5 → additional metabolic acidosis beyond respiratory. CPR scenario: lactic acidosis (tissue hypoperfusion) + respiratory acidosis (inadequate ventilation during CPR + aspiration). Double-hit: need both ventilatory support and cardiovascular resuscitation.'
+  },
+  {
+    q: 'pH 7.48 · PaCO₂ 32 mmHg · HCO₃⁻ 24 mEq/L. Acutely ill patient with confirmed large PE, tachycardic, distressed.',
+    opts: ['Metabolic alkalosis','Acute respiratory alkalosis secondary to PE hypoxia','Chronic respiratory alkalosis','Mixed disorder'],
+    ans: 1,
+    exp: '<strong>Acute respiratory alkalosis — secondary to PE-driven hypoxia and pain/anxiety.</strong> pH 7.48 = alkalemia. PaCO₂ 32 = hyperventilation → respiratory alkalosis. HCO₃⁻ 24 = normal (acute — no time for renal compensation). PE causes: (1) Hypoxemia → ↑respiratory drive; (2) Pain and anxiety → hyperventilation. Expected HCO₃⁻ for acute: 24 − (40−32)×0.2 = 22.4. Measured 24 is slightly high (borderline). A-a gradient would be elevated. Classic early PE gas picture: respiratory alkalosis + elevated A-a gradient.'
+  },
+  {
+    q: 'pH 7.15 · PaCO₂ 80 mmHg · HCO₃⁻ 27 mEq/L · K⁺ 6.5. Asthmatic on bronchodilators, near-silent chest.',
+    opts: ['Metabolic acidosis','Chronic respiratory acidosis','Acute respiratory acidosis — respiratory failure','Mixed respiratory + metabolic acidosis'],
+    ans: 2,
+    exp: '<strong>Acute severe respiratory acidosis — status asthmaticus with respiratory failure.</strong> pH 7.15 = critical acidemia. PaCO₂ 80 = extreme hypoventilation → respiratory arrest imminent. HCO₃⁻ 27: expected for acute = 24 + (80−40)×0.1 = 28 → appropriate for acute. K⁺ 6.5 = severe hyperkalemia from acidosis (H⁺/K⁺ exchange). Near-silent chest = no air entry = imminent arrest. IMMEDIATE action: IV magnesium sulfate, heliox, NIV/intubation. This is a medical emergency. CO₂ rising in asthma = danger sign — normal CO₂ in a distressed asthmatic is also worrying.'
+  },
+  {
+    q: 'pH 7.38 · PaCO₂ 40 mmHg · HCO₃⁻ 24 mEq/L · Lactate 1.1 · SaO₂ 98%. Routine pre-op check.',
+    opts: ['Metabolic acidosis','Respiratory alkalosis','Normal ABG','Metabolic alkalosis'],
+    ans: 2,
+    exp: '<strong>Normal ABG — all parameters within reference range.</strong> pH 7.38 (normal 7.35–7.45). PaCO₂ 40 (normal 35–45). HCO₃⁻ 24 (normal 22–26). Lactate 1.1 (normal &lt;2). SaO₂ 98% (normal). No acid-base disorder. This is a healthy patient\'s normal pre-operative gas. Understanding the normal baseline is as important as identifying disorders.'
+  },
+  {
+    q: 'pH 7.40 · PaCO₂ 20 mmHg · HCO₃⁻ 12 mEq/L · Na⁺ 142 · Cl⁻ 112. Liver failure, hepatic encephalopathy.',
+    opts: ['Normal ABG','Pure metabolic acidosis','Mixed metabolic acidosis + respiratory alkalosis','Pure respiratory alkalosis'],
+    ans: 2,
+    exp: '<strong>Mixed metabolic acidosis + respiratory alkalosis.</strong> pH 7.40 = normal. PaCO₂ 20 = respiratory alkalosis. HCO₃⁻ 12 = metabolic acidosis. Both opposing disorders cancel, giving near-normal pH. AG = 142−(112+12) = 18 → elevated → organic acidosis (hepatic failure → ↑ammonia, citric acid cycle dysfunction + lactic acidosis). Liver failure causes: (1) Respiratory alkalosis from CNS ammonia → hyperventilation; (2) Metabolic acidosis from ↓lactate clearance + organic acid accumulation. Classic liver failure mixed picture.'
+  },
+  {
+    q: 'pH 7.60 · PaCO₂ 18 mmHg · HCO₃⁻ 17 mEq/L. Salicylate overdose, alert but tachypneic, aspirin boxes found.',
+    opts: ['Respiratory alkalosis only','Metabolic acidosis only','Mixed respiratory alkalosis + metabolic acidosis','Metabolic alkalosis'],
+    ans: 2,
+    exp: '<strong>Mixed respiratory alkalosis + metabolic acidosis — classic salicylate poisoning.</strong> pH 7.60 = severe alkalemia (resp component dominant). PaCO₂ 18 = extreme hyperventilation → respiratory alkalosis. HCO₃⁻ 17 = metabolic acidosis. Expected HCO₃⁻ for chronic resp alkalosis: 24 − (40−18)×0.5 = 13. Measured 17 > 13 → HCO₃⁻ not as low as expected for pure resp alkalosis → metabolic acidosis co-existing. Salicylates: (1) directly stimulate respiratory centre → resp alkalosis; (2) uncouple oxidative phosphorylation → metabolic acidosis with high AG. Treat with urinary alkalinization (NaHCO₃ IV) + activated charcoal.'
+  },
+  {
+    q: 'pH 7.36 · PaCO₂ 44 mmHg · HCO₃⁻ 25 mEq/L. Post-ECMO decannulation, lactate 1.8, SvO₂ 72%.',
+    opts: ['Normal ABG, no disorder','Mild metabolic acidosis','Compensated respiratory acidosis','Respiratory alkalosis beginning'],
+    ans: 0,
+    exp: '<strong>Normal ABG.</strong> pH 7.36 (normal). PaCO₂ 44 (high-normal but within 35–45). HCO₃⁻ 25 (normal). Lactate 1.8 (normal &lt;2). SvO₂ 72% (low-normal — CO may be borderline but not critically impaired). This is a well-recovered patient post-ECMO. All values within normal range — no intervention needed from an ABG standpoint. The slightly elevated PaCO₂ and low-normal SvO₂ warrant monitoring but not alarm.'
+  },
+  {
+    q: 'pH 7.30 · PaCO₂ 40 mmHg · HCO₃⁻ 19 mEq/L · Na⁺ 141 · Cl⁻ 98 · K⁺ 3.0. 3-day history of diarrhea.',
+    opts: ['High AG metabolic acidosis — lactic acidosis','Normal AG metabolic acidosis — diarrhea','Respiratory acidosis','Mixed metabolic alkalosis + metabolic acidosis'],
+    ans: 1,
+    exp: '<strong>Normal AG metabolic acidosis — GI bicarbonate loss from diarrhea.</strong> pH 7.30 = acidemia. HCO₃⁻ 19 = metabolic acidosis. AG = 141−(98+19) = 24? Wait — let me recalculate: 141−(98+19) = 24. That IS elevated. But classically diarrhea → hyperchloremia. The elevated AG here may reflect mild dehydration + prerenal azotemia or mild ketonemia from poor intake. PaCO₂ 40 but Winter\'s expected: 1.5×19+8 = 36.5 → measured CO₂ 40 is higher → inadequate respiratory compensation → possible additional respiratory component or early compensation. K⁺ 3.0 = hypokalemia from GI losses. Treat with oral rehydration + KCl.'
+  },
+  {
+    q: 'pH 7.50 · PaCO₂ 50 mmHg · HCO₃⁻ 38 mEq/L. COPD patient admitted for exacerbation, previously on loop diuretics.',
+    opts: ['Acute respiratory acidosis','Chronic respiratory acidosis with metabolic alkalosis (triple threat)','Pure metabolic alkalosis','Chronic respiratory acidosis only'],
+    ans: 1,
+    exp: '<strong>Mixed: Chronic respiratory acidosis + metabolic alkalosis.</strong> pH 7.50 = alkalemia — surprising with PaCO₂ 50. PaCO₂ 50 = respiratory acidosis. HCO₃⁻ 38: expected for chronic resp acidosis = 24 + (50−40)×0.35 = 27.5. Measured 38 >> 27.5 → additional metabolic alkalosis (loop diuretics + contraction alkalosis). Net effect: alkalemia despite hypercapnia. Furosemide in COPD → Cl⁻ depletion → metabolic alkalosis → blunts respiratory drive → worsens CO₂ retention (vicious cycle). Treatment: replace Cl⁻, K⁺, reduce/hold diuretics.'
+  },
+  {
+    q: 'pH 7.25 · PaCO₂ 30 mmHg · HCO₃⁻ 13 mEq/L · Na⁺ 138 · Cl⁻ 108. Type 2 DM on metformin, AKI (creatinine 8.0).',
+    opts: ['Respiratory alkalosis','High AG metabolic acidosis — uremia','Normal AG metabolic acidosis','Metabolic alkalosis'],
+    ans: 1,
+    exp: '<strong>High AG metabolic acidosis — uremic acidosis ± metformin-associated lactic acidosis.</strong> pH 7.25 = acidemia. HCO₃⁻ 13 = metabolic acidosis. AG = 138−(108+13) = 17 → elevated. PaCO₂ 30: Winter\'s = 1.5×13+8 = 27.5±2 → measured 30 at upper limit of appropriate range. Uremia: failed renal H⁺ excretion + ↓NH₄⁺ excretion → AG acidosis. Metformin with AKI: metformin accumulates → inhibits hepatic gluconeogenesis + mitochondrial complex I → lactic acidosis (Type B). Creatinine 8.0 = severe AKI — RRT likely needed.'
+  },
+  {
+    q: 'pH 7.44 · PaCO₂ 26 mmHg · HCO₃⁻ 18 mEq/L. 34-week pregnancy, routine antenatal check.',
+    opts: ['Pathological chronic respiratory alkalosis','Metabolic acidosis','Physiological respiratory alkalosis of pregnancy','Metabolic alkalosis'],
+    ans: 2,
+    exp: '<strong>Physiological respiratory alkalosis of pregnancy.</strong> Normal in pregnancy: PaCO₂ 28–32, HCO₃⁻ 18–22, pH 7.44–7.47. Progesterone stimulates medullary respiratory centres → chronic hyperventilation. Kidneys compensate: ↓HCO₃⁻ reabsorption → HCO₃⁻ 18–22. This is a NORMAL finding in the third trimester. The "normal" PaCO₂ range 35–45 does not apply to pregnant women — PaCO₂ 40 in a pregnant woman = relative hypoventilation.'
+  },
+  {
+    q: 'pH 7.22 · PaCO₂ 72 mmHg · HCO₃⁻ 29 mEq/L. 70-year-old, day 3 post-CABG, extubated 12h ago, morbidly obese, O₂ mask only.',
+    opts: ['Chronic respiratory acidosis — baseline COPD','Acute-on-chronic respiratory acidosis — post-extubation failure','Metabolic acidosis — lactic','Metabolic alkalosis'],
+    ans: 1,
+    exp: '<strong>Acute-on-chronic respiratory acidosis — post-extubation respiratory failure.</strong> pH 7.22 = significant acidemia. PaCO₂ 72 = severe hypoventilation. HCO₃⁻ 29: for chronic CO₂ 72: expected = 24 + (72−40)×0.35 = 35.2. Measured 29 &lt; 35.2 → less compensation than expected for chronic → acute component on top of pre-existing chronic. This obese post-CABG patient has: (1) Chronic hypercapnia baseline; (2) Acute decompensation from residual opioids + atelectasis + obesity hypoventilation post-extubation. URGENT action: NIV (BiPAP), consider re-intubation if deteriorating.'
+  },
+  {
+    q: 'pH 7.38 · PaCO₂ 55 mmHg · HCO₃⁻ 32 mEq/L · Na⁺ 140 · Cl⁻ 92. Post-op with NGT, large transfusion, loop diuretics.',
+    opts: ['Chronic respiratory acidosis — well compensated','Mixed chronic respiratory acidosis + metabolic alkalosis','Pure metabolic alkalosis','Normal ABG'],
+    ans: 1,
+    exp: '<strong>Mixed: Chronic respiratory acidosis + metabolic alkalosis.</strong> pH 7.38 = low-normal. PaCO₂ 55 = respiratory acidosis. HCO₃⁻ 32: expected for chronic = 24 + (55−40)×0.35 = 29.25. Measured 32 > 29.25 → additional metabolic alkalosis. Causes: NGT suction (HCl loss) + blood transfusion (citrate → HCO₃⁻) + furosemide (↓Cl⁻, contraction alkalosis). AG = 140−(92+32) = 16 — mildly elevated but may reflect albumin or correction needed. The metabolic alkalosis partly "neutralizes" the respiratory acidosis keeping pH near-normal.'
+  },
+  {
+    q: 'pH 7.20 · PaCO₂ 18 mmHg · HCO₃⁻ 7 mEq/L · Na⁺ 145 · Cl⁻ 104 · Lactate 14. Post-CABG cardiac arrest, ROSC 10 min ago.',
+    opts: ['Respiratory alkalosis dominant','Metabolic acidosis — moderate','Severe high-AG metabolic acidosis with maximal respiratory compensation','Mixed metabolic + respiratory acidosis'],
+    ans: 2,
+    exp: '<strong>Severe high-AG metabolic acidosis with maximal respiratory compensation.</strong> pH 7.20 = severe acidemia. HCO₃⁻ 7 = critical metabolic acidosis. PaCO₂ 18: Winter\'s = 1.5×7+8 = 18.5 → measured 18 ≈ 18.5 → appropriate maximal Kussmaul ventilation. AG = 145−(104+7) = 34 → massive high AG. Lactate 14 = critical — tissue hypoperfusion during arrest. Post-ROSC: myocardial stunning + reperfusion lactate release. Priorities: optimize CO (may need ECMO/IABP), avoid bicarbonate (can worsen intracellular acidosis), optimize ventilation to maintain compensation.'
+  },
+  {
+    q: 'pH 7.46 · PaCO₂ 44 mmHg · HCO₃⁻ 31 mEq/L. 60-year-old, 5 days of vomiting, K⁺ 2.8.',
+    opts: ['Respiratory alkalosis','Metabolic alkalosis with inadequate respiratory compensation','Respiratory acidosis with metabolic compensation','Mixed metabolic + respiratory alkalosis'],
+    ans: 1,
+    exp: '<strong>Metabolic alkalosis — from prolonged vomiting (HCl loss).</strong> pH 7.46 = mild alkalemia. HCO₃⁻ 31 = metabolic alkalosis. Expected PaCO₂: 0.7×31+21 = 42.7±2. Measured CO₂ 44 is within range → appropriate respiratory compensation (hypoventilation). K⁺ 2.8 = significant hypokalemia — typical with vomiting (↑aldosterone from volume depletion → ↑K⁺ excretion; H⁺/K⁺ exchange; ↑HCO₃⁻ at expense of Cl⁻). Treatment: IV NaCl + KCl replenishment (chloride-responsive metabolic alkalosis).'
+  },
+  {
+    q: 'pH 7.35 · PaCO₂ 36 mmHg · HCO₃⁻ 20 mEq/L · Na⁺ 140 · Cl⁻ 118. Post-op, received 6L NS intraoperatively.',
+    opts: ['Normal ABG','High AG metabolic acidosis','Hyperchloremic metabolic acidosis from NS — with respiratory compensation','Respiratory acidosis'],
+    ans: 2,
+    exp: '<strong>Hyperchloremic (normal AG) metabolic acidosis — dilutional from normal saline.</strong> pH 7.35 = low-normal (borderline acidemia). HCO₃⁻ 20 = metabolic acidosis. AG = 140−(118+20) = 2 → very low AG, well below normal. Cl⁻ 118 = hyperchloremia (NS has 154 mEq/L Cl⁻ — far above plasma). Large-volume NS causes hyperchloremic metabolic acidosis via strong ion difference (SID) reduction. PaCO₂ 36: Winter\'s = 1.5×20+8 = 38±2 → measured 36 within range → appropriate compensation. Solution: no further NS; switch to balanced crystalloid (LR, Plasma-Lyte).'
+  },
+  {
+    q: 'pH 7.16 · PaCO₂ 90 mmHg · HCO₃⁻ 32 mEq/L. BMI 62, apneic episodes, OSA, no CPAP compliance.',
+    opts: ['Acute respiratory acidosis — new onset','Acute-on-chronic respiratory acidosis — OHS decompensation','Metabolic acidosis with respiratory compensation','Normal for this patient'],
+    ans: 1,
+    exp: '<strong>Acute-on-chronic respiratory acidosis — obesity hypoventilation syndrome (OHS) decompensation.</strong> pH 7.16 = critical acidemia. PaCO₂ 90 = extreme hypercapnia. HCO₃⁻ 32: expected for chronic CO₂ 90 = 24 + (90−40)×0.35 = 41.5. Measured 32 &lt;&lt; 41.5 → insufficient renal compensation → significant acute component. OHS: obesity → ↓FRC, ↑WOB, ↓ventilatory drive response → chronic CO₂ retention. Decompensation (infection, sedation, apnea event) → acute spike. Critical: may need intubation; if stable → BiPAP. Long-term: CPAP compliance, weight loss.'
+  },
+  {
+    q: 'pH 7.55 · PaCO₂ 28 mmHg · HCO₃⁻ 24 mEq/L. Post-cardiac surgery day 1, ventilated, rate set at 20 bpm, TV 550 mL.',
+    opts: ['Appropriate ventilation','Acute respiratory alkalosis — over-ventilation on MV','Metabolic alkalosis','Chronic respiratory alkalosis'],
+    ans: 1,
+    exp: '<strong>Acute respiratory alkalosis — iatrogenic over-ventilation on mechanical ventilator.</strong> pH 7.55 = significant alkalemia. PaCO₂ 28 = over-ventilation. HCO₃⁻ 24 = normal (no time for renal compensation — recent post-op). Expected HCO₃⁻ (acute): 24 − (40−28)×0.2 = 21.6. Measured 24 > 21.6 → slightly more alkalemic. This is a very common post-cardiac surgery problem: high MV settings → hyperventilation → respiratory alkalosis → ↓ionized Ca²⁺ (alkalosis binds Ca²⁺ to albumin) → arrhythmias, vasoconstriction. Fix: ↓RR from 20 to 12–14 bpm. Also risk: cerebral vasoconstriction from ↓PaCO₂.'
+  },
+  {
+    q: 'pH 7.31 · PaCO₂ 45 mmHg · HCO₃⁻ 22 mEq/L · Na⁺ 138 · Cl⁻ 110. No specific history provided.',
+    opts: ['Respiratory acidosis — mild','Metabolic acidosis with appropriate compensation','Mixed disorder — subtle','Normal ABG with minimal aberration'],
+    ans: 2,
+    exp: '<strong>Mixed disorder.</strong> pH 7.31 = acidemia. PaCO₂ 45 = high-normal (upper limit — borderline respiratory acidosis). HCO₃⁻ 22 = low-normal (borderline metabolic acidosis). AG = 138−(110+22) = 6 → normal AG. If primary metabolic acidosis: Winter\'s expected CO₂ = 1.5×22+8 = 41±2 → measured 45 is above → respiratory acidosis on top. If primary respiratory acidosis: expected HCO₃⁻ (acute) = 24 + (45−40)×0.1 = 24.5 → measured 22 is below → metabolic acidosis on top. Either way → mixed respiratory + metabolic acidosis, normal AG. Causes: hyperchloremic acidosis + mild hypoventilation.'
+  },
+  {
+    q: 'pH 7.40 · PaCO₂ 40 mmHg · HCO₃⁻ 24 mEq/L · Na⁺ 140 · Cl⁻ 101 · K⁺ 3.2 · Albumin 2.0 g/dL. Cirrhotic patient.',
+    opts: ['Normal ABG — no disorder','High AG acidosis masked by hypoalbuminemia — occult acidosis','Metabolic alkalosis','Respiratory alkalosis'],
+    ans: 1,
+    exp: '<strong>High AG acidosis masked by hypoalbuminemia — occult metabolic acidosis.</strong> Standard AG = 140−(101+24) = 15 — appears elevated. BUT albumin 2.0 g/dL (normal 4.0): corrected AG = AG + 2.5×(4−2.0) = 15+5 = 20. So corrected AG = 20 → HIGH. This means there IS a high-AG acidosis being masked by the low albumin (albumin contributes to the anion gap — hypoalbuminemia lowers the measured AG, hiding the true anion excess). In cirrhosis: lactic acidosis from ↓hepatic lactate clearance + organic acid accumulation. NEVER accept normal AG at face value without albumin correction in hypoalbuminemic patients.'
+  },
+  {
+    q: 'pH 7.39 · PaCO₂ 62 mmHg · HCO₃⁻ 37 mEq/L · K⁺ 4.1. Post-op day 2, COPD, extubated this morning.',
+    opts: ['Normal ABG — no concern','Chronic respiratory acidosis — baseline, fully compensated','Metabolic alkalosis — treat with acetazolamide','Acute respiratory acidosis — re-intubate immediately'],
+    ans: 1,
+    exp: '<strong>Chronic respiratory acidosis — this patient\'s baseline, fully compensated.</strong> pH 7.39 = normal. PaCO₂ 62 = elevated but CHRONIC. Expected HCO₃⁻ chronic: 24 + (62−40)×0.35 = 31.7. Measured 37 > 31.7 → slightly above — possible minor metabolic alkalosis co-existing (common with post-op diuretics). But pH 7.39 = normal. This is likely the patient\'s pre-existing COPD baseline. DO NOT hyperventilate a chronic hypercapnic patient back to normal PaCO₂ — sudden CO₂ drop → severe post-hypercapnic alkalosis → seizures, tetany, arrhythmias. Target: patient\'s known baseline CO₂.'
+  },  ,{
+    q: 'pH 7.24 · PaCO₂ 15 mmHg · HCO₃⁻ 6 mEq/L · Na⁺ 139 · Cl⁻ 105 · Glucose 32 mmol/L · Ketones 4+. Type 1 DM, 18 years old, confused.',
+    opts: ['Respiratory alkalosis with metabolic compensation','Metabolic alkalosis','Severe high-AG metabolic acidosis (DKA) with maximal respiratory compensation','Mixed respiratory and metabolic alkalosis'],
+    ans: 2,
+    exp: '<strong>Severe high-AG metabolic acidosis — Diabetic Ketoacidosis (DKA).</strong> pH 7.24 = significant acidemia. HCO₃⁻ 6 = severe metabolic acidosis. AG = 139−(105+6) = 28 → high AG (ketoacids: β-hydroxybutyrate, acetoacetate). PaCO₂ 15: Winter\'s formula = 1.5×6+8 = 17±2. Measured PaCO₂ 15 is at the lower edge — near-maximal Kussmaul hyperventilation. BE estimate: severely negative. Glucose 32 mmol/L (576 mg/dL) + 4+ ketones → DKA confirmed. Management: IV insulin infusion, aggressive fluid resuscitation (NS initially → LR), potassium replacement (watch: insulin drives K⁺ into cells — must replace before insulin if K⁺ &lt;3.5), monitor glucose hourly. Target: AG closure, not glucose alone.'
+  }
+];
+
+// ── QUIZ RENDERING ───────────────────────────────────────────────
+const TOTAL = QDATA.length;
+let sc = new Array(TOTAL).fill(null);
+const correct = QDATA.map(q => q.ans);
+
+function buildQuiz() {
+  const con = document.getElementById('quizContainer');
+  con.innerHTML = QDATA.map((q, i) => `
+    <div class="quiz-q" id="qq${i}" style="background:var(--bg2);border:1px solid var(--rim);border-radius:18px;padding:18px;margin-bottom:14px">
+      <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:12px">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--cyan-d);border:1px solid var(--cyan);
+                    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;
+                    color:var(--cyan);flex-shrink:0;font-family:var(--mono)">${i+1}</div>
+        <div style="font-size:13.5px;color:var(--text);line-height:1.55;font-weight:500">${q.q}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px" id="opts${i}">
+        ${q.opts.map((o, oi) => `
+          <button onclick="qa(${i},${oi})"
+            style="background:var(--bg3);border:1px solid var(--rim);border-radius:9px;
+                   padding:9px 13px;text-align:left;cursor:pointer;font-size:13px;
+                   color:var(--muted);width:100%;transition:all .14s;font-family:var(--sans)"
+            class="qo-btn" id="opt${i}_${oi}">
+            <span style="font-family:var(--mono);font-size:10px;color:var(--dim);margin-right:6px">${String.fromCharCode(65+oi)}.</span>${o}
+          </button>`).join('')}
+      </div>
+      <div id="exp${i}" style="display:none;background:rgba(0,200,224,.07);border:1px solid var(--cyan-b);
+                                border-radius:9px;padding:11px 13px;font-size:13px;color:var(--text);
+                                margin-top:10px;line-height:1.6">${q.exp}</div>
+    </div>
+  `).join('');
+}
+
+function qa(qi, ci) {
+  if (sc[qi] !== null) return;
+  sc[qi] = ci === correct[qi];
+  const btns = document.querySelectorAll(`#opts${qi} .qo-btn`);
+  btns.forEach(b => b.disabled = true);
+  if (sc[qi]) {
+    btns[ci].style.background = 'rgba(48,200,128,.15)';
+    btns[ci].style.borderColor = 'var(--green)';
+    btns[ci].style.color = 'var(--green)';
+  } else {
+    btns[ci].style.background = 'rgba(240,80,96,.15)';
+    btns[ci].style.borderColor = 'var(--red)';
+    btns[ci].style.color = 'var(--red)';
+    btns[correct[qi]].style.background = 'rgba(48,200,128,.15)';
+    btns[correct[qi]].style.borderColor = 'var(--green)';
+    btns[correct[qi]].style.color = 'var(--green)';
+  }
+  document.getElementById('exp'+qi).style.display = 'block';
+  qupdate();
+}
+
+function qupdate() {
+  const ans = sc.filter(s => s !== null).length;
+  const right = sc.filter(s => s === true).length;
+  document.getElementById('qscr').textContent = right + ' / ' + ans;
+  document.getElementById('qpbar').style.width = (right / TOTAL * 100) + '%';
+  const msgs = ['Answer the clinical cases below','Keep going!','Good progress!','Excellent work! 🎉','Outstanding!'];
+  document.getElementById('qmsg').textContent = ans === TOTAL
+    ? (right >= 30 ? '🏆 Mastery! ' + right + '/' + TOTAL : '✅ Complete: ' + right + '/' + TOTAL + ' — review explanations')
+    : msgs[Math.min(Math.floor(right / 9), 4)];
+}
+
+function qreset() {
+  sc = new Array(TOTAL).fill(null);
+  buildQuiz();
+  document.getElementById('qscr').textContent = '0 / 35';
+  document.getElementById('qpbar').style.width = '0';
+  document.getElementById('qmsg').textContent = 'Answer the clinical cases below';
+}
+
+// Input styling on focus
+document.querySelectorAll('input[type="number"]').forEach(inp => {
+  inp.addEventListener('focus', () => inp.style.borderColor = 'var(--cyan)');
+  inp.addEventListener('blur',  () => inp.style.borderColor = 'rgba(255,255,255,0.07)');
+});
+
+buildQuiz();
+</script>
+
+</main>
+</body>
+</html>
