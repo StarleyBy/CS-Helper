@@ -1,13 +1,19 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-06-14 10:01
+  updated: 2026-06-16 03:12
 
 sections:
   - id: calculators
     title: Calculators and Schemes
     icon: 🧮
     items:
+      - id: abg
+        title: "ABG Interpreter | Arterial Blood Gas Analysis"
+        file: books/calculators/abg.html
+        type: calculator
+        visible: true
+        tags: []
       - id: drug-dilution
         title: "Drug Dilution Calculator"
         file: books/calculators/drug-dilution.html
