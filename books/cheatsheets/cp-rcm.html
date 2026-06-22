@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Constrictive Pericarditis vs Restrictive Cardiomyopathy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#09100f;--bg2:#0f1a18;--bg3:#152320;--bg4:#1c2e2a;
+  --rim:rgba(255,255,255,0.07);--glass:rgba(255,255,255,0.03);
+  --text:#e4ede8;--muted:#6e8c80;--dim:#3a5048;
+  --cp:#d4892a;--cp-l:#f5b85a;--cp-d:rgba(212,137,42,0.13);--cp-b:rgba(212,137,42,0.30);
+  --rcm:#9060d4;--rcm-l:#b890f8;--rcm-d:rgba(144,96,212,0.13);--rcm-b:rgba(144,96,212,0.30);
+  --teal:#2ab89a;--teal-d:rgba(42,184,154,0.12);
+  --red:#e85050;--red-d:rgba(232,80,80,0.12);
+  --green:#3ec870;--green-d:rgba(62,200,112,0.12);
+  --gold:#e8c050;--gold-d:rgba(232,192,80,0.12);
+  --blue:#4898e0;--blue-d:rgba(72,152,224,0.12);
+  --display:'Playfair Display',Georgia,serif;
+  --sans:'IBM Plex Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --r:12px;--r2:20px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.65;overflow-x:hidden}
+::selection{background:rgba(212,137,42,.3)}
+.hdr{background:linear-gradient(160deg,#060e0c 0%,#0d1a16 55%,#121f1b 100%);border-bottom:1px solid var(--rim);padding:28px 22px 24px;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 15% 50%,rgba(212,137,42,.10) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 85% 50%,rgba(144,96,212,.10) 0%,transparent 60%);pointer-events:none}
+.hdr-inner{max-width:960px;margin:0 auto;position:relative;z-index:1}
+.hdr-eyebrow{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.hdr-title{font-family:var(--display);font-size:clamp(22px,5vw,36px);font-weight:800;line-height:1.15;letter-spacing:-.01em}
+.hdr-title .cp-word{color:var(--cp-l)}.hdr-title .rcm-word{color:var(--rcm-l)}.hdr-title .vs{color:var(--muted);font-style:italic;font-weight:600;font-size:.75em}
+.hdr-sub{font-size:13px;color:var(--muted);margin-top:10px;max-width:680px;line-height:1.55}
+.hdr-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.hdr-pill{font-size:11px;font-weight:600;padding:4px 12px;border-radius:30px;letter-spacing:.03em}
+.pill-cp{background:var(--cp-d);color:var(--cp-l);border:1px solid var(--cp-b)}
+.pill-rcm{background:var(--rcm-d);color:var(--rcm-l);border:1px solid var(--rcm-b)}
+.pill-neu{background:var(--teal-d);color:var(--teal);border:1px solid rgba(42,184,154,.3)}
+.nav-wrap{background:var(--bg2);border-bottom:1px solid var(--rim);padding:11px 16px;position:sticky;top:0;z-index:200}
+.nav-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:960px;margin:0 auto}
+.nb{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:9px 4px 7px;cursor:pointer;transition:all .16s}
+.nb:hover{border-color:rgba(212,137,42,.4);background:rgba(212,137,42,.06)}
+.nb.active{background:rgba(212,137,42,.12);border-color:var(--cp)}
+.nb-icon{font-size:17px;line-height:1}
+.nb-lbl{font-size:9.5px;font-weight:600;color:var(--muted);text-align:center;line-height:1.25;letter-spacing:.02em}
+.nb.active .nb-lbl{color:var(--cp-l)}.nb:hover .nb-lbl{color:var(--text)}
+.page{max-width:960px;margin:0 auto;padding:22px 18px 70px}
+.tab{display:none}.tab.active{display:block}
+.sh{margin-bottom:20px}
+.sh h2{font-family:var(--display);font-size:22px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:10px}
+.sh p{color:var(--muted);font-size:13px;margin-top:5px}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.duel{display:grid;grid-template-columns:1fr auto 1fr;gap:0;border-radius:var(--r2);overflow:hidden;border:1px solid var(--rim);margin-bottom:18px}
+.duel-cp{background:linear-gradient(160deg,var(--bg3) 0%,rgba(212,137,42,.06) 100%);padding:20px 18px;border-right:1px solid var(--rim)}
+.duel-rcm{background:linear-gradient(200deg,var(--bg3) 0%,rgba(144,96,212,.06) 100%);padding:20px 18px;border-left:1px solid var(--rim)}
+.duel-mid{background:var(--bg3);display:flex;flex-direction:column;align-items:center;justify-content:center;width:48px;gap:6px;padding:10px 0}
+.duel-mid-dot{width:8px;height:8px;border-radius:50%;background:var(--dim)}
+.duel-mid-lbl{font-family:var(--mono);font-size:8px;font-weight:700;color:var(--dim);letter-spacing:.06em;writing-mode:vertical-lr;text-orientation:mixed;transform:rotate(180deg)}
+.duel-label{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.duel-cp .duel-label{color:var(--cp-l)}.duel-rcm .duel-label{color:var(--rcm-l)}
+.duel-cp h3{font-size:15px;font-weight:700;color:var(--cp-l);margin-bottom:8px}
+.duel-rcm h3{font-size:15px;font-weight:700;color:var(--rcm-l);margin-bottom:8px}
+.duel-cp p,.duel-cp li,.duel-rcm p,.duel-rcm li{font-size:13px;color:var(--muted);line-height:1.6}
+.duel ul{padding-left:15px}.duel li{margin-bottom:4px}.duel li strong{color:var(--text)}
+@media(max-width:640px){.duel{grid-template-columns:1fr}.duel-mid{flex-direction:row;width:100%;height:32px;padding:0 10px}.duel-mid-lbl{writing-mode:horizontal-tb;transform:none}.duel-cp{border-right:none;border-bottom:1px solid var(--rim)}.duel-rcm{border-left:none}}
+.card{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:18px;margin-bottom:16px}
+.card h3{font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card p,.card li{color:var(--muted);font-size:13px;line-height:1.6}
+.card ul,.card ol{padding-left:16px}.card li{margin-bottom:4px}.card li strong{color:var(--text)}
+.card-cp{border-top:3px solid var(--cp)}.card-cp h3{color:var(--cp-l)}
+.card-rcm{border-top:3px solid var(--rcm)}.card-rcm h3{color:var(--rcm-l)}
+.card-teal{border-top:3px solid var(--teal)}.card-teal h3{color:var(--teal)}
+.card-gold{border-top:3px solid var(--gold)}.card-gold h3{color:var(--gold)}
+.card-red{border-top:3px solid var(--red)}.card-red h3{color:var(--red)}
+.card-blue{border-top:3px solid var(--blue)}.card-blue h3{color:var(--blue)}
+.box{border-radius:var(--r);padding:11px 14px;margin:10px 0;font-size:13px;line-height:1.6;color:var(--text)}
+.box-cp{background:var(--cp-d);border-left:3px solid var(--cp)}
+.box-rcm{background:var(--rcm-d);border-left:3px solid var(--rcm)}
+.box-teal{background:var(--teal-d);border-left:3px solid var(--teal)}
+.box-gold{background:var(--gold-d);border-left:3px solid var(--gold)}
+.box-red{background:var(--red-d);border-left:3px solid var(--red)}
+.box-green{background:var(--green-d);border-left:3px solid var(--green)}
+.box-blue{background:var(--blue-d);border-left:3px solid var(--blue)}
+.box strong{font-weight:700}
+.box-cp strong{color:var(--cp-l)}.box-rcm strong{color:var(--rcm-l)}.box-teal strong{color:var(--teal)}.box-gold strong{color:var(--gold)}
+.tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--rim);margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:var(--bg3);font-weight:700;padding:8px 11px;text-align:left;border-bottom:1px solid var(--rim);letter-spacing:.03em;white-space:nowrap}
+th.th-cp{color:var(--cp-l)}th.th-rcm{color:var(--rcm-l)}th.th-neu{color:var(--muted)}
+td{padding:7px 11px;border-bottom:1px solid var(--rim);color:var(--muted);vertical-align:top}
+td.cp-val{color:var(--cp-l);font-weight:600}td.rcm-val{color:var(--rcm-l);font-weight:600}td.both-val{color:var(--teal);font-weight:600}
+tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)}td strong{color:var(--text)}
+.bdg{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:30px;margin:1px;letter-spacing:.04em}
+.bdg-cp{background:var(--cp-d);color:var(--cp-l)}.bdg-rcm{background:var(--rcm-d);color:var(--rcm-l)}
+.bdg-t{background:var(--teal-d);color:var(--teal)}.bdg-r{background:var(--red-d);color:var(--red)}
+.fm{font-family:var(--mono);font-size:12.5px;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:9px 13px;margin:8px 0;color:var(--teal);display:block}
+.dv{height:1px;background:var(--rim);margin:22px 0}
+.stitle{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:24px 0 12px;padding-left:10px;border-left:2px solid var(--cp)}
+.trace-wrap{background:#020806;border-radius:var(--r);border:1px solid var(--rim);padding:14px 16px;margin:12px 0;font-family:var(--mono);font-size:12px}
+.trace-wrap .trace-label{font-size:9.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;font-weight:700}
+.pressure-svg{width:100%;height:auto;display:block}
+.footnote{text-align:center;font-size:11px;color:var(--dim);padding:24px 0 0;border-top:1px solid var(--rim);margin-top:36px}
+@media(max-width:500px){.nav-grid{grid-template-columns:repeat(5,1fr)}.nb-lbl{font-size:8.5px}.hdr{padding:20px 16px}}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-eyebrow">Cardiac Surgery · Cardiology · Perioperative Medicine</div>
+    <h1 class="hdr-title">
+      <span class="cp-word">Constrictive Pericarditis</span>
+      <span class="vs"> vs </span>
+      <span class="rcm-word">Restrictive Cardiomyopathy</span>
+    </h1>
+    <div class="hdr-sub">A comprehensive diagnostic atlas — pathophysiology, clinical presentation, echocardiography, cardiac catheterization, advanced imaging, and treatment. Master the distinction that determines whether a patient needs pericardiectomy or a transplant.</div>
+    <div class="hdr-pills">
+      <span class="hdr-pill pill-cp">Constrictive Pericarditis</span>
+      <span class="hdr-pill pill-rcm">Restrictive Cardiomyopathy</span>
+      <span class="hdr-pill pill-neu">Echo · Cath · CMR · CT</span>
+    </div>
+  </div>
+</div>
+<div class="nav-wrap">
+  <div class="nav-grid">
+    <button class="nb active" onclick="gt(0,this)"><span class="nb-icon">🩺</span><span class="nb-lbl">Overview</span></button>
+    <button class="nb" onclick="gt(1,this)"><span class="nb-icon">🫀</span><span class="nb-lbl">Pathophysiology</span></button>
+    <button class="nb" onclick="gt(2,this)"><span class="nb-icon">🔬</span><span class="nb-lbl">Echo</span></button>
+    <button class="nb" onclick="gt(3,this)"><span class="nb-icon">📈</span><span class="nb-lbl">Catheterization</span></button>
+    <button class="nb" onclick="gt(4,this)"><span class="nb-icon">💊</span><span class="nb-lbl">Diagnosis &amp; Rx</span></button>
+  </div>
+</div>
+<main class="page">
+
+  <!-- CENTRAL MESSAGE -->
+  <div style="background:linear-gradient(135deg,rgba(212,137,42,.13) 0%,rgba(144,96,212,.13) 100%);border:1px solid rgba(255,255,255,.1);border-radius:var(--r2);padding:20px 22px;margin-bottom:22px;text-align:center">
+    <div style="font-family:var(--display);font-size:15px;font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:.01em">The Conceptual Foundation</div>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;max-width:700px;margin:0 auto">
+      <div style="background:var(--cp-d);border:1px solid var(--cp-b);border-radius:var(--r);padding:12px 14px">
+        <div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--cp-l);letter-spacing:.08em;margin-bottom:5px">CONSTRICTIVE PERICARDITIS</div>
+        <div style="font-size:15px;font-weight:700;color:var(--cp-l)">Disease of the <em>Pericardium</em></div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">Normal myocardium · Abnormal pericardium</div>
+      </div>
+      <div style="font-family:var(--display);font-size:20px;font-style:italic;color:var(--muted)">vs</div>
+      <div style="background:var(--rcm-d);border:1px solid var(--rcm-b);border-radius:var(--r);padding:12px 14px">
+        <div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--rcm-l);letter-spacing:.08em;margin-bottom:5px">RESTRICTIVE CARDIOMYOPATHY</div>
+        <div style="font-size:15px;font-weight:700;color:var(--rcm-l)">Disease of the <em>Myocardium</em></div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">Abnormal myocardium · Normal pericardium</div>
+      </div>
+    </div>
+    <div style="font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic">Every imaging and haemodynamic feature flows from this single distinction.</div>
+  </div>
+
+
+<!-- ════ TAB 0: OVERVIEW ════ -->
+<section class="tab active" id="t0">
+  <div class="sh"><h2>🩺 Definitions, Epidemiology &amp; Clinical Presentation</h2><p>Two diseases producing identical clinical syndromes of diastolic heart failure — distinguished only by careful haemodynamic and imaging analysis.</p></div>
+  <div class="duel">
+    <div class="duel-cp"><div class="duel-label">CP · Constrictive Pericarditis</div><h3>What is it?</h3><p>Chronic fibrous thickening and calcification of the pericardium that <strong>encases the heart in a rigid shell</strong>, preventing diastolic filling. The pericardium — normally 1–2 mm thick — becomes a 5–20+ mm rigid constraint on all four cardiac chambers.</p></div>
+    <div class="duel-mid"><div class="duel-mid-dot"></div><div class="duel-mid-lbl">definition</div><div class="duel-mid-dot"></div></div>
+    <div class="duel-rcm"><div class="duel-label">RCM · Restrictive Cardiomyopathy</div><h3>What is it?</h3><p>Intrinsic myocardial disease causing <strong>markedly abnormal diastolic filling</strong> due to increased myocardial stiffness. The pericardium is entirely normal. Ventricles are non-dilated with preserved EF but severely impaired relaxation and compliance.</p></div>
+  </div>
+
+  <div class="stitle">Aetiology</div>
+  <div class="duel">
+    <div class="duel-cp"><div class="duel-label">Causes of CP</div><ul>
+      <li><strong>Post-cardiac surgery (25–30%):</strong> #1 identifiable cause in the West. Any cardiac surgery, most common after CABG/valve. Onset 6 months–15 years post-op.</li>
+      <li><strong>Idiopathic/viral (40–50%):</strong> Post-pericarditis, often enteroviral</li>
+      <li><strong>Post-radiation (10–20%):</strong> Mediastinal XRT for lymphoma, breast cancer</li>
+      <li><strong>Tuberculosis:</strong> Predominant in Asia/Africa (up to 80% of CP in endemic regions); calcification common</li>
+      <li><strong>Other:</strong> CTD (RA, SLE), uremia, bacterial/purulent, trauma, malignancy, asbestos</li>
+    </ul>
+    <div class="box box-cp"><strong>Key clinical insight:</strong> Post-cardiac surgery CP is often missed — dyspnoea is attributed to "post-op state." Any post-CABG/valve patient with elevated JVP and progressive dyspnoea must be evaluated for CP.</div></div>
+    <div class="duel-mid"><div class="duel-mid-dot"></div><div class="duel-mid-lbl">causes</div><div class="duel-mid-dot"></div></div>
+    <div class="duel-rcm"><div class="duel-label">Causes of RCM</div><ul>
+      <li><strong>Cardiac amyloidosis (most common in West):</strong> AL (plasma cell dyscrasia) or TTR (transthyretin — wild-type in elderly men, hereditary)</li>
+      <li><strong>Cardiac sarcoidosis:</strong> Non-caseating granuloma infiltration; often presents as AV block or VT</li>
+      <li><strong>Haemochromatosis:</strong> Iron deposition; responds to phlebotomy/chelation if early</li>
+      <li><strong>Löffler's endocarditis / HES:</strong> Eosinophil infiltration → endocardial fibrosis → apical obliteration</li>
+      <li><strong>Endomyocardial fibrosis (EMF):</strong> Tropical; sub-Saharan Africa predominant</li>
+      <li><strong>Idiopathic:</strong> Sarcomeric gene mutations (MYH7, TNNI3, TNNT2); familial</li>
+      <li><strong>Other:</strong> Fabry, glycogen storage, carcinoid, radiation myopathy</li>
+    </ul></div>
+  </div>
+
+  <div class="stitle">Clinical Presentation</div>
+  <div class="card card-gold">
+    <h3>🩺 Shared Symptoms — The Identical Syndrome</h3>
+    <div class="g2">
+      <div><strong style="color:var(--text)">Right-sided HF symptoms (both):</strong>
+        <ul style="margin-top:6px">
+          <li><strong>Progressive exertional dyspnoea</strong> — universal presenting complaint</li>
+          <li><strong>Peripheral oedema</strong> — bilateral, ascending</li>
+          <li><strong>Ascites</strong> — often disproportionate (especially CP)</li>
+          <li><strong>Hepatomegaly</strong> / congestive hepatopathy / jaundice</li>
+          <li><strong>Fatigue</strong> from ↓ CO</li>
+        </ul>
+      </div>
+      <div><strong style="color:var(--text)">Physical signs (both):</strong>
+        <ul style="margin-top:6px">
+          <li><strong>Elevated JVP</strong> — nearly universal; may be extreme</li>
+          <li><strong>Kussmaul's sign</strong> — ↑ JVP with inspiration (classic in CP, seen in RCM too)</li>
+          <li><strong>Prominent x and y descents</strong> (especially y in CP)</li>
+          <li><strong>Hepatojugular reflux</strong> — positive</li>
+          <li><strong>AF</strong> — common late complication</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="duel" style="margin-top:6px">
+    <div class="duel-cp"><div class="duel-label">CP — Distinguishing Signs</div><ul>
+      <li><strong>Pericardial knock:</strong> High-pitched early diastolic sound, earlier than S₃, at LLSB/apex. Represents abrupt cessation of ventricular filling at the pericardial volume limit. Present in approximately one-third to one-half of patients with CP.</li>
+      <li><strong>Pulsus paradoxus:</strong> Mild (~10 mmHg) in 20–30% of CP. Larger (&gt;25 mmHg) suggests effusive-constrictive physiology.</li>
+      <li><strong>Absence of pulmonary oedema:</strong> Both LV and RV diastolic pressures constrained equally — Frank pulmonary oedema is less common than in RCM, despite elevated filling pressures.</li>
+      <li><strong>Pericardial calcification</strong> on CXR/CT: visible in 25–30%.</li>
+    </ul></div>
+    <div class="duel-mid"><div class="duel-mid-dot"></div><div class="duel-mid-lbl">exam</div><div class="duel-mid-dot"></div></div>
+    <div class="duel-rcm"><div class="duel-label">RCM — Distinguishing Signs</div><ul>
+      <li><strong>S₃ gallop:</strong> Lower-pitched, slightly later than pericardial knock. Reflects impaired filling into non-compliant ventricle.</li>
+      <li><strong>Loud S₄:</strong> Atrial gallop — atrial kick into stiff ventricle (sinus rhythm required).</li>
+      <li><strong>Pulmonary oedema more likely:</strong> LVEDP often very high in amyloid → pulmonary venous hypertension.</li>
+      <li><strong>Biatrial dilation on exam/CXR</strong> — massive LA/RA enlargement.</li>
+      <li><strong>Systemic signs of underlying disease:</strong> Macroglossia, periorbital purpura (AL amyloid), lymphadenopathy (sarcoid), bronzing (haemochromatosis).</li>
+      <li><strong>No pericardial knock.</strong></li>
+    </ul></div>
+  </div>
+
+  <div class="card card-gold" style="margin-top:4px">
+    <h3>📊 Master Comparison Table</h3>
+    <div class="tw"><table>
+      <thead><tr><th class="th-neu">Feature</th><th class="th-cp">Constrictive Pericarditis</th><th class="th-rcm">Restrictive Cardiomyopathy</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Pericardium</strong></td><td class="cp-val">Often thickened (&gt;4 mm) and/or calcified, but <strong>normal thickness does not exclude CP</strong> (especially post-radiation and post-surgical). Haemodynamics and TDI are more reliable than thickness alone.</td><td class="rcm-val">Normal (&lt;2 mm)</td></tr>
+        <tr><td><strong>Myocardium</strong></td><td class="cp-val">Normal</td><td class="rcm-val">Infiltrated / fibrotic / abnormal</td></tr>
+        <tr><td><strong>Wall thickness</strong></td><td class="cp-val">Normal</td><td class="rcm-val">↑↑ (amyloid) or normal</td></tr>
+        <tr><td><strong>Atrial size</strong></td><td class="cp-val">Mild–moderate LA enlargement</td><td class="rcm-val">↑↑ Biatrial massive dilation (hallmark)</td></tr>
+        <tr><td><strong>EF</strong></td><td class="cp-val">Normal (≥55%)</td><td class="rcm-val">Normal or mildly ↓</td></tr>
+        <tr><td><strong>Septal bounce</strong></td><td class="cp-val">Present</td><td class="rcm-val">Absent</td></tr>
+        <tr><td><strong>Mitral E resp. variation</strong></td><td class="cp-val">&gt;25%</td><td class="rcm-val">&lt;10%</td></tr>
+        <tr><td><strong>TDI e' (medial)</strong></td><td class="cp-val">≥8 cm/s (normal/supernormal)</td><td class="rcm-val">&lt;5 cm/s (markedly reduced)</td></tr>
+        <tr><td><strong>E/e' ratio</strong></td><td class="cp-val">Normal–mildly ↑ (8–14)</td><td class="rcm-val">↑↑↑ (&gt;15, often &gt;20)</td></tr>
+        <tr><td><strong>Pericardial knock</strong></td><td class="cp-val">Present in ~30–50% of patients</td><td class="rcm-val">Absent</td></tr>
+        <tr><td><strong>BNP/NT-proBNP/NT-proBNP</strong></td><td class="cp-val">Generally lower (often &lt;400 pg/mL); markedly elevated BNP argues against CP — but values overlap substantially</td><td class="rcm-val">Generally ↑↑↑ (often &gt;1000 pg/mL, amyloid &gt;5000); not a standalone discriminator</td></tr>
+        <tr><td><strong>Cath EDP equalization</strong></td><td class="cp-val">LVEDP − RVEDP &lt;5 mmHg</td><td class="rcm-val">LVEDP &gt;&gt; RVEDP (&gt;5 mmHg)</td></tr>
+        <tr><td><strong>Resp. LV/RV pattern</strong></td><td class="cp-val">Discordant (LV↓, RV↑)</td><td class="rcm-val">Concordant (both move together)</td></tr>
+        <tr><td><strong>CMR LGE</strong></td><td class="cp-val">Pericardial enhancement</td><td class="rcm-val">Myocardial LGE (pattern by cause)</td></tr>
+        <tr><td><strong>Treatment</strong></td><td class="cp-val">Pericardiectomy (potentially curative)</td><td class="rcm-val">Disease-specific medical ± transplant</td></tr>
+      </tbody>
+    </table></div>
+  
+  <div class="card card-gold" style="margin-top:4px">
+    <h3>⚡ CP vs RCM — At a Glance</h3>
+    <div class="tw"><table>
+      <thead><tr>
+        <th class="th-neu">Feature</th>
+        <th class="th-cp">CP</th>
+        <th class="th-rcm">RCM</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><strong>Pathology</strong></td><td class="cp-val">Pericardium (myocardium normal)</td><td class="rcm-val">Myocardium (pericardium normal)</td></tr>
+        <tr><td><strong>TDI medial e′</strong></td><td class="cp-val">Preserved ≥8 cm/s</td><td class="rcm-val">Reduced &lt;5 cm/s</td></tr>
+        <tr><td><strong>Respiratory variation</strong></td><td class="cp-val">Present (&gt;25% mitral E)</td><td class="rcm-val">Minimal (&lt;10%)</td></tr>
+        <tr><td><strong>Septal bounce</strong></td><td class="cp-val">Yes</td><td class="rcm-val">No</td></tr>
+        <tr><td><strong>Biatrial dilation</strong></td><td class="cp-val">Mild–moderate</td><td class="rcm-val">Massive (hallmark)</td></tr>
+        <tr><td><strong>CMR</strong></td><td class="cp-val">Pericardial disease ± LGE</td><td class="rcm-val">Myocardial infiltration / LGE</td></tr>
+        <tr><td><strong>Cath EDP</strong></td><td class="cp-val">Equalised (within 5 mmHg)</td><td class="rcm-val">LVEDP generally higher, no close equalization</td></tr>
+        <tr><td><strong>Cath LV/RV respiration</strong></td><td class="cp-val">Discordant</td><td class="rcm-val">Concordant</td></tr>
+        <tr><td><strong>BNP</strong></td><td class="cp-val">Generally lower; overlap exists</td><td class="rcm-val">Generally markedly ↑; overlap exists</td></tr>
+        <tr><td><strong>Definitive therapy</strong></td><td class="cp-val">Pericardiectomy (potentially curative)</td><td class="rcm-val">Disease-specific medical ± transplant</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+</div>
+</section>
+
+<!-- ════ TAB 1: PATHOPHYSIOLOGY ════ -->
+<section class="tab" id="t1">
+  <div class="sh"><h2>🫀 Pathophysiology</h2><p>Understanding the haemodynamic mechanisms is essential to correctly interpreting every diagnostic test.</p></div>
+  <div class="stitle">Constrictive Pericarditis — The Rigid Shell</div>
+  <div class="card card-cp">
+    <h3>🔩 CP: Fixed Total Cardiac Volume — Four Key Consequences</h3>
+    <div class="g2" style="margin-top:10px">
+      <div>
+        <div class="box box-cp"><strong>1. Enhanced ventricular interdependence:</strong><br>Fixed total cardiac volume → when one ventricle fills more, the other fills less. Inspiration → ↑ RV filling → septum shifts left → ↓ LV filling. Produces the septal bounce on echo and discordant LV/RV pressures at catheterization.</div>
+        <div class="box box-cp"><strong>2. Dissociation of intrathoracic from intracardiac pressures:</strong><br>Rigid pericardium insulates the heart from respiratory pressure changes. Inspiration ↓ intrathoracic P → ↓ pulmonary vein P, but LV diastolic P unchanged → ↓ pulmonary-to-LV pressure gradient → ↓ LV filling → ↓ mitral E velocity with inspiration (the basis of echo respiratory variation).</div>
+      </div>
+      <div>
+        <div class="box box-cp"><strong>3. Early diastolic filling then abrupt stop:</strong><br>Normal myocardial relaxation → rapid early filling → filling ABRUPTLY STOPS at pericardial volume limit → square root sign (dip-plateau) on pressure tracings; high E with short deceleration time on echo.</div>
+        <div class="box box-cp"><strong>4. Equalization of diastolic pressures:</strong><br>Pericardium constrains all chambers equally → LVEDP ≈ RVEDP ≈ PCWP ≈ RAP (within 5 mmHg). The haemodynamic hallmark at cardiac catheterization.</div>
+        
+    <div class="trace-wrap" style="margin-top:14px">
+      <div class="trace-label">Ventricular Interdependence in CP — Fixed Pericardial Volume</div>
+      <svg viewBox="0 0 400 160" style="max-height:200px;width:100%;display:block">
+        <rect width="400" height="160" fill="#020806"/>
+        <!-- Pericardial border -->
+        <ellipse cx="200" cy="80" rx="120" ry="68" fill="none" stroke="#d4892a" stroke-width="3" stroke-dasharray="8,3"/>
+        <text x="200" y="10" fill="#d4892a" font-size="9" font-family="IBM Plex Mono" text-anchor="middle" font-weight="700">RIGID PERICARDIUM — Fixed Total Volume</text>
+        <!-- RV (right side) -->
+        <ellipse cx="150" cy="80" rx="52" ry="42" fill="rgba(62,200,112,0.12)" stroke="#3ec870" stroke-width="2"/>
+        <text x="150" y="75" fill="#3ec870" font-size="11" font-family="IBM Plex Mono" text-anchor="middle" font-weight="700">RV</text>
+        <text x="150" y="90" fill="#3ec870" font-size="9" font-family="IBM Plex Mono" text-anchor="middle">↑ fills</text>
+        <!-- Septum -->
+        <line x1="200" y1="38" x2="200" y2="122" stroke="#6e8c80" stroke-width="2" stroke-dasharray="3,2"/>
+        <!-- Arrow showing septum shift -->
+        <text x="200" y="30" fill="#ffffff" font-size="8" font-family="IBM Plex Mono" text-anchor="middle" opacity="0.6">IVS shifts ←</text>
+        <path d="M212,80 L192,80" stroke="#ffffff" stroke-width="1.5" marker-end="url(#arrW)" opacity="0.7"/>
+        <!-- LV (left side) -->
+        <ellipse cx="250" cy="80" rx="45" ry="36" fill="rgba(212,137,42,0.12)" stroke="#d4892a" stroke-width="2"/>
+        <text x="250" y="75" fill="#d4892a" font-size="11" font-family="IBM Plex Mono" text-anchor="middle" font-weight="700">LV</text>
+        <text x="250" y="90" fill="#d4892a" font-size="9" font-family="IBM Plex Mono" text-anchor="middle">↓ compressed</text>
+        <!-- Labels -->
+        <text x="60" y="100" fill="#3ec870" font-size="9" font-family="IBM Plex Mono">INSPIRATION</text>
+        <text x="60" y="112" fill="#3ec870" font-size="9" font-family="IBM Plex Mono">↑ venous return</text>
+        <text x="310" y="100" fill="#d4892a" font-size="9" font-family="IBM Plex Mono" text-anchor="middle">↓ LV filling</text>
+        <text x="310" y="112" fill="#d4892a" font-size="9" font-family="IBM Plex Mono" text-anchor="middle">↓ CO</text>
+        <!-- Arrows on sides -->
+        <text x="30" y="58" fill="#3ec870" font-size="18" font-family="IBM Plex Mono">→</text>
+        <text x="340" y="58" fill="#d4892a" font-size="18" font-family="IBM Plex Mono">←</text>
+        <defs>
+          <marker id="arrW" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="white" opacity="0.7"/>
+          </marker>
+        </defs>
+        <text x="200" y="148" fill="#6e8c80" font-size="8" font-family="IBM Plex Mono" text-anchor="middle">RV expansion → septal shift left → LV volume ↓ → septal bounce on echo · LV systolic pressure ↓ at cath</text>
+      </svg>
+    </div>
+
+    <div class="box box-teal"><strong>Critical insight:</strong> The myocardium is NORMAL in CP. Pericardiectomy removes the constraint → haemodynamics normalize → potentially curative.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">Restrictive Cardiomyopathy — The Stiff Myocardium</div>
+  <div class="card card-rcm">
+    <h3>🧱 RCM: Intrinsic Myocardial Stiffness — Four Key Consequences</h3>
+    <div class="g2" style="margin-top:10px">
+      <div>
+        <div class="box box-rcm"><strong>1. Elevated LVEDP with LVEDP &gt;&gt; RVEDP:</strong><br>Infiltrated myocardium (amyloid, fibrosis, iron) → steep EDPVR → any ↑ volume → large ↑ pressure. LV typically stiffer than RV → LVEDP &gt; RVEDP by &gt;5 mmHg. Unlike CP where they equalize.</div>
+        <div class="box box-rcm"><strong>2. Normal ventricular interdependence:</strong><br>Normal pericardium → not a fixed-volume container → NO enhanced ventricular interdependence → NO respiratory variation in Doppler flows → mitral E constant throughout respiration.</div>
+      </div>
+      <div>
+        <div class="box box-rcm"><strong>3. Impaired myocardial relaxation (↓ e'):</strong><br>Diseased myocardium → impaired active relaxation → markedly reduced annular velocities on TDI (e' &lt;5 cm/s). The myocardium cannot generate the suction that drives early diastolic filling normally. This is the basis of the low e' in RCM.</div>
+        <div class="box box-rcm"><strong>4. Biatrial dilation from chronically elevated filling pressures:</strong><br>High LVEDP → LA hypertension → LA dilation. High RVEDP → RA hypertension → RA dilation. Both atria massively dilated — the anatomical hallmark of RCM. BNP markedly elevated reflecting myocardial stress.</div>
+        <div class="box box-red"><strong>Critical insight:</strong> The myocardium is diseased in RCM. Pericardiectomy does NOT help. Treatment targets the underlying cause; transplant for end-stage disease.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">The Core Physiological Distinction</div>
+  <div class="tw"><table>
+    <thead><tr><th class="th-neu">Haemodynamic feature</th><th class="th-cp">CP Mechanism</th><th class="th-rcm">RCM Mechanism</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Diastolic pressure equalization</strong></td><td class="cp-val">LVEDP ≈ RVEDP — pericardial constraint on all chambers</td><td class="rcm-val">LVEDP &gt;&gt; RVEDP — LV typically stiffer than RV</td></tr>
+      <tr><td><strong>Ventricular interdependence</strong></td><td class="cp-val">↑↑ Enhanced — fixed total cardiac volume</td><td class="rcm-val">Normal — pericardium compliant, no volume constraint</td></tr>
+      <tr><td><strong>Intrathoracic–intracardiac pressure coupling</strong></td><td class="cp-val">Dissociated — pericardium insulates heart</td><td class="rcm-val">Normal — pressure changes coupled with respiration</td></tr>
+      <tr><td><strong>Mitral E respiratory variation</strong></td><td class="cp-val">&gt;25% decrease with inspiration</td><td class="rcm-val">&lt;10% — minimal variation</td></tr>
+      <tr><td><strong>LV/RV pressure concordance</strong></td><td class="cp-val">Discordant — LV↓ when RV↑ (inspiration)</td><td class="rcm-val">Concordant — both change in same direction</td></tr>
+      <tr><td><strong>Myocardial relaxation (e')</strong></td><td class="cp-val">Normal — ≥8 cm/s</td><td class="rcm-val">↓↓ Impaired — &lt;5 cm/s</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box box-teal"><strong>The single most important pathophysiological distinction:</strong> CP = normal myocardium constrained by abnormal pericardium → pericardium dissociates intrathoracic from intracardiac pressures → respiratory variation in filling. RCM = diseased myocardium with normal pericardium → normal respiratory coupling → no variation. Every diagnostic test exploits this difference.</div>
+</section>
+
+<!-- ════ TAB 2: ECHOCARDIOGRAPHY ════ -->
+<section class="tab" id="t2">
+  <div class="sh"><h2>🔬 Echocardiography — First-Line Diagnostic</h2><p>Systematic echo with TDI provides &gt;85% diagnostic accuracy. Multiple modalities must be applied together.</p></div>
+  <div class="box box-gold" style="margin-bottom:14px"><strong>Systematic echo protocol:</strong> (1) Pericardial thickness/calcification · (2) Ventricular size, wall thickness, EF · (3) Atrial size · (4) Septal motion with respiration · (5) Mitral inflow Doppler + respiratory variation · (6) TDI medial and lateral e' — the key discriminator · (7) Tricuspid inflow variation · (8) Hepatic vein Doppler · (9) IVC · (10) Speckle tracking strain</div>
+
+  <div class="stitle">2D Findings</div>
+  <div class="duel">
+    <div class="duel-cp"><div class="duel-label">CP — 2D Echo</div><ul>
+      <li><strong>Pericardial thickening:</strong> Bright echogenic pericardium &gt;4 mm; calcification = intensely bright with posterior acoustic shadowing</li>
+      <li><strong>Normal LV systolic function:</strong> EF ≥55%; normal wall motion</li>
+      <li><strong>"Tubular" LV shape:</strong> Constrained, may appear narrow in short axis</li>
+      <li><strong>Mild LA enlargement;</strong> RA enlarged but less than in RCM</li>
+      <li><strong>IVC dilated, &lt;50% collapse</strong> with sniff (↑ RAP)</li>
+      <li><strong>Flattened diastolic posterior wall</strong> on M-mode — abrupt stop of posterior motion in mid-diastole</li>
+    </ul></div>
+    <div class="duel-mid"><div class="duel-mid-dot"></div><div class="duel-mid-lbl">2D</div><div class="duel-mid-dot"></div></div>
+    <div class="duel-rcm"><div class="duel-label">RCM — 2D Echo</div><ul>
+      <li><strong>Normal pericardium:</strong> &lt;2 mm — important negative finding</li>
+      <li><strong>Biatrial massive dilation (hallmark):</strong> Both LA and RA markedly enlarged; LA/LV volume ratio &gt;1 is a clue</li>
+      <li><strong>Wall thickness:</strong> ↑↑ in amyloid (&gt;12–25 mm); "sparkling"/granular texture; normal in idiopathic/sarcoid</li>
+      <li><strong>Normal or mildly ↓ EF</strong> (45–60%)</li>
+      <li><strong>Apical obliteration</strong> (Löffler's/EMF)</li>
+      <li><strong>Valvular involvement:</strong> Thickened valves in amyloid; EMF causes MR/TR</li>
+    </ul></div>
+  </div>
+
+
+    <div class="box box-gold" style="margin-top:6px"><strong>Important caveat on pericardial thickness:</strong> A normal pericardial thickness on echo (&lt;4 mm) does <em>not</em> exclude constrictive pericarditis. Approximately 20% of surgically confirmed CP patients have pericardial thickness within normal limits, particularly in radiation-induced and post-surgical cases. Haemodynamic features (TDI e′, respiratory variation) and CMR are more reliable than thickness alone.</div>
+
+  <div class="stitle">Septal Bounce — The CP-Specific 2D Sign</div>
+  <div class="card card-cp">
+    <h3>↔️ Septal Bounce / Ventricular Septal Shift</h3>
+    <div class="g2">
+      <div>
+        <div class="box box-cp"><strong>Mechanism:</strong> Inspiration → ↑ RV filling → RV expands → but total cardiac volume fixed → IVS shifts LEFT → abrupt leftward motion of septum at inspiration onset. On echo: characteristic "bounce" or "shudder" of IVS visible in real-time 2D and M-mode.</div>
+        <div class="box box-cp"><strong>M-mode appearance:</strong> Abnormal posterior then abrupt anterior motion of IVS in early diastole = "W" shape of IVS. This combined with respiratory variation is highly specific for CP.</div>
+        <div class="box box-teal"><strong>Absent in RCM:</strong> Normal pericardium → no volume constraint → no enhanced ventricular interdependence → no septal bounce.</div>
+      </div>
+      <div>
+        <div class="trace-wrap">
+          <div class="trace-label">IVS M-mode schematic — CP vs Normal</div>
+          <svg class="pressure-svg" viewBox="0 0 300 90">
+            <rect width="300" height="90" fill="#020806"/>
+            <text x="6" y="12" fill="#3a5048" font-size="8" font-family="IBM Plex Mono">Normal IVS (grey)</text>
+            <text x="6" y="22" fill="#d4892a" font-size="8" font-family="IBM Plex Mono">CP: septal bounce (amber)</text>
+            <path d="M0,55 Q75,53 150,55 Q225,57 300,55" fill="none" stroke="#3a5048" stroke-width="1" stroke-dasharray="4,2"/>
+            <path d="M0,55 L40,55 L44,50 L48,60 L52,35 L56,55 L100,55 L140,55 L144,50 L148,60 L152,35 L156,55 L200,55 L240,55 L244,50 L248,60 L252,35 L256,55 L300,55" fill="none" stroke="#d4892a" stroke-width="2"/>
+            <text x="60" y="88" fill="#6e8c80" font-size="7" font-family="IBM Plex Mono">Insp</text>
+            <text x="160" y="88" fill="#6e8c80" font-size="7" font-family="IBM Plex Mono">Insp</text>
+            <text x="260" y="88" fill="#6e8c80" font-size="7" font-family="IBM Plex Mono">Insp</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">Mitral Inflow Doppler — Respiratory Variation</div>
+  <div class="card card-gold">
+    <h3>🌊 The Most Important Doppler Finding</h3>
+    <p style="margin-bottom:10px">Measure peak mitral E velocity at end-expiration and beginning of inspiration. This is the most diagnostically powerful Doppler measurement.</p>
+    <div class="duel" style="margin:10px 0;border-radius:var(--r)">
+      <div class="duel-cp" style="padding:14px 16px">
+        <div class="duel-label">CP</div>
+        <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--cp-l)">E variation ≥25%</div>
+        <p style="margin-top:6px">Expiration: E high (e.g. 1.2 m/s) → Inspiration: E falls markedly (e.g. 0.85 m/s) = 29% variation</p>
+        <code class="fm">% variation = (E_exp − E_insp) / E_exp × 100 ≥ 25%</code>
+        <p style="font-size:12px;color:var(--muted)">Pericardium insulates heart from thoracic pressure → ↓ pulmonary vein-to-LA gradient with inspiration → ↓ LV filling → ↓ E wave</p>
+      </div>
+      <div class="duel-mid"><div class="duel-mid-dot"></div></div>
+      <div class="duel-rcm" style="padding:14px 16px">
+        <div class="duel-label">RCM</div>
+        <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--rcm-l)">E variation &lt;10%</div>
+        <p style="margin-top:6px">E velocity nearly constant throughout respiration (e.g. 1.4 m/s throughout)</p>
+        <code class="fm">% variation &lt; 10% → no significant respiratory effect</code>
+        <p style="font-size:12px;color:var(--muted)">Normal pericardium → normal pressure coupling → pulmonary vein and LV pressures change concordantly → filling gradient unchanged → E constant</p>
+      </div>
+    </div>
+    <div class="box box-gold"><strong>Sensitivity/Specificity:</strong> &gt;25% variation: Sn 84%, Sp 91% for CP vs RCM. <strong>Pitfalls:</strong> Rapid breathing underestimates variation. Volume overload can mask CP variation — repeat after diuresis. AF makes assessment unreliable (use &gt;10-beat average). Significant MS causes spurious elevation.</div>
+  </div>
+
+  <div class="stitle">Tissue Doppler Imaging — The Single Most Discriminating Test</div>
+  <div class="card card-teal">
+    <h3>⚡ TDI Mitral Annular e' — The Most Powerful Single Echo Feature</h3>
+    <p style="margin-bottom:12px">TDI e' measures <strong>myocardial velocity</strong> independently of loading conditions, reflecting intrinsic myocardial relaxation. This is the most powerful single measurement for CP vs RCM distinction.</p>
+    <div class="duel" style="border-radius:var(--r);margin:10px 0">
+      <div class="duel-cp" style="padding:14px 16px">
+        <div class="duel-label">CP — TDI</div>
+        <div style="font-family:var(--mono);font-size:26px;font-weight:700;color:var(--cp-l);margin-bottom:6px">e' ≥ 8 cm/s <span style="font-size:14px;opacity:.7">(often ≥9)</span></div>
+        <p>Normal or <strong>supernormal</strong> (annulus paradoxus/reversus). Most studies use medial e' ≥8 cm/s; contemporary literature increasingly uses ≥9 cm/s as the threshold.</p>
+        <p style="margin-top:8px;font-size:13px">In CP, intrinsic myocardial relaxation is preserved. Because the myocardium relaxes normally, medial annular velocities remain relatively preserved despite impaired ventricular filling volume — TDI reflects myocardial velocity, not filling volume.</p>
+        <div class="box box-cp" style="margin-top:10px"><strong>Annulus Reversus (highly suggestive of CP):</strong> Normal: lateral e' &gt; medial e'. In CP: medial e' ≥ lateral e'. The lateral wall is tethered by the pericardium → its motion is relatively limited compared to the medial wall. This reversal of normal annular velocity ratio is highly suggestive of constrictive physiology in the appropriate clinical context.</div>
+        <code class="fm">E/e' ratio: normal–mildly ↑ (8–14)</code>
+      </div>
+      <div class="duel-mid"><div class="duel-mid-dot"></div><div class="duel-mid-lbl">TDI</div><div class="duel-mid-dot"></div></div>
+      <div class="duel-rcm" style="padding:14px 16px">
+        <div class="duel-label">RCM — TDI</div>
+        <div style="font-family:var(--mono);font-size:26px;font-weight:700;color:var(--rcm-l);margin-bottom:6px">e' &lt; 5 cm/s</div>
+        <p>Markedly <strong>reduced</strong> at both lateral and medial annulus.</p>
+        <p style="margin-top:8px;font-size:13px">The myocardium is intrinsically diseased → impaired relaxation → very low annular velocities despite preserved EF. Amyloid infiltration, fibrosis, and iron deposits all reduce myocardial velocity.</p>
+        <div class="box box-rcm" style="margin-top:10px"><strong>E/e' ratio dramatically elevated:</strong> High transmitral E (high filling pressure) / very low e' (impaired relaxation) = very high E/e' ratio. E/e' &gt;14 = significant diastolic dysfunction. In amyloid: E/e' may reach 20–40+.</div>
+        <code class="fm">E/e' ratio: ↑↑↑ (often &gt;15–20, sometimes &gt;30 in amyloid)</code>
+      </div>
+    </div>
+    <div class="box box-teal"><strong>Clinical impact:</strong> Medial e' ≥8–9 cm/s → favours CP → consider pericardiectomy. Medial e' &lt;5 cm/s → favours RCM → pursue RCM workup (amyloid screen, biopsy, transplant evaluation). This single number redirects the entire management pathway.</div>
+  </div>
+
+  <div class="stitle">Other Doppler &amp; Advanced Echo Findings</div>
+  <div class="g2">
+    <div class="card card-cp">
+      <h3>CP — Tricuspid &amp; Hepatic Vein</h3>
+      <ul>
+        <li><strong>Tricuspid E increase with inspiration (&gt;40%):</strong> Opposite to mitral — inspiration ↑ RV filling → tricuspid E ↑. Discordant respiratory response (mitral ↓, tricuspid ↑) is specific for CP.</li>
+        <li><strong>Hepatic vein expiratory diastolic reversal:</strong> Flow reversal during expiration (in RCM it's inspiratory).</li>
+      </ul>
+      <div class="box box-cp"><strong>CP Doppler constellation:</strong> Inspiration → ↓ mitral E + ↑ tricuspid E + expiratory hepatic vein reversal. This pattern together is essentially diagnostic of CP.</div>
+    </div>
+    <div class="card card-rcm">
+      <h3>RCM — Tricuspid &amp; Hepatic Vein</h3>
+      <ul>
+        <li><strong>Minimal respiratory variation in both:</strong> Mitral and tricuspid E change &lt;10% — concordant pattern.</li>
+        <li><strong>Hepatic vein inspiratory reversal:</strong> Flow reversal occurs with inspiration in RCM.</li>
+      </ul>
+    </div>
+    <div class="card card-gold">
+      <h3>Speckle Tracking — GLS &amp; Strain</h3>
+      <div class="box box-cp"><strong>CP:</strong> LV-GLS normal (−18 to −22%). Myocardial mechanics fundamentally intact. RV free wall strain may be mildly reduced from pericardial tethering — can recover after pericardiectomy.</div>
+      <div class="box box-rcm"><strong>RCM — Amyloid "Apical Sparing":</strong> Amyloid densest at base → base/mid segments severely impaired in longitudinal strain → but apex relatively spared → "bull's-eye" map shows preserved apical strain with impaired basal/mid strain. This pattern is strongly suggestive of cardiac amyloidosis (Sn ~80%, Sp ~90%), but not pathognomonic — also observed in hypertrophic cardiomyopathy, chronic kidney disease, and hypertensive heart disease. Integrate with other features.</div>
+    </div>
+    <div class="card card-gold">
+      <h3>Complete Echo Features Summary</h3>
+      <div class="tw"><table>
+        <thead><tr><th class="th-neu">Feature</th><th class="th-cp">CP</th><th class="th-rcm">RCM</th><th class="th-neu">Power</th></tr></thead>
+        <tbody>
+          <tr><td>Pericardial thickness</td><td class="cp-val">&gt;4 mm</td><td class="rcm-val">&lt;2 mm</td><td>High (CMR better)</td></tr>
+          <tr><td>Septal bounce</td><td class="cp-val">Present</td><td class="rcm-val">Absent</td><td>Very high</td></tr>
+          <tr><td>Mitral E variation</td><td class="cp-val">&gt;25%</td><td class="rcm-val">&lt;10%</td><td>Sn 84%, Sp 91%</td></tr>
+          <tr><td>TDI medial e'</td><td class="cp-val">≥8 cm/s</td><td class="rcm-val">&lt;5 cm/s</td><td>HIGHEST</td></tr>
+          <tr><td>Annulus reversus</td><td class="cp-val">Medial ≥ lateral e'</td><td class="rcm-val">Lateral &gt; medial (low both)</td><td>Highly suggestive of CP (in appropriate clinical context)</td></tr>
+          <tr><td>E/e' ratio</td><td class="cp-val">8–14</td><td class="rcm-val">&gt;15 (often &gt;20)</td><td>High</td></tr>
+          <tr><td>Atrial size</td><td class="cp-val">Mild–moderate LA</td><td class="rcm-val">Biatrial massive dilation</td><td>High for RCM</td></tr>
+          <tr><td>Wall thickness</td><td class="cp-val">Normal</td><td class="rcm-val">↑↑ (amyloid) / normal</td><td>High for amyloid</td></tr>
+          <tr><td>LV-GLS / apical sparing</td><td class="cp-val">Normal GLS</td><td class="rcm-val">↓GLS; apical sparing (amyloid)</td><td>High for amyloid</td></tr>
+          <tr><td>Hepatic vein reversal</td><td class="cp-val">Expiratory</td><td class="rcm-val">Inspiratory</td><td>Moderate</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ TAB 3: CATHETERIZATION ════ -->
+<section class="tab" id="t3">
+  <div class="sh"><h2>📈 Cardiac Cardiac Catheterization — Reference Invasive Haemodynamic Test</h2><p style="font-size:12.5px;color:var(--muted);margin-top:-6px;margin-bottom:12px">Used when non-invasive imaging (echo, CMR, CT) is inconclusive. In 2025, catheterization follows — it does not replace — comprehensive non-invasive evaluation.</p><p>When non-invasive imaging (echo, CMR, CT) is inconclusive, simultaneous right and left heart catheterization with respiratory pressure recordings provides definitive haemodynamic differentiation. In 2025, cath follows — not replaces — comprehensive non-invasive evaluation.</p></div>
+  <div class="box box-gold" style="margin-bottom:14px"><strong>Indications:</strong> Echo inconclusive · Before pericardiectomy (confirm + exclude CAD) · Discordant echo findings · Effusive-constrictive physiology suspected · Pulmonary hypertension assessment</div>
+
+  <div class="stitle">Criterion 1 — Diastolic Pressure Equalization</div>
+  <div class="card card-cp">
+    <h3>CP — The "5 mmHg Rule"</h3>
+    <div class="box box-cp"><strong>Classic CP signature:</strong><br>RVEDP ≈ LVEDP ≈ PCWP ≈ RAP — all within <strong>5 mmHg</strong><br>Typical: RAP ~15 · RVEDP ~15 · PCWP ~16 · LVEDP ~16 mmHg</div>
+    <div class="g2" style="margin-top:10px">
+      <div>
+        <div class="trace-wrap">
+          <div class="trace-label">Simultaneous RV &amp; LV pressure — CP (equalized EDP)</div>
+          <svg class="pressure-svg" viewBox="0 0 320 130">
+            <rect width="320" height="130" fill="#020806"/>
+            <g stroke="#0f1f0f" stroke-width="0.5">
+              <line x1="0" y1="30" x2="320" y2="30"/>
+              <line x1="0" y1="65" x2="320" y2="65"/>
+              <line x1="0" y1="100" x2="320" y2="100"/>
+            </g>
+            <text x="3" y="29" fill="#3a5048" font-size="7" font-family="IBM Plex Mono">120</text>
+            <text x="3" y="64" fill="#3a5048" font-size="7" font-family="IBM Plex Mono">60</text>
+            <text x="3" y="99" fill="#3a5048" font-size="7" font-family="IBM Plex Mono">20</text>
+            <text x="3" y="124" fill="#3a5048" font-size="7" font-family="IBM Plex Mono">0</text>
+            <!-- LV waveform amber -->
+            <path d="M18,122 L24,122 L27,28 L30,23 L34,28 L40,122 L46,100 L52,100 L58,122 L64,122 L67,28 L70,23 L74,28 L80,122 L86,100 L92,100 L98,122 L104,122 L107,28 L110,23 L114,28 L120,122 L126,100 L132,100 L138,122 L144,122 L147,28 L150,23 L154,28 L160,122 L166,100 L172,100 L178,122 L184,122 L187,28 L190,23 L194,28 L200,122 L206,100 L212,100 L218,122 L224,122 L227,28 L230,23 L234,28 L240,122 L246,100 L252,100 L258,122 L264,122 L267,28 L270,23 L274,28 L280,122 L286,100 L292,100 L298,122" fill="none" stroke="#d4892a" stroke-width="1.5"/>
+            <!-- RV waveform green (matches LV diastolic) -->
+            <path d="M18,122 L24,122 L27,100 L30,72 L33,70 L36,72 L40,100 L46,100 L52,100 L58,122 L64,122 L67,100 L70,72 L73,70 L76,72 L80,100 L86,100 L92,100 L98,122 L104,122 L107,100 L110,72 L113,70 L116,72 L120,100 L126,100 L132,100 L138,122 L144,122 L147,100 L150,72 L153,70 L156,72 L160,100 L166,100 L172,100 L178,122 L184,122 L187,100 L190,72 L193,70 L196,72 L200,100 L206,100 L212,100 L218,122 L224,122 L227,100 L230,72 L233,70 L236,72 L240,100 L246,100 L252,100 L258,122 L264,122 L267,100 L270,72 L273,70 L276,72 L280,100 L286,100 L292,100 L298,122" fill="none" stroke="#3ec870" stroke-width="1.5"/>
+            <text x="200" y="96" fill="#d4892a" font-size="8" font-family="IBM Plex Mono">LV EDP ≈ 15</text>
+            <text x="200" y="108" fill="#3ec870" font-size="8" font-family="IBM Plex Mono">RV EDP ≈ 15</text>
+            <text x="150" y="10" fill="#6e8c80" font-size="8" font-family="IBM Plex Mono">CP: EDP equalized — within 5 mmHg</text>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <strong style="color:var(--text)">Square Root Sign (Dip-and-Plateau):</strong>
+        <p style="margin-top:6px;color:var(--muted);font-size:13px">Diastolic RV (and LV) pressure shows: early rapid drop (dip) → filling abruptly stops at pericardial limit → pressure plateaus at elevated EDP = √ sign. Also seen in RCM — NOT specific for CP alone.</p>
+        <div class="trace-wrap" style="margin-top:10px">
+          <div class="trace-label">Square root sign — diastolic pressure (both CP &amp; RCM)</div>
+          <svg viewBox="0 0 200 70">
+            <rect width="200" height="70" fill="#020806"/>
+            <path d="M20,65 L30,65 L35,25 L50,55 L185,55" fill="none" stroke="#d4892a" stroke-width="2"/>
+            <text x="52" y="50" fill="#6e8c80" font-size="7" font-family="IBM Plex Mono">plateau</text>
+            <text x="25" y="22" fill="#6e8c80" font-size="7" font-family="IBM Plex Mono">dip</text>
+            <path d="M20,65 L30,65 L35,23 L50,53 L185,53" fill="none" stroke="#9060d4" stroke-width="1.5" stroke-dasharray="4,2" opacity="0.6"/>
+            <text x="5" y="68" fill="#d4892a" font-size="7" font-family="IBM Plex Mono">CP</text>
+            <text x="18" y="68" fill="#9060d4" font-size="7" font-family="IBM Plex Mono">RCM (similar)</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-rcm" style="margin-top:0">
+    <h3>RCM — Diastolic Pressures</h3>
+    <div class="box box-rcm"><strong>RCM haemodynamic signature:</strong><br>LVEDP is often modestly higher than RVEDP (difference variable, can be 2–10+ mmHg), and the close equalization seen in CP is typically absent. PCWP generally exceeds RAP by ≥5 mmHg. Note: in advanced amyloidosis, pressures may approach equalization, making differentiation harder.<br>Typical: RAP ~15 · RVEDP ~12 · PCWP ~24 · LVEDP ~25 mmHg</div>
+    <p style="margin-top:10px">LV typically stiffer than RV in infiltrative disease → pressures diverge. LVEDP − RVEDP &gt;5 mmHg is the most reliable catheterization criterion for RCM over CP.</p>
+  </div>
+
+  <div class="stitle">Criterion 2 — LV/RV Pressure Concordance vs Discordance (Most Specific)</div>
+  <div class="card card-gold">
+    <h3>📈 Simultaneous LV &amp; RV Systolic Pressures During Respiration — Definitive Test</h3>
+    <div class="duel" style="margin:10px 0;border-radius:var(--r)">
+      <div class="duel-cp" style="padding:14px 16px">
+        <div class="duel-label">CP — DISCORDANT</div>
+        <p><strong style="color:var(--cp-l)">Inspiration: RV ↑ · LV ↓ (opposite directions)</strong></p>
+        <p style="margin-top:8px;font-size:13px">Fixed pericardial volume → ↑ RV filling → septum shifts → ↓ LV volume → LV systolic pressure ↓ while RV systolic pressure ↑.</p>
+        <div class="trace-wrap" style="margin-top:10px">
+          <div class="trace-label">CP — Discordant LV/RV (inspiration →)</div>
+          <svg viewBox="0 0 240 80">
+            <rect width="240" height="80" fill="#020806"/>
+            <line x1="80" y1="8" x2="80" y2="75" stroke="#3a5048" stroke-width="0.8" stroke-dasharray="3,2"/>
+            <text x="82" y="16" fill="#3a5048" font-size="7" font-family="IBM Plex Mono">INSP</text>
+            <path d="M5,18 Q40,16 75,17 Q100,45 140,46 Q175,47 235,46" fill="none" stroke="#d4892a" stroke-width="2"/>
+            <text x="165" y="42" fill="#d4892a" font-size="8" font-family="IBM Plex Mono">LV ↓</text>
+            <path d="M5,50 Q40,51 75,49 Q100,22 140,20 Q175,19 235,20" fill="none" stroke="#3ec870" stroke-width="2"/>
+            <text x="165" y="16" fill="#3ec870" font-size="8" font-family="IBM Plex Mono">RV ↑</text>
+          </svg>
+        </div>
+      </div>
+      <div class="duel-mid"><div class="duel-mid-dot"></div><div class="duel-mid-lbl">Resp</div><div class="duel-mid-dot"></div></div>
+      <div class="duel-rcm" style="padding:14px 16px">
+        <div class="duel-label">RCM — CONCORDANT</div>
+        <p><strong style="color:var(--rcm-l)">Inspiration: RV ↑ · LV ↑ (same direction)</strong></p>
+        <p style="margin-top:8px;font-size:13px">Normal pericardium → normal intrathoracic-intracardiac coupling → both LV and RV filling change concordantly with respiration. No enhanced ventricular interdependence.</p>
+        <div class="trace-wrap" style="margin-top:10px">
+          <div class="trace-label">RCM — Concordant LV/RV (inspiration →)</div>
+          <svg viewBox="0 0 240 80">
+            <rect width="240" height="80" fill="#020806"/>
+            <line x1="80" y1="8" x2="80" y2="75" stroke="#3a5048" stroke-width="0.8" stroke-dasharray="3,2"/>
+            <text x="82" y="16" fill="#3a5048" font-size="7" font-family="IBM Plex Mono">INSP</text>
+            <path d="M5,28 Q40,26 75,27 Q100,20 140,20 Q175,20 235,20" fill="none" stroke="#d4892a" stroke-width="2"/>
+            <text x="165" y="16" fill="#d4892a" font-size="8" font-family="IBM Plex Mono">LV ↑</text>
+            <path d="M5,50 Q40,50 75,50 Q100,44 140,44 Q175,44 235,44" fill="none" stroke="#9060d4" stroke-width="2"/>
+            <text x="165" y="40" fill="#9060d4" font-size="8" font-family="IBM Plex Mono">RV ↑</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="box box-gold"><strong>Sensitivity/specificity of discordance for CP: ~86%/93%.</strong> If resting haemodynamics inconclusive: rapid volume loading (500–1000 mL NS over 5–10 min) unmasks equalization in CP. Exercise haemodynamics also useful.</div>
+  </div>
+
+  <div class="stitle">Complete Catheterization Comparison</div>
+  <div class="tw"><table>
+    <thead><tr><th class="th-neu">Measurement</th><th class="th-cp">CP</th><th class="th-rcm">RCM</th></tr></thead>
+    <tbody>
+      <tr><td><strong>RAP</strong></td><td>↑ (12–20 mmHg)</td><td>↑ (12–20 mmHg)</td></tr>
+      <tr><td><strong>RVEDP</strong></td><td>↑ (12–18 mmHg)</td><td>↑ (10–16 mmHg)</td></tr>
+      <tr><td><strong>LVEDP</strong></td><td>↑ (12–18 mmHg)</td><td>↑↑ (18–30 mmHg)</td></tr>
+      <tr><td><strong>LVEDP − RVEDP</strong></td><td class="cp-val">&lt;5 mmHg (equalization)</td><td class="rcm-val">&gt;5 mmHg (divergent)</td></tr>
+      <tr><td><strong>PCWP − RAP</strong></td><td class="cp-val">&lt;5 mmHg</td><td class="rcm-val">&gt;5 mmHg</td></tr>
+      <tr><td><strong>Square root sign</strong></td><td class="both-val">Present</td><td class="both-val">Present</td></tr>
+      <tr><td><strong>LV/RV resp. pattern</strong></td><td class="cp-val">Discordant (LV↓, RV↑ with inspiration)</td><td class="rcm-val">Concordant (both change together)</td></tr>
+      <tr><td><strong>RV systolic pressure</strong></td><td>&lt;55 mmHg (usually)</td><td>May be &gt;55 mmHg (significant PH)</td></tr>
+      <tr><td><strong>Volume loading effect</strong></td><td class="cp-val">Unmasks EDP equalization</td><td class="rcm-val">Worsens pressures, no equalization</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="card card-gold" style="margin-top:8px">
+    <h3>⚠️ Effusive-Constrictive Pericarditis</h3>
+    <div class="g2">
+      <div>
+        <p>A combined syndrome where pericardial effusion AND constriction coexist. After pericardiocentesis, effusion drains but haemodynamics do NOT normalize — the thickened visceral pericardium still constrains the heart.</p>
+        <div class="box box-cp"><strong>Diagnostic criteria:</strong> RAP ≥10 mmHg before drainage → after complete pericardiocentesis: RAP remains ≥10 mmHg AND fails to fall &gt;50%. Persisting dip-plateau after drainage.</div>
+      </div>
+      <div>
+        <strong style="color:var(--text)">Causes:</strong>
+        <ul style="margin-top:6px">
+          <li>Malignancy (most common)</li>
+          <li>Idiopathic/viral</li>
+          <li>Post-radiation · Tuberculosis · Post-cardiac surgery</li>
+        </ul>
+        <div class="box box-cp"><strong>Treatment:</strong> Anti-inflammatory if active inflammation; pericardiectomy of the visceral pericardium if persistent constriction.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ════════════ TAB 4: DIAGNOSIS & TREATMENT ════════════ -->
+<section class="tab" id="t4">
+  <div class="sh">
+    <h2>💊 Advanced Imaging, Diagnosis &amp; Treatment</h2>
+    <p>Multimodality imaging beyond echo, biomarkers, biopsy, and definitive management strategies for both conditions.</p>
+  </div>
+
+  <!-- Advanced imaging -->
+  <div class="stitle">Advanced Imaging Modalities</div>
+  <div class="g2">
+    <div class="card card-gold">
+      <h3>🧲 Cardiac MRI (CMR) — The Anatomical Gold Standard for CP</h3>
+      <ul>
+        <li><strong>Pericardial thickness:</strong> CMR accurately measures pericardial thickness (&gt;4 mm = abnormal; &gt;6 mm = strongly supports CP). Superior to echo and CT for thin pericardium detection. Normal pericardium ≤2 mm on CMR.</li>
+        <li><strong>Late gadolinium enhancement (LGE) of pericardium:</strong> Pericardial LGE = active inflammation → predicts response to anti-inflammatory therapy. Non-enhancing CP → fibrotic, less likely to respond to medical therapy → proceed to surgery.</li>
+        <li><strong>Real-time cine CMR (respiratory gating off):</strong> Visualizes septal bounce and ventricular interdependence in real time during free breathing — even more sensitive than echo for this finding.</li>
+        <li><strong>Tagging sequences:</strong> Demonstrate pericardial-myocardial adhesion (myocardium moves WITH pericardium rather than sliding freely) — pathognomonic for CP when present.</li>
+        <li><strong>T1/T2 mapping:</strong> Detects myocardial inflammation/infiltration; elevated T1 in amyloid; elevated T2 in myocarditis/sarcoid.</li>
+        <li><strong>Myocardial LGE patterns in RCM:</strong> Amyloid: diffuse subendocardial/transmural LGE with abnormal nulling; Sarcoid: patchy mid-myocardial or subepicardial LGE (RV insertion points); Haemochromatosis: ↓T2* (iron); Idiopathic RCM: often no LGE.</li>
+      </ul>
+    </div>
+    <div class="card card-gold">
+      <h3>📡 CT — Best for Pericardial Calcification</h3>
+      <ul>
+        <li><strong>Pericardial calcification:</strong> CT is the definitive modality for detecting and quantifying pericardial calcification — far superior to echo and CMR. Presence of significant calcification in appropriate clinical context = CP confirmed (essentially pathognomonic when circumferential).</li>
+        <li><strong>Pericardial thickness:</strong> Accurately measured; &gt;4 mm supports CP.</li>
+        <li><strong>Coronary anatomy:</strong> CT coronary angiography or formal coronary angiography (pre-pericardiectomy) to assess for CAD — very common comorbidity.</li>
+        <li><strong>Mediastinal anatomy:</strong> Surgical planning — extent of calcification, relationship to coronary arteries and great vessels (particularly important when calcification encases the coronary arteries).</li>
+        <li><strong>Note for RCM:</strong> CT shows normal pericardium, possible biatrial dilation, may show myocardial calcification in haemochromatosis.</li>
+      </ul>
+      <div class="box box-teal"><strong>CT vs CMR:</strong> Use CT when calcification is suspected (pre-surgical planning); use CMR for soft tissue characterization, myocardial involvement, and when pericardial thickness is near-normal (CMR more sensitive for thin but pathological pericardium).</div>
+    </div>
+  </div>
+
+  <!-- Biomarkers and special tests -->
+  <div class="stitle">Biomarkers &amp; Specialized Diagnostic Tests</div>
+  <div class="card card-gold">
+    <h3>🧪 Biomarkers — Key Differences</h3>
+    <div class="tw"><table>
+      <thead><tr>
+        <th class="th-neu">Biomarker</th>
+        <th class="th-cp">CP</th>
+        <th class="th-rcm">RCM</th>
+        <th class="th-neu">Clinical utility</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><strong>BNP / NT-proBNP</strong></td>
+          <td class="cp-val">Normal or mildly ↑ (often &lt;400 pg/mL)</td>
+          <td class="rcm-val">↑↑↑ Markedly elevated (amyloid: often &gt;1000–5000 pg/mL)</td>
+          <td>High discriminatory value — markedly elevated BNP strongly favours RCM over CP</td></tr>
+        <tr><td><strong>Troponin (hs-TnI/TnT)</strong></td>
+          <td class="cp-val">Normal (unless active myopericarditis)</td>
+          <td class="rcm-val">↑ in amyloid, sarcoid, haemochromatosis</td>
+          <td>Elevated troponin in RCM reflects ongoing myocardial injury</td></tr>
+        <tr><td><strong>CRP / ESR / WBC</strong></td>
+          <td class="cp-val">↑ in active/inflammatory CP (useful for anti-inflammatory therapy response)</td>
+          <td class="rcm-val">Variable — elevated in sarcoid, haemochromatosis in active phase</td>
+          <td>Guides anti-inflammatory therapy in CP (colchicine response)</td></tr>
+        <tr><td><strong>Serum protein electrophoresis (SPEP) / Free light chains</strong></td>
+          <td>Normal</td>
+          <td class="rcm-val">Abnormal in AL amyloidosis (monoclonal protein)</td>
+          <td>Essential in all suspected RCM — screens for haematological malignancy</td></tr>
+        <tr><td><strong>TTR gene sequencing</strong></td>
+          <td>Normal</td>
+          <td class="rcm-val">Mutation in hereditary ATTR amyloidosis</td>
+          <td>Guides treatment (tafamidis, patisiran) and family screening</td></tr>
+        <tr><td><strong>Serum ferritin / transferrin saturation</strong></td>
+          <td>Normal</td>
+          <td class="rcm-val">↑↑ in haemochromatosis</td>
+          <td>Screening test; liver biopsy or HFE gene mutation confirms</td></tr>
+        <tr><td><strong>ACE level / BAL</strong></td>
+          <td>Normal</td>
+          <td class="rcm-val">↑ ACE in sarcoidosis (low sensitivity)</td>
+          <td>FDG-PET/CT is superior for active cardiac sarcoidosis</td></tr>
+        <tr><td><strong>Eosinophil count</strong></td>
+          <td>Normal</td>
+          <td class="rcm-val">↑↑ in Löffler's endocarditis / HES</td>
+          <td>Peripheral eosinophilia ≥1500/μL = Löffler's until proven otherwise</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Amyloid special section -->
+
+    <div class="card card-rcm" style="margin-top:0;margin-bottom:16px">
+      <h3>🚩 Red Flags for Cardiac Amyloidosis — Screen These Patients</h3>
+      <div class="g2">
+        <div>
+          <strong style="color:var(--text)">Systemic clues:</strong>
+          <ul style="margin-top:6px">
+            <li><strong>Bilateral carpal tunnel syndrome</strong> — especially if bilateral/recurrent in an older man</li>
+            <li><strong>Lumbar spinal stenosis</strong> (ATTR deposits in ligamentum flavum)</li>
+            <li><strong>Biceps tendon rupture</strong> ("Popeye sign") — spontaneous, atraumatic</li>
+            <li><strong>Macroglossia</strong> — pathognomonic for AL amyloidosis</li>
+            <li><strong>Periorbital purpura</strong> ("raccoon eyes") — AL amyloid in periorbital capillaries</li>
+            <li><strong>Peripheral / autonomic neuropathy</strong> — especially in hereditary ATTR</li>
+            <li><strong>Nephrotic-range proteinuria</strong> — AL amyloid renal involvement</li>
+          </ul>
+        </div>
+        <div>
+          <strong style="color:var(--text)">Cardiac clues:</strong>
+          <ul style="margin-top:6px">
+            <li><strong>Low-voltage ECG with thick LV walls</strong> — voltage/mass discordance; ~70% sensitive for amyloid</li>
+            <li><strong>Pseudo-infarct Q waves</strong> without coronary disease (inferior/lateral leads)</li>
+            <li><strong>Apical sparing on GLS</strong> — strongly suggestive (not pathognomonic)</li>
+            <li><strong>Unexplained HFpEF</strong> in patients &gt;65 with thick walls — ATTR until proven otherwise</li>
+            <li><strong>Thickened valves</strong> + granular sparkling myocardium on echo</li>
+            <li><strong>Rapidly progressive aortic stenosis</strong> in elderly — ATTR amyloid co-exists with AS in ~15%</li>
+            <li><strong>Intolerance to ACEi/ARBs/CCBs/digoxin</strong> — amyloid heart is exquisitely sensitive</li>
+          </ul>
+          <div class="box box-teal" style="margin-top:10px"><strong>⁹⁹ᵐTc-PYP rule:</strong> Any patient ≥60 with unexplained thick LV walls (≥12 mm) + HF symptoms → PYP scan. Grade 2–3 uptake without monoclonal protein = ATTR confirmed without biopsy. This is a game-changing test.</div>
+        </div>
+      </div>
+    </div>
+
+  <div class="card card-rcm">
+    <h3>💎 Cardiac Amyloidosis — The Most Important RCM in 2025</h3>
+    <p style="margin-bottom:10px">Cardiac amyloidosis has emerged as the most prevalent and clinically important form of RCM. Two main types with very different prognosis and treatment:</p>
+    <div class="g2">
+      <div>
+        <strong style="color:var(--rcm-l)">AL (light-chain) Amyloidosis:</strong>
+        <ul style="margin-top:6px">
+          <li>Plasma cell dyscrasia produces misfolded immunoglobulin light chains → amyloid fibrils deposited in heart, kidney, nerves, liver</li>
+          <li><strong>Prognosis:</strong> Median survival 6–12 months untreated; 5 years with chemotherapy</li>
+          <li><strong>Treatment:</strong> Chemotherapy targeting the plasma cell clone (daratumumab + bortezomib + dexamethasone ± cyclophosphamide); stem cell transplant in selected patients; heart transplant rarely (requires preceding BMT to eliminate the amyloid source)</li>
+          <li><strong>Diagnosis:</strong> Fat pad biopsy (70% sensitivity); bone marrow biopsy; cardiac biopsy; serum free light chains</li>
+        </ul>
+        <div class="box box-rcm" style="margin-top:8px"><strong>Red flags for AL amyloid:</strong> Macroglossia, periorbital purpura ("raccoon eyes"), carpal tunnel syndrome, nephrotic-range proteinuria + cardiac RCM = AL amyloidosis until proven otherwise.</div>
+      </div>
+      <div>
+        <strong style="color:var(--rcm-l)">ATTR (transthyretin) Amyloidosis:</strong>
+        <ul style="margin-top:6px">
+          <li>Misfolded transthyretin (TTR) protein, either wild-type (age-related, predominantly men &gt;70 years) or hereditary (Val122Ile most common in African Americans)</li>
+          <li><strong>Prognosis:</strong> Better than AL; median survival 2–6 years untreated; significantly improved with tafamidis</li>
+          <li><strong>Treatment:</strong> <strong>Tafamidis (Vyndaqel)</strong> — TTR stabilizer; significantly reduces mortality and hospitalization (ATTR-ACT trial, 30% relative mortality reduction); <strong>Patisiran/inotersen</strong> — RNA interference silencers for hereditary ATTR; <strong>Acoramidis</strong> — newer TTR stabilizer</li>
+          <li><strong>Clue:</strong> ⁹⁹ᵐTc-PYP scintigraphy (bone scan) — Grade 2–3 cardiac uptake without monoclonal protein = ATTR diagnosis without biopsy</li>
+        </ul>
+        <div class="box box-rcm" style="margin-top:8px"><strong>Tafamidis clinical impact:</strong> First disease-modifying therapy for any RCM. All patients &gt;60 with unexplained LV wall thickening (≥12 mm), preserved EF, and characteristic echo/CMR findings should be screened for ATTR before attributing findings to hypertension.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Endomyocardial biopsy -->
+  <div class="card card-blue">
+    <h3>🔬 Endomyocardial Biopsy (EMB) — When and Why</h3>
+    <div class="g2">
+      <div>
+        <strong style="color:var(--text)">Indications in RCM:</strong>
+        <ul style="margin-top:6px">
+          <li>Confirm amyloidosis (Congo red stain → apple-green birefringence; electron microscopy → fibril pattern; mass spectrometry → typing AL vs ATTR)</li>
+          <li>Confirm sarcoidosis (non-caseating granulomas) when other sites inaccessible</li>
+          <li>Confirm haemochromatosis (Prussian blue iron stain)</li>
+          <li>Classify idiopathic RCM (fibrosis pattern)</li>
+          <li>Exclude myocarditis mimicking RCM</li>
+        </ul>
+      </div>
+      <div>
+        <strong style="color:var(--text)">Yield and limitations:</strong>
+        <ul style="margin-top:6px">
+          <li>Amyloid: 90–100% sensitivity (typical sampling 5 pieces from RV septum)</li>
+          <li>Sarcoid: 20–40% sensitivity (patchy distribution) — PET/CT-guided biopsy ↑ yield</li>
+          <li>Haemochromatosis: High (iron deposits diffuse)</li>
+          <li>Complication rate: 0.5–1% major (cardiac perforation, tamponade, AV block, fistula)</li>
+          <li>Not indicated in CP — diagnosis is pericardial, not myocardial</li>
+        </ul>
+        <div class="box box-blue" style="margin-top:8px"><strong>Fat pad biopsy first:</strong> In suspected AL amyloidosis, abdominal subcutaneous fat pad biopsy is positive in 70% and avoids cardiac biopsy risk. If negative + high suspicion → EMB.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Diagnostic Algorithm -->
+  <div class="stitle">Diagnostic Algorithm — Step-by-Step Approach</div>
+  <div class="card card-gold">
+    <h3>📐 Practical Diagnostic Pathway: CP vs RCM</h3>
+    <div style="display:flex;flex-direction:column;gap:0">
+      <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--rim)">
+        <div style="width:30px;height:30px;border-radius:50%;background:var(--cp-d);border:1px solid var(--cp);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--cp-l);flex-shrink:0">1</div>
+        <div><strong style="color:var(--text)">Clinical history and examination</strong><br><span style="color:var(--muted);font-size:13px">History of cardiac surgery, radiation, TB, CTD → raises CP pre-test probability. Macroglossia, periorbital purpura, neuropathy → AL amyloid. Elderly man, aortic stenosis, bilateral CTS → ATTR amyloid. Family history of CMP → idiopathic/hereditary RCM. Calculate pre-test probability before imaging.</span></div>
+      </div>
+      <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--rim)">
+        <div style="width:30px;height:30px;border-radius:50%;background:var(--cp-d);border:1px solid var(--cp);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--cp-l);flex-shrink:0">2</div>
+        <div><strong style="color:var(--text)">Biomarkers: BNP, troponin, SPEP, free light chains, ferritin</strong><br><span style="color:var(--muted);font-size:13px">Markedly elevated BNP (&gt;1000 pg/mL) strongly favours RCM. Monoclonal protein → AL amyloid workup. Very high ferritin + ↑ transferrin sat. → haemochromatosis. Normal/mildly elevated BNP compatible with CP.</span></div>
+      </div>
+      <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--rim)">
+        <div style="width:30px;height:30px;border-radius:50%;background:var(--cp-d);border:1px solid var(--cp);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--cp-l);flex-shrink:0">3</div>
+        <div><strong style="color:var(--text)">Comprehensive echocardiography with Doppler and TDI</strong><br><span style="color:var(--muted);font-size:13px">Septal bounce + medial e' ≥8 + mitral E variation ≥25% + pericardial thickening → CP likely. Biatrial dilation + e' &lt;5 + E/e' &gt;15 + wall thickening ("sparkling") + no septal bounce → RCM likely. Assess all parameters systematically. Strain analysis: apical sparing → amyloid.</span></div>
+      </div>
+      <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--rim)">
+        <div style="width:30px;height:30px;border-radius:50%;background:var(--cp-d);border:1px solid var(--cp);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--cp-l);flex-shrink:0">4</div>
+        <div><strong style="color:var(--text)">Cardiac CT and/or CMR</strong><br><span style="color:var(--muted);font-size:13px">CT: pericardial calcification (virtually diagnostic of CP when circumferential). CMR: pericardial thickness + LGE pattern (pericardial vs myocardial) + tagging (pericardio-myocardial adhesion) + T1/T2 mapping (infiltration). ⁹⁹ᵐTc-PYP scan: Grade 2–3 + no monoclonal protein = ATTR amyloidosis confirmed without biopsy. FDG-PET: active sarcoidosis.</span></div>
+      </div>
+      <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--rim)">
+        <div style="width:30px;height:30px;border-radius:50%;background:var(--cp-d);border:1px solid var(--cp);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--cp-l);flex-shrink:0">5</div>
+        <div><strong style="color:var(--text)">Cardiac catheterization (if still uncertain)</strong><br><span style="color:var(--muted);font-size:13px">Simultaneous LV/RV pressures during respiration: discordant (LV↓ when RV↑) = CP. Diastolic pressure equalization (LVEDP − RVEDP &lt;5 mmHg) = CP. Concordant + LVEDP &gt;&gt; RVEDP = RCM. Volume loading if resting haemodynamics inconclusive. Coronary angiography pre-pericardiectomy.</span></div>
+      </div>
+      <div style="display:flex;gap:12px;padding:12px 0">
+        <div style="width:30px;height:30px;border-radius:50%;background:var(--cp-d);border:1px solid var(--cp);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--cp-l);flex-shrink:0">6</div>
+        <div><strong style="color:var(--text)">Endomyocardial biopsy (if RCM confirmed but cause unclear)</strong><br><span style="color:var(--muted);font-size:13px">Perform EMB to type RCM if non-invasive workup inconclusive. Fat pad biopsy first in AL amyloid. EMB for sarcoid (PET-guided), haemochromatosis, and idiopathic RCM classification. Not needed if ATTR confirmed by PYP scintigraphy.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Treatment -->
+  <div class="stitle">Treatment</div>
+  <div class="duel">
+    <div class="duel-cp">
+      <div class="duel-label">CP — Treatment</div>
+      <h3>🔪 Pericardiectomy — The Only Cure</h3>
+      <ul>
+        <li><strong>Complete (radical) pericardiectomy:</strong> The definitive treatment. Remove as much of the visceral and parietal pericardium as safely possible — from phrenic to phrenic nerve. Incomplete resection = inadequate — residual constriction is common if &lt;75% removed.</li>
+        <li><strong>Surgical approach:</strong> Median sternotomy (preferred — allows complete resection) or lateral thoracotomy. CPB standby — may be needed if pericardium adherent to epicardium or myocardium.</li>
+        <li><strong>Mortality:</strong> 5–10% (experienced centres: 3–5%). Higher in: radiation-induced CP (myocardial damage), advanced disease (CI &lt;1.5), severe calcification encasing coronaries.</li>
+        <li><strong>Long-term outcomes:</strong> 70–90% of patients significantly improve. Haemodynamic improvement may be delayed 3–6 months post-op (myocardial adaptation needed). 10-year survival ~50–70%.</li>
+        <li><strong>Medical therapy (pre-operative / inflammatory CP):</strong>
+          <ul>
+            <li>NSAIDs (ibuprofen 600 mg tid) + Colchicine 0.5 mg bid × 3 months (reduces recurrence/progression)</li>
+            <li>Active pericardial LGE on CMR → anti-inflammatory before surgery</li>
+            <li>Corticosteroids if NSAIDs fail or autoimmune/TB cause</li>
+            <li>TB: anti-TB therapy + prednisolone for tuberculous CP</li>
+          </ul>
+        </li>
+        <li><strong>Avoid:</strong> Diuretics in excess (preload-dependent; over-diuresis → ↓ CO). Negative inotropes, vasodilators (further ↓ CO).</li>
+      </ul>
+      <div class="box box-cp" style="margin-top:10px"><strong>Pericardiectomy timing:</strong> Earlier is better — severe calcification, long-standing disease, and radiation-induced CP have worse outcomes. Operate before severe myocardial atrophy or hepatic fibrosis develops. NYHA III–IV with confirmed CP = prompt surgical referral.</div>
+    </div>
+    <div class="duel-mid"><div class="duel-mid-dot"></div><div class="duel-mid-lbl">Rx</div><div class="duel-mid-dot"></div></div>
+    <div class="duel-rcm">
+      <div class="duel-label">RCM — Treatment</div>
+      <h3>💊 Disease-Specific + Supportive Therapy</h3>
+      <ul>
+        <li><strong>Diuretics (mainstay of symptomatic relief):</strong> Loop diuretics (furosemide) ± aldosterone antagonist. Careful titration — over-diuresis ↓ preload → ↓ CO (preload-dependent diastolic function). Aim: euvolaemia, not aggressively dry.</li>
+        <li><strong>Heart rate control:</strong> Target HR 60–70 bpm — longer diastole → better filling. β-blockers or ivabradine cautiously. Avoid tachycardia (shortens diastolic filling time).</li>
+        <li><strong>Anticoagulation:</strong> Warfarin/DOAC — for AF (high prevalence), LA thrombus (Löffler's, EMF), or intracardiac thrombus.</li>
+        <li><strong>Amyloid-specific:</strong>
+          <ul>
+            <li>AL: Daratumumab + Bortezomib + Dexamethasone (D-VD) — first-line; stem cell transplant if eligible</li>
+            <li>ATTR: Tafamidis 61 mg/day (wild-type and hereditary Val30Met); Patisiran or Inotersen (hereditary ATTR with polyneuropathy); Acoramidis (emerging)</li>
+            <li>Avoid CCBs (contraindicated in amyloid — worsen hypotension and heart block)</li>
+            <li>Avoid digoxin (binds amyloid fibrils → toxicity at low levels)</li>
+            <li>Avoid ACEi/ARBs in advanced AL (hypotension)</li>
+          </ul>
+        </li>
+        <li><strong>Sarcoidosis:</strong> Prednisolone 40 mg/day → taper over 6–12 months. ICD for VT/AV block (&gt;3° or type 2° Mobitz II). CRT if LBBB + low EF.</li>
+        <li><strong>Haemochromatosis:</strong> Phlebotomy (weekly until ferritin &lt;50 ng/mL) or deferasirox/deferoxamine chelation. Can partially reverse cardiomyopathy if detected early.</li>
+        <li><strong>Löffler's/HES:</strong> Hydroxyurea, imatinib (FIP1L1-PDGFRA+ cases), corticosteroids; anticoagulation for apical thrombus.</li>
+        <li><strong>Heart transplantation:</strong> For end-stage RCM unresponsive to medical therapy. AL amyloid requires preceding plasma cell clone eradication (BMT) to prevent amyloid recurrence in donor heart. ATTR transplant outcomes good (but limited by age/comorbidities). LVAD bridge to transplant problematic in RCM (small cavity, suction events).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Pitfalls and teaching points -->
+  <div class="stitle">Critical Pitfalls &amp; Teaching Points</div>
+
+  <div class="card card-red" style="margin-bottom:16px">
+    <h3>⚠️ Common Diagnostic Pitfall Scenarios</h3>
+    <div class="tw"><table>
+      <thead><tr>
+        <th class="th-neu">Clinical Situation</th>
+        <th class="th-neu">How it complicates diagnosis</th>
+        <th class="th-neu">What to do</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Severe tricuspid regurgitation</strong></td>
+          <td>Prominent v wave and rapid y descent on JVP mimics CP; dilated IVC; right-sided congestion</td>
+          <td>Echo: evaluate TR severity and RV function. CP and severe TR can co-exist. Cath differentiates.</td>
+        </tr>
+        <tr>
+          <td><strong>Atrial fibrillation</strong></td>
+          <td>Masks respiratory Doppler variation (mitral E varies with RR interval, not respiration). Cannot use standard variation criteria.</td>
+          <td>Use &gt;10 beat average; assess septal bounce, TDI e′, and cath haemodynamics instead of respiratory Doppler.</td>
+        </tr>
+        <tr>
+          <td><strong>Mechanical ventilation</strong></td>
+          <td>Positive pressure ventilation reverses normal respiratory physiology — all respiratory Doppler indices unreliable</td>
+          <td>Perform echo during brief spontaneous breathing trial; or defer to cath during spontaneous breathing.</td>
+        </tr>
+        <tr>
+          <td><strong>COPD / severe obstructive lung disease</strong></td>
+          <td>Exaggerated intrathoracic pressure swings → large respiratory Doppler variation even without CP; may produce apparent "septal bounce"</td>
+          <td>Context: elevated JVP? Pericardial thickness on CMR? TDI e′? Cath discordance (not respiratory variation alone).</td>
+        </tr>
+        <tr>
+          <td><strong>Prior cardiac surgery (without CP)</strong></td>
+          <td>Pericardial scarring and adhesions may produce annulus reversus (medial e′ ≥ lateral e′) without true constrictive physiology; pericardial thickening without haemodynamic compromise</td>
+          <td>Require haemodynamic evidence (respiratory variation AND cath equalization) before diagnosing CP post-surgery — anatomy alone is insufficient.</td>
+        </tr>
+        <tr>
+          <td><strong>Radiation heart disease</strong></td>
+          <td>Can produce simultaneous constrictive pericarditis AND myocardial restriction — truly mixed physiology. Both e′ and respiratory variation may be intermediate.</td>
+          <td>CMR: distinguish pericardial vs myocardial LGE. Cath: volume loading. Low threshold for surgical exploration + biopsy if uncertain.</td>
+        </tr>
+        <tr>
+          <td><strong>Mitral annular calcification (MAC)</strong></td>
+          <td>Annulus calcification restricts annular motion → reduces lateral e′ selectively → may mimic annulus reversus pattern without CP</td>
+          <td>Evaluate full clinical context. Significant MAC on echo; CMR pericardium; respiratory variation; cath if needed.</td>
+        </tr>
+        <tr>
+          <td><strong>Hypovolaemia masking CP</strong></td>
+          <td>Under-filled patients may not show respiratory variation — pressure equalization at low filling volumes</td>
+          <td>Reassess after adequate volume loading; cath with volume challenge (500–1000 mL NS) unmasks CP.</td>
+        </tr>
+        <tr>
+          <td><strong>Advanced amyloidosis with near-equalized pressures</strong></td>
+          <td>In end-stage cardiac amyloidosis, LVEDP and RVEDP can approach equalization, mimicking CP haemodynamics</td>
+          <td>TDI e′ (markedly low in amyloid); CMR LGE pattern; PYP scan; EMB. Clinical context (amyloid features, BNP markedly elevated).</td>
+        </tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="g2">
+    <div class="card card-red">
+      <h3>⚠️ Common Diagnostic Mistakes (Continued)</h3>
+      <ul>
+        <li><strong>Attributing post-surgical dyspnoea to "cardiac surgery" without considering CP:</strong> CP develops 6 months–15 years post-op. Any post-CABG/valve patient with elevated JVP and dyspnoea needs echo ± CMR to exclude CP.</li>
+        <li><strong>Relying on pericardial thickness alone:</strong> 20% of CP has normal pericardial thickness (&lt;2 mm) on echo. Haemodynamics and TDI are more reliable than thickness measurements alone.</li>
+        <li><strong>Accepting low BNP as evidence against RCM:</strong> BNP can be relatively low in early/compensated RCM. It is the very high BNP that argues against CP, not a normal BNP that excludes RCM.</li>
+        <li><strong>Missing amyloidosis as cause of "HFpEF":</strong> ATTR amyloidosis mimics HFpEF. In any patient &gt;60 with HFpEF, thick walls, and low-voltage ECG → screen with ⁹⁹ᵐTc-PYP. Treat with tafamidis if ATTR confirmed.</li>
+        <li><strong>Operating on RCM patient (misdiagnosed as CP):</strong> Pericardiectomy on an RCM patient does not improve haemodynamics and carries surgical mortality without benefit. Pre-operative EMB or very thorough non-invasive workup is essential in all borderline cases.</li>
+        <li><strong>Using CCBs or digoxin in cardiac amyloidosis:</strong> Both are potentially dangerous — CCBs bind amyloid fibrils → negative inotrope effect amplified; digoxin binds amyloid → toxicity at low levels.</li>
+      </ul>
+    </div>
+    <div class="card card-teal">
+      <h3>🎯 High-Yield Teaching Points</h3>
+      <ul>
+        <li><strong>TDI e' is the single most useful echo test:</strong> e' ≥8 = CP (normal myocardium); e' &lt;5 = RCM (diseased myocardium). This one number often determines the entire management pathway.</li>
+        <li><strong>Discordant LV/RV pressure response at catheterization is the gold standard:</strong> LV↓ when RV↑ with inspiration = CP. This pattern reflects enhanced ventricular interdependence and is the most specific single haemodynamic feature.</li>
+        <li><strong>"Annulus reversus" in CP:</strong> Medial e' ≥ lateral e' = highly suggestive of constrictive physiology (in appropriate clinical context — also possible post-cardiac surgery, mitral annular calcification). Normal physiology and RCM both show lateral &gt; medial e'.</li>
+        <li><strong>Diastolic pressure equalization ≠ square root sign:</strong> The square root sign is seen in BOTH conditions. Only equalization (LVEDP − RVEDP &lt;5 mmHg) is specific for CP.</li>
+        <li><strong>⁹⁹ᵐTc-PYP scintigraphy = ATTR without biopsy:</strong> Grade 2–3 uptake + absence of monoclonal protein = ATTR diagnosis with &gt;99% specificity. Game-changing for elderly patients with suspected ATTR amyloid.</li>
+        <li><strong>Early pericardiectomy = better outcomes:</strong> Once severe calcification encases the coronary arteries, pericardiectomy becomes technically treacherous. Operate before the window closes.</li>
+        <li><strong>Complete pericardiectomy, not partial:</strong> Incomplete removal is a major cause of suboptimal outcomes. Phrenic-to-phrenic resection is the standard. CPB improves completeness in difficult cases.</li>
+        <li><strong>Post-pericardiectomy haemodynamic improvement is delayed:</strong> The myocardium needs 3–6 months to remodel and recover from chronic constraint. Patients need reassurance and continued medical support in this period.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ECG section -->
+  <div class="stitle">ECG Findings</div>
+  <div class="duel">
+    <div class="duel-cp">
+      <div class="duel-label">CP — ECG</div>
+      <ul>
+        <li><strong>Non-specific:</strong> No pathognomonic ECG finding</li>
+        <li><strong>Common:</strong> Low-voltage QRS (pericardial fluid / fibrous tissue attenuates signal)</li>
+        <li><strong>Atrial fibrillation:</strong> Common late finding (both CP and RCM)</li>
+        <li><strong>P-wave abnormalities:</strong> LA enlargement pattern (broad, notched P in II; deep negative terminal deflection in V1)</li>
+        <li><strong>T-wave changes:</strong> Non-specific T-wave inversions</li>
+        <li><strong>Electrical alternans:</strong> Only if concurrent large effusion</li>
+      </ul>
+    </div>
+    <div class="duel-mid"><div class="duel-mid-dot"></div><div class="duel-mid-lbl">ECG</div><div class="duel-mid-dot"></div></div>
+    <div class="duel-rcm">
+      <div class="duel-label">RCM — ECG (disease-specific)</div>
+      <ul>
+        <li><strong>Amyloid hallmark — Low voltage + thick walls:</strong> QRS voltage paradoxically LOW despite increased wall thickness on echo. This "voltage-mass discordance" is ~70% sensitive for cardiac amyloid.</li>
+        <li><strong>Pseudo-infarct pattern (amyloid):</strong> Pathological Q waves (especially inferior/lateral leads) without coronary disease — amyloid deposits cause electrical "dead zones"</li>
+        <li><strong>Conduction disease (sarcoid):</strong> Complete AV block, LBBB, RBBB — may be presenting manifestation of cardiac sarcoidosis; ICD warranted</li>
+        <li><strong>VT (sarcoid, haemochromatosis):</strong> Sustained VT as presenting arrhythmia — ICD required</li>
+        <li><strong>Atrial fibrillation:</strong> Very common in all forms of RCM (massive atrial dilation)</li>
+        <li><strong>Short PR, delta wave:</strong> Rare; Fabry disease can mimic pre-excitation</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Final comparison box -->
+  <div class="card card-gold" style="margin-top:8px">
+    <h3>🏆 The Definitive Diagnostic Summary</h3>
+    <div class="tw"><table>
+      <thead><tr>
+        <th class="th-neu">Diagnostic tool</th>
+        <th class="th-cp">Findings pointing to CP</th>
+        <th class="th-rcm">Findings pointing to RCM</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><strong>History</strong></td><td class="cp-val">Prior cardiac surgery, radiation, TB, pericarditis</td><td class="rcm-val">Amyloid features, family history, systemic disease</td></tr>
+        <tr><td><strong>Physical exam</strong></td><td class="cp-val">Pericardial knock, prominent y descent, Kussmaul's sign</td><td class="rcm-val">S₃, S₄, systemic amyloid signs, pulmonary oedema</td></tr>
+        <tr><td><strong>BNP</strong></td><td class="cp-val">Normal to mildly ↑ (&lt;400)</td><td class="rcm-val">↑↑↑ (&gt;1000, often &gt;5000 in amyloid)</td></tr>
+        <tr><td><strong>Echo 2D</strong></td><td class="cp-val">Thick pericardium, septal bounce, normal walls</td><td class="rcm-val">Normal pericardium, thick walls, biatrial dilation, sparkling</td></tr>
+        <tr><td><strong>Echo Doppler</strong></td><td class="cp-val">Mitral E variation &gt;25%, tricuspid variation &gt;40%</td><td class="rcm-val">Mitral E variation &lt;10%, E/e' &gt;15</td></tr>
+        <tr><td><strong>TDI (e')</strong></td><td class="cp-val">≥8 cm/s (annulus reversus)</td><td class="rcm-val">&lt;5 cm/s</td></tr>
+        <tr><td><strong>Speckle tracking</strong></td><td class="cp-val">Normal GLS</td><td class="rcm-val">↓ GLS; apical sparing pattern (amyloid)</td></tr>
+        <tr><td><strong>CT</strong></td><td class="cp-val">Pericardial calcification, ↑ thickness</td><td class="rcm-val">Normal pericardium</td></tr>
+        <tr><td><strong>CMR</strong></td><td class="cp-val">↑ Pericardial thickness, LGE pericardium, tagging = adhesion</td><td class="rcm-val">Myocardial LGE (diffuse subendocardial in amyloid)</td></tr>
+        <tr><td><strong>⁹⁹ᵐTc-PYP scan</strong></td><td>Negative</td><td class="rcm-val">Grade 2–3 = ATTR amyloid</td></tr>
+        <tr><td><strong>EMB</strong></td><td>Not indicated</td><td class="rcm-val">Confirms and types RCM</td></tr>
+        <tr><td><strong>Cath — diastolic EDP</strong></td><td class="cp-val">LVEDP − RVEDP &lt;5 mmHg</td><td class="rcm-val">LVEDP &gt;&gt; RVEDP (&gt;5 mmHg)</td></tr>
+        <tr><td><strong>Cath — respiratory</strong></td><td class="cp-val">Discordant LV↓ / RV↑</td><td class="rcm-val">Concordant both ↑ together</td></tr>
+        <tr><td><strong>Treatment</strong></td><td class="cp-val">Pericardiectomy (curative)</td><td class="rcm-val">Disease-specific medical ± transplant</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box box-teal" style="margin-top:12px">
+      <strong>The three questions that guide every CP vs RCM evaluation:</strong><br>
+      1. Is the <strong>pericardium</strong> thickened/calcified? (CT/CMR/echo)<br>
+      2. Is the <strong>myocardium</strong> moving normally? (TDI e' ≥8 = CP; e' &lt;5 = RCM)<br>
+      3. Is there <strong>respiratory dissociation</strong> between intrathoracic and intracardiac pressures? (Doppler variation &gt;25% or cath discordance = CP)
+    </div>
+  </div>
+
+  <div class="footnote">
+    Based on: Nishimura RA — NEJM 1996 (Constrictive vs Restrictive); Geske JB et al. — JACC 2013 (haemodynamic evaluation); Habib G et al. — ESC Guidelines 2015; Garcia MJ — JACC 2016 (diastolic function assessment); Wechalekar AD et al. — Lancet 2016 (cardiac amyloidosis); Gillmore JD et al. — Circulation 2016 (PYP scintigraphy ATTR); Maurer MS et al. — NEJM 2018 (ATTR-ACT tafamidis trial); Haley JH et al. — JASE 2002 (echo CP vs RCM); Ling LH et al. — Circulation 1999 (pericardiectomy outcomes); Imazio M et al. — NEJM 2013 (colchicine pericarditis); ESC/EACVI Guidelines 2022 (diastolic function). For educational purposes only — always integrate with clinical judgment.
+    <br><br>Cardiac Surgery Clinical Education · StarleyBy · 2025
+  </div>
+</section>
+
+<script>
+const tabs = document.querySelectorAll('.tab');
+const nbs  = document.querySelectorAll('.nb');
+function gt(i, b) {
+  tabs.forEach(t => t.classList.remove('active'));
+  nbs.forEach(n => n.classList.remove('active'));
+  tabs[i].classList.add('active');
+  b.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</main>
+</body>
+</html>
