@@ -207,11 +207,17 @@
     <div class="quick-nav">
         <a href="#indications">Indications</a>
         <a href="#modes">Pacing modes</a>
+        <a href="#nbg">NBG code</a>
         <a href="#parameters">Parameters</a>
         <a href="#setup">Setup & thresholds</a>
+        <a href="#avsynchrony">AV synchrony</a>
+        <a href="#mechanical-capture">Mechanical capture</a>
+        <a href="#ecg-patterns">ECG patterns</a>
         <a href="#clinical">Clinical use</a>
         <a href="#troubleshooting">Troubleshooting</a>
         <a href="#special">Special cases</a>
+        <a href="#transcutaneous">Transcutaneous</a>
+        <a href="#postcardiac">Post-surgery / TdP</a>
         <a href="#emergency">Emergency mode</a>
         <a href="#safety">Safety & pitfalls</a>
     </div>
@@ -244,7 +250,7 @@
                             <li>Atrial pacing to restore AV synchrony in haemodynamically compromised junctional rhythm</li>
                             <li>Prophylactic backup pacing when epicardial wires are placed (most centres)</li>
                         </ul>
-                        <div class="footnote">Epicardial wires typically remain functional for 4-7 days; capture thresholds often rise after day 3.</div>
+                        <div class="footnote">Capture thresholds often rise progressively after surgery. Epicardial wires are commonly removed within several days when no longer needed; threshold >10 mA by day 4–5 is not unusual.</div>
                     </div>
                 </div>
                 <div class="card">
@@ -274,8 +280,8 @@
                         <tbody>
                             <tr><td><strong>DDD</strong> (full dual-chamber)</td><td>YES</td><td>YES</td><td>YES</td><td>YES</td><td>Physiological AV synchrony; preferred for haemodynamically unstable complete heart block with intact sinus node.</td></tr>
                             <tr><td><strong>DDI</strong></td><td>YES</td><td>YES</td><td>YES</td><td>YES</td><td>Atrial sensing inhibits both atrial and ventricular pacing, but atrial pacing ignores sensed atrial events – useful when atrial tachyarrhythmias are present.</td></tr>
-                            <tr><td><strong>DVI</strong></td><td>YES</td><td>NO</td><td>YES</td><td>YES</td><td>Atrial pacing & ventricular pacing triggered by ventricular sensing; no atrial sensing. Not recommended, risk of atrial pacing on T wave.</td></tr>
-                            <tr><td><strong>DOO</strong></td><td>YES (asynch)</td><td>NO</td><td>YES (asynch)</td><td>NO</td><td>Fixed-rate asynchronous dual-chamber (emergency mode). EMERGENCY key activates DOO.</td></tr>
+                            <tr><td><strong>DVI</strong></td><td>YES</td><td>NO</td><td>YES</td><td>YES</td><td>Atrial pacing without atrial sensing; ventricular sensing preserved. Rarely used in contemporary practice due to suboptimal AV timing and the availability of superior dual-chamber modes (DDI, DDD).</td></tr>
+                            <tr><td><strong>DOO</strong></td><td>YES (asynch)</td><td>NO</td><td>YES (asynch)</td><td>NO</td><td>Fixed-rate asynchronous dual-chamber pacing — used when reliable sensing is not possible (electromagnetic interference, electrocautery, or profound bradycardia). EMERGENCY key activates DOO. R-on-T risk: use only when indicated.</td></tr>
                             <tr><td><strong>VVI</strong></td><td>NO</td><td>NO</td><td>YES</td><td>YES</td><td>Single-chamber ventricular demand pacing – most common temporary ventricular backup; safe but without AV synchrony.</td></tr>
                             <tr><td><strong>VOO</strong></td><td>NO</td><td>NO</td><td>YES (asynch)</td><td>NO</td><td>Fixed ventricular pacing at set rate – used only when sensing impossible or during electrocautery.</td></tr>
                             <tr><td><strong>AAI</strong></td><td>YES</td><td>YES</td><td>NO</td><td>NO</td><td>Atrial demand pacing – suitable for isolated sinus node disease with intact AV conduction.</td></tr>
@@ -300,7 +306,7 @@
                             <tr><td><strong>Ventricular output (mA)</strong></td><td>0.1 - 20</td><td>5-10 mA</td><td>Set at 2x capture threshold to ensure safety margin without excessive energy.</td></tr>
                             <tr><td><strong>Atrial sensitivity (mV)</strong></td><td>0.4 - 10 mV</td><td>2.0 mV</td><td>Lower number = more sensitive. Set to half the sensitivity threshold after testing.</td></tr>
                             <tr><td><strong>Ventricular sensitivity (mV)</strong></td><td>0.8 - 20 mV</td><td>4.0 mV</td><td>Set to half of sensed R-wave amplitude (typically 3-5 mV). Too sensitive -> oversensing.</td></tr>
-                            <tr><td><strong>AV delay (ms)</strong></td><td>Manual 20 - 300; AUTO 50 - 250</td><td>150 ms (or auto)</td><td>Shorter AV delay (80-120 ms) for hypertrophic cardiomyopathy; longer (200 ms) to permit intrinsic conduction.</td></tr>
+                            <tr><td><strong>AV delay (ms)</strong></td><td>Manual 20 - 300; AUTO 50 - 250</td><td>150 ms (or auto)</td><td>Longer AV delay (180–200 ms) to permit intrinsic conduction where possible. Shorter AV delay (80–120 ms) has historically been used in selected HCM patients for LVOT gradient reduction, though this is not standard contemporary therapy; consult specialist guidance.</td></tr>
                             <tr><td><strong>PVARP (ms)</strong></td><td>150 - 500</td><td>250 ms</td><td>Post-ventricular atrial refractory period prevents sensing of retrograde P-waves and pacemaker-mediated tachycardia.</td></tr>
                             <tr><td><strong>Upper tracking rate (bpm)</strong></td><td>80 - 230 (manual) or auto</td><td>130 bpm</td><td>Limits ventricular pacing rate in DDD when atrial rate rises (e.g., sinus tachycardia).</td></tr>
                             <tr><td><strong>Pulse width (ms)</strong></td><td>A 1.0, V 1.5 (fixed)</td><td>Not adjustable</td><td>Fixed values: atrial 1.0 ms, ventricular 1.5 ms.</td></tr>
@@ -322,10 +328,10 @@
                             <li>Connect atrial and ventricular leads to color-coded ports (red = ventricular, yellow/atrial).</li>
                             <li>Set mode to DDD (or VVI for simple ventricular backup).</li>
                             <li>Set rate 70-80 bpm.</li>
-                            <li>Set output (mA) to 5 mA (ventricular) and 5 mA (atrial).</li>
-                            <li>Increase output while observing ECG until capture – i.e. pacing spike followed by QRS (or P-wave for atrial).</li>
-                            <li>Reduce output until capture is lost -> record capture threshold (mA).</li>
-                            <li>Set output to 2x the capture threshold (minimum 5 mA as safety margin).</li>
+                            <li>Set output to a high starting value (10–20 mA for ventricle, 10 mA for atrium) to ensure reliable capture.</li>
+                            <li>Confirm capture (pacing spike followed by wide QRS or P-wave) while observing ECG continuously.</li>
+                            <li>Gradually <strong>decrease</strong> output until capture is lost → record the <em>capture threshold</em> (mA). Starting high and titrating downward is safer and the standard approach.</li>
+                            <li>Set working output to at least <strong>2× the capture threshold</strong>, or according to institutional practice; a fixed minimum of 5 mA is not universally required (e.g., fresh epicardial threshold 0.7 mA → 1.5–2 mA may suffice).</li>
                         </ol>
                         <div class="tip-box">Typical capture thresholds: transvenous RV apex 0.5-1.5 mA; epicardial wires 1-5 mA; after 4 days may rise above 10 mA.</div>
                     </div>
@@ -335,13 +341,13 @@
                     <div class="card-body">
                         <ol style="margin-left: 20px;">
                             <li>Set mode to VVI, AAI, or DDD (sensing-dependent mode).</li>
-                            <li>Set rate <10 bpm below patient's intrinsic rate (to prevent pacing).</li>
-                            <li>Reduce output to 0.5 mA (to avoid capture interference).</li>
+                            <li>Set rate 10 bpm below patient's intrinsic rate to allow the intrinsic rhythm to emerge.</li>
+                            <li>If clinically safe (no significant pacing dependency), the pacing output may be temporarily reduced or the rate lowered further to facilitate sensing assessment. <strong>Do not reduce output in pacing-dependent patients or complete AV block.</strong></li>
                             <li>Increase sensitivity (turn sensitivity dial counter-clockwise – higher mV) until the sense indicator stops flashing -> point of undersensing.</li>
                             <li>Now increase sensitivity (clockwise, lower mV) until sense indicator flashes with each intrinsic beat -> this is the sensitivity threshold.</li>
                             <li>Set sensitivity to half the threshold value (e.g., threshold 2 mV -> set 1 mV).</li>
                         </ol>
-                        <div class="alert-box">Oversensing (sensitivity too high) causes pacing inhibition (pause) or inappropriate mode switch. Undersensing leads to asynchronous pacing (risk of R-on-T).</div>
+                        <div class="alert-box">Oversensing (sensitivity too high) causes inappropriate inhibition of pacing — potentially catastrophic in pacing-dependent patients — as well as competitive asynchronous pacing and inappropriate mode switches. Undersensing leads to asynchronous pacing (risk of R-on-T).</div>
                     </div>
                 </div>
                 <div class="card">
@@ -417,6 +423,158 @@
             </div>
         </div>
 
+        <!-- NBG CODE + MODE SELECTION -->
+        <div class="section" id="nbg">
+            <div class="section-title">NBG pacemaker code & mode selection algorithm</div>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">NBG code (NASPE/BPEG Generic)</div>
+                    <div class="card-body">
+                        <table class="param-table">
+                            <thead><tr><th>Position</th><th>Meaning</th><th>Letters used</th></tr></thead>
+                            <tbody>
+                                <tr><td><strong>I</strong></td><td>Chamber(s) paced</td><td>A = Atrium, V = Ventricle, D = Dual, O = None</td></tr>
+                                <tr><td><strong>II</strong></td><td>Chamber(s) sensed</td><td>A = Atrium, V = Ventricle, D = Dual, O = None</td></tr>
+                                <tr><td><strong>III</strong></td><td>Response to sensing</td><td>I = Inhibit, T = Trigger, D = Dual (I+T), O = None</td></tr>
+                                <tr><td><strong>IV</strong></td><td>Rate modulation</td><td>R = Rate responsive, O = None</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="tip-box">Example: DDD = Dual-chamber paced, dual-chamber sensed, inhibit + trigger response. VVI = Ventricular paced, ventricular sensed, inhibit response.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Mode selection algorithm</div>
+                    <div class="card-body">
+                        <pre style="background:#f4f9fe; padding:14px; border-radius:12px; font-size:13px; line-height:1.7; overflow-x:auto;">
+Sinus node intact?
+│
+├── YES
+│     AV block present?
+│     ├── YES → <strong>DDD</strong> (AV sequential, physiological)
+│     └── NO  → <strong>AAI</strong> (atrial demand)
+│
+└── NO (sinus arrest / dysfunction)
+      Ventricular backup only needed?
+      ├── YES → <strong>VVI</strong> (simple ventricular demand)
+      └── BOTH chambers → <strong>DDD</strong> or <strong>DDI</strong>
+
+Atrial tachyarrhythmia present? → <strong>DDI</strong> or <strong>VVI</strong>
+Electromagnetic interference / electrocautery? → <strong>VOO / DOO</strong>
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AV SYNCHRONY -->
+        <div class="section" id="avsynchrony">
+            <div class="section-title">AV synchrony — why it matters (especially post-cardiac surgery)</div>
+            <div class="card">
+                <div class="card-body">
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px;">
+                        <div>
+                            <strong>Physiological importance</strong>
+                            <ul>
+                                <li>Atrial contraction contributes up to 20–30% of ventricular filling ("atrial kick") — critical in patients with diastolic dysfunction or reduced compliance.</li>
+                                <li>Loss of AV synchrony (e.g., VVI pacing) reduces cardiac output by 15–25% in some patients.</li>
+                                <li>After cardiac surgery, AV synchrony is especially important: the heart is often stiff (ischaemia-reperfusion, cardioplegia), relying more heavily on atrial filling.</li>
+                                <li>Junctional rhythm after cardiac surgery is common; atrial pacing at a rate slightly above junctional rate restores AV synchrony without ventricular pacing.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong>DDD vs VVI — clinical decision</strong>
+                            <ul>
+                                <li><strong>DDD preferred</strong> when: intact sinus node, AV block, haemodynamic compromise, post-cardiac surgery with epicardial wires available.</li>
+                                <li><strong>VVI acceptable</strong> when: ventricular backup only needed, atrial lead not available, or atrial arrhythmias present.</li>
+                                <li>Post-AVR or post-CABG with complete heart block: DDD is strongly preferred to maintain AV synchrony and optimise output.</li>
+                            </ul>
+                            <div class="tip-box">Optimise AV delay (typically 150–180 ms) to maximise ventricular filling time. Too short: truncates filling; too long: intrinsic conduction takes over, may cause fusion.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MECHANICAL VS ELECTRICAL CAPTURE -->
+        <div class="section" id="mechanical-capture">
+            <div class="section-title">Electrical capture vs mechanical capture — a critical distinction</div>
+            <div class="card">
+                <div class="card-body">
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px; margin-bottom:16px;">
+                        <div>
+                            <strong>Electrical capture</strong>
+                            <ul>
+                                <li>Pacing spike followed by a wide QRS complex (ventricular) or P-wave (atrial) on ECG.</li>
+                                <li>Confirms that the myocardium has been depolarised electrically.</li>
+                                <li>Does <em>not</em> guarantee effective mechanical contraction or cardiac output.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong>Mechanical capture</strong>
+                            <ul>
+                                <li>Actual myocardial contraction producing cardiac output.</li>
+                                <li><strong>Must be confirmed separately</strong> — especially in haemodynamically unstable patients.</li>
+                                <li>Confirm via: palpable pulse, arterial line waveform synchronous with pacing, Doppler NIBP, or point-of-care echocardiography.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="alert-box">⚠️ Do not assume that a wide QRS after each pacing spike means the patient is being effectively resuscitated. In pulseless electrical activity (PEA), electrical capture may be present without mechanical output. Always verify <strong>mechanical capture</strong> by pulse or arterial waveform in any haemodynamically unstable patient.</div>
+
+                    <!-- SVG: capture states diagram -->
+                    <svg viewBox="0 0 700 160" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:700px; margin:18px auto; display:block;">
+                        <defs>
+                            <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1e4a6e"/></marker>
+                        </defs>
+                        <!-- Panel 1: Normal capture -->
+                        <rect x="10" y="10" width="200" height="140" rx="12" fill="#e8f4fd" stroke="#2980b9" stroke-width="1.5"/>
+                        <text x="110" y="32" text-anchor="middle" font-size="12" font-weight="700" fill="#1a607b">✔ Electrical + Mechanical Capture</text>
+                        <!-- spike -->
+                        <line x1="50" y1="100" x2="50" y2="55" stroke="#e74c3c" stroke-width="2.5"/>
+                        <line x1="50" y1="55" x2="52" y2="100" stroke="#e74c3c" stroke-width="2.5"/>
+                        <!-- QRS -->
+                        <polyline points="70,100 80,100 88,55 96,130 104,100 120,100" fill="none" stroke="#1e4a6e" stroke-width="2.5"/>
+                        <line x1="120" y1="100" x2="190" y2="100" stroke="#1e4a6e" stroke-width="1.5"/>
+                        <text x="110" y="148" text-anchor="middle" font-size="11" fill="#1a607b">Spike → wide QRS + pulse</text>
+
+                        <!-- Panel 2: Electrical only (no mechanical) -->
+                        <rect x="225" y="10" width="210" height="140" rx="12" fill="#fff6e5" stroke="#f39c12" stroke-width="1.5"/>
+                        <text x="330" y="32" text-anchor="middle" font-size="12" font-weight="700" fill="#c0770a">⚠ Electrical Only — No Mechanical</text>
+                        <line x1="260" y1="100" x2="260" y2="55" stroke="#e74c3c" stroke-width="2.5"/>
+                        <line x1="260" y1="55" x2="262" y2="100" stroke="#e74c3c" stroke-width="2.5"/>
+                        <polyline points="280,100 290,100 298,60 306,130 314,100 330,100" fill="none" stroke="#1e4a6e" stroke-width="2.5"/>
+                        <line x1="330" y1="100" x2="420" y2="100" stroke="#1e4a6e" stroke-width="1.5"/>
+                        <text x="330" y="148" text-anchor="middle" font-size="11" fill="#c0770a">QRS present — no palpable pulse (PEA)</text>
+
+                        <!-- Panel 3: No capture -->
+                        <rect x="450" y="10" width="240" height="140" rx="12" fill="#ffeae9" stroke="#e74c3c" stroke-width="1.5"/>
+                        <text x="570" y="32" text-anchor="middle" font-size="12" font-weight="700" fill="#c0392b">✖ No Capture</text>
+                        <line x1="490" y1="100" x2="490" y2="55" stroke="#e74c3c" stroke-width="2.5"/>
+                        <line x1="490" y1="55" x2="492" y2="100" stroke="#e74c3c" stroke-width="2.5"/>
+                        <line x1="510" y1="100" x2="680" y2="100" stroke="#1e4a6e" stroke-width="1.5"/>
+                        <text x="570" y="148" text-anchor="middle" font-size="11" fill="#c0392b">Spike only — no QRS, no pulse</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- CAPTURE/SENSING ECG PATTERNS -->
+        <div class="section" id="ecg-patterns">
+            <div class="section-title">Recognising pacing problems on ECG</div>
+            <div class="card">
+                <div class="card-body">
+                    <table class="param-table">
+                        <thead><tr><th>ECG finding</th><th>Problem</th><th>Mechanism</th><th>Action</th></tr></thead>
+                        <tbody>
+                            <tr><td>Spike present, no QRS follows</td><td><strong>Failure to capture</strong></td><td>Threshold exceeded, lead displacement, electrolyte disturbance</td><td>Increase output; check lead; correct electrolytes (especially K⁺)</td></tr>
+                            <tr><td>No spike despite bradycardia (demand mode)</td><td><strong>Oversensing</strong></td><td>Generator inhibited by spurious signals (T-wave, myopotentials, noise)</td><td>Decrease sensitivity (increase mV); check lead insulation</td></tr>
+                            <tr><td>Spike after intrinsic QRS / spike fires too early</td><td><strong>Undersensing</strong></td><td>Intrinsic R-wave not detected → competition → R-on-T risk</td><td>Increase sensitivity (decrease mV); recheck sensing threshold</td></tr>
+                            <tr><td>Narrow QRS after atrial spike — no ventricular spike needed</td><td><strong>Normal AV conduction intact</strong></td><td>Intrinsic conduction faster than AV delay</td><td>No action; consider lengthening AV delay to further promote intrinsic conduction</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <!-- TROUBLESHOOTING -->
         <div class="section" id="troubleshooting">
             <div class="section-title">Troubleshooting – failure to pace, failure to capture, undersensing/oversensing</div>
@@ -426,10 +584,10 @@
                         <thead><tr><th>Problem</th><th>Possible causes</th><th>Action / resolution</th></tr></thead>
                         <tbody>
                             <tr><td><strong>No pacing spikes</strong></td><td>Dead battery, loose connection, pacemaker turned off, broken lead wire.</td><td>Check battery indicator; replace 9 V battery. Inspect all connections; turn rate up to confirm spikes.</td></tr>
-                            <tr><td><strong>Pacing spikes present but no capture</strong></td><td>Lead dislodgement, high capture threshold (oedema, fibrosis), low output setting, metabolic derangement (hypokalaemia, acidosis).</td><td>Increase output gradually (max 20 mA for ventricle). Check lead position by CXR. Correct electrolytes. Consider alternative lead.</td></tr>
+                            <tr><td><strong>Pacing spikes present but no capture</strong></td><td>Lead dislodgement, high capture threshold (oedema, fibrosis), low output setting, metabolic derangement (<strong>hyperkalaemia</strong> or acidosis are the most common electrolyte causes of loss of capture; hypokalaemia may also play a role), myocardial ischaemia.</td><td>Increase output gradually (max 20 mA for ventricle). Check lead position by CXR. Correct electrolytes — especially exclude <strong>hyperkalaemia</strong>. Consider alternative lead if refractory.</td></tr>
                             <tr><td><strong>Undersensing (spikes appear regardless of intrinsic beats)</strong></td><td>Low sensitivity (mV set too high), lead fracture, poor electrode contact, myocardial infarction at tip.</td><td>Increase sensitivity (decrease mV) until sense indicator flashes with each QRS. Perform sensitivity threshold test.</td></tr>
                             <tr><td><strong>Oversensing (no pacing despite bradycardia)</strong></td><td>Sensitivity set too high (low mV), T-wave oversensing, myopotentials, cross-talk.</td><td>Decrease sensitivity (increase mV) gradually. If T-wave oversensing, increase PVARP or switch to VVI mode.</td></tr>
-                            <tr><td><strong>Pacemaker-mediated tachycardia (PMT)</strong></td><td>Retrograde P-wave sensed after ventricular paced beat -> triggers ventricular pacing at upper rate.</td><td>Extend PVARP (e.g., from 250 ms to 350 ms) or switch to DDI. Apply magnet to reset temporary device.</td></tr>
+                            <tr><td><strong>Pacemaker-mediated tachycardia (PMT)</strong></td><td>Retrograde P-wave sensed after ventricular paced beat → triggers ventricular pacing at upper rate.</td><td>Extend PVARP (e.g., 250 ms → 350 ms) or switch to DDI mode. <em>Note: magnet application has unpredictable effects on external temporary generators and is not a standard intervention for PMT in this setting.</em></td></tr>
                             <tr><td><strong>Diaphragmatic stimulation (hiccoughs)</strong></td><td>High output or lead near phrenic nerve (especially left ventricular epicardial leads).</td><td>Reduce output if capture margin allows. Reposition lead if possible.</td></tr>
                         </tbody>
                     </table>
@@ -460,7 +618,7 @@
                         <ul>
                             <li>Electrocautery may cause oversensing (inhibition) or trigger asynchronous pacing.</li>
                             <li>Switch to VOO or DOO mode (asynchronous) before electrocautery use.</li>
-                            <li>Alternatively, place magnet over the pulse generator to force DOO pacing (emergency mode).</li>
+                            <li>Alternatively, manually switch the generator to DOO (asynchronous) mode. <em>Note: magnet behaviour is device-dependent and not universally applicable to external temporary generators — manual mode selection is preferred.</em></li>
                             <li>After electrocautery, revert to demand mode and re-assess capture and sensing.</li>
                         </ul>
                         <div class="alert-box">DOO mode prevents inhibition but carries risk of R-on-T. Use only when absolutely required.</div>
@@ -507,6 +665,71 @@
                         </div>
                     </div>
                     <div class="warning-box">Battery indicator: When low battery symbol appears, replace 9 V battery immediately (alkaline: 7-9 days, lithium: 16 days). Always use fresh battery for each new patient.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TRANSCUTANEOUS PACING -->
+        <div class="section" id="transcutaneous">
+            <div class="section-title">Transcutaneous pacing — bridge to transvenous/epicardial access</div>
+            <div class="card">
+                <div class="card-body">
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px;">
+                        <div>
+                            <strong>Technique & setup</strong>
+                            <ul>
+                                <li>Place pads in anterior-posterior or anterior-lateral position. Anterior-posterior preferred for better capture thresholds.</li>
+                                <li>Start output at 40–80 mA; increase by 10 mA increments until electrical capture (wide QRS on ECG).</li>
+                                <li>Typical capture: 50–100 mA; some patients require up to 200 mA.</li>
+                                <li>Set rate to 60–80 bpm for bradycardia, 90–110 bpm for torsades.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong>Key clinical points</strong>
+                            <ul>
+                                <li><strong>Always confirm mechanical capture</strong> by palpating pulse or arterial waveform — chest wall muscle contractions can mimic QRS complexes on ECG.</li>
+                                <li>Provide analgesia and sedation (e.g., morphine 1–2 mg IV + midazolam 1–2 mg IV) as transcutaneous pacing is painful.</li>
+                                <li>Transcutaneous pacing is a <em>temporising measure</em> only; arrange definitive transvenous or epicardial pacing promptly.</li>
+                                <li>Ineffective in patients with hypothermia (core temp &lt;30°C) — may require rewarming before capture is achievable.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="warning-box">Skeletal muscle contractions during transcutaneous pacing can obscure ECG and mimic capture. Always confirm mechanical capture by pulse or arterial line — not ECG alone.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- POST-CARDIAC SURGERY & TORSADES ADDENDA -->
+        <div class="section" id="postcardiac">
+            <div class="section-title">Post-cardiac surgery pacing & temporary pacing in torsades de pointes</div>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">Post-cardiac surgery (CABG, valve, TAVI)</div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>AV block after AVR:</strong> Common after aortic valve surgery due to proximity to the conduction system; DDD pacing restores AV synchrony and cardiac output.</li>
+                            <li><strong>Junctional rhythm:</strong> Atrial pacing at 80–90 bpm (just above junctional rate) restores AV synchrony and significantly improves haemodynamics post-cardiopulmonary bypass.</li>
+                            <li><strong>After TAVI:</strong> New left bundle branch block or complete AV block occurs in up to 25% of cases. Temporary transvenous pacing until recovery or permanent pacemaker implantation.</li>
+                            <li><strong>Epicardial wire removal:</strong> Remove with steady continuous traction — do not pull if significant resistance felt (risk of laceration). Monitor for 2–4 hours after removal (risk of haemopericardium / tamponade). Have pericardiocentesis equipment available.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Temporary pacing for torsades de pointes</div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Increase pacing rate to 90–110 bpm (ventricular) to shorten QT interval and suppress pause-dependent torsades.</li>
+                            <li>Mode: VVI or DDD depending on AV status.</li>
+                            <li>Simultaneously treat underlying causes:
+                                <ul>
+                                    <li>Correct <strong>hypomagnesaemia</strong> (IV magnesium sulphate 2 g over 10–15 min).</li>
+                                    <li>Correct <strong>hypokalaemia</strong> (target K⁺ ≥4.5 mmol/L).</li>
+                                    <li>Withdraw or replace all <strong>QT-prolonging drugs</strong> (anti-arrhythmics, antibiotics, antiemetics, antipsychotics).</li>
+                                </ul>
+                            </li>
+                            <li>Pacing is a bridge — not a cure. Address the underlying QT abnormality.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
