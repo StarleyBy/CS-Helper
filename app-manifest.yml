@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-06-23 11:18
+  updated: 2026-06-23 18:23
 
 sections:
   - id: calculators
@@ -239,7 +239,7 @@ sections:
         visible: true
         tags: [renal, AKI, acute kidney injury]
       - id: ventilation
-        title: "Hamilton C1 Ventilator Guide | VSIMV, PSIMV, Modes & Clinical Reference"
+        title: "Hamilton C1 · Mechanical Ventilation Reference"
         file: books/cheatsheets/ventilation.html
         type: cheatsheet
         visible: true
