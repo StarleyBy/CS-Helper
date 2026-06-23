@@ -3,1147 +3,823 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hamilton C1 · ICU Ventilator Guide</title>
+<title>Hamilton C1 · Mechanical Ventilation Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ─── TOKENS ──────────────────────────────────────────────── */
-:root {
-  --navy:     #07192e;
-  --navy2:    #0d2440;
-  --navy3:    #162f52;
-  --sky:      #0ea5e9;
-  --sky-lt:   #e0f2fe;
-  --teal:     #0891b2;
-  --teal-lt:  #cffafe;
-  --amber:    #f59e0b;
-  --amber-lt: #fef3c7;
-  --red:      #ef4444;
-  --red-lt:   #fee2e2;
-  --green:    #10b981;
-  --green-lt: #d1fae5;
-  --purple:   #8b5cf6;
-  --purple-lt:#ede9fe;
-  --surface:  #f0f5fa;
-  --card:     #ffffff;
-  --border:   #e2eaf3;
-  --text:     #0f2235;
-  --muted:    #64748b;
-  --sidebar-w: 230px;
-  --head-h:    56px;
+:root{
+  --bg:#080f0e;--bg2:#0d1917;--bg3:#122019;--bg4:#182b22;
+  --rim:rgba(255,255,255,0.07);--glass:rgba(255,255,255,0.03);
+  --text:#e2ede8;--muted:#6b8c7e;--dim:#304a3f;
+  --vent:#2ab89a;--vent-l:#5dd4bc;--vent-d:rgba(42,184,154,0.13);--vent-b:rgba(42,184,154,0.30);
+  --prot:#3ec870;--prot-l:#74e896;--prot-d:rgba(62,200,112,0.13);--prot-b:rgba(62,200,112,0.28);
+  --warn:#e8a830;--warn-l:#f5c85a;--warn-d:rgba(232,168,48,0.13);--warn-b:rgba(232,168,48,0.30);
+  --dang:#e85050;--dang-l:#f87878;--dang-d:rgba(232,80,80,0.13);--dang-b:rgba(232,80,80,0.28);
+  --adv:#9060d4;--adv-l:#b890f8;--adv-d:rgba(144,96,212,0.13);--adv-b:rgba(144,96,212,0.28);
+  --blu:#4898e0;--blu-l:#82baf5;--blu-d:rgba(72,152,224,0.13);--blu-b:rgba(72,152,224,0.28);
+  --display:'Playfair Display',Georgia,serif;
+  --sans:'IBM Plex Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --r:12px;--r2:20px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.65;overflow-x:hidden}
+::selection{background:rgba(42,184,154,.25)}
+
+/* HDR */
+.hdr{background:linear-gradient(160deg,#050d0b 0%,#0a1814 55%,#0d1e18 100%);border-bottom:1px solid var(--rim);padding:28px 22px 24px;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 90% at 10% 50%,rgba(42,184,154,.12) 0%,transparent 60%),radial-gradient(ellipse 50% 70% at 90% 30%,rgba(72,152,224,.08) 0%,transparent 60%);pointer-events:none}
+.hdr-inner{max-width:960px;margin:0 auto;position:relative;z-index:1}
+.hdr-eyebrow{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.hdr-title{font-family:var(--display);font-size:clamp(22px,5vw,36px);font-weight:800;line-height:1.15;letter-spacing:-.01em;color:var(--text)}
+.hdr-title .accent{color:var(--vent-l)}
+.hdr-title .model{color:var(--muted);font-style:italic;font-weight:600;font-size:.72em}
+.hdr-sub{font-size:13px;color:var(--muted);margin-top:10px;max-width:700px;line-height:1.55}
+.hdr-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.hdr-pill{font-size:11px;font-weight:600;padding:4px 12px;border-radius:30px;letter-spacing:.03em}
+.pill-v{background:var(--vent-d);color:var(--vent-l);border:1px solid var(--vent-b)}
+.pill-p{background:var(--prot-d);color:var(--prot-l);border:1px solid var(--prot-b)}
+.pill-w{background:var(--warn-d);color:var(--warn-l);border:1px solid var(--warn-b)}
+.pill-a{background:var(--adv-d);color:var(--adv-l);border:1px solid var(--adv-b)}
+
+/* NAV */
+.nav-wrap{background:var(--bg2);border-bottom:1px solid var(--rim);padding:11px 16px;position:sticky;top:0;z-index:200}
+.nav-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:960px;margin:0 auto}
+.nb{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:9px 4px 7px;cursor:pointer;transition:all .16s;font-family:inherit}
+.nb:hover{border-color:rgba(42,184,154,.4);background:rgba(42,184,154,.06)}
+.nb.active{background:rgba(42,184,154,.14);border-color:var(--vent)}
+.nb-icon{font-size:17px;line-height:1}
+.nb-lbl{font-size:9.5px;font-weight:600;color:var(--muted);text-align:center;line-height:1.25;letter-spacing:.02em}
+.nb.active .nb-lbl{color:var(--vent-l)}.nb:hover .nb-lbl{color:var(--text)}
+
+/* LAYOUT */
+.page{max-width:960px;margin:0 auto;padding:22px 18px 70px}
+.tab{display:none}.tab.active{display:block}
+.sh{margin-bottom:20px}
+.sh h2{font-family:var(--display);font-size:22px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:10px}
+.sh p{color:var(--muted);font-size:13px;margin-top:5px}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:18px;margin-bottom:16px}
+.card h3{font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card p,.card li{color:var(--muted);font-size:13px;line-height:1.6}
+.card ul,.card ol{padding-left:16px}.card li{margin-bottom:4px}.card li strong{color:var(--text)}
+.card-vent{border-top:3px solid var(--vent)}.card-vent h3{color:var(--vent-l)}
+.card-prot{border-top:3px solid var(--prot)}.card-prot h3{color:var(--prot-l)}
+.card-warn{border-top:3px solid var(--warn)}.card-warn h3{color:var(--warn-l)}
+.card-dang{border-top:3px solid var(--dang)}.card-dang h3{color:var(--dang-l)}
+.card-adv{border-top:3px solid var(--adv)}.card-adv h3{color:var(--adv-l)}
+.card-blu{border-top:3px solid var(--blu)}.card-blu h3{color:var(--blu-l)}
+
+/* BOXES */
+.box{border-radius:var(--r);padding:11px 14px;margin:10px 0;font-size:13px;line-height:1.6;color:var(--text)}
+.box-vent{background:var(--vent-d);border-left:3px solid var(--vent)}
+.box-prot{background:var(--prot-d);border-left:3px solid var(--prot)}
+.box-warn{background:var(--warn-d);border-left:3px solid var(--warn)}
+.box-dang{background:var(--dang-d);border-left:3px solid var(--dang)}
+.box-adv{background:var(--adv-d);border-left:3px solid var(--adv)}
+.box-blu{background:var(--blu-d);border-left:3px solid var(--blu)}
+.box strong{font-weight:700}
+.box-vent strong{color:var(--vent-l)}.box-prot strong{color:var(--prot-l)}.box-warn strong{color:var(--warn-l)}
+.box-dang strong{color:var(--dang-l)}.box-adv strong{color:var(--adv-l)}.box-blu strong{color:var(--blu-l)}
+
+/* TABLES */
+.tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--rim);margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:var(--bg3);font-weight:700;padding:8px 11px;text-align:left;border-bottom:1px solid var(--rim);letter-spacing:.03em;white-space:nowrap}
+th.th-v{color:var(--vent-l)}th.th-p{color:var(--prot-l)}th.th-w{color:var(--warn-l)}th.th-n{color:var(--muted)}th.th-d{color:var(--dang-l)}
+td{padding:7px 11px;border-bottom:1px solid var(--rim);color:var(--muted);vertical-align:top;line-height:1.55}
+tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)}td strong{color:var(--text)}
+td.v-val{color:var(--vent-l);font-weight:600}td.p-val{color:var(--prot-l);font-weight:600}
+td.w-val{color:var(--warn-l);font-weight:600}td.d-val{color:var(--dang-l);font-weight:600}
+
+/* MISC */
+.bdg{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:30px;margin:1px;letter-spacing:.04em}
+.bdg-v{background:var(--vent-d);color:var(--vent-l)}.bdg-p{background:var(--prot-d);color:var(--prot-l)}
+.bdg-w{background:var(--warn-d);color:var(--warn-l)}.bdg-d{background:var(--dang-d);color:var(--dang-l)}
+.bdg-a{background:var(--adv-d);color:var(--adv-l)}.bdg-b{background:var(--blu-d);color:var(--blu-l)}
+.fm{font-family:var(--mono);font-size:12.5px;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:9px 13px;margin:8px 0;color:var(--vent-l);display:block}
+.dv{height:1px;background:var(--rim);margin:22px 0}
+.stitle{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:24px 0 12px;padding-left:10px;border-left:2px solid var(--vent)}
+.trace-wrap{background:#020806;border-radius:var(--r);border:1px solid var(--rim);padding:14px 16px;margin:12px 0;font-family:var(--mono);font-size:12px}
+.trace-wrap .trace-label{font-size:9.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;font-weight:700}
+.footnote{text-align:center;font-size:11px;color:var(--dim);padding:24px 0 0;border-top:1px solid var(--rim);margin-top:36px}
+
+/* DUEL */
+.duel{display:grid;grid-template-columns:1fr auto 1fr;gap:0;border-radius:var(--r2);overflow:hidden;border:1px solid var(--rim);margin-bottom:18px}
+.duel-a{background:linear-gradient(160deg,var(--bg3) 0%,rgba(62,200,112,.06) 100%);padding:20px 18px;border-right:1px solid var(--rim)}
+.duel-b{background:linear-gradient(200deg,var(--bg3) 0%,rgba(232,80,80,.06) 100%);padding:20px 18px;border-left:1px solid var(--rim)}
+.duel-mid{background:var(--bg3);display:flex;flex-direction:column;align-items:center;justify-content:center;width:40px;gap:6px;padding:10px 0}
+.duel-mid-dot{width:7px;height:7px;border-radius:50%;background:var(--dim)}
+.duel-mid-lbl{font-family:var(--mono);font-size:8px;font-weight:700;color:var(--dim);letter-spacing:.06em;writing-mode:vertical-lr;text-orientation:mixed;transform:rotate(180deg)}
+.duel-label{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.duel-a .duel-label{color:var(--prot-l)}.duel-b .duel-label{color:var(--dang-l)}
+.duel-a h3{font-size:15px;font-weight:700;color:var(--prot-l);margin-bottom:8px}
+.duel-b h3{font-size:15px;font-weight:700;color:var(--dang-l);margin-bottom:8px}
+.duel-a p,.duel-a li,.duel-b p,.duel-b li{font-size:13px;color:var(--muted);line-height:1.6}
+.duel ul{padding-left:15px}.duel li{margin-bottom:4px}.duel li strong{color:var(--text)}
+@media(max-width:640px){
+  .duel{grid-template-columns:1fr}.duel-mid{flex-direction:row;width:100%;height:30px;padding:0 10px}
+  .duel-mid-lbl{writing-mode:horizontal-tb;transform:none}
+  .duel-a{border-right:none;border-bottom:1px solid var(--rim)}.duel-b{border-left:none}
 }
 
-/* ─── RESET ───────────────────────────────────────────────── */
-*{margin:0;padding:0;box-sizing:border-box;}
-html,body{height:100%;font-family:'Inter',system-ui,'Segoe UI',sans-serif;background:var(--surface);color:var(--text);}
-a{text-decoration:none;}
-ul{padding-left:1.2em;}
-li{margin-bottom:.35em;}
+[data-tip]{cursor:help;border-bottom:1px dashed var(--vent);position:relative}
+[data-tip]::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#050d0b;border:1px solid var(--rim);color:var(--text);padding:7px 11px;border-radius:8px;font-size:12px;line-height:1.4;min-width:160px;max-width:260px;white-space:normal;pointer-events:none;opacity:0;transition:opacity .15s;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+[data-tip]:hover::after{opacity:1}
 
-/* ─── LAYOUT ──────────────────────────────────────────────── */
-.app{display:flex;height:100vh;overflow:hidden;}
-
-/* ─── SIDEBAR ─────────────────────────────────────────────── */
-.sidebar{
-  width:var(--sidebar-w);min-width:var(--sidebar-w);
-  background:var(--navy);
-  display:flex;flex-direction:column;
-  overflow:hidden;
-  transition:width .25s;
-  z-index:50;
-}
-.sidebar-brand{
-  padding:18px 20px 14px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  flex-shrink:0;
-}
-.sidebar-brand .logo{
-  font-size:15px;font-weight:800;color:#fff;
-  display:flex;align-items:center;gap:8px;letter-spacing:-.01em;
-}
-.sidebar-brand .sub{
-  font-size:10.5px;color:rgba(255,255,255,.42);
-  margin-top:3px;letter-spacing:.04em;text-transform:uppercase;
-}
-.sidebar-nav{
-  flex:1;overflow-y:auto;padding:10px 0 16px;
-  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.12) transparent;
-}
-.sidebar-nav::-webkit-scrollbar{width:4px;}
-.sidebar-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:4px;}
-.nav-item{
-  display:flex;align-items:center;gap:10px;
-  padding:9px 18px;
-  font-size:12.5px;font-weight:500;
-  color:rgba(255,255,255,.55);
-  cursor:pointer;
-  border-left:3px solid transparent;
-  transition:all .15s;
-  white-space:nowrap;
-  overflow:hidden;
-}
-.nav-item:hover{color:rgba(255,255,255,.9);background:rgba(255,255,255,.05);}
-.nav-item.active{
-  color:#fff;font-weight:700;
-  background:rgba(14,165,233,.18);
-  border-left-color:var(--sky);
-}
-.nav-item .ni{font-size:14px;flex-shrink:0;}
-.sidebar-footer{
-  padding:12px 16px;border-top:1px solid rgba(255,255,255,.07);
-  flex-shrink:0;
-}
-.pbw-pill{
-  background:rgba(245,158,11,.18);
-  border:1px solid rgba(245,158,11,.35);
-  border-radius:20px;padding:5px 10px;
-  font-size:10.5px;font-weight:700;color:#fcd34d;
-  text-align:center;
-  letter-spacing:.02em;
-}
-
-/* ─── CONTENT AREA ────────────────────────────────────────── */
-.main{
-  flex:1;overflow:hidden;
-  display:flex;flex-direction:column;
-}
-
-/* ─── TOP BAR ─────────────────────────────────────────────── */
-.topbar{
-  height:var(--head-h);min-height:var(--head-h);
-  background:#fff;
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 28px;
-  gap:16px;
-  flex-shrink:0;
-  box-shadow:0 1px 4px rgba(0,0,0,.06);
-}
-.topbar-left{display:flex;align-items:center;gap:14px;}
-.hamburger{
-  display:none;cursor:pointer;
-  background:none;border:none;color:var(--muted);
-  font-size:20px;padding:4px;
-}
-.section-eyebrow{
-  font-size:10.5px;font-weight:700;
-  letter-spacing:.08em;text-transform:uppercase;
-  color:var(--muted);
-}
-.section-name{
-  font-size:17px;font-weight:800;
-  color:var(--text);
-  display:flex;align-items:center;gap:8px;
-}
-.topbar-right{display:flex;align-items:center;gap:10px;}
-.counter{
-  font-size:12px;font-weight:700;
-  color:var(--muted);
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:20px;padding:4px 12px;
-  white-space:nowrap;
-}
-.nav-btn{
-  height:32px;padding:0 14px;
-  border-radius:8px;font-size:12.5px;font-weight:700;
-  cursor:pointer;border:none;
-  transition:all .15s;
-}
-.btn-prev{background:var(--surface);color:var(--muted);border:1px solid var(--border);}
-.btn-prev:hover{background:#e8edf4;color:var(--text);}
-.btn-next{background:var(--sky);color:#fff;}
-.btn-next:hover{background:var(--teal);}
-.btn-prev:disabled,.btn-next:disabled{opacity:.35;cursor:not-allowed;}
-
-/* ─── SECTIONS WRAPPER ────────────────────────────────────── */
-.sections-wrap{
-  flex:1;overflow-y:auto;
-  padding:28px 32px 48px;
-  position:relative;
-}
-
-/* ─── SECTION PAGE ────────────────────────────────────────── */
-.sec-page{display:none;animation:fadeIn .2s ease;}
-.sec-page.active{display:block;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
-
-/* ─── PAGE HEADER ─────────────────────────────────────────── */
-.page-header{
-  display:flex;align-items:flex-start;justify-content:space-between;
-  margin-bottom:26px;gap:16px;
-}
-.page-header-text{}
-.page-icon{
-  font-size:80px;line-height:1;
-  opacity:.07;
-  flex-shrink:0;
-  margin-top:-8px;
-  user-select:none;
-  pointer-events:none;
-}
-
-/* ─── GRID LAYOUTS ────────────────────────────────────────── */
-.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px;margin-bottom:18px;}
-.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;margin-bottom:16px;}
-
-/* ─── CARD ────────────────────────────────────────────────── */
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 1px 6px rgba(0,0,0,.05);
-}
-.card-head{
-  padding:13px 20px;
-  font-weight:700;font-size:14.5px;
-  display:flex;align-items:center;gap:8px;
-  border-bottom:1px solid var(--border);
-}
-.card-head.blue  {background:var(--sky-lt);color:#075985;}
-.card-head.teal  {background:var(--teal-lt);color:#155e75;}
-.card-head.green {background:var(--green-lt);color:#065f46;}
-.card-head.amber {background:var(--amber-lt);color:#92400e;}
-.card-head.red   {background:var(--red-lt);color:#991b1b;}
-.card-head.purple{background:var(--purple-lt);color:#5b21b6;}
-.card-head.navy  {background:var(--navy);color:#fff;}
-.card-body{padding:18px 20px;}
-
-/* ─── TABLES ──────────────────────────────────────────────── */
-.tbl{width:100%;border-collapse:collapse;font-size:13px;}
-.tbl th{
-  padding:9px 12px;text-align:left;font-weight:700;
-  background:#f6f9fd;color:#2d4a6a;font-size:11.5px;
-  letter-spacing:.03em;text-transform:uppercase;
-  border-bottom:2px solid var(--border);
-}
-.tbl td{
-  padding:10px 12px;vertical-align:top;
-  border-bottom:1px solid #f0f4f9;
-  line-height:1.55;
-}
-.tbl tr:last-child td{border-bottom:none;}
-.tbl tr:hover td{background:#fafcff;}
-.tbl tr.hl td{background:#f0f8ff;}
-
-/* ─── CALLOUTS ────────────────────────────────────────────── */
-.note,.warn,.alert,.tip,.ok,.purple-note{
-  padding:12px 16px;border-radius:12px;
-  font-size:13.5px;line-height:1.55;
-  margin:12px 0;
-  display:flex;gap:10px;align-items:flex-start;
-}
-.note   {background:#f0f8ff;border-left:4px solid var(--sky);color:#0c4a6e;}
-.warn   {background:var(--amber-lt);border-left:4px solid var(--amber);color:#78350f;}
-.alert  {background:var(--red-lt);border-left:4px solid var(--red);color:#7f1d1d;}
-.tip    {background:#f0fdf4;border-left:4px solid var(--green);color:#14532d;}
-.ok     {background:var(--green-lt);border-left:4px solid var(--green);color:#064e3b;}
-.purple-note{background:var(--purple-lt);border-left:4px solid var(--purple);color:#4c1d95;}
-.note .ico,.warn .ico,.alert .ico,.tip .ico,.ok .ico,.purple-note .ico{flex-shrink:0;font-size:16px;margin-top:1px;}
-
-/* ─── TOOLTIP ─────────────────────────────────────────────── */
-[data-tip]{cursor:help;border-bottom:1px dashed var(--sky);position:relative;}
-[data-tip]::after{
-  content:attr(data-tip);
-  position:absolute;bottom:calc(100% + 7px);left:50%;
-  transform:translateX(-50%);
-  background:#0f2235;color:#fff;
-  padding:7px 12px;border-radius:8px;
-  font-size:12px;line-height:1.45;
-  min-width:160px;max-width:260px;
-  white-space:normal;pointer-events:none;
-  opacity:0;transition:opacity .15s;z-index:999;
-  box-shadow:0 4px 16px rgba(0,0,0,.25);
-}
-[data-tip]:hover::after{opacity:1;}
-
-/* ─── BADGE ───────────────────────────────────────────────── */
-.badge{
-  display:inline-flex;align-items:center;
-  padding:2px 9px;border-radius:20px;
-  font-size:10.5px;font-weight:700;
-  vertical-align:middle;
-}
-.badge-new{background:#ef4444;color:#fff;}
-.badge-key{background:var(--navy);color:#fff;}
-.badge-mode{background:var(--sky);color:#fff;}
-
-/* ─── PBW NOTE ────────────────────────────────────────────── */
-.pbw{
-  display:inline-block;
-  background:#fef3c7;border:1px solid #fcd34d;
-  border-radius:6px;padding:1px 7px;
-  font-size:11.5px;font-weight:700;color:#78350f;
-}
-
-/* ─── SVG WRAP ────────────────────────────────────────────── */
-.svg-wrap{overflow-x:auto;padding:8px 0;}
-
-/* ─── SECTION LIST ────────────────────────────────────────── */
-.list-clean{list-style:none;padding:0;}
-.list-clean li{
-  padding:8px 0;border-bottom:1px solid #f0f4f9;
-  display:flex;gap:10px;align-items:flex-start;
-  font-size:13.5px;
-}
-.list-clean li:last-child{border-bottom:none;}
-.list-clean li::before{
-  content:'›';color:var(--sky);font-weight:900;
-  flex-shrink:0;margin-top:1px;
-}
-
-/* ─── FORMULA BOX ─────────────────────────────────────────── */
-.formula{
-  background:#0f2235;color:#7dd3fc;
-  border-radius:10px;padding:13px 18px;
-  font-family:'JetBrains Mono','Fira Code',monospace;
-  font-size:13px;margin:12px 0;letter-spacing:.02em;
-}
-
-/* ─── BOTTOM NAV ──────────────────────────────────────────── */
-.bottom-nav{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-top:36px;padding-top:20px;
-  border-top:1px solid var(--border);
-}
-.bottom-btn{
-  display:flex;align-items:center;gap:8px;
-  padding:10px 20px;border-radius:12px;
-  font-size:13px;font-weight:700;
-  cursor:pointer;border:none;
-  transition:all .15s;
-}
-.bottom-btn.prev{background:var(--surface);color:var(--muted);border:1px solid var(--border);}
-.bottom-btn.prev:hover{background:#e8edf4;color:var(--text);}
-.bottom-btn.next{background:var(--sky);color:#fff;box-shadow:0 2px 8px rgba(14,165,233,.35);}
-.bottom-btn.next:hover{background:var(--teal);}
-.bottom-btn:disabled{opacity:.3;cursor:not-allowed;}
-.bottom-center{font-size:12px;color:var(--muted);font-weight:600;}
-
-/* ─── PROGRESS BAR ────────────────────────────────────────── */
-.progress-bar{
-  height:3px;background:var(--border);
-  position:relative;
-}
-.progress-fill{
-  height:100%;background:linear-gradient(90deg,var(--sky),var(--teal));
-  border-radius:2px;transition:width .3s ease;
-}
-
-/* ─── MOBILE ──────────────────────────────────────────────── */
-.mobile-nav-overlay{display:none;}
-@media(max-width:768px){
-  .sidebar{position:fixed;top:0;left:-100%;height:100%;z-index:200;transition:left .25s;}
-  .sidebar.open{left:0;}
-  .mobile-nav-overlay{
-    display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:199;
-  }
-  .mobile-nav-overlay.open{display:block;}
-  .hamburger{display:block;}
-  .sections-wrap{padding:18px 16px 40px;}
-  .topbar{padding:0 16px;}
-  .page-icon{font-size:50px;}
-  .grid-2,.grid-3{grid-template-columns:1fr;}
-  .section-name{font-size:15px;}
-  .topbar-right .counter{display:none;}
-}
+@media(max-width:500px){.nav-grid{grid-template-columns:repeat(5,1fr)}.nb-lbl{font-size:8.5px}.hdr{padding:20px 14px}}
 </style>
 </head>
 <body>
-<div class="mobile-nav-overlay" id="overlay" onclick="closeSidebar()"></div>
-<div class="app">
 
-<!-- ═══ SIDEBAR ═════════════════════════════════════════════ -->
-<aside class="sidebar" id="sidebar">
-  <div class="sidebar-brand">
-    <div class="logo">🫁 Hamilton C1</div>
-    <div class="sub">ICU Ventilator Reference</div>
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-eyebrow">Cardiac Surgery · Critical Care · Anaesthesiology</div>
+    <h1 class="hdr-title">
+      <span class="accent">Mechanical Ventilation</span> &mdash; <span class="model">Hamilton C1</span>
+    </h1>
+    <div class="hdr-sub">Evidence-based clinical reference: modes, protective ventilation, ARDS, patient&ndash;ventilator asynchrony, auto-PEEP, mechanical power, cardiac surgery considerations, and weaning. All tidal volumes in <strong style="color:var(--warn-l)">Predicted Body Weight (PBW)</strong>, not actual weight.</div>
+    <div class="hdr-pills">
+      <span class="hdr-pill pill-v">Ventilation Modes</span>
+      <span class="hdr-pill pill-p">Protective Ventilation &middot; ARDS</span>
+      <span class="hdr-pill pill-w">Asynchrony &middot; Auto-PEEP</span>
+      <span class="hdr-pill pill-a">Cardiac Surgery &middot; Weaning</span>
+    </div>
   </div>
-  <nav class="sidebar-nav" id="sidebarNav"></nav>
-  <div class="sidebar-footer">
-    <div class="pbw-pill">All Vt in Predicted Body Weight</div>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <div class="nav-grid">
+    <button class="nb active" onclick="gt(0,this)"><span class="nb-icon">🔄</span><span class="nb-lbl">Modes &amp; Parameters</span></button>
+    <button class="nb" onclick="gt(1,this)"><span class="nb-icon">🛡️</span><span class="nb-lbl">Protective &amp; ARDS</span></button>
+    <button class="nb" onclick="gt(2,this)"><span class="nb-icon">⚡</span><span class="nb-lbl">Asynchrony &amp; Auto-PEEP</span></button>
+    <button class="nb" onclick="gt(3,this)"><span class="nb-icon">❤️</span><span class="nb-lbl">Cardiac Surgery &amp; ICU</span></button>
+    <button class="nb" onclick="gt(4,this)"><span class="nb-icon">⚙️</span><span class="nb-lbl">Clinical &amp; Weaning</span></button>
   </div>
-</aside>
+</div>
 
-<!-- ═══ MAIN ════════════════════════════════════════════════ -->
-<div class="main">
-  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<main class="page">
 
-  <!-- TOP BAR -->
-  <div class="topbar">
-    <div class="topbar-left">
-      <button class="hamburger" onclick="toggleSidebar()">☰</button>
+<!-- ══ PBW CENTRAL BOX ══════════════════════════════════════════ -->
+<div style="background:linear-gradient(135deg,rgba(42,184,154,.10) 0%,rgba(72,152,224,.08) 100%);border:1px solid rgba(42,184,154,.25);border-radius:var(--r2);padding:18px 22px;margin-bottom:22px">
+  <div style="font-family:var(--display);font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px;letter-spacing:.01em">⚖️ The Foundational Rule: Predicted Body Weight</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div style="background:var(--prot-d);border:1px solid var(--prot-b);border-radius:var(--r);padding:13px 16px">
+      <div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--prot-l);letter-spacing:.08em;margin-bottom:6px">PBW FORMULA</div>
+      <div style="font-family:var(--mono);font-size:13px;color:var(--prot-l)">Male: 50 + 2.3 &times; (height<sub>in</sub> &minus; 60)</div>
+      <div style="font-family:var(--mono);font-size:13px;color:var(--prot-l);margin-top:3px">Female: 45.5 + 2.3 &times; (height<sub>in</sub> &minus; 60)</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px">Based on height, not weight. 1 inch = 2.54 cm.</div>
+    </div>
+    <div style="background:var(--dang-d);border:1px solid var(--dang-b);border-radius:var(--r);padding:13px 16px">
+      <div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--dang-l);letter-spacing:.08em;margin-bottom:6px">WHY IT MATTERS</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6">Using actual body weight in obese patients causes <strong style="color:var(--dang-l)">severe volutrauma</strong>. A 140 kg patient still receives 6 mL/kg based on their <em>predicted</em> lean body mass &mdash; not 840 mL per breath.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ TAB 0: MODES & PARAMETERS ═══════════════════════════ -->
+<section class="tab active" id="t0">
+  <div class="sh"><h2>🔄 Ventilation Modes &amp; Parameters</h2><p>Hamilton C1 mode taxonomy, physiological targets, and titration principles. All Vt in PBW.</p></div>
+
+  <div class="stitle">Mandatory Modes &mdash; Volume-controlled &amp; Pressure-controlled</div>
+  <div class="tw"><table>
+    <thead><tr>
+      <th class="th-v">Mode</th><th class="th-v">Full name</th><th class="th-n">Mechanism</th><th class="th-n">Primary use</th>
+    </tr></thead>
+    <tbody>
+      <tr><td><strong>VC-CMV</strong></td><td>Volume-controlled CMV</td><td>Fixed Vt delivered every breath; patient cannot trigger extra breaths above set RR</td><td>Full sedation/paralysis; ARDS; post-cardiac arrest</td></tr>
+      <tr><td><strong>VC-AC</strong></td><td>Volume-controlled Assist-Control</td><td>Fixed Vt per breath; patient can trigger additional assisted breaths at same Vt</td><td>Spontaneous breathing with guaranteed tidal volume</td></tr>
+      <tr><td><strong>PC-CMV / PC-AC</strong></td><td>Pressure-controlled CMV / AC</td><td>Pressure-limited breaths; Vt varies with compliance and resistance</td><td>Obstructive disease; Pplat limitation; air leak</td></tr>
+      <tr><td><strong>VSIMV</strong> <span class="bdg bdg-v">MOST USED</span></td><td>Volume-controlled SIMV</td><td>Mandatory Vt breaths synchronized to patient effort; spontaneous breaths between them can receive pressure support. Guarantees minimum minute ventilation.</td><td>Partial support; weaning; neuromuscular disease; when guaranteed Vt is essential</td></tr>
+      <tr><td><strong>PSIMV</strong> <span class="bdg bdg-v">MOST USED</span></td><td>Pressure-controlled SIMV</td><td>Mandatory breaths are pressure-limited (Vt varies); synchronization window prevents double-triggering and breath stacking</td><td>COPD/asthma; post-pneumonectomy; Pplat-limited patients; air leak management</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="stitle">Dual-control, Intelligent &amp; Special Modes</div>
+  <div class="g2">
+    <div class="card card-adv">
+      <h3>🤖 INTELLiVENT-ASV &mdash; Closed-loop</h3>
+      <p>Integrates <strong>IBW</strong>, minute ventilation target, and real-time <strong>SpO&sub2; / EtCO&sub2;</strong> feedback to auto-adjust RR, PS, PEEP, and FiO&sub2; breath-to-breath. Hamilton C1&rsquo;s flagship intelligent mode.</p>
+      <div class="box box-adv" style="margin-top:10px"><strong>Targets:</strong> EtCO&sub2; 35&ndash;45 mmHg &middot; SpO&sub2; 88&ndash;96% &middot; Safety limits: Pmax 40, PEEP max 20, RR max 40/min</div>
+      <div class="box box-warn"><strong>Caution:</strong> Avoid in severe metabolic acidosis with compensatory tachypnea &mdash; algorithm may under-ventilate by misinterpreting high RR as demand already met.</div>
+    </div>
+    <div class="card card-vent">
+      <h3>⏱️ DuoLevel / APRV</h3>
+      <p>Two pressure levels (P_high / P_low) with <strong>unrestricted spontaneous breathing</strong> at both levels. Sustained recruitment via prolonged P_high; CO&sub2; clearance via brief T_low release.</p>
+      <div class="box box-vent"><strong>Typical settings:</strong> P_high 20&ndash;30 cmH&sub2;O &middot; T_high 4&ndash;6 sec &middot; P_low 0&ndash;5 &middot; T_low 0.2&ndash;0.8 sec (set so expiratory flow at end &asymp;75% of peak)</div>
+      <div class="box box-dang"><strong>Contraindicated:</strong> Severe obstructive disease (auto-PEEP risk) &middot; Large air leak<br><strong>Elevated ICP: use with caution</strong> &mdash; high mean airway pressure may impair cerebral venous drainage; not an absolute contraindication.</div>
+    </div>
+    <div class="card card-blu">
+      <h3>🌬️ NIV &amp; VS</h3>
+      <ul>
+        <li><strong>NIV:</strong> Non-invasive ventilation with turbine-driven leak compensation up to 40 L/min. COPD exacerbation, APO. Contraindicated in facial trauma, upper airway obstruction, inability to protect airway.</li>
+        <li><strong>VS (Volume Support):</strong> Spontaneous breaths with pressure-servo targeting set Vt. No mandatory breaths. Used for weaning and SBT.</li>
+        <li><strong>PRVC:</strong> Pressure-limited, volume-targeted dual-control. <em>Proprietary names vary by manufacturer</em> (AutoFlow&mdash;Dr&auml;ger, VC+&mdash;Puritan Bennett, PRVC&mdash;Maquet/Servo).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stitle">Core Parameters &mdash; Targets &amp; Titration</div>
+  <div class="tw"><table>
+    <thead><tr>
+      <th class="th-v">Parameter</th><th class="th-n">Description</th><th class="th-n">Physiologic effect</th><th class="th-v">Targets &amp; titration</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Tidal Volume (Vt)</strong><br><span class="bdg bdg-v">PBW only</span></td>
+        <td>Volume per breath (mL/kg <span data-tip="Males: 50 + 2.3 × (height_inches − 60). Females: 45.5 + 2.3 × (height_inches − 60)">PBW</span>)</td>
+        <td>Alveolar ventilation (PaCO&sub2;); lung stretch &rarr; VILI if excessive</td>
+        <td class="v-val"><strong>All adults: 6&ndash;8 mL/kg PBW &middot; ARDS: 6 mL/kg PBW</strong><br><span style="color:var(--dang-l)">Obstructive disease: do NOT increase Vt &mdash; prioritize adequate expiratory time and auto-PEEP control</span></td>
+      </tr>
+      <tr>
+        <td><strong>Respiratory Rate (RR)</strong></td>
+        <td>Breaths/min (mandatory + spontaneous in SIMV)</td>
+        <td>Controls minute ventilation &rarr; PaCO&sub2;</td>
+        <td>Start 12&ndash;16/min; adjust to normocapnia (PaCO&sub2; 35&ndash;45). SIMV backup rate 4&ndash;6 below spontaneous rate.</td>
+      </tr>
+      <tr>
+        <td><strong><span data-tip="End-expiratory pressure held in airways. Recruits alveoli, prevents derecruitment. Excess → air trapping and ↓ cardiac output.">PEEP</span></strong></td>
+        <td>Positive End-Expiratory Pressure (cmH&sub2;O)</td>
+        <td>Alveolar recruitment; excess &rarr; air trapping, &darr; venous return, &darr; cardiac output</td>
+        <td>ARDS: 5&ndash;15 cmH&sub2;O (FiO&sub2;/PEEP table or compliance titration)<br><strong style="color:var(--warn-l)">Obstructive: individualize &mdash; external PEEP &asymp; 70&ndash;85% of intrinsic auto-PEEP</strong> (typically 5&ndash;8 cmH&sub2;O)<br>Post-cardiac surgery: cautious &mdash; high PEEP reduces RV preload</td>
+      </tr>
+      <tr>
+        <td><strong>FiO&sub2;</strong></td>
+        <td>Fraction of inspired oxygen (0.21&ndash;1.0)</td>
+        <td>&uarr; PaO&sub2;; prolonged FiO&sub2; &gt;0.6 &rarr; O&sub2; toxicity, absorption atelectasis</td>
+        <td class="v-val">Most patients: <strong>SpO&sub2; 92&ndash;96%</strong><br>ARDS: SpO&sub2; 92&ndash;96% or PaO&sub2; 55&ndash;80 mmHg<br><span style="color:var(--warn-l)">COPD with hypercapnia risk: SpO&sub2; 88&ndash;92%</span><br>FiO&sub2; &gt;0.6 &rarr; &uarr; PEEP + recruitment + prone before further FiO&sub2; increase</td>
+      </tr>
+      <tr>
+        <td><strong>Plateau Pressure (<span data-tip="End-inspiratory airway pressure at zero flow. Measure via inspiratory hold 0.5–3 sec. Reflects alveolar distending pressure, not airway resistance.">Pplat</span>)</strong></td>
+        <td>End-inspiratory pressure at zero flow (cmH&sub2;O)</td>
+        <td>Reflects alveolar overdistension. Pplat &ne; Ppeak (Ppeak includes airway resistance)</td>
+        <td class="p-val"><strong>Target &le;30 cmH&sub2;O</strong><br>Always measure via inspiratory hold &mdash; peak pressure alone is insufficient</td>
+      </tr>
+      <tr style="background:rgba(42,184,154,.04)">
+        <td><strong><span data-tip="ΔP = Pplat − PEEP. Strongest predictor of ARDS mortality independent of Vt. Reflects stress on functionally aerated lung.">Driving Pressure (ΔP)</span></strong> <span class="bdg bdg-v">KEY</span></td>
+        <td>Pplat &minus; PEEP (cmH&sub2;O) &mdash; stress on aerated lung</td>
+        <td>Strongest predictor of VILI and ARDS mortality &mdash; independent of Vt. Reflects lung strain on functional lung volume.</td>
+        <td class="v-val"><strong>Target &le;15 cmH&sub2;O (ideally &le;13)</strong><br>Measure: inspiratory hold &rarr; Pplat; ΔP = Pplat &minus; PEEP<br>If ΔP &gt;15: &darr; Vt by 1 mL/kg PBW steps or &uarr; PEEP to &uarr; compliance<br><em>(Amato et al., NEJM 2015)</em></td>
+      </tr>
+      <tr>
+        <td><strong>I:E Ratio</strong></td>
+        <td>Inspiratory:Expiratory time ratio</td>
+        <td>Affects mean airway pressure and gas trapping</td>
+        <td>Normal 1:2 &middot; ARDS: 1:1 for recruitment &middot; Obstructive: 1:3&ndash;1:4 to limit auto-PEEP</td>
+      </tr>
+      <tr>
+        <td><strong>Inspiratory Flow</strong></td>
+        <td>Peak inspiratory flow rate (L/min)</td>
+        <td>Higher flow &rarr; shorter Ti &rarr; longer Te; affects patient comfort</td>
+        <td>Standard 40&ndash;60 L/min &middot; Obstructive: 60&ndash;80 L/min</td>
+      </tr>
+      <tr>
+        <td><strong>Trigger sensitivity</strong></td>
+        <td>Effort needed to initiate an assisted breath</td>
+        <td>Too sensitive &rarr; auto-trigger; too high &rarr; &uarr; work of breathing</td>
+        <td>Flow trigger: 2&ndash;5 L/min &middot; Pressure trigger: &minus;1 to &minus;2 cmH&sub2;O</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <div class="stitle">Advanced Hamilton-specific Parameters</div>
+  <div class="g2">
+    <div class="card card-vent">
+      <h3>📡 P0.1 &mdash; Respiratory Drive Index</h3>
+      <p>Airway occlusion pressure in the first 100 ms of inspiratory effort. Reflects central respiratory drive without the confound of Vt or mode settings.</p>
+      <div class="tw"><table>
+        <tr><th class="th-n">P0.1 (cmH&sub2;O)</th><th class="th-n">Interpretation</th></tr>
+        <tr><td>&lt;1</td><td class="p-val">Overassistance / over-sedation</td></tr>
+        <tr><td>1.5&ndash;3.5</td><td class="v-val">Adequate drive &mdash; target range</td></tr>
+        <tr><td>&gt;4&ndash;6</td><td class="d-val">High respiratory drive; risk of P-SILI and fatigue</td></tr>
+      </table></div>
+    </div>
+    <div class="card card-blu">
+      <h3>📐 RCexp, Pmax &amp; INTELLiVENT Targets</h3>
+      <ul>
+        <li><strong>RCexp (expiratory time constant):</strong> Qualitative guide to expiratory time. No universal threshold &mdash; prolonged RCexp in COPD/asthma signals need for longer Te. Monitor trends, not absolute values.</li>
+        <li><strong>Pmax / High-pressure limit:</strong> Individualize per patient &mdash; set above operating Ppeak but low enough to detect dangerous rises. No single universally safe fixed value.</li>
+        <li><strong>INTELLiVENT-ASV targets:</strong> Set EtCO&sub2; 35&ndash;45, SpO&sub2; 88&ndash;96%, %MinVol. Closed-loop auto-adjusts &mdash; avoid in severe metabolic acidosis with compensatory tachypnea.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════ TAB 1: PROTECTIVE & ARDS ════════════════════════════ -->
+<section class="tab" id="t1">
+  <div class="sh"><h2>🛡️ Protective Lung Ventilation &amp; ARDS</h2><p>Minimizing ventilator-induced lung injury (VILI) through volume, pressure, and driving-force limitation. Berlin classification and ARDSnet protocol.</p></div>
+
+  <div style="background:linear-gradient(135deg,rgba(62,200,112,.10) 0%,rgba(42,184,154,.08) 100%);border:1px solid rgba(62,200,112,.25);border-radius:var(--r2);padding:18px 22px;margin-bottom:20px">
+    <div style="font-family:var(--display);font-size:15px;font-weight:700;color:var(--text);margin-bottom:10px">The Four Mechanisms of VILI</div>
+    <div class="g3" style="gap:10px">
+      <div style="background:var(--dang-d);border:1px solid var(--dang-b);border-radius:var(--r);padding:11px 14px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--dang-l);letter-spacing:.06em;font-weight:700;margin-bottom:5px">VOLUTRAUMA</div>
+        <div style="font-size:12.5px;color:var(--muted)">Excessive tidal volume overstretches alveoli &rarr; membrane disruption</div>
+      </div>
+      <div style="background:var(--warn-d);border:1px solid var(--warn-b);border-radius:var(--r);padding:11px 14px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--warn-l);letter-spacing:.06em;font-weight:700;margin-bottom:5px">BAROTRAUMA</div>
+        <div style="font-size:12.5px;color:var(--muted)">Excessive alveolar pressure (Pplat) &rarr; pneumothorax, pneumomediastinum</div>
+      </div>
+      <div style="background:var(--adv-d);border:1px solid var(--adv-b);border-radius:var(--r);padding:11px 14px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--adv-l);letter-spacing:.06em;font-weight:700;margin-bottom:5px">ATELECTRAUMA</div>
+        <div style="font-size:12.5px;color:var(--muted)">Repeated collapse and reopening of alveoli &rarr; shear stress injury</div>
+      </div>
+      <div style="background:var(--blu-d);border:1px solid var(--blu-b);border-radius:var(--r);padding:11px 14px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--blu-l);letter-spacing:.06em;font-weight:700;margin-bottom:5px">BIOTRAUMA</div>
+        <div style="font-size:12.5px;color:var(--muted)">Mechanical injury triggers inflammatory mediator release &rarr; systemic MODS</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">Protective Targets</div>
+  <div class="duel">
+    <div class="duel-a">
+      <div class="duel-label">Targets &mdash; Aim For</div>
+      <h3>✅ Protective ventilation parameters</h3>
+      <ul>
+        <li><strong>Tidal Volume:</strong> 6 mL/kg PBW (ARDS) &middot; 6&ndash;8 mL/kg PBW (others)</li>
+        <li><strong>Plateau Pressure (Pplat):</strong> &le;30 cmH&sub2;O</li>
+        <li><strong>Driving Pressure (ΔP = Pplat &minus; PEEP):</strong> &le;15 cmH&sub2;O (ideally &le;13)</li>
+        <li><strong>PEEP:</strong> Sufficient to prevent derecruitment &mdash; titrate by compliance or FiO&sub2;/PEEP table</li>
+        <li><strong>FiO&sub2;:</strong> Lowest to maintain SpO&sub2; 92&ndash;96%; avoid &gt;0.6 long-term</li>
+        <li><strong>PaCO&sub2;:</strong> Permissive hypercapnia acceptable (pH &ge;7.20) to limit pressures</li>
+        <li><strong>Prone position:</strong> P/F &lt;150 after 12&ndash;24 h optimised settings &rarr; &ge;16 h/day</li>
+        <li><strong>Conservative fluids:</strong> Post-resuscitation phase &mdash; avoid fluid overload</li>
+      </ul>
+    </div>
+    <div class="duel-mid"><div class="duel-mid-dot"></div><div class="duel-mid-lbl">vs</div><div class="duel-mid-dot"></div></div>
+    <div class="duel-b">
+      <div class="duel-label">Avoid &mdash; Injurious</div>
+      <h3>🚫 VILI risk factors</h3>
+      <ul>
+        <li><strong>Vt &gt;8 mL/kg PBW</strong> in ARDS or at-risk lungs</li>
+        <li><strong>Pplat &gt;30 cmH&sub2;O</strong></li>
+        <li><strong>Driving pressure &gt;15 cmH&sub2;O</strong></li>
+        <li><strong>FiO&sub2; &gt;0.6</strong> without escalating PEEP or recruitment</li>
+        <li><strong>Derecruitment:</strong> unnecessary PEEP reductions, circuit disconnections</li>
+        <li><strong>Hyperoxia</strong> (PaO&sub2; &gt;100 mmHg without indication)</li>
+        <li><strong>High mechanical power</strong> (RR, Vt, driving pressure all contribute)</li>
+        <li><strong>Uncorrected patient&ndash;ventilator asynchrony</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stitle">Measuring Driving Pressure</div>
+  <div class="card card-vent">
+    <h3>🔢 Step-by-step: ΔP measurement on Hamilton C1</h3>
+    <div class="g2" style="margin-top:10px">
+      <ol style="padding-left:18px;font-size:13.5px;color:var(--muted);line-height:2">
+        <li>Switch to VC-CMV or VSIMV (patient must be <strong style="color:var(--text)">passive</strong> &mdash; no spontaneous effort)</li>
+        <li>Apply <strong style="color:var(--text)">inspiratory hold</strong> for 0.5&ndash;3 seconds</li>
+        <li>Read <strong style="color:var(--vent-l)">Pplat</strong> from the displayed plateau pressure</li>
+        <li>Calculate: <strong style="color:var(--vent-l)">ΔP = Pplat &minus; PEEP</strong></li>
+        <li>If ΔP &gt;15: reduce Vt by 1 mL/kg PBW steps <em>or</em> increase PEEP to improve compliance</li>
+        <li>Reassess after every change</li>
+      </ol>
       <div>
-        <div class="section-eyebrow" id="topEyebrow">Section 1 of 15</div>
-        <div class="section-name" id="topTitle">Loading…</div>
+        <div class="box box-vent"><strong>Why ΔP matters more than Vt alone:</strong> A patient with low respiratory system compliance (stiff, consolidated lungs) will have a high ΔP at the same Vt as a healthy lung. Driving pressure reveals the actual mechanical stress delivered to the functional lung &mdash; it adapts to the patient&rsquo;s lung mechanics automatically.</div>
+        <div class="box box-prot"><strong>Clinical pearl:</strong> If ΔP &gt;15 despite Vt already at 6 mL/kg PBW &rarr; reduce to 4 mL/kg PBW and check. Also consider whether PEEP is optimised &mdash; recruiting collapsed alveoli increases compliance and reduces ΔP without changing Vt.</div>
       </div>
-    </div>
-    <div class="topbar-right">
-      <span class="counter" id="counterBadge">1 / 15</span>
-      <button class="nav-btn btn-prev" id="topPrev" onclick="navigate(-1)">← Prev</button>
-      <button class="nav-btn btn-next" id="topNext" onclick="navigate(1)">Next →</button>
     </div>
   </div>
 
-  <!-- SECTIONS WRAPPER -->
-  <div class="sections-wrap" id="sectionsWrap">
+  <div class="stitle">ARDS &mdash; Berlin Classification (2012)</div>
+  <div class="tw"><table>
+    <thead><tr>
+      <th class="th-n">Severity</th><th class="th-v">PaO&sub2;/FiO&sub2; (mmHg)</th><th class="th-n">PEEP requirement</th><th class="th-v">Clinical escalation</th><th class="th-n">Additional criteria</th>
+    </tr></thead>
+    <tbody>
+      <tr><td><strong>Mild</strong></td><td class="v-val">200&ndash;300 (on PEEP &ge;5)</td><td>5&ndash;8 cmH&sub2;O</td><td>Optimise sedation; NIV trial appropriate</td><td rowspan="3" style="vertical-align:middle;color:var(--muted);font-size:12px">Bilateral opacities on CXR/CT not fully explained by effusions/collapse; respiratory failure not fully explained by cardiac failure or fluid overload</td></tr>
+      <tr><td><strong>Moderate</strong></td><td class="w-val">100&ndash;200</td><td>8&ndash;13 cmH&sub2;O</td><td>Higher PEEP; NMB 48 h if significant asynchrony</td></tr>
+      <tr style="background:rgba(232,80,80,.04)"><td><strong>Severe</strong></td><td class="d-val">&lt;100</td><td>13&ndash;18 cmH&sub2;O</td><td><strong>Prone &ge;16 h/day</strong> &middot; APRV &middot; iNO &middot; ECMO evaluation</td></tr>
+    </tbody>
+  </table></div>
 
-    <!-- ██ 0 · MODES ██████████████████████████████████████████ -->
-    <div class="sec-page" id="page-0">
-      <div class="page-header">
-        <div class="page-header-text"></div>
-        <div class="page-icon">🔄</div>
+  <div class="stitle">ARDSnet Low-Vt Protocol Summary</div>
+  <div class="card card-prot">
+    <h3>📋 Lung-protective ventilation protocol (ARDSnet)</h3>
+    <div class="g2">
+      <ul>
+        <li><strong>Vt = 6 mL/kg PBW</strong> &mdash; reduce to 4 if Pplat &gt;30 or ΔP &gt;15</li>
+        <li><strong>Pplat &le;30 cmH&sub2;O</strong></li>
+        <li><strong>Driving pressure &le;15 cmH&sub2;O</strong></li>
+        <li>RR up to <strong>35/min</strong> to maintain pH &ge;7.20</li>
+        <li>PEEP/FiO&sub2; titration per low- or high-PEEP table</li>
+        <li>Target <strong>SpO&sub2; 92&ndash;96%</strong> or PaO&sub2; 55&ndash;80 mmHg</li>
+      </ul>
+      <ul>
+        <li><strong>Cisatracurium (NMB) 48 h</strong> if P/F &lt;150 with significant dyssynchrony</li>
+        <li>Conservative fluid management post-resuscitation</li>
+        <li><strong>Prone &ge;16 h/day</strong> if P/F &lt;150 after 12&ndash;24 h on optimised settings</li>
+        <li>Consider APRV or INTELLiVENT-ASV for refractory hypoxemia</li>
+        <li>ECMO evaluation if P/F persistently &lt;80 despite optimised care</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stitle">Hypoxemia Escalation Algorithm</div>
+  <div class="trace-wrap">
+    <div class="trace-label">Stepwise management of persistent hypoxemia</div>
+    <svg viewBox="0 0 860 200" style="width:100%;display:block;max-height:220px">
+      <defs>
+        <marker id="ar" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L6,3 z" fill="#3a5048"/>
+        </marker>
+      </defs>
+      <rect x="8" y="70" width="120" height="60" rx="10" fill="rgba(42,184,154,.15)" stroke="#2ab89a" stroke-width="1.5"/>
+      <text x="68" y="94" text-anchor="middle" font-weight="700" fill="#5dd4bc" font-size="12" font-family="IBM Plex Sans">Hypoxemia</text>
+      <text x="68" y="112" text-anchor="middle" fill="#6b8c7e" font-size="11" font-family="IBM Plex Sans">SpO&#8322; below target</text>
+
+      <rect x="176" y="70" width="120" height="60" rx="10" fill="rgba(42,184,154,.10)" stroke="#2ab89a" stroke-width="1.5"/>
+      <text x="236" y="94" text-anchor="middle" font-weight="700" fill="#5dd4bc" font-size="12" font-family="IBM Plex Sans">&#8593; FiO&#8322;</text>
+      <text x="236" y="112" text-anchor="middle" fill="#6b8c7e" font-size="11" font-family="IBM Plex Sans">Titrate to target</text>
+
+      <rect x="344" y="55" width="140" height="90" rx="10" fill="rgba(232,168,48,.13)" stroke="#e8a830" stroke-width="1.5"/>
+      <text x="414" y="78" text-anchor="middle" font-weight="700" fill="#f5c85a" font-size="12" font-family="IBM Plex Sans">FiO&#8322; &gt; 0.60?</text>
+      <text x="414" y="96" text-anchor="middle" fill="#6b8c7e" font-size="11" font-family="IBM Plex Sans">&#8593; PEEP</text>
+      <text x="414" y="112" text-anchor="middle" fill="#6b8c7e" font-size="11" font-family="IBM Plex Sans">Recruitment</text>
+      <text x="414" y="128" text-anchor="middle" fill="#6b8c7e" font-size="11" font-family="IBM Plex Sans">manoeuvre</text>
+
+      <rect x="532" y="55" width="130" height="90" rx="10" fill="rgba(232,80,80,.12)" stroke="#e85050" stroke-width="1.5"/>
+      <text x="597" y="78" text-anchor="middle" font-weight="700" fill="#f87878" font-size="12" font-family="IBM Plex Sans">P/F &lt; 150?</text>
+      <text x="597" y="96" text-anchor="middle" fill="#6b8c7e" font-size="11" font-family="IBM Plex Sans">Prone position</text>
+      <text x="597" y="112" text-anchor="middle" fill="#6b8c7e" font-size="11" font-family="IBM Plex Sans">&#8805;16 h/day</text>
+      <text x="597" y="128" text-anchor="middle" fill="#6b8c7e" font-size="11" font-family="IBM Plex Sans">NMB 48 h</text>
+
+      <rect x="710" y="55" width="140" height="90" rx="10" fill="rgba(144,96,212,.12)" stroke="#9060d4" stroke-width="1.5"/>
+      <text x="780" y="78" text-anchor="middle" font-weight="700" fill="#b890f8" font-size="12" font-family="IBM Plex Sans">Refractory</text>
+      <text x="780" y="94" text-anchor="middle" fill="#6b8c7e" font-size="11" font-family="IBM Plex Sans">APRV / iNO</text>
+      <text x="780" y="110" text-anchor="middle" fill="#6b8c7e" font-size="11" font-family="IBM Plex Sans">ECMO eval</text>
+      <text x="780" y="126" text-anchor="middle" fill="#9060d4" font-size="10" font-family="IBM Plex Sans">P/F &lt;80 + optimised</text>
+
+      <line x1="128" y1="100" x2="174" y2="100" stroke="#3a5048" stroke-width="1.5" marker-end="url(#ar)"/>
+      <line x1="296" y1="100" x2="342" y2="100" stroke="#3a5048" stroke-width="1.5" marker-end="url(#ar)"/>
+      <line x1="484" y1="100" x2="530" y2="100" stroke="#3a5048" stroke-width="1.5" marker-end="url(#ar)"/>
+      <line x1="662" y1="100" x2="708" y2="100" stroke="#3a5048" stroke-width="1.5" marker-end="url(#ar)"/>
+
+      <text x="68" y="172" text-anchor="middle" fill="#3a5048" font-size="10" font-family="IBM Plex Mono">STEP 1</text>
+      <text x="236" y="172" text-anchor="middle" fill="#3a5048" font-size="10" font-family="IBM Plex Mono">STEP 2</text>
+      <text x="414" y="172" text-anchor="middle" fill="#3a5048" font-size="10" font-family="IBM Plex Mono">STEP 3</text>
+      <text x="597" y="172" text-anchor="middle" fill="#3a5048" font-size="10" font-family="IBM Plex Mono">STEP 4</text>
+      <text x="780" y="172" text-anchor="middle" fill="#3a5048" font-size="10" font-family="IBM Plex Mono">STEP 5</text>
+    </svg>
+  </div>
+</section>
+
+
+<!-- ════ TAB 2: ASYNCHRONY & AUTO-PEEP ════════════════════════ -->
+<section class="tab" id="t2">
+  <div class="sh"><h2>⚡ Patient&ndash;Ventilator Asynchrony &amp; Auto-PEEP</h2><p>Identify and correct the mismatch between patient neural drive and ventilator delivery. Asynchrony prolongs ventilation and worsens outcomes.</p></div>
+
+  <div class="box box-warn" style="margin-bottom:18px"><strong>Key principle:</strong> Always identify the asynchrony pattern from waveforms before escalating sedation. Sedation suppresses the symptom without fixing the cause &mdash; and may worsen P-SILI.</div>
+
+  <div class="stitle">Patient&ndash;Ventilator Asynchrony (PVA) &mdash; Seven Patterns</div>
+  <div class="tw"><table>
+    <thead><tr>
+      <th class="th-v">Pattern</th><th class="th-n">Waveform signature</th><th class="th-n">Mechanism</th><th class="th-v">Management</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Double triggering</strong></td>
+        <td>Two consecutive Vt within one neural effort; second breath appears on flow-time trace with early flow peak</td>
+        <td>Ti(vent) &lt; neural Ti; high respiratory drive forces a second trigger before the ventilator finishes cycling</td>
+        <td class="v-val">&#8593; Ti; switch to PC mode; if severe &rarr; deepen sedation / NMB</td>
+      </tr>
+      <tr>
+        <td><strong>Flow starvation</strong></td>
+        <td>Concave pressure-time curve during VC breath &mdash; patient actively &ldquo;pulling&rdquo; the airway pressure down</td>
+        <td>Set inspiratory flow insufficient for patient&rsquo;s ventilatory demand; patient&rsquo;s inspiratory muscles work against the ventilator</td>
+        <td class="v-val">&#8593; Inspiratory flow (60&ndash;80 L/min); switch to PC or PSV</td>
+      </tr>
+      <tr>
+        <td><strong>Ineffective effort</strong></td>
+        <td>Deflection in flow or pressure trace without a triggered breath; visible as &ldquo;missed&rdquo; notches in flow curve</td>
+        <td>Auto-PEEP exceeds patient&rsquo;s trigger threshold; or over-sedation. Patient making effort but cannot overcome intrinsic PEEP to trigger.</td>
+        <td class="v-val">&#8595; Auto-PEEP (&#8595; RR, &#8593; Te, bronchodilators); apply external PEEP ~70&ndash;85% of iPEEP; lighten sedation</td>
+      </tr>
+      <tr>
+        <td><strong>Auto-triggering</strong></td>
+        <td>Ventilator triggers without patient effort; irregular and unexplained high RR on display</td>
+        <td>Circuit leak, cardiac oscillations, condensed water in circuit, trigger sensitivity too high</td>
+        <td class="v-val">Drain circuit; &#8595; trigger sensitivity; fix leak source; use flow trigger over pressure</td>
+      </tr>
+      <tr>
+        <td><strong>Premature cycling</strong></td>
+        <td>Inspiratory flow still positive at end of breath; patient still inhaling when ventilator cycles off</td>
+        <td>Ti(vent) &lt; neural Ti; PSV cycle-off threshold too high (breath terminates before patient finishes inhaling)</td>
+        <td class="v-val">&#8593; Ti; &#8595; PSV expiratory trigger sensitivity (Hamilton: Expiratory Trigger Sensitivity setting)</td>
+      </tr>
+      <tr>
+        <td><strong>Delayed cycling</strong></td>
+        <td>Active expiratory muscle effort visible at end of ventilator breath; pressure spike on pressure-time trace</td>
+        <td>Ti(vent) &gt; neural Ti; breath continues after patient wants to exhale</td>
+        <td class="v-val">&#8595; Ti; &#8593; PSV cycle-off threshold; avoid unnecessary inverse ratio</td>
+      </tr>
+      <tr>
+        <td><strong>Reverse triggering</strong></td>
+        <td>Diaphragmatic effort entrained by the ventilator delivery; may cause double-triggering-like pattern</td>
+        <td>Deep sedation or neurological injury &mdash; ventilator breath reflexively entrain diaphragm; Vt amplified by patient effort after delivery begins</td>
+        <td class="v-val">Reassess sedation; short-term NMB (48 h); may resolve with lighter sedation</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <div class="stitle">Auto-PEEP &mdash; Intrinsic PEEP &amp; Dynamic Hyperinflation</div>
+  <div class="g2">
+    <div class="card card-dang">
+      <h3>💨 Pathophysiology &amp; Consequences</h3>
+      <p><strong>Auto-PEEP</strong> (iPEEP) occurs when expiratory flow fails to reach zero before the next breath &mdash; air traps and raises end-expiratory alveolar pressure above set PEEP.</p>
+      <div class="box box-warn" style="margin-top:12px"><strong>Causes:</strong> COPD &middot; Asthma &middot; High RR &middot; Short expiratory time &middot; High Vt &middot; Small ETT &middot; Secretions &middot; Dynamic airway collapse</div>
+      <div class="box box-dang"><strong>Consequences:</strong><br>
+        &bull; &#8593; Intrathoracic pressure &rarr; &#8595; venous return &rarr; <strong>hypotension / obstructive shock</strong><br>
+        &bull; Ineffective triggering (patient must overcome iPEEP to trigger)<br>
+        &bull; Dynamic hyperinflation &rarr; pneumothorax risk<br>
+        &bull; &#8593; Work of breathing
       </div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-head blue">📌 Volume-controlled &amp; Pressure-controlled</div>
-          <div class="card-body">
-            <table class="tbl">
-              <tr><th>Mode</th><th>Description</th><th>Use case</th></tr>
-              <tr><td><strong>VC-CMV</strong></td><td>Volume-controlled continuous mandatory ventilation</td><td>Full support, ARDS, post-arrest</td></tr>
-              <tr><td><strong>VC-AC</strong></td><td>Assist-control, volume targeted</td><td>Spontaneous breathing + guaranteed Vt</td></tr>
-              <tr><td><strong>PC-CMV / PC-AC</strong></td><td>Pressure-controlled, set inspiratory pressure</td><td>Obstructive disease; limit <span data-tip="End-inspiratory plateau pressure. Measure via inspiratory hold. Target ≤30 cmH₂O">Pplat</span></td></tr>
-              <tr><td><strong>VSIMV</strong> <span class="badge badge-mode">most used</span></td><td>Volume-controlled SIMV — mandatory Vt breaths synchronized with effort; spontaneous breaths pressure-supported</td><td>Weaning, partial support; guaranteed minute ventilation</td></tr>
-              <tr><td><strong>PSIMV</strong> <span class="badge badge-mode">most used</span></td><td>Pressure-controlled SIMV — mandatory breaths pressure-limited; synchronization window prevents stacking</td><td>COPD/asthma, air leak, Pplat limitation</td></tr>
-            </table>
-          </div>
+      <div class="box box-vent"><strong>Bedside test:</strong> Unexplained hypotension in COPD/asthma patient on ventilator &rarr; briefly disconnect ETT from circuit. If haemodynamics improve and trapped air audibly released &rarr; auto-PEEP confirmed.</div>
+    </div>
+    <div class="card card-vent">
+      <h3>📏 Measurement &amp; Management</h3>
+      <p style="margin-bottom:10px"><strong>Measurement:</strong> Apply <em>expiratory hold</em> (0.5&ndash;2 sec) &rarr; read total PEEP from display.<br>
+      <span class="fm">auto-PEEP = total PEEP &minus; set PEEP</span></p>
+      <p style="font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Management ladder</p>
+      <ul>
+        <li>&#8595; RR &rarr; &#8593; expiratory time</li>
+        <li>&#8595; Vt (less volume to exhale per breath)</li>
+        <li>&#8593; I:E ratio to 1:3&ndash;1:4 in obstructive disease</li>
+        <li>&#8593; Peak inspiratory flow (shortens Ti &rarr; longer Te)</li>
+        <li>Bronchodilators + aggressive secretion clearance</li>
+        <li>Apply external PEEP &asymp; <strong>70&ndash;85% of measured iPEEP</strong> to stent airways and reduce trigger threshold</li>
+      </ul>
+      <div class="box box-dang" style="margin-top:12px"><strong>Cardiac surgery:</strong> Auto-PEEP severely impairs RV filling in a preload-dependent post-operative heart. Monitor proactively in any COPD or bronchospasm patient post-sternotomy.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════ TAB 3: CARDIAC SURGERY & ICU ════════════════════════ -->
+<section class="tab" id="t3">
+  <div class="sh"><h2>❤️ Cardiac Surgery &amp; ICU Considerations</h2><p>Permissive hypercapnia, mechanical power, post-operative ventilation goals, haemodynamic interactions between positive-pressure ventilation and the post-cardiac surgery heart.</p></div>
+
+  <div class="stitle">Permissive Hypercapnia</div>
+  <div class="g2">
+    <div class="card card-adv">
+      <h3>♾️ Concept &amp; rationale</h3>
+      <p><strong>Permissive hypercapnia</strong> = intentional tolerance of elevated PaCO&sub2; to achieve lower Vt and driving pressures, prioritising lung protection over normocapnia.</p>
+      <div class="box box-adv" style="margin-top:10px">
+        <strong>Acceptable parameters:</strong><br>
+        &bull; PaCO&sub2; up to <strong>60&ndash;80 mmHg</strong> if haemodynamically tolerated<br>
+        &bull; Minimum acceptable pH: <strong>&ge;7.20&ndash;7.25</strong><br>
+        &bull; Avoid rapid CO&sub2; changes (arrhythmia risk)<br>
+        &bull; NaHCO&sub3; may temporise if pH &lt;7.20 (controversial; tidal correction only)
+      </div>
+      <div class="box box-prot"><strong>Lung-protective benefit:</strong> Modest hypercapnic acidosis may have direct anti-inflammatory, lung-protective effects. Generally well tolerated in ARDS with adequate haemodynamics.</div>
+    </div>
+    <div class="card card-dang">
+      <h3>🚫 Contraindications &amp; cautions</h3>
+      <ul>
+        <li><strong>Intracranial hypertension (TBI, post-neurosurgery):</strong> CO&sub2; is a potent cerebral vasodilator; hypercapnia worsens ICP. <em>Avoid permissive hypercapnia.</em></li>
+        <li><strong>Pulmonary hypertension:</strong> Hypercapnia and acidosis &uarr; PVR &rarr; worsens RV failure.</li>
+        <li><strong>RV failure post-cardiac surgery:</strong> Maintain normocapnia; hypercapnia &uarr; RV afterload.</li>
+        <li><strong>Severe metabolic acidosis</strong> (pH &lt;7.20): additional respiratory acidosis is dangerous.</li>
+        <li><strong>Cardiac arrhythmias</strong> attributable to acidosis.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stitle">Mechanical Power &mdash; The Energy Dimension of VILI</div>
+  <div class="card card-vent">
+    <h3>⚙️ Unified VILI metric: energy delivered per minute</h3>
+    <div class="g2">
+      <div>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:12px"><strong style="color:var(--text)">Mechanical Power (MP)</strong> integrates volume, pressure, flow, and rate &mdash; capturing the cumulative injurious energy delivered to the respiratory system. It overcomes the limitation of single-parameter assessment.</p>
+        <div class="trace-label" style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Simplified formula (VC-CMV)</div>
+        <span class="fm">MP (J/min) = 0.098 &times; RR &times; Vt<sub>(L)</sub> &times; (P<sub>peak</sub> &minus; &Delta;P/2)</span>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Pressures in cmH&sub2;O &middot; Vt in litres</p>
+        <div class="tw"><table>
+          <tr><th class="th-n">MP (J/min)</th><th class="th-v">Clinical implication</th></tr>
+          <tr><td>&lt;12</td><td class="p-val">Generally safe zone</td></tr>
+          <tr><td>12&ndash;17</td><td class="w-val">Intermediate &mdash; minimise other risk factors</td></tr>
+          <tr><td>&gt;17&ndash;20</td><td class="d-val">Associated with VILI and higher mortality (ARDS)</td></tr>
+        </table></div>
+      </div>
+      <div>
+        <div class="box box-warn"><strong>Main contributors to high MP:</strong><br>
+          &bull; High Vt (dominant driver)<br>
+          &bull; High respiratory rate<br>
+          &bull; High driving pressure<br>
+          &bull; High PEEP (static component)<br>
+          &bull; High airway resistance (&#8593; Ppeak)
         </div>
-        <div class="card">
-          <div class="card-head teal">🧠 Dual &amp; advanced modes</div>
-          <div class="card-body">
-            <table class="tbl">
-              <tr><th>Mode</th><th>Description</th><th>Key feature</th></tr>
-              <tr><td><strong>DuoLevel / APRV</strong></td><td>Two pressure levels with unrestricted spontaneous breathing</td><td>ARDS recruitment, severe hypoxemia</td></tr>
-              <tr><td><strong>INTELLiVENT-ASV</strong></td><td>Closed-loop adaptive support ventilation</td><td>Auto-adjusts RR, PEEP, PS via EtCO₂ &amp; SpO₂</td></tr>
-              <tr><td><strong>NIV</strong></td><td>Non-invasive; leak compensation ≤40 L/min</td><td>COPD exacerbation, APO</td></tr>
-              <tr><td><strong>VS (Volume Support)</strong></td><td>Spontaneous breaths with target Vt; no mandatory breaths</td><td>Weaning, SBT</td></tr>
-            </table>
-            <div class="note" style="margin-top:14px;"><span class="ico">💡</span><div><strong>PRVC</strong> — pressure-limited, volume-targeted dual-control mode. <em>Proprietary names vary by manufacturer</em> (AutoFlow on Dräger, VC+ on Puritan Bennett, PRVC on Maquet/Servo) — not Hamilton-exclusive.</div></div>
-          </div>
-        </div>
+        <div class="box box-vent"><strong>Hamilton C1:</strong> INTELLiVENT-ASV can display estimated MP. Reducing RR and Vt together synergistically lowers MP &mdash; even when each individual value appears acceptable in isolation.</div>
+        <div class="box box-adv"><strong>Evidence status:</strong> Emerging metric &mdash; not yet embedded in formal guidelines (2025). Provides a valuable unified lens especially when standard parameters conflict (e.g. low Vt but very high RR + PEEP). (Gattinoni et al., Intensive Care Med 2016)</div>
       </div>
     </div>
+  </div>
 
-    <!-- ██ 1 · PARAMETERS ████████████████████████████████████ -->
-    <div class="sec-page" id="page-1">
-      <div class="page-header">
-        <div class="page-header-text"></div>
-        <div class="page-icon">📊</div>
-      </div>
-      <div class="alert" style="margin-bottom:18px;">
-        <span class="ico">⚠️</span>
-        <div>All tidal volumes refer to <strong><span data-tip="Males: 50 + 2.3 × (height_inches − 60). Females: 45.5 + 2.3 × (height_inches − 60). Use height, not actual weight.">Predicted Body Weight (PBW)</span></strong> — <em>not actual body weight</em>. Using actual weight in obese patients causes dangerous volutrauma.</div>
-      </div>
-      <div class="card" style="margin-bottom:18px;">
-        <div class="card-head blue">🫀 Basic parameters</div>
-        <div class="card-body" style="padding:0;">
-          <table class="tbl">
-            <tr><th>Parameter</th><th>Description</th><th>Physiologic effect</th><th>Targets &amp; titration</th></tr>
-            <tr>
-              <td><strong>Tidal Volume (Vt)</strong></td>
-              <td>Volume per breath (mL/kg <span class="pbw">PBW</span>)</td>
-              <td>Alveolar ventilation (PaCO₂); lung stretch → VILI</td>
-              <td><strong>All adults: 6–8 mL/kg PBW</strong><br>ARDS: 6 mL/kg PBW (ARDSnet)<br><em>Obstructive disease: do NOT increase Vt — prioritize adequate expiratory time and auto-PEEP control.</em></td>
-            </tr>
-            <tr>
-              <td><strong>RR</strong></td>
-              <td>Breaths/min (mandatory + spontaneous in SIMV)</td>
-              <td>Controls minute ventilation → PaCO₂</td>
-              <td>Start 12–16/min; adjust to normocapnia (PaCO₂ 35–45 mmHg). SIMV: backup rate 4–6 below spontaneous.</td>
-            </tr>
-            <tr>
-              <td><strong><span data-tip="Pressure at end-expiration. Recruits alveoli and prevents atelectrauma.">PEEP</span></strong></td>
-              <td>Positive End-Expiratory Pressure (cmH₂O)</td>
-              <td>Alveolar recruitment; excess → air trapping, ↓ cardiac output</td>
-              <td>ARDS: 5–15 cmH₂O (FiO₂/PEEP table)<br><strong>Obstructive: individualize — external PEEP ≈ 70–85% of intrinsic auto-PEEP</strong> (typically 5–8 cmH₂O)<br>Post-cardiac surgery: cautious — high PEEP reduces RV preload</td>
-            </tr>
-            <tr>
-              <td><strong>FiO₂</strong></td>
-              <td>Fraction of inspired oxygen (0.21–1.0)</td>
-              <td>↑ PaO₂; FiO₂ &gt;0.6 prolonged → O₂ toxicity, atelectasis</td>
-              <td><strong>Most patients: SpO₂ 92–96%</strong><br>ARDS: SpO₂ 92–96% or PaO₂ 55–80 mmHg<br>COPD with hypercapnia risk: SpO₂ 88–92%<br>If FiO₂ &gt;0.6 → prioritize ↑ PEEP / recruitment / prone</td>
-            </tr>
-            <tr>
-              <td><strong>Inspiratory Pressure (PS)</strong></td>
-              <td>Pressure above PEEP during inspiration</td>
-              <td>Determines Vt in PC modes and PSV</td>
-              <td>Start 10–15 cmH₂O above PEEP; adjust for Vt 6–8 mL/kg PBW. Keep <span data-tip="End-inspiratory plateau pressure. Measure via inspiratory hold 0.5–3 sec. Target ≤30 cmH₂O.">Pplat</span> ≤30 cmH₂O.</td>
-            </tr>
-            <tr class="hl">
-              <td><strong><span data-tip="ΔP = Pplat − PEEP. Independent predictor of ARDS mortality. Target ≤15 cmH₂O.">Driving Pressure (ΔP)</span></strong> <span class="badge badge-new">KEY</span></td>
-              <td>Pplat − PEEP (cmH₂O)</td>
-              <td>Reflects stress on aerated lung. Strongest predictor of VILI and ARDS mortality.</td>
-              <td><strong>Target ≤15 cmH₂O</strong> (ideally ≤13)<br>Measure: inspiratory hold → Pplat; ΔP = Pplat − PEEP<br>If ΔP &gt;15 → ↓ Vt by 1 mL/kg PBW steps or ↑ PEEP to improve compliance</td>
-            </tr>
-            <tr>
-              <td><strong>Plateau Pressure (Pplat)</strong></td>
-              <td>End-inspiratory airway pressure at zero flow</td>
-              <td>Reflects alveolar overdistension (≠ Peak pressure)</td>
-              <td><strong>Target ≤30 cmH₂O</strong><br><em>Ppeak ≠ Pplat.</em> Ppeak includes airway resistance. Always measure Pplat via inspiratory hold.</td>
-            </tr>
-            <tr>
-              <td><strong>I:E ratio</strong></td>
-              <td>Inspiratory:Expiratory time ratio</td>
-              <td>Affects mean airway pressure and gas trapping</td>
-              <td>Normal 1:2 · ARDS: 1:1 (recruitment) · Obstructive: 1:3–1:4 (limit auto-PEEP)</td>
-            </tr>
-            <tr>
-              <td><strong>Inspiratory Flow</strong></td>
-              <td>Peak inspiratory flow (L/min)</td>
-              <td>Higher flow → shorter Ti → longer Te</td>
-              <td>Standard 40–60 L/min · Obstructive: 60–80 L/min</td>
-            </tr>
-            <tr>
-              <td><strong>Trigger sensitivity</strong></td>
-              <td>Effort to initiate assisted breath</td>
-              <td>Too sensitive → auto-trigger; too high → ↑ WOB</td>
-              <td>Flow: 2–5 L/min · Pressure: −1 to −2 cmH₂O</td>
-            </tr>
-          </table>
+  <div class="stitle">Mechanical Ventilation after Cardiac Surgery</div>
+  <div class="g2">
+    <div class="card card-vent">
+      <h3>🏥 Post-operative goals &amp; fast-track extubation</h3>
+      <ul>
+        <li><strong>Early extubation (fast-track):</strong> Target 4&ndash;8 h post-CABG / valve repair in uncomplicated cases. Reduces VAP, ICU stay, and cost.</li>
+        <li>Protective ventilation even for short post-op periods: <strong>Vt 6&ndash;8 mL/kg PBW</strong></li>
+        <li>SpO&sub2; 94&ndash;98% (liberal target acceptable with adequate cardiac output)</li>
+        <li>EtCO&sub2; 35&ndash;42 mmHg; avoid hypercapnia if elevated PVR suspected</li>
+        <li>PEEP 5&ndash;8 cmH&sub2;O to prevent post-sternotomy / CPB-related atelectasis</li>
+        <li>Propofol or dexmedetomidine preferred over benzodiazepines for fast-track</li>
+      </ul>
+      <div class="box box-prot"><strong>Phrenic nerve palsy</strong> (post-IMA harvest, hypothermia): assess by diaphragm ultrasound. Unilateral palsy may still permit extubation. Bilateral palsy requires continued ventilatory support.</div>
+    </div>
+    <div class="card card-warn">
+      <h3>⚠️ Haemodynamic interactions with PPV</h3>
+      <ul>
+        <li><strong>High PEEP &rarr; &#8595; RV preload:</strong> In RV failure (post-tricuspid, PH, RV MI) &mdash; use lowest effective PEEP; avoid driving preload-dependence into haemodynamic crisis.</li>
+        <li><strong>Hypercapnia &amp; hypoxia &rarr; &#8593; PVR &rarr; &#8593; RV afterload:</strong> Maintain normocapnia and normoxia in RV failure. Avoid permissive hypercapnia in this setting.</li>
+        <li><strong>Pulse pressure variation (PPV) for fluid responsiveness:</strong> Valid only in fully controlled, arrhythmia-free ventilation with Vt &ge;8 mL/kg &mdash; a direct conflict with lung-protective ventilation in ARDS patients.</li>
+        <li><strong>Post-pneumonectomy:</strong> PEEP 3&ndash;5 cmH&sub2;O on remaining lung; minimise FiO&sub2;; avoid high mean airway pressures.</li>
+      </ul>
+    </div>
+    <div class="card card-prot">
+      <h3>✅ Extubation readiness criteria</h3>
+      <ul>
+        <li>Awake, follows simple commands</li>
+        <li>Spontaneous Vt &gt;5 mL/kg PBW &middot; RR &lt;30/min</li>
+        <li>SpO&sub2; &gt;92% on PS &le;8 cmH&sub2;O + PEEP 5</li>
+        <li>FiO&sub2; &le;0.40 &middot; PEEP &le;8 cmH&sub2;O</li>
+        <li>No vasopressor escalation</li>
+        <li>Intact cough / secretion clearance</li>
+        <li>P0.1 &lt;4&ndash;6 cmH&sub2;O (adequate drive; no excessive demand)</li>
+      </ul>
+      <div class="box box-vent">Post-extubation in high-risk patients: HFNO prophylactically to reduce re-intubation risk. NIV for cardiogenic pulmonary oedema.</div>
+    </div>
+    <div class="card card-dang">
+      <h3>🚨 Delay extubation if:</h3>
+      <ul>
+        <li>Haemodynamic instability / ongoing vasopressor escalation</li>
+        <li>Significant bleeding requiring re-exploration</li>
+        <li>Uncontrolled arrhythmia (rapid AF, VT)</li>
+        <li>Persistent severe hypoxemia (FiO&sub2; &gt;0.5, PEEP &gt;8)</li>
+        <li>Neurological deficit, prolonged obtundation</li>
+        <li>Severe metabolic acidosis / hypothermia</li>
+        <li>Bilateral phrenic palsy or diaphragmatic injury</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════ TAB 4: CLINICAL & WEANING ════════════════════════════ -->
+<section class="tab" id="t4">
+  <div class="sh"><h2>⚙️ Clinical Practice, Weaning &amp; Advanced Modes</h2><p>Quick setup, alarm management, troubleshooting, evidence-based weaning, and deep dive on INTELLiVENT-ASV and APRV.</p></div>
+
+  <div class="stitle">Quick Initial Setup &mdash; Adult, IBW 70 kg</div>
+  <div class="g2">
+    <div class="card card-vent">
+      <h3>💨 VSIMV setup</h3>
+      <div class="tw"><table>
+        <tr><th class="th-n">Setting</th><th class="th-v">Value</th></tr>
+        <tr><td>Mandatory Vt</td><td class="v-val"><strong>420 mL (6 mL/kg PBW)</strong></td></tr>
+        <tr><td>SIMV rate</td><td>10&ndash;12/min (backup)</td></tr>
+        <tr><td>Pressure Support</td><td>10&ndash;15 cmH&sub2;O (spontaneous breaths)</td></tr>
+        <tr><td>PEEP</td><td>5 cmH&sub2;O (&#8593; per clinical need)</td></tr>
+        <tr><td>FiO&sub2;</td><td>1.0 &rarr; titrate to SpO&sub2; 92&ndash;96%</td></tr>
+        <tr><td>Flow</td><td>50 L/min (square wave)</td></tr>
+        <tr><td>Trigger</td><td>Flow 3 L/min</td></tr>
+      </table></div>
+    </div>
+    <div class="card card-blu">
+      <h3>🫁 PSIMV setup</h3>
+      <div class="tw"><table>
+        <tr><th class="th-n">Setting</th><th class="th-v">Value</th></tr>
+        <tr><td>Pressure control (&Delta;P)</td><td class="v-val">12&ndash;15 cmH&sub2;O above PEEP &rarr; Vt 6&ndash;8 mL/kg PBW</td></tr>
+        <tr><td>SIMV rate</td><td>10&ndash;12/min</td></tr>
+        <tr><td>Pressure Support</td><td>10&ndash;15 cmH&sub2;O</td></tr>
+        <tr><td>PEEP</td><td>5&ndash;8 cmH&sub2;O</td></tr>
+        <tr><td>Inspiratory time</td><td>1.0&ndash;1.2 sec</td></tr>
+        <tr><td>FiO&sub2;</td><td>Titrate to SpO&sub2; 92&ndash;96%</td></tr>
+      </table></div>
+    </div>
+  </div>
+  <div class="box box-warn"><strong>After initiation:</strong> Measure Pplat (inspiratory hold) and calculate &Delta;P = Pplat &minus; PEEP. Reduce Vt if Pplat &gt;30 cmH&sub2;O or &Delta;P &gt;15 cmH&sub2;O. COPD: &#8593; inspiratory flow to 60&ndash;80 L/min, &#8595; SIMV rate to 6&ndash;8/min to allow adequate expiratory time.</div>
+
+  <div class="stitle">Alarm Limits &mdash; Individualised Thresholds</div>
+  <div class="tw"><table>
+    <thead><tr><th class="th-n">Alarm</th><th class="th-n">Lower limit</th><th class="th-n">Upper limit</th><th class="th-v">Cause &amp; response</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>High pressure (Ppeak)</strong></td>
+        <td>&mdash;</td>
+        <td><strong>Individualise:</strong> above operating Ppeak but low enough to detect dangerous rises. Starting point: 35&ndash;40 cmH&sub2;O (ARDS); up to 45 (severe obstructive). Reassess with every mode or patient change.</td>
+        <td class="v-val">Bronchospasm, secretions, kinked ETT, biting &rarr; suction, bronchodilator, check circuit</td>
+      </tr>
+      <tr><td><strong>Low pressure</strong></td><td>5 cmH&sub2;O below baseline Ppeak</td><td>&mdash;</td><td>Disconnection, cuff leak &rarr; reconnect, check cuff</td></tr>
+      <tr><td><strong>Low minute volume</strong></td><td>3 L/min (adult)</td><td>&mdash;</td><td>Hypoventilation, apnoea, leak &rarr; assess patient, &#8593; RR</td></tr>
+      <tr><td><strong>High RR</strong></td><td>&mdash;</td><td>35/min</td><td>Pain, anxiety, pulmonary oedema, asynchrony &rarr; assess sedation</td></tr>
+      <tr><td><strong>Low SpO&sub2;</strong></td><td>88% (COPD) / 92% (others)</td><td>&mdash;</td><td>Hypoxemia &rarr; &#8593; FiO&sub2;/PEEP, check probe, suction</td></tr>
+      <tr><td><strong>High EtCO&sub2;</strong></td><td>&mdash;</td><td>45&ndash;50 mmHg (adjust per permissive strategy)</td><td>Hypoventilation, dead space &rarr; &#8593; RR/Vt, check circuit</td></tr>
+      <tr><td><strong>Apnoea</strong></td><td>No breath 15&ndash;20 sec</td><td>&mdash;</td><td>Set backup RR, adjust trigger, bag patient</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box box-blu"><strong>Individualise always:</strong> Fixed universal alarm limits are insufficient. A PEEP 14 ARDS patient has entirely different Ppeak thresholds than a post-CABG patient on PEEP 5. Review limits after every mode change or significant patient state change.</div>
+
+  <div class="stitle">Troubleshooting &mdash; Hamilton C1 Errors &amp; Warnings</div>
+  <div class="g2">
+    <div class="card card-dang">
+      <h3>🚫 Device errors</h3>
+      <ul>
+        <li><strong>&ldquo;High PEEP leak&rdquo;</strong> &mdash; circuit leak or exhalation valve malfunction &rarr; check expiratory filter, reconnect, run SST</li>
+        <li><strong>&ldquo;Check patient circuit&rdquo;</strong> &mdash; disconnection or occlusion &rarr; inspect circuit, replace wet filter</li>
+        <li><strong>&ldquo;Occlusion / high pressure&rdquo;</strong> &mdash; secretions, ETT kink, biting &rarr; suction, check ETT position</li>
+        <li><strong>&ldquo;Power failure&rdquo;</strong> &mdash; battery depleted &rarr; connect external power; C1 has 4-hour hot-swappable battery</li>
+        <li><strong>&ldquo;Sensor error&rdquo;</strong> &mdash; contaminated flow/pressure sensor &rarr; run leak test, replace sensor</li>
+      </ul>
+      <div class="box box-dang"><strong>Ventilator inoperative:</strong> Disconnect and manually bag immediately. Always have backup device at bedside.</div>
+    </div>
+    <div class="card card-warn">
+      <h3>⚠️ Clinical warnings</h3>
+      <ul>
+        <li><strong>&ldquo;Low compliance&rdquo;</strong> &mdash; dynamic compliance &lt;30 mL/cmH&sub2;O: atelectasis, ARDS, pneumothorax &rarr; recruit, CXR</li>
+        <li><strong>&ldquo;Auto-PEEP high&rdquo;</strong> &mdash; COPD/asthma &rarr; &#8595; RR, &#8593; Te, bronchodilators, apply external PEEP ~70&ndash;85% iPEEP</li>
+        <li><strong>&ldquo;Asynchrony detected&rdquo;</strong> &mdash; double-triggering or ineffective efforts &rarr; review waveforms, adjust trigger or mode</li>
+        <li><strong>&ldquo;High FiO&sub2; demand&rdquo;</strong> &mdash; FiO&sub2; &gt;0.6 prolonged &rarr; optimise PEEP, recruitment, prone, treat underlying cause</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stitle">Evidence-based Weaning</div>
+  <div class="card card-prot">
+    <h3>🏁 SAT + SBT protocol (ACCCM/ERS 2017)</h3>
+    <div class="g2">
+      <div>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Daily <strong style="color:var(--text)">Spontaneous Awakening Trials (SAT)</strong> + <strong style="color:var(--text)">Spontaneous Breathing Trials (SBT)</strong> are the recommended strategy &mdash; superior to gradual SIMV rate reduction (Girard 2008; ACCCM/ERS 2017).</p>
+        <div class="box box-prot"><strong>SAT:</strong> Interrupt sedation daily until awake/arousable. Reassess sedation strategy &mdash; target lightest effective sedation.</div>
+        <div class="box box-prot"><strong>SBT:</strong> PSV 5&ndash;8 cmH&sub2;O + PEEP 5 cmH&sub2;O <em>or</em> CPAP/T-piece for 30&ndash;120 min.<br>
+          Pass criteria: RR &lt;35, SpO&sub2; &gt;92%, spontaneous Vt &gt;5 mL/kg PBW, no distress, haemodynamically stable.<br>
+          <strong>Pass &rarr; extubate. Fail &rarr; full support; reassess daily.</strong>
         </div>
       </div>
-      <div class="card">
-        <div class="card-head teal">🎯 Advanced Hamilton-specific parameters</div>
-        <div class="card-body" style="padding:0;">
-          <table class="tbl">
-            <tr><th>Parameter</th><th>Definition</th><th>Interpretation</th></tr>
-            <tr>
-              <td><strong><span data-tip="Airway occlusion pressure at 100ms. Reflects central respiratory drive.">P0.1</span></strong></td>
-              <td>Pressure drop in first 100 ms of inspiratory effort</td>
-              <td>&lt;1 cmH₂O → overassistance / over-sedation<br>1.5–3.5 cmH₂O → adequate drive<br>&gt;4–6 cmH₂O → high drive; risk of P-SILI and fatigue</td>
-            </tr>
-            <tr>
-              <td><strong><span data-tip="Airway resistance × compliance. Reflects time needed for complete exhalation.">RCexp</span></strong></td>
-              <td>Expiratory time constant</td>
-              <td>Qualitative guide — no universal threshold. Prolonged RCexp (COPD/asthma) → more expiratory time needed. Monitor trends, not absolute values.</td>
-            </tr>
-            <tr>
-              <td><strong>INTELLiVENT-ASV targets</strong></td>
-              <td>EtCO₂, SpO₂, %MinVol</td>
-              <td>Closed-loop auto-adjusts RR, PS, PEEP. Avoid in severe metabolic acidosis with compensatory tachypnea.</td>
-            </tr>
-            <tr>
-              <td><strong>High-pressure limit (Pmax)</strong></td>
-              <td>Upper pressure safety cutoff</td>
-              <td>Individualize per patient — set above operating Ppeak but low enough to detect dangerous rises promptly. No universal fixed value.</td>
-            </tr>
-          </table>
-        </div>
+      <div>
+        <div class="box box-warn"><strong>SIMV rate reduction is NOT recommended</strong> as a primary weaning strategy &mdash; it is slower and associated with worse outcomes compared to daily SBT. Use SIMV for partial support in pre-SBT patients, not as a stepwise weaning ladder.</div>
+        <p style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin:12px 0 6px">Readiness checklist</p>
+        <ul>
+          <li>Underlying cause of RF treated / improving</li>
+          <li>FiO&sub2; &le;0.40 &middot; PEEP &le;8 cmH&sub2;O</li>
+          <li>Haemodynamically stable (minimal/no vasopressors)</li>
+          <li>Intact cough / secretion clearance</li>
+          <li>Awake, follows simple commands</li>
+          <li>P0.1 &lt;4&ndash;6 cmH&sub2;O</li>
+        </ul>
       </div>
     </div>
+  </div>
 
-    <!-- ██ 2 · PROTECTIVE VENTILATION ████████████████████████ -->
-    <div class="sec-page" id="page-2">
-      <div class="page-header">
-        <div></div><div class="page-icon">🛡️</div>
-      </div>
-      <div class="ok"><span class="ico">🛡️</span><div><strong>VILI</strong> has four mechanisms: <strong>volutrauma</strong> (volume), <strong>barotrauma</strong> (pressure), <strong>atelectrauma</strong> (repeated collapse/reopening), <strong>biotrauma</strong> (inflammatory cascade). Protective ventilation minimizes all four.</div></div>
-      <div class="grid-3" style="margin-top:16px;">
-        <div class="card">
-          <div class="card-head green">✅ Protective targets</div>
-          <div class="card-body" style="padding:0;">
-            <table class="tbl">
-              <tr><th>Parameter</th><th>Target</th></tr>
-              <tr><td>Tidal Volume</td><td><strong>6 mL/kg PBW</strong> (ARDS) · 6–8 (others)</td></tr>
-              <tr><td>Plateau Pressure</td><td><strong>≤30 cmH₂O</strong></td></tr>
-              <tr class="hl"><td><strong>Driving Pressure</strong></td><td><strong>≤15 cmH₂O</strong></td></tr>
-              <tr><td>PEEP</td><td>Prevent derecruitment; titrate by compliance</td></tr>
-              <tr><td>FiO₂</td><td>Lowest for SpO₂ 92–96%; avoid &gt;0.6 long-term</td></tr>
-              <tr><td>PaCO₂</td><td>Permissive hypercapnia (pH ≥7.20) acceptable</td></tr>
-              <tr><td>Prone position</td><td>P/F &lt;150 after 12–24 h · ≥16 h/day</td></tr>
-            </table>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head red">🚫 Avoid</div>
-          <div class="card-body">
-            <ul class="list-clean">
-              <li>Vt &gt;8 mL/kg PBW in ARDS / at-risk lungs</li>
-              <li>Pplat &gt;30 cmH₂O</li>
-              <li>Driving pressure &gt;15 cmH₂O</li>
-              <li>FiO₂ &gt;0.6 without escalating PEEP / recruitment</li>
-              <li>Derecruitment (unnecessary PEEP drops, disconnections)</li>
-              <li>Fluid overload in ARDS (conservative strategy)</li>
-              <li>Hyperoxia (PaO₂ &gt;100 mmHg without indication)</li>
-            </ul>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head blue">🔢 Measuring ΔP</div>
-          <div class="card-body">
-            <ol style="padding-left:1.2em;line-height:1.9;font-size:13.5px;">
-              <li>Use VC-CMV or VSIMV (patient passive)</li>
-              <li>Apply <strong>inspiratory hold</strong> 0.5–3 sec → read Pplat</li>
-              <li>ΔP = Pplat − PEEP</li>
-              <li>If ΔP &gt;15 → ↓ Vt by 1 mL/kg steps or ↑ PEEP to ↑ compliance</li>
-              <li>Reassess after each change</li>
-            </ol>
-            <div class="note" style="margin-top:12px;"><span class="ico">💡</span><div>ΔP is a proxy for <strong>lung strain</strong>. Low compliance → high ΔP at the same Vt. ΔP reveals true mechanical stress better than Vt alone. (Amato et al., NEJM 2015)</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="card" style="margin-top:4px;">
-        <div class="card-head blue">📐 Hypoxemia escalation algorithm</div>
-        <div class="card-body">
-          <div class="svg-wrap">
-            <svg viewBox="0 0 820 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:540px;font-family:Inter,sans-serif;font-size:12px;">
-              <defs><marker id="a" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#94a3b8"/></marker></defs>
-              <rect x="8" y="66" width="112" height="48" rx="10" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="1.5"/>
-              <text x="64" y="87" text-anchor="middle" font-weight="700" fill="#075985">Hypoxemia</text>
-              <text x="64" y="104" text-anchor="middle" fill="#075985">SpO₂ below target</text>
-              <rect x="162" y="66" width="112" height="48" rx="10" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="1.5"/>
-              <text x="218" y="87" text-anchor="middle" font-weight="700" fill="#075985">↑ FiO₂</text>
-              <text x="218" y="104" text-anchor="middle" fill="#075985">titrate to SpO₂ target</text>
-              <rect x="326" y="52" width="138" height="76" rx="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
-              <text x="395" y="74" text-anchor="middle" font-weight="700" fill="#92400e">FiO₂ &gt; 0.60?</text>
-              <text x="395" y="91" text-anchor="middle" fill="#92400e">↑ PEEP</text>
-              <text x="395" y="107" text-anchor="middle" fill="#92400e">Recruitment</text>
-              <text x="395" y="120" text-anchor="middle" fill="#92400e">manoeuvre</text>
-              <rect x="516" y="52" width="132" height="76" rx="10" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5"/>
-              <text x="582" y="74" text-anchor="middle" font-weight="700" fill="#991b1b">Persistent?</text>
-              <text x="582" y="91" text-anchor="middle" fill="#991b1b">P/F &lt; 150</text>
-              <text x="582" y="107" text-anchor="middle" fill="#991b1b">→ Prone</text>
-              <text x="582" y="120" text-anchor="middle" fill="#991b1b">≥16 h/day</text>
-              <rect x="700" y="52" width="110" height="76" rx="10" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
-              <text x="755" y="74" text-anchor="middle" font-weight="700" fill="#5b21b6">Refractory</text>
-              <text x="755" y="91" text-anchor="middle" fill="#5b21b6">APRV / iNO</text>
-              <text x="755" y="107" text-anchor="middle" fill="#5b21b6">ECMO eval</text>
-              <line x1="120" y1="90" x2="160" y2="90" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a)"/>
-              <line x1="274" y1="90" x2="324" y2="90" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a)"/>
-              <line x1="464" y1="90" x2="514" y2="90" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a)"/>
-              <line x1="648" y1="90" x2="698" y2="90" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a)"/>
-              <text x="64" y="156" text-anchor="middle" fill="#94a3b8" font-size="10">Step 1</text>
-              <text x="218" y="156" text-anchor="middle" fill="#94a3b8" font-size="10">Step 2</text>
-              <text x="395" y="152" text-anchor="middle" fill="#94a3b8" font-size="10">Step 3</text>
-              <text x="582" y="152" text-anchor="middle" fill="#94a3b8" font-size="10">Step 4</text>
-              <text x="755" y="152" text-anchor="middle" fill="#94a3b8" font-size="10">Step 5</text>
-            </svg>
-          </div>
-        </div>
-      </div>
+  <div class="stitle">Advanced Mode Deep Dive</div>
+  <div class="g2">
+    <div class="card card-adv">
+      <h3>🤖 INTELLiVENT-ASV &mdash; Closed-loop ventilation</h3>
+      <p>INTELLiVENT-ASV uses <strong>ideal body weight</strong>, <strong>%MinVol target</strong>, and real-time <strong>SpO&sub2; / EtCO&sub2;</strong> to continuously auto-adjust RR, PS, PEEP, and FiO&sub2;. No manual breath-to-breath adjustments needed during stable phases.</p>
+      <div class="box box-adv"><strong>Best for:</strong> Stable ARDS weaning &middot; post-op cardiac surgery &middot; neurological patients &middot; overnight monitoring</div>
+      <div class="box box-warn"><strong>Avoid in:</strong> Severe metabolic acidosis with compensatory tachypnea (algorithm interprets high RR as met demand, may under-ventilate) &middot; Acute haemodynamic instability with rapid lung mechanics changes</div>
     </div>
-
-    <!-- ██ 3 · ARDS ████████████████████████████████████████████ -->
-    <div class="sec-page" id="page-3">
-      <div class="page-header"><div></div><div class="page-icon">🫁</div></div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-head blue">📋 Berlin Classification (2012)</div>
-          <div class="card-body" style="padding:0;">
-            <table class="tbl">
-              <tr><th>Severity</th><th>P/F (mmHg)</th><th>PEEP</th><th>Escalation</th></tr>
-              <tr><td><strong>Mild</strong></td><td>200–300 (PEEP ≥5)</td><td>5–8 cmH₂O</td><td>Optimise sedation, NIV trial</td></tr>
-              <tr><td><strong>Moderate</strong></td><td>100–200</td><td>8–13 cmH₂O</td><td>Higher PEEP, NMB 48 h if asynchrony</td></tr>
-              <tr class="hl"><td><strong>Severe</strong></td><td>&lt;100</td><td>13–18 cmH₂O</td><td><strong>Prone ≥16 h/day</strong>; APRV; iNO; ECMO evaluation</td></tr>
-            </table>
-            <div style="padding:14px 16px;">
-              <div class="note"><span class="ico">💡</span><div>Criteria: bilateral opacities (CXR/CT); not fully explained by effusions or collapse; not fully explained by cardiac failure or fluid overload.</div></div>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head amber">📌 ARDSnet low-Vt protocol</div>
-          <div class="card-body">
-            <ul class="list-clean">
-              <li><strong>Vt = 6 mL/kg PBW</strong> (reduce to 4 if Pplat &gt;30 or ΔP &gt;15)</li>
-              <li><strong>Pplat ≤30 cmH₂O</strong></li>
-              <li><strong>Driving pressure ≤15 cmH₂O</strong></li>
-              <li>RR up to 35/min to maintain pH ≥7.20</li>
-              <li>PEEP/FiO₂ table (low- or high-PEEP strategy)</li>
-              <li>Target SpO₂ 92–96% or PaO₂ 55–80 mmHg</li>
-              <li>Conservative fluids post-resuscitation</li>
-              <li>Cisatracurium (NMB) 48 h if P/F &lt;150 + significant asynchrony</li>
-              <li>Prone ≥16 h/day if P/F &lt;150 after 12–24 h optimal settings</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+    <div class="card card-vent">
+      <h3>⏱️ APRV &mdash; Airway Pressure Release Ventilation</h3>
+      <div class="tw"><table>
+        <tr><th class="th-n">Parameter</th><th class="th-v">Typical setting</th><th class="th-n">Purpose</th></tr>
+        <tr><td>P_high</td><td class="v-val">20&ndash;30 cmH&sub2;O</td><td>Sustained recruitment pressure</td></tr>
+        <tr><td>T_high</td><td class="v-val">4&ndash;6 sec</td><td>Long inflation time &rarr; maximum recruitment; spontaneous breathing allowed</td></tr>
+        <tr><td>P_low</td><td class="v-val">0&ndash;5 cmH&sub2;O</td><td>Release to allow CO&sub2; clearance</td></tr>
+        <tr><td>T_low</td><td class="v-val">0.2&ndash;0.8 sec</td><td>Set so expiratory flow at end &asymp;75% of peak &rarr; avoids complete derecruitment</td></tr>
+      </table></div>
+      <div class="box box-dang"><strong>Contraindicated:</strong> Severe COPD/asthma (dynamic hyperinflation) &middot; Large air leak<br><strong>ICP elevation: caution</strong> (not absolute CI) &mdash; high mean Paw may impair cerebral venous drainage; monitor ICP and individualise per case.</div>
     </div>
+  </div>
 
-    <!-- ██ 4 · ASYNCHRONY ██████████████████████████████████████ -->
-    <div class="sec-page" id="page-4">
-      <div class="page-header"><div></div><div class="page-icon">⚡</div></div>
-      <div class="warn" style="margin-bottom:16px;"><span class="ico">⚠️</span><div>Asynchrony is associated with prolonged ventilation and poor outcomes. Identify the pattern from waveforms <strong>before escalating sedation</strong>.</div></div>
-      <div class="card">
-        <div class="card-head blue">🔍 PVA patterns — recognition &amp; management</div>
-        <div class="card-body" style="padding:0;">
-          <table class="tbl">
-            <tr><th>Pattern</th><th>Waveform clue</th><th>Mechanism</th><th>Management</th></tr>
-            <tr><td><strong>Double triggering</strong></td><td>Two consecutive Vt within one neural effort</td><td>Ti(vent) &lt; neural Ti; high respiratory drive</td><td>↑ Ti; switch to PC; if severe → sedation / NMB</td></tr>
-            <tr><td><strong>Flow starvation</strong></td><td>Concave pressure-time curve during VC breath (patient pulling)</td><td>Set flow insufficient for patient demand</td><td>↑ Inspiratory flow; switch to PC or PSV</td></tr>
-            <tr><td><strong>Ineffective effort</strong></td><td>Deflection in flow/pressure without triggered breath</td><td>Auto-PEEP exceeds trigger effort; over-sedation</td><td>↓ Auto-PEEP; apply external PEEP ~70–85% iPEEP; lighten sedation</td></tr>
-            <tr><td><strong>Auto-triggering</strong></td><td>Trigger without effort; irregular RR</td><td>Circuit leak, cardiac oscillations, trigger too sensitive</td><td>Drain circuit; ↓ trigger sensitivity; fix leak</td></tr>
-            <tr><td><strong>Premature cycling</strong></td><td>Flow positive at cycle-off; patient still inhaling</td><td>Ti(vent) &lt; neural Ti; low PSV cycle-off threshold</td><td>↑ Ti; ↑ Expiratory Trigger Sensitivity (Hamilton setting)</td></tr>
-            <tr><td><strong>Delayed cycling</strong></td><td>Active expiratory effort at end of breath; pressure spike</td><td>Ti(vent) &gt; neural Ti</td><td>↓ Ti; ↑ cycle-off threshold</td></tr>
-            <tr><td><strong>Reverse triggering</strong></td><td>Diaphragmatic effort triggered by ventilator delivery</td><td>Deep sedation — breath entrains diaphragm</td><td>Reassess sedation; short-term NMB; may resolve with lightened sedation</td></tr>
-          </table>
-        </div>
-      </div>
-    </div>
+  <div class="footnote">
+    Based on: ARDSnet Protocol (NHLBI 2000) &middot; Amato MB et al. &mdash; Driving Pressure and Survival in ARDS, NEJM 2015 &middot; Gattinoni L et al. &mdash; Mechanical Power, Intensive Care Med 2016 &middot; Girard TD et al. &mdash; Awakening and Breathing Trial, Lancet 2008 &middot; ACCCM/ERS Weaning Guidelines 2017 &middot; ATS/ERS/ESICM/SCCM Mechanical Ventilation Guidelines &middot; Hamilton Medical C1 Operator&rsquo;s Manual v6.0 &middot; INTELLiVENT-ASV Clinical Guide &middot; Bojar RM &mdash; Manual of Perioperative Care in Adult Cardiac Surgery &middot; Marino PL &mdash; The ICU Book. For educational purposes only &mdash; always integrate with clinical judgement.
+    <br><br>Cardiac Surgery Clinical Education &middot; StarleyBy &middot; 2025
+  </div>
+</section>
 
-    <!-- ██ 5 · AUTO-PEEP ██████████████████████████████████████ -->
-    <div class="sec-page" id="page-5">
-      <div class="page-header"><div></div><div class="page-icon">💨</div></div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-head red">⚠️ Pathophysiology &amp; recognition</div>
-          <div class="card-body">
-            <p style="font-size:13.5px;line-height:1.6;margin-bottom:12px;"><strong>Auto-PEEP</strong> (iPEEP) occurs when expiratory flow does not reach zero before the next breath — air is trapped, raising end-expiratory alveolar pressure above set PEEP.</p>
-            <p style="font-weight:700;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Causes</p>
-            <ul class="list-clean" style="font-size:13px;margin-bottom:12px;">
-              <li>COPD, asthma</li>
-              <li>High RR or short expiratory time</li>
-              <li>High Vt; small ETT; secretions</li>
-              <li>Dynamic airway collapse</li>
-            </ul>
-            <p style="font-weight:700;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Consequences</p>
-            <ul class="list-clean" style="font-size:13px;">
-              <li>↑ Intrathoracic pressure → ↓ venous return → <strong>hypotension / obstructive shock</strong></li>
-              <li>Ineffective triggering (patient must overcome iPEEP first)</li>
-              <li>Dynamic hyperinflation → pneumothorax</li>
-              <li>↑ Work of breathing</li>
-            </ul>
-            <div class="note" style="margin-top:12px;"><span class="ico">💡</span><div>Unexplained hypotension on ventilator in obstructive disease: suspect auto-PEEP first. Briefly disconnect → observe haemodynamic improvement and audible air release.</div></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head teal">📏 Measurement &amp; management</div>
-          <div class="card-body">
-            <p style="font-weight:700;font-size:13px;margin-bottom:8px;">Measurement</p>
-            <p style="font-size:13.5px;margin-bottom:14px;">Expiratory hold (0.5–2 sec) → read total PEEP.<br><strong>Auto-PEEP = total PEEP − set PEEP</strong></p>
-            <p style="font-weight:700;font-size:13px;margin-bottom:8px;">Management ladder</p>
-            <ul class="list-clean" style="font-size:13px;">
-              <li>↓ RR → ↑ expiratory time</li>
-              <li>↓ Vt (less volume per breath to exhale)</li>
-              <li>↑ I:E ratio (1:3–1:4)</li>
-              <li>↑ Peak inspiratory flow (shortens Ti)</li>
-              <li>Bronchodilators + secretion clearance</li>
-              <li>Apply external PEEP ≈ 70–85% of measured iPEEP</li>
-            </ul>
-            <div class="alert" style="margin-top:12px;"><span class="ico">🚨</span><div>In cardiac surgery patients: auto-PEEP severely impairs RV filling → haemodynamic collapse. Monitor actively in COPD or post-bronchospasm patients.</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ██ 6 · PERMISSIVE HYPERCAPNIA ████████████████████████ -->
-    <div class="sec-page" id="page-6">
-      <div class="page-header"><div></div><div class="page-icon">♾️</div></div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-head purple">📖 Concept</div>
-          <div class="card-body">
-            <p style="font-size:13.5px;line-height:1.65;margin-bottom:14px;"><strong>Permissive hypercapnia</strong> = intentional acceptance of elevated PaCO₂ to achieve lower Vt and pressures — prioritizing lung protection over normocapnia.</p>
-            <ul class="list-clean">
-              <li>Allow PaCO₂ up to <strong>60–80 mmHg</strong> if haemodynamically tolerated</li>
-              <li>Acceptable pH: <strong>≥7.20–7.25</strong></li>
-              <li>Avoid rapid CO₂ fluctuations (arrhythmia risk)</li>
-              <li>NaHCO₃ may correct pH if &lt;7.20 (controversial, tidal correction only)</li>
-            </ul>
-            <div class="tip" style="margin-top:12px;"><span class="ico">💡</span><div>Modest hypercapnic acidosis may have direct lung-protective effects (anti-inflammatory). Generally well tolerated in ARDS with adequate haemodynamics.</div></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head red">🚫 Contraindications &amp; cautions</div>
-          <div class="card-body">
-            <ul class="list-clean">
-              <li><strong>Intracranial hypertension (TBI, post-neurosurgery)</strong> — CO₂ is a potent cerebral vasodilator; hypercapnia worsens ICP. <em>Avoid.</em></li>
-              <li><strong>Pulmonary hypertension</strong> — hypercapnia and acidosis ↑ PVR; worsens RV failure.</li>
-              <li><strong>Severe metabolic acidosis</strong> (pH &lt;7.20) — additional respiratory acidosis is dangerous.</li>
-              <li><strong>RV failure post-cardiac surgery</strong> — maintain normocapnia; hypercapnia ↑ RV afterload.</li>
-              <li>Cardiac arrhythmias attributable to acidosis.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ██ 7 · MECHANICAL POWER ███████████████████████████████ -->
-    <div class="sec-page" id="page-7">
-      <div class="page-header"><div></div><div class="page-icon">⚙️</div></div>
-      <div class="card">
-        <div class="card-body">
-          <div class="grid-2" style="gap:28px;margin-bottom:0;">
-            <div>
-              <p style="font-size:13.5px;line-height:1.65;margin-bottom:14px;"><strong>Mechanical Power (MP)</strong> is the total energy delivered to the respiratory system per minute. It unifies volume, pressure, flow, and rate — capturing cumulative injurious potential better than any single parameter.</p>
-              <p style="font-weight:700;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Simplified formula (VC-CMV)</p>
-              <div class="formula">MP (J/min) = 0.098 × RR × Vt<sub>(L)</sub> × (P<sub>peak</sub> − ΔP/2)</div>
-              <p style="font-size:12px;color:var(--muted);margin-bottom:16px;">Pressures in cmH₂O · Vt in litres</p>
-              <p style="font-weight:700;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Clinical thresholds (observational)</p>
-              <table class="tbl">
-                <tr><th>MP (J/min)</th><th>Clinical implication</th></tr>
-                <tr class="hl"><td>&lt;12</td><td>Generally safe zone</td></tr>
-                <tr><td>12–17</td><td>Intermediate — minimize other risk factors</td></tr>
-                <tr><td>&gt;17–20</td><td>Associated with VILI and higher mortality in ARDS</td></tr>
-              </table>
-            </div>
-            <div>
-              <p style="font-weight:700;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Main contributors</p>
-              <ul class="list-clean" style="margin-bottom:16px;">
-                <li>High Vt (dominant driver)</li>
-                <li>High respiratory rate</li>
-                <li>High driving pressure</li>
-                <li>High PEEP (static component)</li>
-                <li>High airway resistance (↑ Ppeak)</li>
-              </ul>
-              <div class="note"><span class="ico">💡</span><div>Hamilton C1 with INTELLiVENT-ASV can display estimated MP. Reducing RR and Vt synergistically lowers MP even when individual values appear acceptable.</div></div>
-              <div class="purple-note" style="margin-top:10px;"><span class="ico">🔬</span><div>MP is emerging and not yet in formal guidelines (2025), but provides a unified lens — especially when standard parameters conflict (e.g. low Vt but high RR + high PEEP). (Gattinoni et al., Intensive Care Med 2016)</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ██ 8 · CARDIAC SURGERY ████████████████████████████████ -->
-    <div class="sec-page" id="page-8">
-      <div class="page-header"><div></div><div class="page-icon">❤️</div></div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-head teal">🏥 Post-operative goals &amp; fast-track</div>
-          <div class="card-body">
-            <ul class="list-clean">
-              <li><strong>Early extubation (fast-track):</strong> target 4–8 h post-CABG / valve repair in uncomplicated cases. Reduces VAP, ICU stay, cost.</li>
-              <li>Protective ventilation even for short post-op: <strong>Vt 6–8 mL/kg PBW</strong></li>
-              <li>SpO₂ 94–98% (liberal target acceptable with adequate cardiac output)</li>
-              <li>EtCO₂ 35–42 mmHg; avoid hypercapnia if elevated PVR suspected</li>
-              <li>PEEP 5–8 cmH₂O to prevent atelectasis (sternotomy + CPB effects)</li>
-              <li>Propofol or dexmedetomidine preferred over benzodiazepines</li>
-            </ul>
-            <div class="ok" style="margin-top:12px;"><span class="ico">✅</span><div><strong>Phrenic nerve palsy</strong> (post-IMA harvest, hypothermia): assess by ultrasound. Unilateral palsy may still permit extubation. Bilateral palsy requires continued support.</div></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head amber">⚠️ Haemodynamic interactions with PPV</div>
-          <div class="card-body">
-            <ul class="list-clean">
-              <li><strong>High PEEP → ↓ RV preload:</strong> in RV failure (post-tricuspid, PH, RV MI) — use lowest effective PEEP.</li>
-              <li><strong>Hypercapnia and hypoxia → ↑ PVR → ↑ RV afterload:</strong> maintain normocapnia in RV failure.</li>
-              <li><strong>Pulse pressure variation (PPV):</strong> valid fluid responsiveness marker only in fully controlled, arrhythmia-free ventilation with Vt ≥8 mL/kg — conflicts with lung protection in ARDS.</li>
-              <li><strong>Post-pneumonectomy:</strong> PEEP 3–5 cmH₂O on remaining lung; minimize FiO₂; avoid high mean airway pressures.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head green">📋 Extubation readiness criteria</div>
-          <div class="card-body">
-            <ul class="list-clean">
-              <li>Awake, follows commands</li>
-              <li>Spontaneous Vt &gt;5 mL/kg PBW, RR &lt;30/min</li>
-              <li>SpO₂ &gt;92% on PS ≤8 cmH₂O + PEEP 5</li>
-              <li>FiO₂ ≤0.40, PEEP ≤8 cmH₂O</li>
-              <li>No vasopressor escalation</li>
-              <li>Adequate cough / secretion clearance</li>
-              <li>P0.1 &lt;4–6 cmH₂O</li>
-            </ul>
-            <div class="tip" style="margin-top:10px;"><span class="ico">💡</span><div>Post-extubation: consider HFNO prophylactically in impaired cardiac function to reduce re-intubation risk.</div></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head red">🚨 Delay extubation if:</div>
-          <div class="card-body">
-            <ul class="list-clean">
-              <li>Haemodynamic instability / vasopressor escalation</li>
-              <li>Significant bleeding requiring re-exploration</li>
-              <li>Uncontrolled arrhythmia (rapid AF)</li>
-              <li>Persistent severe hypoxemia (FiO₂ &gt;0.5, PEEP &gt;8)</li>
-              <li>Neurological deficit, prolonged obtundation</li>
-              <li>Severe metabolic acidosis / hypothermia</li>
-              <li>Bilateral phrenic palsy or diaphragm injury</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ██ 9 · INDICATIONS ████████████████████████████████████ -->
-    <div class="sec-page" id="page-9">
-      <div class="page-header"><div></div><div class="page-icon">✅</div></div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-head green">🟢 Indications for mechanical ventilation</div>
-          <div class="card-body">
-            <ul class="list-clean">
-              <li>Acute respiratory failure (PaO₂ &lt;60 mmHg, PaCO₂ &gt;50 with pH &lt;7.25)</li>
-              <li>Apnoea / impending respiratory arrest</li>
-              <li>Severe hypoxemia (P/F &lt;200)</li>
-              <li>↑ Work of breathing (accessory muscles, paradoxical breathing, tachypnea)</li>
-              <li>Post-cardiac arrest / post-operative support</li>
-              <li>Neuromuscular disease (GBS, myasthenia gravis)</li>
-              <li>Airway protection failure</li>
-              <li>Transport — C1 is turbine-driven, no external gas source needed</li>
-            </ul>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head red">🔴 Contraindications (relative)</div>
-          <div class="card-body">
-            <ul class="list-clean">
-              <li>Untreated pneumothorax (chest drain first)</li>
-              <li>Massive haemoptysis / severe distal airway obstruction</li>
-              <li>Advanced directive limiting life support</li>
-              <li>APRV contraindicated in severe obstructive disease (high auto-PEEP risk)</li>
-            </ul>
-            <div class="warn" style="margin-top:12px;"><span class="ico">⚠️</span><div><strong>C1 NIV mode contraindicated in:</strong> facial trauma, upper airway obstruction, inability to protect airway. Turbine compensates leaks up to 40 L/min.</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ██ 10 · ALARMS █████████████████████████████████████████ -->
-    <div class="sec-page" id="page-10">
-      <div class="page-header"><div></div><div class="page-icon">🔔</div></div>
-      <div class="card">
-        <div class="card-head blue">⚙️ Alarm limits — thresholds &amp; troubleshooting</div>
-        <div class="card-body" style="padding:0;">
-          <table class="tbl alarm-table">
-            <tr><th>Alarm</th><th>Lower</th><th>Upper</th><th>Cause &amp; response</th></tr>
-            <tr>
-              <td>High pressure (Ppeak)</td>
-              <td>—</td>
-              <td><strong>Individualize:</strong> above operating Ppeak but low enough to detect dangerous rises. Starting point: 35–40 cmH₂O (ARDS); up to 45 (severe obstructive).</td>
-              <td>Bronchospasm, secretions, kinked ETT, biting → suction, bronchodilator, check circuit</td>
-            </tr>
-            <tr><td>Low pressure</td><td>5 cmH₂O below baseline Ppeak</td><td>—</td><td>Disconnection, cuff leak → reconnect, check cuff and circuit</td></tr>
-            <tr><td>Low minute volume</td><td>3 L/min (adult)</td><td>—</td><td>Hypoventilation, apnoea, leak → assess patient, ↑ RR, check circuit</td></tr>
-            <tr><td>High RR</td><td>—</td><td>35/min</td><td>Pain, anxiety, pulmonary oedema, asynchrony → assess sedation, change mode</td></tr>
-            <tr><td>Low SpO₂</td><td>88% (COPD) or 92% (others)</td><td>—</td><td>Hypoxemia → ↑ FiO₂/PEEP, check probe, suction</td></tr>
-            <tr><td>High EtCO₂</td><td>—</td><td>45–50 mmHg (adjust per permissive strategy)</td><td>Hypoventilation, dead space → ↑ RR/Vt, check circuit</td></tr>
-            <tr><td>Apnoea</td><td>No breath 15–20 sec</td><td>—</td><td>Trigger too high, apnoea → set backup RR, adjust trigger, bag patient</td></tr>
-          </table>
-        </div>
-      </div>
-      <div class="note" style="margin-top:14px;"><span class="ico">💡</span><div><strong>C1 Limits menu:</strong> Individualize alarm limits to patient severity. Fixed universal values are not appropriate — a PEEP 14 ARDS patient has very different needs from a post-op CABG patient on PEEP 5.</div></div>
-    </div>
-
-    <!-- ██ 11 · ERRORS ████████████████████████████████████████ -->
-    <div class="sec-page" id="page-11">
-      <div class="page-header"><div></div><div class="page-icon">⚠️</div></div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-head red">🚫 Ventilator errors</div>
-          <div class="card-body">
-            <ul class="list-clean">
-              <li><strong>"High PEEP leak"</strong> — circuit leak or exhalation valve malfunction → check expiratory filter, reconnect, run SST</li>
-              <li><strong>"Check patient circuit"</strong> — disconnection or occlusion → inspect circuit, replace wet filter</li>
-              <li><strong>"Occlusion / high pressure"</strong> — secretions, ETT kink, biting → suction, check ETT position, sedation</li>
-              <li><strong>"Power failure"</strong> — battery depleted → connect external power; C1 has 4-h hot-swappable battery</li>
-              <li><strong>"Sensor error"</strong> — contaminated flow/pressure sensor → run leak test, replace sensor</li>
-            </ul>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head amber">⚠️ Clinical warnings</div>
-          <div class="card-body">
-            <ul class="list-clean">
-              <li><strong>"Low compliance"</strong> — atelectasis, ARDS, pneumothorax → recruit, CXR</li>
-              <li><strong>"Auto-PEEP high"</strong> — COPD/asthma → ↓ RR, ↑ Te, bronchodilators, apply external PEEP ≈70–85% iPEEP</li>
-              <li><strong>"Asynchrony detected"</strong> — double-triggering or ineffective efforts → adjust trigger, consider mode change</li>
-              <li><strong>"High FiO₂ demand"</strong> — FiO₂ &gt;0.6 prolonged → optimize PEEP, recruitment, prone, treat cause</li>
-            </ul>
-            <div class="alert" style="margin-top:12px;"><span class="ico">🧰</span><div><strong>"Ventilator inoperative":</strong> Disconnect and manually bag immediately. Always have backup device at bedside.</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ██ 12 · QUICK SETUP ███████████████████████████████████ -->
-    <div class="sec-page" id="page-12">
-      <div class="page-header"><div></div><div class="page-icon">📝</div></div>
-      <div class="card" style="margin-bottom:18px;">
-        <div class="card-head navy">📐 Quick initial setup — adult, IBW 70 kg</div>
-        <div class="card-body">
-          <div class="grid-2" style="margin-bottom:0;">
-            <div>
-              <p style="font-weight:700;font-size:14px;margin-bottom:12px;">💨 VSIMV (Volume SIMV)</p>
-              <table class="tbl">
-                <tr><th>Setting</th><th>Value</th></tr>
-                <tr><td>Mandatory Vt</td><td><strong>420 mL (6 mL/kg PBW)</strong></td></tr>
-                <tr><td>SIMV rate</td><td>10–12/min</td></tr>
-                <tr><td>Pressure Support</td><td>10–15 cmH₂O</td></tr>
-                <tr><td>PEEP</td><td>5 cmH₂O (↑ per need)</td></tr>
-                <tr><td>FiO₂</td><td>1.0 → titrate to SpO₂ 92–96%</td></tr>
-                <tr><td>Flow</td><td>50 L/min (square wave)</td></tr>
-                <tr><td>Trigger</td><td>Flow 3 L/min</td></tr>
-              </table>
-            </div>
-            <div>
-              <p style="font-weight:700;font-size:14px;margin-bottom:12px;">🫁 PSIMV (Pressure SIMV)</p>
-              <table class="tbl">
-                <tr><th>Setting</th><th>Value</th></tr>
-                <tr><td>Pressure control ΔP</td><td>12–15 cmH₂O above PEEP → Vt 6–8 mL/kg PBW</td></tr>
-                <tr><td>SIMV rate</td><td>10–12/min</td></tr>
-                <tr><td>Pressure Support</td><td>10–15 cmH₂O</td></tr>
-                <tr><td>PEEP</td><td>5–8 cmH₂O</td></tr>
-                <tr><td>Inspiratory time</td><td>1.0–1.2 sec</td></tr>
-                <tr><td>FiO₂</td><td>Titrate to SpO₂ 92–96%</td></tr>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="warn"><span class="ico">📌</span><div>After initiation: measure Pplat (inspiratory hold) and calculate driving pressure (ΔP = Pplat − PEEP). Reduce Vt if Pplat &gt;30 cmH₂O or ΔP &gt;15 cmH₂O.</div></div>
-      <div class="note" style="margin-top:8px;"><span class="ico">📌</span><div><strong>COPD setup:</strong> ↓ SIMV rate (6–8/min), ↑ inspiratory flow (60–80 L/min) to prolong expiration and limit auto-PEEP. Individualize external PEEP to ~70–85% of measured iPEEP.</div></div>
-    </div>
-
-    <!-- ██ 13 · ADVANCED MODES ████████████████████████████████ -->
-    <div class="sec-page" id="page-13">
-      <div class="page-header"><div></div><div class="page-icon">🧪</div></div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-head blue">🤖 INTELLiVENT-ASV (closed-loop)</div>
-          <div class="card-body">
-            <p style="font-size:13.5px;line-height:1.6;margin-bottom:12px;"><strong>Mechanism:</strong> Integrates IBW, minute ventilation target, and SpO₂/EtCO₂ feedback to auto-adjust RR, PS, PEEP, and FiO₂ breath-to-breath.</p>
-            <table class="tbl" style="margin-bottom:12px;">
-              <tr><th>Setting</th><th>Typical target</th></tr>
-              <tr><td>EtCO₂</td><td>35–45 mmHg</td></tr>
-              <tr><td>SpO₂</td><td>88–96%</td></tr>
-              <tr><td>Pmax safety limit</td><td>40 cmH₂O</td></tr>
-              <tr><td>Max PEEP</td><td>20 cmH₂O</td></tr>
-              <tr><td>Max RR</td><td>40/min</td></tr>
-            </table>
-            <div class="tip"><span class="ico">💡</span><div>Avoid in severe metabolic acidosis with compensatory tachypnea — algorithm may under-ventilate by misinterpreting high RR as demand already met.</div></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head teal">⏱️ APRV (Airway Pressure Release Ventilation)</div>
-          <div class="card-body">
-            <table class="tbl" style="margin-bottom:12px;">
-              <tr><th>Parameter</th><th>Typical value</th></tr>
-              <tr><td>P_high</td><td>20–30 cmH₂O</td></tr>
-              <tr><td>T_high</td><td>4–6 sec</td></tr>
-              <tr><td>P_low</td><td>0–5 cmH₂O</td></tr>
-              <tr><td>T_low</td><td>0.2–0.8 sec (set so expiratory flow at end ≈75% of peak)</td></tr>
-            </table>
-            <p style="font-size:13px;margin-bottom:12px;"><strong>Indication:</strong> Severe ARDS (P/F &lt;150) unresponsive to conventional ventilation. Sustained recruitment + preserved spontaneous breathing.</p>
-            <div class="alert"><span class="ico">⚠️</span><div>Contraindicated in severe obstructive disease (high auto-PEEP risk) and large air leak.<br><strong>Elevated ICP:</strong> use with caution — not an absolute contraindication, but high mean airway pressure may impair cerebral venous drainage. Individualize per case.</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ██ 14 · WEANING ████████████████████████████████████████ -->
-    <div class="sec-page" id="page-14">
-      <div class="page-header"><div></div><div class="page-icon">🏁</div></div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-head green">✅ Evidence-based weaning approach</div>
-          <div class="card-body">
-            <p style="font-size:13.5px;line-height:1.65;margin-bottom:14px;">Daily <strong>Spontaneous Awakening Trials (SAT)</strong> + <strong>Spontaneous Breathing Trials (SBT)</strong> are the recommended strategy (Girard 2008; ACCCM/ERS 2017). Superior to gradual SIMV rate reduction.</p>
-            <ul class="list-clean">
-              <li><strong>SAT:</strong> interrupt sedation daily until awake/arousable</li>
-              <li><strong>SBT:</strong> PSV 5–8 cmH₂O + PEEP 5, or CPAP/T-piece for 30–120 min</li>
-              <li>Pass criteria: RR &lt;35, SpO₂ &gt;92%, Vt &gt;5 mL/kg PBW spontaneous, no distress, haemodynamically stable</li>
-              <li>Pass → extubate · Fail → full support, reassess daily</li>
-            </ul>
-            <div class="warn" style="margin-top:12px;"><span class="ico">⚠️</span><div>Gradual SIMV rate reduction is <strong>not recommended</strong> as a primary weaning strategy — it is slower and associated with worse outcomes. Use SIMV for partial support in pre-SBT patients only.</div></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head blue">🔁 Readiness checklist</div>
-          <div class="card-body">
-            <ul class="list-clean">
-              <li>Underlying cause of respiratory failure treated / improving</li>
-              <li>FiO₂ ≤0.40, PEEP ≤8 cmH₂O</li>
-              <li>Haemodynamically stable (no or minimal vasopressors)</li>
-              <li>Intact cough / secretion clearance</li>
-              <li>Awake, follows simple commands</li>
-              <li>P0.1 &lt;4–6 cmH₂O (adequate drive, no excessive demand)</li>
-            </ul>
-            <div class="tip" style="margin-top:12px;"><span class="ico">💡</span><div>Post-extubation in cardiac surgery or high-risk patients: consider HFNO prophylactically to reduce re-intubation risk.</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="card" style="margin-top:4px;">
-        <div class="card-head navy">📚 Sources</div>
-        <div class="card-body" style="font-size:12.5px;color:var(--muted);line-height:1.8;">
-          Hamilton Medical C1 Operator's Manual (v6.0) · INTELLiVENT-ASV Clinical Guide · ARDSnet Protocol · ATS/ERS/ESICM Mechanical Ventilation Guidelines · ACCCM/ERS Weaning Guidelines 2017 · Amato MB et al. (Driving Pressure, NEJM 2015) · Gattinoni L et al. (Mechanical Power, Intensive Care Med 2016) · Bojar RM — Manual of Perioperative Care in Adult Cardiac Surgery · Marino PL — The ICU Book
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /sections-wrap -->
-</div><!-- /main -->
-</div><!-- /app -->
+</main>
 
 <script>
-const SECTIONS = [
-  { id:'page-0',  icon:'🔄', label:'Ventilation modes' },
-  { id:'page-1',  icon:'📊', label:'Parameters' },
-  { id:'page-2',  icon:'🛡️', label:'Lung protection' },
-  { id:'page-3',  icon:'🫁', label:'ARDS — Berlin + ARDSnet' },
-  { id:'page-4',  icon:'⚡', label:'Patient-ventilator asynchrony' },
-  { id:'page-5',  icon:'💨', label:'Auto-PEEP' },
-  { id:'page-6',  icon:'♾️', label:'Permissive hypercapnia' },
-  { id:'page-7',  icon:'⚙️', label:'Mechanical power' },
-  { id:'page-8',  icon:'❤️', label:'Cardiac surgery' },
-  { id:'page-9',  icon:'✅', label:'Indications' },
-  { id:'page-10', icon:'🔔', label:'Alarm management' },
-  { id:'page-11', icon:'⚠️', label:'Errors & troubleshooting' },
-  { id:'page-12', icon:'📝', label:'Quick setup' },
-  { id:'page-13', icon:'🧪', label:'Advanced modes' },
-  { id:'page-14', icon:'🏁', label:'Weaning' },
-];
-
-let current = 0;
-
-// Build sidebar
-const nav = document.getElementById('sidebarNav');
-SECTIONS.forEach((s, i) => {
-  const el = document.createElement('div');
-  el.className = 'nav-item' + (i === 0 ? ' active' : '');
-  el.innerHTML = '<span class="ni">' + s.icon + '</span><span>' + s.label + '</span>';
-  el.addEventListener('click', () => { goTo(i); closeSidebar(); });
-  nav.appendChild(el);
-});
-
-function goTo(index) {
-  if (index < 0 || index >= SECTIONS.length) return;
-  // Hide all
-  document.querySelectorAll('.sec-page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  // Show target
-  document.getElementById(SECTIONS[index].id).classList.add('active');
-  nav.children[index].classList.add('active');
-  // Scroll content to top
-  document.getElementById('sectionsWrap').scrollTop = 0;
-  // Scroll sidebar nav item into view
-  nav.children[index].scrollIntoView({block:'nearest'});
-  current = index;
-  updateUI();
+const tabs = document.querySelectorAll('.tab');
+const nbs  = document.querySelectorAll('.nb');
+function gt(i, b) {
+  tabs.forEach(t => t.classList.remove('active'));
+  nbs.forEach(n => n.classList.remove('active'));
+  tabs[i].classList.add('active');
+  b.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-function navigate(dir) { goTo(current + dir); }
-
-function updateUI() {
-  const n = SECTIONS.length;
-  const s = SECTIONS[current];
-  document.getElementById('topEyebrow').textContent = 'Section ' + (current+1) + ' of ' + n;
-  document.getElementById('topTitle').textContent = s.icon + '  ' + s.label;
-  document.getElementById('counterBadge').textContent = (current+1) + ' / ' + n;
-  document.getElementById('topPrev').disabled = (current === 0);
-  document.getElementById('topNext').disabled = (current === n-1);
-  document.getElementById('progressFill').style.width = (((current+1)/n)*100) + '%';
-  // Update hash
-  window.location.hash = current;
-}
-
-function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('overlay').classList.toggle('open');
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('overlay').classList.remove('open');
-}
-
-// Keyboard navigation
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
-  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
-});
-
-// Hash routing on load
-const hash = parseInt(window.location.hash.replace('#',''));
-goTo(isNaN(hash) ? 0 : Math.max(0, Math.min(hash, SECTIONS.length-1)));
 </script>
 </body>
 </html>
