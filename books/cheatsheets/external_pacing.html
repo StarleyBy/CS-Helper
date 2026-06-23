@@ -1,776 +1,716 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Medtronic 5388 – Temporary External Pacing Guide</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: #f0f4f9;
-            font-family: 'Inter', system-ui, 'Segoe UI', 'Roboto', sans-serif;
-            line-height: 1.45;
-            color: #162b3a;
-            padding: 32px 24px;
-        }
-        .guide-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 32px;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.08);
-            overflow: hidden;
-        }
-        .header {
-            background: linear-gradient(135deg, #1e4a6e 0%, #0e2e45 100%);
-            padding: 28px 34px;
-            color: white;
-        }
-        .header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-        .badge {
-            background: #ffb74d;
-            color: #0e2e45;
-            padding: 4px 14px;
-            border-radius: 40px;
-            font-size: 14px;
-            font-weight: 700;
-        }
-        .subhead {
-            font-size: 15px;
-            margin-top: 10px;
-            border-left: 3px solid #ffb74d;
-            padding-left: 16px;
-            opacity: 0.9;
-        }
-        .quick-nav {
-            background: #ffffff;
-            border-bottom: 1px solid #e2edf5;
-            padding: 12px 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(12px);
-            background-color: rgba(255,255,255,0.92);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-        }
-        .quick-nav a {
-            background: #ecf5fc;
-            padding: 6px 16px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            color: #1e4a6e;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-        .quick-nav a:hover {
-            background: #cbe4f0;
-            transform: scale(1.02);
-        }
-        .content {
-            padding: 30px 34px;
-        }
-        .section {
-            margin-bottom: 44px;
-            scroll-margin-top: 80px;
-        }
-        .section-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: #1e4a6e;
-            border-bottom: 3px solid #cbe4f0;
-            padding-bottom: 8px;
-            margin-bottom: 24px;
-        }
-        .subsection-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin: 28px 0 16px 0;
-            color: #1e6f8f;
-            padding-left: 8px;
-            border-left: 5px solid #ffb74d;
-        }
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 24px;
-            margin-bottom: 24px;
-        }
-        .card {
-            background: #ffffff;
-            border-radius: 24px;
-            border: 1px solid #e2edf5;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-        }
-        .card-header {
-            background: #ecf5fc;
-            padding: 14px 20px;
-            font-weight: 700;
-            font-size: 18px;
-            border-bottom: 1px solid #d0e2ef;
-            color: #1a607b;
-        }
-        .card-body {
-            padding: 18px 22px;
-        }
-        .param-table, .mode-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13.5px;
-            margin: 14px 0;
-        }
-        .param-table th, .mode-table th {
-            background: #f4f9fe;
-            text-align: left;
-            padding: 10px 12px;
-            font-weight: 700;
-        }
-        .param-table td, .mode-table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid #e6edf4;
-            vertical-align: top;
-        }
-        .warning-box {
-            background: #fff6e5;
-            border-left: 5px solid #f39c12;
-            padding: 14px 18px;
-            border-radius: 18px;
-            margin: 16px 0;
-        }
-        .alert-box {
-            background: #ffeae9;
-            border-left: 5px solid #e74c3c;
-            padding: 14px 18px;
-            border-radius: 18px;
-            margin: 16px 0;
-        }
-        .tip-box {
-            background: #e8f4fd;
-            border-left: 5px solid #2980b9;
-            padding: 14px 18px;
-            border-radius: 18px;
-            margin: 16px 0;
-        }
-        .footnote {
-            font-size: 12px;
-            color: #6c86a3;
-            margin-top: 20px;
-            border-top: 1px solid #dde5ef;
-            padding-top: 14px;
-        }
-        hr {
-            margin: 24px 0;
-            border: none;
-            border-top: 1px solid #dfeaf2;
-        }
-        @media (max-width: 760px) {
-            .content { padding: 20px; }
-            .card-header { font-size: 16px; }
-            .quick-nav { gap: 8px; overflow-x: auto; flex-wrap: nowrap; justify-content: flex-start; padding: 10px 16px; }
-            .quick-nav a { font-size: 11px; white-space: nowrap; }
-        }
-        code {
-            background: #f0f4f9;
-            padding: 2px 6px;
-            border-radius: 12px;
-            font-size: 12px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temporary External Pacing – Clinical Reference</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  height: 100%;
+  font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  color: #162b3a;
+  background: #f0f4f9;
+}
+
+/* ── LAYOUT ── */
+#shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* header */
+#top {
+  flex-shrink: 0;
+  background: linear-gradient(135deg,#1e4a6e,#0e2e45);
+  color: #fff;
+  padding: 14px 22px;
+}
+#top h1 { font-size:18px; font-weight:700; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.badge { background:#ffb74d; color:#0e2e45; padding:3px 11px; border-radius:40px; font-size:11px; font-weight:700; }
+#top p { font-size:11.5px; margin-top:4px; padding-left:12px; border-left:3px solid #ffb74d; opacity:.85; }
+
+/* body = sidebar + content */
+#body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── SIDEBAR ── */
+#sidebar {
+  width: 188px;
+  flex-shrink: 0;
+  background: #fff;
+  border-right: 2px solid #e2edf5;
+  overflow-y: auto;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.nav-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 9px 13px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1e4a6e;
+  cursor: pointer;
+  transition: background .13s;
+  font-family: inherit;
+  line-height: 1.3;
+}
+.nav-btn:hover { background: #ecf5fc; }
+.nav-btn.active { background: #1e4a6e; color: #fff; }
+
+/* ── CONTENT ── */
+#content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 28px 36px;
+}
+.page { display: none; }
+.page.active { display: block; }
+
+/* ── TYPOGRAPHY & COMPONENTS ── */
+.section-title {
+  font-size: 20px; font-weight:700; color:#1e4a6e;
+  border-bottom:3px solid #cbe4f0; padding-bottom:7px; margin-bottom:20px;
+}
+.card-grid {
+  display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap:16px; margin-bottom:16px;
+}
+.card {
+  background:#fff; border-radius:16px;
+  border:1px solid #e2edf5; overflow:hidden;
+  box-shadow:0 2px 6px rgba(0,0,0,.03);
+}
+.card-header {
+  background:#ecf5fc; padding:10px 16px;
+  font-weight:700; font-size:14px;
+  border-bottom:1px solid #d0e2ef; color:#1a607b;
+}
+.card-body { padding:13px 16px; }
+.card-body ul, .card-body ol { padding-left:18px; }
+.card-body li { margin-bottom:5px; }
+
+table { width:100%; border-collapse:collapse; font-size:13px; margin:10px 0; }
+th { background:#f4f9fe; text-align:left; padding:8px 10px; font-weight:700; }
+td { padding:8px 10px; border-bottom:1px solid #e6edf4; vertical-align:top; }
+
+.warn  { background:#fff6e5; border-left:5px solid #f39c12; padding:10px 14px; border-radius:12px; margin:12px 0; font-size:13px; }
+.alert { background:#ffeae9; border-left:5px solid #e74c3c; padding:10px 14px; border-radius:12px; margin:12px 0; font-size:13px; }
+.tip   { background:#e8f4fd; border-left:5px solid #2980b9; padding:10px 14px; border-radius:12px; margin:12px 0; font-size:13px; }
+
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+pre {
+  background:#f4f9fe; padding:12px; border-radius:10px;
+  font-size:12.5px; line-height:1.7; white-space:pre-wrap; overflow-x:auto;
+}
+.fn { font-size:11.5px; color:#6c86a3; margin-top:8px; border-top:1px dashed #dde5ef; padding-top:8px; }
+.page-footer { font-size:11px; color:#6c86a3; margin-top:28px; border-top:1px solid #dde5ef; padding-top:10px; }
+
+@media(max-width:680px){
+  #sidebar { width:100%; height:auto; flex-direction:row; flex-wrap:wrap; border-right:none; border-bottom:2px solid #e2edf5; padding:6px; gap:4px; overflow-x:auto; }
+  .nav-btn { width:auto; padding:6px 11px; font-size:11.5px; white-space:nowrap; }
+  #body { flex-direction:column; }
+  .two-col { grid-template-columns:1fr; }
+  #content { padding:14px 14px 24px; }
+}
+</style>
 </head>
 <body>
-<div class="guide-container">
-    <div class="header">
-        <h1>
-            Medtronic 5388 Temporary Pacemaker <span class="badge">Clinical Reference 2025</span>
-        </h1>
-        <div class="subhead">
-            Comprehensive guide to modes, parameters, indications, troubleshooting, and emergency use. Based on Medtronic 5388 technical manual, LITFL protocols, and up-to-date clinical guidelines.
-        </div>
+<div id="shell">
+
+<!-- HEADER -->
+<div id="top">
+  <h1>Temporary External Pacing <span class="badge">Clinical Reference 2025</span></h1>
+  <p>Modes &middot; Parameters &middot; Thresholds &middot; Troubleshooting &middot; Emergency use &middot; Post-cardiac surgery</p>
+</div>
+
+<!-- BODY -->
+<div id="body">
+
+  <!-- SIDEBAR NAV -->
+  <nav id="sidebar">
+    <button class="nav-btn active"  onclick="sp('indications',this)">Indications</button>
+    <button class="nav-btn"         onclick="sp('modes',this)">Pacing modes</button>
+    <button class="nav-btn"         onclick="sp('nbg',this)">NBG code</button>
+    <button class="nav-btn"         onclick="sp('parameters',this)">Parameters</button>
+    <button class="nav-btn"         onclick="sp('setup',this)">Setup &amp; thresholds</button>
+    <button class="nav-btn"         onclick="sp('avsync',this)">AV synchrony</button>
+    <button class="nav-btn"         onclick="sp('capture',this)">Capture</button>
+    <button class="nav-btn"         onclick="sp('ecg',this)">ECG patterns</button>
+    <button class="nav-btn"         onclick="sp('clinical',this)">Clinical use</button>
+    <button class="nav-btn"         onclick="sp('trouble',this)">Troubleshooting</button>
+    <button class="nav-btn"         onclick="sp('special',this)">Special cases</button>
+    <button class="nav-btn"         onclick="sp('transcutaneous',this)">Transcutaneous</button>
+    <button class="nav-btn"         onclick="sp('postcardiac',this)">Post-surgery / TdP</button>
+    <button class="nav-btn"         onclick="sp('emergency',this)">Emergency / RAP</button>
+    <button class="nav-btn"         onclick="sp('safety',this)">Safety</button>
+  </nav>
+
+  <!-- CONTENT AREA -->
+  <div id="content">
+
+<!-- ■■■ INDICATIONS ■■■ -->
+<div class="page active" id="page-indications">
+  <div class="section-title">Indications for temporary pacing</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-header">Bradyarrhythmias (Class I / IIa)</div>
+      <div class="card-body">
+        <ul>
+          <li>Haemodynamically unstable bradycardia unresponsive to atropine / chronotropic drugs</li>
+          <li>Complete (3rd degree) AV block with ventricular escape &lt;45 bpm and hypotension</li>
+          <li>Mobitz II second-degree AV block with wide QRS or haemodynamic compromise</li>
+          <li>Alternating bundle branch block / bilateral BBB with syncope</li>
+          <li>Asystole &gt;3 s or symptomatic sinus pauses</li>
+        </ul>
+        <div class="tip">Transvenous pacing is preferred for sustained therapy; transcutaneous pacing is a bridge until transvenous/epicardial access.</div>
+      </div>
     </div>
-    <div class="quick-nav">
-        <a href="#indications">Indications</a>
-        <a href="#modes">Pacing modes</a>
-        <a href="#nbg">NBG code</a>
-        <a href="#parameters">Parameters</a>
-        <a href="#setup">Setup & thresholds</a>
-        <a href="#avsynchrony">AV synchrony</a>
-        <a href="#mechanical-capture">Mechanical capture</a>
-        <a href="#ecg-patterns">ECG patterns</a>
-        <a href="#clinical">Clinical use</a>
-        <a href="#troubleshooting">Troubleshooting</a>
-        <a href="#special">Special cases</a>
-        <a href="#transcutaneous">Transcutaneous</a>
-        <a href="#postcardiac">Post-surgery / TdP</a>
-        <a href="#emergency">Emergency mode</a>
-        <a href="#safety">Safety & pitfalls</a>
+    <div class="card">
+      <div class="card-header">Post-cardiac surgery &amp; epicardial pacing</div>
+      <div class="card-body">
+        <ul>
+          <li>Transient conduction disturbances after valve surgery or coronary revascularisation</li>
+          <li>AV junctional bradycardia, accelerated idioventricular rhythm, or complete heart block</li>
+          <li>Supraventricular tachycardias (overdrive pacing)</li>
+          <li>Atrial pacing to restore AV synchrony in haemodynamically compromised junctional rhythm</li>
+          <li>Prophylactic backup pacing when epicardial wires are placed (most centres)</li>
+        </ul>
+        <div class="fn">Capture thresholds often rise progressively after surgery. Epicardial wires are commonly removed within several days; threshold &gt;10 mA by day 4&ndash;5 is not unusual.</div>
+      </div>
     </div>
-    <div class="content">
+    <div class="card">
+      <div class="card-header">Other indications &amp; overdrive pacing</div>
+      <div class="card-body">
+        <ul>
+          <li>Overdrive pacing for SVT (atrial flutter, AVNRT)</li>
+          <li>Drug-refractory VT suppression (overdrive via ventricular lead &mdash; rarely used)</li>
+          <li>HCM: LVOT gradient reduction via short AV delay (historical; specialist guidance required)</li>
+          <li>Pause-dependent torsade de pointes (increase rate to 90&ndash;110 bpm)</li>
+        </ul>
+        <div class="alert">Temporary pacing is not indicated for asystole refractory to CPR unless a reversible cause is identified.</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <!-- INDICATIONS -->
-        <div class="section" id="indications">
-            <div class="section-title">Indications for temporary pacing (external / transvenous / epicardial)</div>
-            <div class="card-grid">
-                <div class="card">
-                    <div class="card-header">Bradyarrhythmias (Class I/IIa)</div>
-                    <div class="card-body">
-                        <ul>
-                            <li>Hemodynamically unstable bradycardia unresponsive to atropine / chronotropic drugs</li>
-                            <li>Complete (3rd degree) AV block with ventricular escape &lt;45 bpm and hypotension</li>
-                            <li>Mobitz II second-degree AV block with wide QRS or haemodynamic compromise</li>
-                            <li>Alternating bundle branch block / bilateral BBB with syncope</li>
-                            <li>Asystole >3 s or symptomatic sinus pauses</li>
-                        </ul>
-                        <div class="tip-box">Transvenous pacing is preferred for sustained therapy; transcutaneous pacing is a bridge until transvenous/epicardial access.</div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">Post-cardiac surgery & epicardial pacing</div>
-                    <div class="card-body">
-                        <ul>
-                            <li>Transient conduction disturbances after valve surgery or coronary revascularisation</li>
-                            <li>AV junctional bradycardia, accelerated idioventricular rhythm, or complete heart block</li>
-                            <li>Supraventricular tachycardias (overdrive pacing)</li>
-                            <li>Atrial pacing to restore AV synchrony in haemodynamically compromised junctional rhythm</li>
-                            <li>Prophylactic backup pacing when epicardial wires are placed (most centres)</li>
-                        </ul>
-                        <div class="footnote">Capture thresholds often rise progressively after surgery. Epicardial wires are commonly removed within several days when no longer needed; threshold >10 mA by day 4–5 is not unusual.</div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">Other indications & overdrive pacing</div>
-                    <div class="card-body">
-                        <ul>
-                            <li>Overdrive pacing for supraventricular tachycardia (atrial flutter, AVNRT)</li>
-                            <li>Suppression of drug-refractory VT (overdrive pacing via ventricular lead, rarely used)</li>
-                            <li>Hypertrophic cardiomyopathy (LVOT gradient reduction via short AV delay)</li>
-                            <li>Pause-dependent torsade de pointes (increase basal rate to 90-110 bpm)</li>
-                        </ul>
-                        <div class="alert-box">Temporary pacing is not indicated for asystole refractory to CPR unless a reversible cause is identified.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- ■■■ PACING MODES ■■■ -->
+<div class="page" id="page-modes">
+  <div class="section-title">Eight pacing modes</div>
+  <div class="card">
+    <div class="card-body">
+      <table>
+        <thead><tr><th>Mode</th><th>A paced</th><th>A sensed</th><th>V paced</th><th>V sensed</th><th>Clinical use</th></tr></thead>
+        <tbody>
+          <tr><td><strong>DDD</strong></td><td>YES</td><td>YES</td><td>YES</td><td>YES</td><td>Full dual-chamber demand. Physiological AV synchrony; preferred for complete AV block with intact sinus node.</td></tr>
+          <tr><td><strong>DDI</strong></td><td>YES</td><td>YES</td><td>YES</td><td>YES</td><td>Atrial sensing inhibits both chambers but does not trigger ventricular pacing. Useful when atrial tachyarrhythmias present (prevents rate tracking).</td></tr>
+          <tr><td><strong>DVI</strong></td><td>YES</td><td>NO</td><td>YES</td><td>YES</td><td>Atrial pacing without atrial sensing. Rarely used in contemporary practice &mdash; superior modes (DDI, DDD) available.</td></tr>
+          <tr><td><strong>DOO</strong></td><td>YES (asynch)</td><td>NO</td><td>YES (asynch)</td><td>NO</td><td>Fixed-rate asynchronous &mdash; used when reliable sensing is not possible (EMI, electrocautery, profound bradycardia). EMERGENCY key activates DOO at 80 bpm / 20 mA. R-on-T risk.</td></tr>
+          <tr><td><strong>VVI</strong></td><td>NO</td><td>NO</td><td>YES</td><td>YES</td><td>Ventricular demand. Most common temporary ventricular backup; safe but no AV synchrony.</td></tr>
+          <tr><td><strong>VOO</strong></td><td>NO</td><td>NO</td><td>YES (asynch)</td><td>NO</td><td>Fixed ventricular pacing &mdash; used only when sensing is unreliable or during electrocautery.</td></tr>
+          <tr><td><strong>AAI</strong></td><td>YES</td><td>YES</td><td>NO</td><td>NO</td><td>Atrial demand &mdash; isolated sinus node disease with intact AV conduction.</td></tr>
+          <tr><td><strong>AOO</strong></td><td>YES (asynch)</td><td>NO</td><td>NO</td><td>NO</td><td>Asynchronous atrial pacing &mdash; burst overdrive for atrial flutter via Menu&nbsp;#3 (up to 800 min&#8315;&#185;).</td></tr>
+        </tbody>
+      </table>
+      <div class="tip">Burst pacing up to 800 min&#8315;&#185; in AOO mode for atrial flutter / SVT termination (Menu #3).</div>
+    </div>
+  </div>
+</div>
 
-        <!-- 8 PACING MODES -->
-        <div class="section" id="modes">
-            <div class="section-title">Eight pacing modes of Medtronic 5388</div>
-            <div class="card">
-                <div class="card-body">
-                    <table class="mode-table">
-                        <thead>
-                            <tr><th>Mode</th><th>Atrial pacing</th><th>Atrial sensing</th><th>Ventricular pacing</th><th>Ventricular sensing</th><th>Clinical use / example</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td><strong>DDD</strong> (full dual-chamber)</td><td>YES</td><td>YES</td><td>YES</td><td>YES</td><td>Physiological AV synchrony; preferred for haemodynamically unstable complete heart block with intact sinus node.</td></tr>
-                            <tr><td><strong>DDI</strong></td><td>YES</td><td>YES</td><td>YES</td><td>YES</td><td>Atrial sensing inhibits both atrial and ventricular pacing, but atrial pacing ignores sensed atrial events – useful when atrial tachyarrhythmias are present.</td></tr>
-                            <tr><td><strong>DVI</strong></td><td>YES</td><td>NO</td><td>YES</td><td>YES</td><td>Atrial pacing without atrial sensing; ventricular sensing preserved. Rarely used in contemporary practice due to suboptimal AV timing and the availability of superior dual-chamber modes (DDI, DDD).</td></tr>
-                            <tr><td><strong>DOO</strong></td><td>YES (asynch)</td><td>NO</td><td>YES (asynch)</td><td>NO</td><td>Fixed-rate asynchronous dual-chamber pacing — used when reliable sensing is not possible (electromagnetic interference, electrocautery, or profound bradycardia). EMERGENCY key activates DOO. R-on-T risk: use only when indicated.</td></tr>
-                            <tr><td><strong>VVI</strong></td><td>NO</td><td>NO</td><td>YES</td><td>YES</td><td>Single-chamber ventricular demand pacing – most common temporary ventricular backup; safe but without AV synchrony.</td></tr>
-                            <tr><td><strong>VOO</strong></td><td>NO</td><td>NO</td><td>YES (asynch)</td><td>NO</td><td>Fixed ventricular pacing at set rate – used only when sensing impossible or during electrocautery.</td></tr>
-                            <tr><td><strong>AAI</strong></td><td>YES</td><td>YES</td><td>NO</td><td>NO</td><td>Atrial demand pacing – suitable for isolated sinus node disease with intact AV conduction.</td></tr>
-                            <tr><td><strong>AOO</strong></td><td>YES (asynch)</td><td>NO</td><td>NO</td><td>NO</td><td>Asynchronous atrial pacing (e.g., overdrive pacing, burst pacing for atrial flutter).</td></tr>
-                        </tbody>
-                    </table>
-                    <div class="tip-box">High-rate burst pacing (up to 800 min⁻1) is available in AOO mode for terminating atrial tachycardias / flutter (use Menu #3).</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- PARAMETERS RANGES -->
-        <div class="section" id="parameters">
-            <div class="section-title">Adjustable parameters – ranges and clinical titration</div>
-            <div class="card">
-                <div class="card-body">
-                    <table class="param-table">
-                        <thead><tr><th>Parameter</th><th>Range</th><th>Default / starting value</th><th>Clinical notes</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>Base rate (bpm)</strong></td><td>30 - 200</td><td>70 - 80 (adult) / 100-120 (paediatric)</td><td>Set 10-20 bpm above intrinsic rate to ensure capture. Lower rate for weaning (backup pacing).</td></tr>
-                            <tr><td><strong>Atrial output (mA)</strong></td><td>0.1 - 20</td><td>5-10 mA</td><td>Start with 5 mA and increase until atrial capture. Final output = 2x capture threshold.</td></tr>
-                            <tr><td><strong>Ventricular output (mA)</strong></td><td>0.1 - 20</td><td>5-10 mA</td><td>Set at 2x capture threshold to ensure safety margin without excessive energy.</td></tr>
-                            <tr><td><strong>Atrial sensitivity (mV)</strong></td><td>0.4 - 10 mV</td><td>2.0 mV</td><td>Lower number = more sensitive. Set to half the sensitivity threshold after testing.</td></tr>
-                            <tr><td><strong>Ventricular sensitivity (mV)</strong></td><td>0.8 - 20 mV</td><td>4.0 mV</td><td>Set to half of sensed R-wave amplitude (typically 3-5 mV). Too sensitive -> oversensing.</td></tr>
-                            <tr><td><strong>AV delay (ms)</strong></td><td>Manual 20 - 300; AUTO 50 - 250</td><td>150 ms (or auto)</td><td>Longer AV delay (180–200 ms) to permit intrinsic conduction where possible. Shorter AV delay (80–120 ms) has historically been used in selected HCM patients for LVOT gradient reduction, though this is not standard contemporary therapy; consult specialist guidance.</td></tr>
-                            <tr><td><strong>PVARP (ms)</strong></td><td>150 - 500</td><td>250 ms</td><td>Post-ventricular atrial refractory period prevents sensing of retrograde P-waves and pacemaker-mediated tachycardia.</td></tr>
-                            <tr><td><strong>Upper tracking rate (bpm)</strong></td><td>80 - 230 (manual) or auto</td><td>130 bpm</td><td>Limits ventricular pacing rate in DDD when atrial rate rises (e.g., sinus tachycardia).</td></tr>
-                            <tr><td><strong>Pulse width (ms)</strong></td><td>A 1.0, V 1.5 (fixed)</td><td>Not adjustable</td><td>Fixed values: atrial 1.0 ms, ventricular 1.5 ms.</td></tr>
-                        </tbody>
-                    </table>
-                    <div class="warning-box">Sensitivity and capture threshold checks should be performed daily (or after repositioning). Set rate lower than intrinsic rhythm to assess underlying rhythm, but never reduce output when testing sensitivity (risk of asystole).</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- STEP-BY-STEP SETUP AND THRESHOLD CHECKING -->
-        <div class="section" id="setup">
-            <div class="section-title">Step-by-step: connection, threshold checks, daily verification</div>
-            <div class="card-grid">
-                <div class="card">
-                    <div class="card-header">Initial set-up & capture threshold</div>
-                    <div class="card-body">
-                        <ol style="margin-left: 20px;">
-                            <li>Connect atrial and ventricular leads to color-coded ports (red = ventricular, yellow/atrial).</li>
-                            <li>Set mode to DDD (or VVI for simple ventricular backup).</li>
-                            <li>Set rate 70-80 bpm.</li>
-                            <li>Set output to a high starting value (10–20 mA for ventricle, 10 mA for atrium) to ensure reliable capture.</li>
-                            <li>Confirm capture (pacing spike followed by wide QRS or P-wave) while observing ECG continuously.</li>
-                            <li>Gradually <strong>decrease</strong> output until capture is lost → record the <em>capture threshold</em> (mA). Starting high and titrating downward is safer and the standard approach.</li>
-                            <li>Set working output to at least <strong>2× the capture threshold</strong>, or according to institutional practice; a fixed minimum of 5 mA is not universally required (e.g., fresh epicardial threshold 0.7 mA → 1.5–2 mA may suffice).</li>
-                        </ol>
-                        <div class="tip-box">Typical capture thresholds: transvenous RV apex 0.5-1.5 mA; epicardial wires 1-5 mA; after 4 days may rise above 10 mA.</div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">Sensitivity testing (avoid undersensing/oversensing)</div>
-                    <div class="card-body">
-                        <ol style="margin-left: 20px;">
-                            <li>Set mode to VVI, AAI, or DDD (sensing-dependent mode).</li>
-                            <li>Set rate 10 bpm below patient's intrinsic rate to allow the intrinsic rhythm to emerge.</li>
-                            <li>If clinically safe (no significant pacing dependency), the pacing output may be temporarily reduced or the rate lowered further to facilitate sensing assessment. <strong>Do not reduce output in pacing-dependent patients or complete AV block.</strong></li>
-                            <li>Increase sensitivity (turn sensitivity dial counter-clockwise – higher mV) until the sense indicator stops flashing -> point of undersensing.</li>
-                            <li>Now increase sensitivity (clockwise, lower mV) until sense indicator flashes with each intrinsic beat -> this is the sensitivity threshold.</li>
-                            <li>Set sensitivity to half the threshold value (e.g., threshold 2 mV -> set 1 mV).</li>
-                        </ol>
-                        <div class="alert-box">Oversensing (sensitivity too high) causes inappropriate inhibition of pacing — potentially catastrophic in pacing-dependent patients — as well as competitive asynchronous pacing and inappropriate mode switches. Undersensing leads to asynchronous pacing (risk of R-on-T).</div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">Daily checks & documentation</div>
-                    <div class="card-body">
-                        <ul>
-                            <li>Check underlying rhythm -> decrease rate (do NOT turn output down).</li>
-                            <li>Verify capture threshold and output margin (still 2x threshold).</li>
-                            <li>Verify sensing threshold (sensitivity margin: half of measured threshold).</li>
-                            <li>Inspect lead connections, battery level indicator (9 V, replace weekly for alkaline).</li>
-                            <li>Check AV delay and refractory settings (especially in DDD mode).</li>
-                            <li>Document pacing parameters and any asynchrony (e.g., fusion, pseudofusion).</li>
-                        </ul>
-                        <div class="footnote">Failure to perform daily threshold checks is a common cause of unrecognised loss of capture.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- CLINICAL USE PER SCENARIO -->
-        <div class="section" id="clinical">
-            <div class="section-title">Clinical use per scenario (how to choose mode & settings)</div>
-            <div class="card-grid">
-                <div class="card">
-                    <div class="card-header">Sick sinus syndrome (preserved AV conduction)</div>
-                    <div class="card-body">
-                        <ul>
-                            <li>Mode: AAI or DDD (if AV conduction is borderline).</li>
-                            <li>Rate: 60-80 bpm.</li>
-                            <li>Output: Atrial 2x threshold (usually 5-8 mA).</li>
-                            <li>Sensitivity: Atrial 0.5-1.5 mV (half of sensed P-wave).</li>
-                            <li>AV delay: Long (200 ms) to allow intrinsic conduction.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">Complete heart block (AV dissociation)</div>
-                    <div class="card-body">
-                        <ul>
-                            <li>Mode: DDD (preferred for AV synchrony) or VVI (simple backup).</li>
-                            <li>Rate: 70-90 bpm, adjust to haemodynamic stability.</li>
-                            <li>AV delay: 120-180 ms (short enough to capture ventricle before intrinsic escape).</li>
-                            <li>Upper rate: 110-120 bpm to avoid 2:1 block.</li>
-                            <li>Check for pacemaker-mediated tachycardia (PMT) – if occurs, extend PVARP or switch to DDI.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">Post-cardiac surgery (epicardial leads)</div>
-                    <div class="card-body">
-                        <ul>
-                            <li>Mode: DDD or DDI (AV sequential pacing).</li>
-                            <li>Rate: 80 bpm initially, then wean as tolerated.</li>
-                            <li>AV delay: 150 ms (auto mode often works).</li>
-                            <li>Output: Start 10 mA and test capture; final = 2x threshold.</li>
-                            <li>Atrial output limit: 10 mA maximum (box limit).</li>
-                            <li>If failure of capture after day 4, consider replacing leads or switching to transvenous system.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">Overdrive pacing for atrial flutter / SVT</div>
-                    <div class="card-body">
-                        <ul>
-                            <li>Mode: AOO (asynchronous atrial) via Menu #3 for burst pacing (80-800 min−1).</li>
-                            <li>Set burst rate 10-30% above intrinsic atrial rate.</li>
-                            <li>Deliver burst for 5-15 sec, observe ECG for termination.</li>
-                            <li>Caution: Risk of rapid ventricular response or induction of AF. Have defibrillator ready.</li>
-                        </ul>
-                        <div class="alert-box">Rapid atrial pacing may induce atrial fibrillation or ventricular arrhythmia. Ensure defibrillation is immediately available.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- NBG CODE + MODE SELECTION -->
-        <div class="section" id="nbg">
-            <div class="section-title">NBG pacemaker code & mode selection algorithm</div>
-            <div class="card-grid">
-                <div class="card">
-                    <div class="card-header">NBG code (NASPE/BPEG Generic)</div>
-                    <div class="card-body">
-                        <table class="param-table">
-                            <thead><tr><th>Position</th><th>Meaning</th><th>Letters used</th></tr></thead>
-                            <tbody>
-                                <tr><td><strong>I</strong></td><td>Chamber(s) paced</td><td>A = Atrium, V = Ventricle, D = Dual, O = None</td></tr>
-                                <tr><td><strong>II</strong></td><td>Chamber(s) sensed</td><td>A = Atrium, V = Ventricle, D = Dual, O = None</td></tr>
-                                <tr><td><strong>III</strong></td><td>Response to sensing</td><td>I = Inhibit, T = Trigger, D = Dual (I+T), O = None</td></tr>
-                                <tr><td><strong>IV</strong></td><td>Rate modulation</td><td>R = Rate responsive, O = None</td></tr>
-                            </tbody>
-                        </table>
-                        <div class="tip-box">Example: DDD = Dual-chamber paced, dual-chamber sensed, inhibit + trigger response. VVI = Ventricular paced, ventricular sensed, inhibit response.</div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">Mode selection algorithm</div>
-                    <div class="card-body">
-                        <pre style="background:#f4f9fe; padding:14px; border-radius:12px; font-size:13px; line-height:1.7; overflow-x:auto;">
+<!-- ■■■ NBG CODE ■■■ -->
+<div class="page" id="page-nbg">
+  <div class="section-title">NBG pacemaker code &amp; mode selection algorithm</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-header">NBG code (NASPE/BPEG Generic)</div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Position</th><th>Meaning</th><th>Letters</th></tr></thead>
+          <tbody>
+            <tr><td><strong>I</strong></td><td>Chamber(s) paced</td><td>A = Atrium, V = Ventricle, D = Dual, O = None</td></tr>
+            <tr><td><strong>II</strong></td><td>Chamber(s) sensed</td><td>A = Atrium, V = Ventricle, D = Dual, O = None</td></tr>
+            <tr><td><strong>III</strong></td><td>Response to sensing</td><td>I = Inhibit, T = Trigger, D = Dual (I+T), O = None</td></tr>
+            <tr><td><strong>IV</strong></td><td>Rate modulation</td><td>R = Rate responsive, O = None</td></tr>
+          </tbody>
+        </table>
+        <div class="tip">DDD = Dual paced, dual sensed, inhibit + trigger. VVI = Ventricular paced, ventricular sensed, inhibit.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">Mode selection algorithm</div>
+      <div class="card-body">
+        <pre>
 Sinus node intact?
 │
 ├── YES
 │     AV block present?
-│     ├── YES → <strong>DDD</strong> (AV sequential, physiological)
-│     └── NO  → <strong>AAI</strong> (atrial demand)
+│     ├── YES  →  DDD (AV sequential, physiological)
+│     └── NO   →  AAI (atrial demand)
 │
 └── NO (sinus arrest / dysfunction)
-      Ventricular backup only needed?
-      ├── YES → <strong>VVI</strong> (simple ventricular demand)
-      └── BOTH chambers → <strong>DDD</strong> or <strong>DDI</strong>
+      Both chambers needed?
+      ├── YES  →  DDD or DDI
+      └── NO   →  VVI (ventricular demand only)
 
-Atrial tachyarrhythmia present? → <strong>DDI</strong> or <strong>VVI</strong>
-Electromagnetic interference / electrocautery? → <strong>VOO / DOO</strong>
-                        </pre>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- AV SYNCHRONY -->
-        <div class="section" id="avsynchrony">
-            <div class="section-title">AV synchrony — why it matters (especially post-cardiac surgery)</div>
-            <div class="card">
-                <div class="card-body">
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px;">
-                        <div>
-                            <strong>Physiological importance</strong>
-                            <ul>
-                                <li>Atrial contraction contributes up to 20–30% of ventricular filling ("atrial kick") — critical in patients with diastolic dysfunction or reduced compliance.</li>
-                                <li>Loss of AV synchrony (e.g., VVI pacing) reduces cardiac output by 15–25% in some patients.</li>
-                                <li>After cardiac surgery, AV synchrony is especially important: the heart is often stiff (ischaemia-reperfusion, cardioplegia), relying more heavily on atrial filling.</li>
-                                <li>Junctional rhythm after cardiac surgery is common; atrial pacing at a rate slightly above junctional rate restores AV synchrony without ventricular pacing.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <strong>DDD vs VVI — clinical decision</strong>
-                            <ul>
-                                <li><strong>DDD preferred</strong> when: intact sinus node, AV block, haemodynamic compromise, post-cardiac surgery with epicardial wires available.</li>
-                                <li><strong>VVI acceptable</strong> when: ventricular backup only needed, atrial lead not available, or atrial arrhythmias present.</li>
-                                <li>Post-AVR or post-CABG with complete heart block: DDD is strongly preferred to maintain AV synchrony and optimise output.</li>
-                            </ul>
-                            <div class="tip-box">Optimise AV delay (typically 150–180 ms) to maximise ventricular filling time. Too short: truncates filling; too long: intrinsic conduction takes over, may cause fusion.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MECHANICAL VS ELECTRICAL CAPTURE -->
-        <div class="section" id="mechanical-capture">
-            <div class="section-title">Electrical capture vs mechanical capture — a critical distinction</div>
-            <div class="card">
-                <div class="card-body">
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px; margin-bottom:16px;">
-                        <div>
-                            <strong>Electrical capture</strong>
-                            <ul>
-                                <li>Pacing spike followed by a wide QRS complex (ventricular) or P-wave (atrial) on ECG.</li>
-                                <li>Confirms that the myocardium has been depolarised electrically.</li>
-                                <li>Does <em>not</em> guarantee effective mechanical contraction or cardiac output.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <strong>Mechanical capture</strong>
-                            <ul>
-                                <li>Actual myocardial contraction producing cardiac output.</li>
-                                <li><strong>Must be confirmed separately</strong> — especially in haemodynamically unstable patients.</li>
-                                <li>Confirm via: palpable pulse, arterial line waveform synchronous with pacing, Doppler NIBP, or point-of-care echocardiography.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="alert-box">⚠️ Do not assume that a wide QRS after each pacing spike means the patient is being effectively resuscitated. In pulseless electrical activity (PEA), electrical capture may be present without mechanical output. Always verify <strong>mechanical capture</strong> by pulse or arterial waveform in any haemodynamically unstable patient.</div>
-
-                    <!-- SVG: capture states diagram -->
-                    <svg viewBox="0 0 700 160" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:700px; margin:18px auto; display:block;">
-                        <defs>
-                            <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1e4a6e"/></marker>
-                        </defs>
-                        <!-- Panel 1: Normal capture -->
-                        <rect x="10" y="10" width="200" height="140" rx="12" fill="#e8f4fd" stroke="#2980b9" stroke-width="1.5"/>
-                        <text x="110" y="32" text-anchor="middle" font-size="12" font-weight="700" fill="#1a607b">✔ Electrical + Mechanical Capture</text>
-                        <!-- spike -->
-                        <line x1="50" y1="100" x2="50" y2="55" stroke="#e74c3c" stroke-width="2.5"/>
-                        <line x1="50" y1="55" x2="52" y2="100" stroke="#e74c3c" stroke-width="2.5"/>
-                        <!-- QRS -->
-                        <polyline points="70,100 80,100 88,55 96,130 104,100 120,100" fill="none" stroke="#1e4a6e" stroke-width="2.5"/>
-                        <line x1="120" y1="100" x2="190" y2="100" stroke="#1e4a6e" stroke-width="1.5"/>
-                        <text x="110" y="148" text-anchor="middle" font-size="11" fill="#1a607b">Spike → wide QRS + pulse</text>
-
-                        <!-- Panel 2: Electrical only (no mechanical) -->
-                        <rect x="225" y="10" width="210" height="140" rx="12" fill="#fff6e5" stroke="#f39c12" stroke-width="1.5"/>
-                        <text x="330" y="32" text-anchor="middle" font-size="12" font-weight="700" fill="#c0770a">⚠ Electrical Only — No Mechanical</text>
-                        <line x1="260" y1="100" x2="260" y2="55" stroke="#e74c3c" stroke-width="2.5"/>
-                        <line x1="260" y1="55" x2="262" y2="100" stroke="#e74c3c" stroke-width="2.5"/>
-                        <polyline points="280,100 290,100 298,60 306,130 314,100 330,100" fill="none" stroke="#1e4a6e" stroke-width="2.5"/>
-                        <line x1="330" y1="100" x2="420" y2="100" stroke="#1e4a6e" stroke-width="1.5"/>
-                        <text x="330" y="148" text-anchor="middle" font-size="11" fill="#c0770a">QRS present — no palpable pulse (PEA)</text>
-
-                        <!-- Panel 3: No capture -->
-                        <rect x="450" y="10" width="240" height="140" rx="12" fill="#ffeae9" stroke="#e74c3c" stroke-width="1.5"/>
-                        <text x="570" y="32" text-anchor="middle" font-size="12" font-weight="700" fill="#c0392b">✖ No Capture</text>
-                        <line x1="490" y1="100" x2="490" y2="55" stroke="#e74c3c" stroke-width="2.5"/>
-                        <line x1="490" y1="55" x2="492" y2="100" stroke="#e74c3c" stroke-width="2.5"/>
-                        <line x1="510" y1="100" x2="680" y2="100" stroke="#1e4a6e" stroke-width="1.5"/>
-                        <text x="570" y="148" text-anchor="middle" font-size="11" fill="#c0392b">Spike only — no QRS, no pulse</text>
-                    </svg>
-                </div>
-            </div>
-        </div>
-
-        <!-- CAPTURE/SENSING ECG PATTERNS -->
-        <div class="section" id="ecg-patterns">
-            <div class="section-title">Recognising pacing problems on ECG</div>
-            <div class="card">
-                <div class="card-body">
-                    <table class="param-table">
-                        <thead><tr><th>ECG finding</th><th>Problem</th><th>Mechanism</th><th>Action</th></tr></thead>
-                        <tbody>
-                            <tr><td>Spike present, no QRS follows</td><td><strong>Failure to capture</strong></td><td>Threshold exceeded, lead displacement, electrolyte disturbance</td><td>Increase output; check lead; correct electrolytes (especially K⁺)</td></tr>
-                            <tr><td>No spike despite bradycardia (demand mode)</td><td><strong>Oversensing</strong></td><td>Generator inhibited by spurious signals (T-wave, myopotentials, noise)</td><td>Decrease sensitivity (increase mV); check lead insulation</td></tr>
-                            <tr><td>Spike after intrinsic QRS / spike fires too early</td><td><strong>Undersensing</strong></td><td>Intrinsic R-wave not detected → competition → R-on-T risk</td><td>Increase sensitivity (decrease mV); recheck sensing threshold</td></tr>
-                            <tr><td>Narrow QRS after atrial spike — no ventricular spike needed</td><td><strong>Normal AV conduction intact</strong></td><td>Intrinsic conduction faster than AV delay</td><td>No action; consider lengthening AV delay to further promote intrinsic conduction</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- TROUBLESHOOTING -->
-        <div class="section" id="troubleshooting">
-            <div class="section-title">Troubleshooting – failure to pace, failure to capture, undersensing/oversensing</div>
-            <div class="card">
-                <div class="card-body">
-                    <table class="param-table">
-                        <thead><tr><th>Problem</th><th>Possible causes</th><th>Action / resolution</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>No pacing spikes</strong></td><td>Dead battery, loose connection, pacemaker turned off, broken lead wire.</td><td>Check battery indicator; replace 9 V battery. Inspect all connections; turn rate up to confirm spikes.</td></tr>
-                            <tr><td><strong>Pacing spikes present but no capture</strong></td><td>Lead dislodgement, high capture threshold (oedema, fibrosis), low output setting, metabolic derangement (<strong>hyperkalaemia</strong> or acidosis are the most common electrolyte causes of loss of capture; hypokalaemia may also play a role), myocardial ischaemia.</td><td>Increase output gradually (max 20 mA for ventricle). Check lead position by CXR. Correct electrolytes — especially exclude <strong>hyperkalaemia</strong>. Consider alternative lead if refractory.</td></tr>
-                            <tr><td><strong>Undersensing (spikes appear regardless of intrinsic beats)</strong></td><td>Low sensitivity (mV set too high), lead fracture, poor electrode contact, myocardial infarction at tip.</td><td>Increase sensitivity (decrease mV) until sense indicator flashes with each QRS. Perform sensitivity threshold test.</td></tr>
-                            <tr><td><strong>Oversensing (no pacing despite bradycardia)</strong></td><td>Sensitivity set too high (low mV), T-wave oversensing, myopotentials, cross-talk.</td><td>Decrease sensitivity (increase mV) gradually. If T-wave oversensing, increase PVARP or switch to VVI mode.</td></tr>
-                            <tr><td><strong>Pacemaker-mediated tachycardia (PMT)</strong></td><td>Retrograde P-wave sensed after ventricular paced beat → triggers ventricular pacing at upper rate.</td><td>Extend PVARP (e.g., 250 ms → 350 ms) or switch to DDI mode. <em>Note: magnet application has unpredictable effects on external temporary generators and is not a standard intervention for PMT in this setting.</em></td></tr>
-                            <tr><td><strong>Diaphragmatic stimulation (hiccoughs)</strong></td><td>High output or lead near phrenic nerve (especially left ventricular epicardial leads).</td><td>Reduce output if capture margin allows. Reposition lead if possible.</td></tr>
-                        </tbody>
-                    </table>
-                    <div class="tip-box">If unsure about sensing, temporarily switch to asynchronous mode (VOO or DOO) to guarantee pacing; however, this carries R-on-T risk.</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SPECIAL CASES -->
-        <div class="section" id="special">
-            <div class="section-title">Special clinical situations (paediatrics, MRI, electrocautery, IABP)</div>
-            <div class="card-grid">
-                <div class="card">
-                    <div class="card-header">Paediatric pacing (Medtronic 5388)</div>
-                    <div class="card-body">
-                        <ul>
-                            <li>Same device, but use smaller transvenous leads (4 Fr or 5 Fr) or epicardial wires.</li>
-                            <li>Higher basal rate: neonate 120-150 bpm, infant 100-140 bpm, child 80-100 bpm.</li>
-                            <li>Lower output threshold often sufficient (start 2 mA for ventricle).</li>
-                            <li>Sensitivity should be carefully adjusted (avoid oversensing of high-amplitude paediatric QRS).</li>
-                            <li>Use VVI or DDD if AV sequential pacing required for cardiac output.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">During surgery / electrocautery (EMI)</div>
-                    <div class="card-body">
-                        <ul>
-                            <li>Electrocautery may cause oversensing (inhibition) or trigger asynchronous pacing.</li>
-                            <li>Switch to VOO or DOO mode (asynchronous) before electrocautery use.</li>
-                            <li>Alternatively, manually switch the generator to DOO (asynchronous) mode. <em>Note: magnet behaviour is device-dependent and not universally applicable to external temporary generators — manual mode selection is preferred.</em></li>
-                            <li>After electrocautery, revert to demand mode and re-assess capture and sensing.</li>
-                        </ul>
-                        <div class="alert-box">DOO mode prevents inhibition but carries risk of R-on-T. Use only when absolutely required.</div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">IABP interaction & MRI safety</div>
-                    <div class="card-body">
-                        <ul>
-                            <li>IABP can misinterpret pacing spikes as QRS complexes -> trigger counter-pulsation at wrong timing.</li>
-                            <li>Solution: Set IABP to trigger from arterial pressure waveform or enable high-frequency filter (bypasses pacing artifacts).</li>
-                            <li>MRI unsafe – Medtronic 5388 contains ferromagnetic material; never enter MRI suite with generator attached.</li>
-                            <li>Epicardial wires in situ are also MRI-unsafe; retrieve or cut close to skin before MRI.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- EMERGENCY ASYNCHRONOUS PACING AND RAP -->
-        <div class="section" id="emergency">
-            <div class="section-title">Emergency asynchronous pacing (DOO) and high-rate burst (RAP)</div>
-            <div class="card">
-                <div class="card-body">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-                        <div>
-                            <strong>Emergency key (DOO mode)</strong>
-                            <ul>
-                                <li>Press EMERGENCY key -> immediately switches to DOO (asynchronous dual-chamber) at rate of 80 bpm with high output (20 mA).</li>
-                                <li>Use when capture is lost or in profound bradycardia / asystole.</li>
-                                <li>DOO mode ignores sensing; therefore risk of R-on-T (ventricular fibrillation). Use only in emergency.</li>
-                                <li>To exit DOO, press the key again or select another mode.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <strong>Rapid Atrial Pacing (RAP) – burst mode</strong>
-                            <ul>
-                                <li>Access through Menu #3 (RAP menu).</li>
-                                <li>Rate adjustable from 80-800 min−1 in AOO or DDD.</li>
-                                <li>Primarily used for termination of atrial flutter / SVT (overdrive pacing).</li>
-                                <li>Safety measures: Ensure defibrillator is nearby, monitor for rapid ventricular response.</li>
-                                <li>Deliver burst for 5-15 s, then re-evaluate rhythm.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="warning-box">Battery indicator: When low battery symbol appears, replace 9 V battery immediately (alkaline: 7-9 days, lithium: 16 days). Always use fresh battery for each new patient.</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TRANSCUTANEOUS PACING -->
-        <div class="section" id="transcutaneous">
-            <div class="section-title">Transcutaneous pacing — bridge to transvenous/epicardial access</div>
-            <div class="card">
-                <div class="card-body">
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px;">
-                        <div>
-                            <strong>Technique & setup</strong>
-                            <ul>
-                                <li>Place pads in anterior-posterior or anterior-lateral position. Anterior-posterior preferred for better capture thresholds.</li>
-                                <li>Start output at 40–80 mA; increase by 10 mA increments until electrical capture (wide QRS on ECG).</li>
-                                <li>Typical capture: 50–100 mA; some patients require up to 200 mA.</li>
-                                <li>Set rate to 60–80 bpm for bradycardia, 90–110 bpm for torsades.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <strong>Key clinical points</strong>
-                            <ul>
-                                <li><strong>Always confirm mechanical capture</strong> by palpating pulse or arterial waveform — chest wall muscle contractions can mimic QRS complexes on ECG.</li>
-                                <li>Provide analgesia and sedation (e.g., morphine 1–2 mg IV + midazolam 1–2 mg IV) as transcutaneous pacing is painful.</li>
-                                <li>Transcutaneous pacing is a <em>temporising measure</em> only; arrange definitive transvenous or epicardial pacing promptly.</li>
-                                <li>Ineffective in patients with hypothermia (core temp &lt;30°C) — may require rewarming before capture is achievable.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="warning-box">Skeletal muscle contractions during transcutaneous pacing can obscure ECG and mimic capture. Always confirm mechanical capture by pulse or arterial line — not ECG alone.</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- POST-CARDIAC SURGERY & TORSADES ADDENDA -->
-        <div class="section" id="postcardiac">
-            <div class="section-title">Post-cardiac surgery pacing & temporary pacing in torsades de pointes</div>
-            <div class="card-grid">
-                <div class="card">
-                    <div class="card-header">Post-cardiac surgery (CABG, valve, TAVI)</div>
-                    <div class="card-body">
-                        <ul>
-                            <li><strong>AV block after AVR:</strong> Common after aortic valve surgery due to proximity to the conduction system; DDD pacing restores AV synchrony and cardiac output.</li>
-                            <li><strong>Junctional rhythm:</strong> Atrial pacing at 80–90 bpm (just above junctional rate) restores AV synchrony and significantly improves haemodynamics post-cardiopulmonary bypass.</li>
-                            <li><strong>After TAVI:</strong> New left bundle branch block or complete AV block occurs in up to 25% of cases. Temporary transvenous pacing until recovery or permanent pacemaker implantation.</li>
-                            <li><strong>Epicardial wire removal:</strong> Remove with steady continuous traction — do not pull if significant resistance felt (risk of laceration). Monitor for 2–4 hours after removal (risk of haemopericardium / tamponade). Have pericardiocentesis equipment available.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">Temporary pacing for torsades de pointes</div>
-                    <div class="card-body">
-                        <ul>
-                            <li>Increase pacing rate to 90–110 bpm (ventricular) to shorten QT interval and suppress pause-dependent torsades.</li>
-                            <li>Mode: VVI or DDD depending on AV status.</li>
-                            <li>Simultaneously treat underlying causes:
-                                <ul>
-                                    <li>Correct <strong>hypomagnesaemia</strong> (IV magnesium sulphate 2 g over 10–15 min).</li>
-                                    <li>Correct <strong>hypokalaemia</strong> (target K⁺ ≥4.5 mmol/L).</li>
-                                    <li>Withdraw or replace all <strong>QT-prolonging drugs</strong> (anti-arrhythmics, antibiotics, antiemetics, antipsychotics).</li>
-                                </ul>
-                            </li>
-                            <li>Pacing is a bridge — not a cure. Address the underlying QT abnormality.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SAFETY MICROSHOCK -->
-        <div class="section" id="safety">
-            <div class="section-title">Safety, microshock precautions, and daily surveillance</div>
-            <div class="card">
-                <div class="card-body">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-                        <div>
-                            <strong>Microshock prevention (electrical safety)</strong>
-                            <ul>
-                                <li>Patients with temporary pacemakers are at risk of microshock (ventricular fibrillation from stray currents).</li>
-                                <li>Use only patient-isolated pacing cables (Medtronic 5433A, M5433V).</li>
-                                <li>All electrical equipment (ECG, monitors, bed) must share common ground.</li>
-                                <li>Wires should be covered with non-conductive caps (e.g., syringe barrel) when not connected.</li>
-                                <li>Touch the patient's bed frame before handling exposed pacing terminals to discharge static.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <strong>Defibrillation with pacemaker in situ</strong>
-                            <ul>
-                                <li>Defibrillation is safe but requires precautions:</li>
-                                <li>Place paddles/pads at least 15 cm away from pacemaker generator and leads.</li>
-                                <li>Disconnect the pacemaker from the patient before shock (if feasible).</li>
-                                <li>If disconnected, re-assess capture and thresholds after defibrillation.</li>
-                                <li>Medtronic 5388 has built-in defibrillation protection (device will not be damaged by external shock).</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="tip-box">Perform a full pacemaker check (capture, sensing, battery, connections) after each patient transport, procedure, and defibrillation event.</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="footnote">
-            Sources & further reading: Medtronic 5388 Technical Manual (Manualzz / Manualios), LITFL (Transcutaneous, Epicardial, Transvenous Pacing), Deranged Physiology (Sensitivity & Output), ESC 2025 temporary pacing guidelines, and FDA MAUDE reports on pacing failures. Always consult your hospital's pacing protocol and follow manufacturer's instructions for use.
-        </div>
-
+Atrial tachyarrhythmia?    →  DDI or VVI
+Electromagnetic interference?  →  VOO / DOO
+        </pre>
+      </div>
     </div>
+  </div>
 </div>
+
+<!-- ■■■ PARAMETERS ■■■ -->
+<div class="page" id="page-parameters">
+  <div class="section-title">Adjustable parameters</div>
+  <div class="card">
+    <div class="card-body">
+      <table>
+        <thead><tr><th>Parameter</th><th>Range</th><th>Starting value</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Base rate (bpm)</strong></td><td>30&ndash;200</td><td>70&ndash;80 adult; 100&ndash;120 paediatric</td><td>Set 10&ndash;20 bpm above intrinsic rate. Lower for weaning.</td></tr>
+          <tr><td><strong>Atrial output (mA)</strong></td><td>0.1&ndash;20</td><td>10 mA</td><td>Titrate down from high to threshold; set &ge;2&times; threshold.</td></tr>
+          <tr><td><strong>Ventricular output (mA)</strong></td><td>0.1&ndash;20</td><td>10 mA</td><td>Set &ge;2&times; capture threshold. Fixed 5 mA minimum is not universally required.</td></tr>
+          <tr><td><strong>Atrial sensitivity (mV)</strong></td><td>0.4&ndash;10</td><td>2.0 mV</td><td>Lower value = more sensitive. Set to &frac12; of measured P-wave amplitude.</td></tr>
+          <tr><td><strong>Ventricular sensitivity (mV)</strong></td><td>0.8&ndash;20</td><td>4.0 mV</td><td>Set to &frac12; of sensed R-wave (typically 3&ndash;5 mV). Too sensitive &rarr; oversensing.</td></tr>
+          <tr><td><strong>AV delay (ms)</strong></td><td>20&ndash;300 / auto 50&ndash;250</td><td>150 ms or auto</td><td>Longer (180&ndash;200 ms) to permit intrinsic conduction. Short AV in HCM &mdash; historical, not standard today.</td></tr>
+          <tr><td><strong>PVARP (ms)</strong></td><td>150&ndash;500</td><td>250 ms</td><td>Prevents sensing of retrograde P-waves &rarr; reduces PMT risk.</td></tr>
+          <tr><td><strong>Upper tracking rate (bpm)</strong></td><td>80&ndash;230 / auto</td><td>130 bpm</td><td>Limits ventricular pacing rate in DDD during sinus tachycardia.</td></tr>
+          <tr><td><strong>Pulse width (ms)</strong></td><td>Fixed</td><td>A 1.0 ms, V 1.5 ms</td><td>Not adjustable.</td></tr>
+        </tbody>
+      </table>
+      <div class="warn">Perform sensitivity and capture threshold checks daily. Never reduce output while testing sensitivity in pacing-dependent patients.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ■■■ SETUP & THRESHOLDS ■■■ -->
+<div class="page" id="page-setup">
+  <div class="section-title">Setup, threshold checks, daily verification</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-header">Initial set-up &amp; capture threshold</div>
+      <div class="card-body">
+        <ol>
+          <li>Connect leads to colour-coded ports (red = ventricular, yellow = atrial).</li>
+          <li>Set mode DDD or VVI. Rate 70&ndash;80 bpm.</li>
+          <li>Set output to a <strong>high starting value</strong> (10&ndash;20 mA ventricular, 10 mA atrial) to ensure reliable capture from the outset.</li>
+          <li>Confirm capture: pacing spike followed by wide QRS (ventricular) or P-wave (atrial).</li>
+          <li>Gradually <strong>decrease</strong> output until capture is lost &rarr; record <em>capture threshold</em> (mA). Titrating down from a high value is the standard safer approach.</li>
+          <li>Set working output to <strong>&ge;2&times; capture threshold</strong>, per institutional practice.</li>
+        </ol>
+        <div class="tip">Typical thresholds: transvenous RV apex 0.5&ndash;1.5 mA; epicardial wires 1&ndash;5 mA; may exceed 10 mA after day 4&ndash;5.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">Sensitivity testing</div>
+      <div class="card-body">
+        <ol>
+          <li>Set rate 10 bpm below intrinsic rate to allow intrinsic beats to emerge.</li>
+          <li>If clinically safe (no pacing dependency), output may be temporarily reduced to facilitate sensing assessment. <strong>Never do this in complete AV block or pacing-dependent patients.</strong></li>
+          <li>Increase sensitivity (counter-clockwise / higher mV) until sense indicator stops flashing &rarr; undersensing point.</li>
+          <li>Increase sensitivity (clockwise / lower mV) until indicator flashes with every intrinsic beat &rarr; <em>sensing threshold</em>.</li>
+          <li>Set final sensitivity to <strong>&frac12; the threshold value</strong> (e.g., 2 mV threshold &rarr; set 1 mV).</li>
+        </ol>
+        <div class="alert">Oversensing causes inappropriate inhibition &mdash; catastrophic in pacing-dependent patients. Undersensing causes asynchronous pacing and R-on-T risk.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">Daily checks &amp; documentation</div>
+      <div class="card-body">
+        <ul>
+          <li>Check underlying rhythm by <strong>lowering rate</strong> (do NOT turn output down).</li>
+          <li>Verify capture threshold &mdash; confirm output still &ge;2&times; threshold.</li>
+          <li>Verify sensing threshold &mdash; confirm margin is &frac12; of threshold.</li>
+          <li>Inspect lead connections; check battery (9&nbsp;V; replace weekly for alkaline).</li>
+          <li>Document AV delay, PVARP, any fusion or asynchrony.</li>
+        </ul>
+        <div class="fn">Failure to perform daily threshold checks is a common cause of unrecognised loss of capture.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ■■■ AV SYNCHRONY ■■■ -->
+<div class="page" id="page-avsync">
+  <div class="section-title">AV synchrony &mdash; why it matters</div>
+  <div class="card">
+    <div class="card-body">
+      <div class="two-col">
+        <div>
+          <strong>Physiological importance</strong>
+          <ul style="margin-top:8px">
+            <li>Atrial contraction contributes 20&ndash;30% of ventricular filling (&ldquo;atrial kick&rdquo;) &mdash; critical in diastolic dysfunction or reduced compliance.</li>
+            <li>Loss of AV synchrony (e.g. VVI pacing) reduces cardiac output by 15&ndash;25% in some patients.</li>
+            <li>After cardiac surgery the heart is stiff (ischaemia-reperfusion, cardioplegia) &mdash; reliance on atrial filling is increased.</li>
+            <li>Junctional rhythm post-surgery is common; atrial pacing just above junctional rate restores AV synchrony without ventricular pacing.</li>
+          </ul>
+        </div>
+        <div>
+          <strong>DDD vs VVI &mdash; clinical decision</strong>
+          <ul style="margin-top:8px">
+            <li><strong>DDD preferred:</strong> intact sinus node, AV block, haemodynamic compromise, post-cardiac surgery with epicardial wires available.</li>
+            <li><strong>VVI acceptable:</strong> ventricular backup only, no atrial lead, or atrial arrhythmias present.</li>
+            <li>Post-AVR / CABG with complete heart block: DDD strongly preferred.</li>
+          </ul>
+          <div class="tip">Optimise AV delay 150&ndash;180 ms. Too short: truncates atrial filling. Too long: intrinsic conduction overtakes and fusion occurs.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ■■■ CAPTURE ■■■ -->
+<div class="page" id="page-capture">
+  <div class="section-title">Electrical capture vs mechanical capture</div>
+  <div class="card">
+    <div class="card-body">
+      <div class="two-col" style="margin-bottom:14px">
+        <div>
+          <strong>Electrical capture</strong>
+          <ul style="margin-top:8px">
+            <li>Pacing spike followed by wide QRS (ventricular) or P-wave (atrial) on ECG.</li>
+            <li>Confirms myocardial depolarisation has occurred.</li>
+            <li>Does <em>not</em> guarantee effective contraction or cardiac output.</li>
+          </ul>
+        </div>
+        <div>
+          <strong>Mechanical capture</strong>
+          <ul style="margin-top:8px">
+            <li>Actual myocardial contraction producing cardiac output.</li>
+            <li><strong>Must be confirmed separately</strong> in haemodynamically unstable patients.</li>
+            <li>Confirm via: palpable pulse, arterial line waveform, Doppler NIBP, or point-of-care echo.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="alert">&#9888;&#65039; In PEA, electrical capture may be present without mechanical output. A wide QRS on the monitor is <strong>not sufficient</strong> &mdash; always verify mechanical capture by pulse or arterial waveform.</div>
+      <svg viewBox="0 0 700 165" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px;margin:16px auto;display:block;">
+        <rect x="10" y="10" width="210" height="145" rx="12" fill="#e8f4fd" stroke="#2980b9" stroke-width="1.5"/>
+        <text x="115" y="32" text-anchor="middle" font-size="12" font-weight="700" fill="#1a607b">&#10004; Electrical + Mechanical</text>
+        <line x1="50" y1="100" x2="50" y2="55" stroke="#e74c3c" stroke-width="2.5"/>
+        <line x1="50" y1="55" x2="52" y2="100" stroke="#e74c3c" stroke-width="2.5"/>
+        <polyline points="68,100 78,100 86,55 94,132 102,100 128,100" fill="none" stroke="#1e4a6e" stroke-width="2.5"/>
+        <line x1="128" y1="100" x2="205" y2="100" stroke="#1e4a6e" stroke-width="1.5"/>
+        <text x="115" y="148" text-anchor="middle" font-size="11" fill="#1a607b">Spike &#8594; QRS + palpable pulse</text>
+
+        <rect x="235" y="10" width="215" height="145" rx="12" fill="#fff6e5" stroke="#f39c12" stroke-width="1.5"/>
+        <text x="342" y="32" text-anchor="middle" font-size="12" font-weight="700" fill="#c0770a">&#9888; Electrical Only (PEA)</text>
+        <line x1="270" y1="100" x2="270" y2="55" stroke="#e74c3c" stroke-width="2.5"/>
+        <line x1="270" y1="55" x2="272" y2="100" stroke="#e74c3c" stroke-width="2.5"/>
+        <polyline points="288,100 298,100 306,55 314,132 322,100 348,100" fill="none" stroke="#1e4a6e" stroke-width="2.5"/>
+        <line x1="348" y1="100" x2="442" y2="100" stroke="#1e4a6e" stroke-width="1.5"/>
+        <text x="342" y="148" text-anchor="middle" font-size="11" fill="#c0770a">QRS present &#8212; no pulse</text>
+
+        <rect x="465" y="10" width="225" height="145" rx="12" fill="#ffeae9" stroke="#e74c3c" stroke-width="1.5"/>
+        <text x="577" y="32" text-anchor="middle" font-size="12" font-weight="700" fill="#c0392b">&#10006; No Capture</text>
+        <line x1="500" y1="100" x2="500" y2="55" stroke="#e74c3c" stroke-width="2.5"/>
+        <line x1="500" y1="55" x2="502" y2="100" stroke="#e74c3c" stroke-width="2.5"/>
+        <line x1="516" y1="100" x2="680" y2="100" stroke="#1e4a6e" stroke-width="1.5"/>
+        <text x="577" y="148" text-anchor="middle" font-size="11" fill="#c0392b">Spike only &#8212; no QRS, no pulse</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- ■■■ ECG PATTERNS ■■■ -->
+<div class="page" id="page-ecg">
+  <div class="section-title">Recognising pacing problems on ECG</div>
+  <div class="card">
+    <div class="card-body">
+      <table>
+        <thead><tr><th>ECG finding</th><th>Problem</th><th>Mechanism</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Spike present, no QRS follows</td><td><strong>Failure to capture</strong></td><td>Threshold exceeded; lead displacement; hyperkalaemia (most important electrolyte cause); ischaemia; fibrosis</td><td>Increase output; CXR for lead position; correct electrolytes &mdash; exclude hyperkalaemia first</td></tr>
+          <tr><td>No spike despite bradycardia (demand mode)</td><td><strong>Oversensing</strong></td><td>Generator inhibited by spurious signals (T-wave, myopotentials, cross-talk)</td><td>Decrease sensitivity (increase mV); check lead insulation; T-wave oversensing &rarr; extend PVARP</td></tr>
+          <tr><td>Spike fires after / within intrinsic QRS</td><td><strong>Undersensing</strong></td><td>Intrinsic R-wave not detected &rarr; competition &rarr; R-on-T risk</td><td>Increase sensitivity (decrease mV); recheck sensing threshold</td></tr>
+          <tr><td>Narrow QRS after atrial spike, no ventricular spike</td><td><strong>Intact AV conduction</strong> (normal)</td><td>Intrinsic conduction faster than programmed AV delay</td><td>No action; consider lengthening AV delay to promote intrinsic conduction</td></tr>
+          <tr><td>QRS after every spike, no palpable pulse</td><td><strong>Electrical capture without mechanical capture (PEA)</strong></td><td>Depolarisation without effective contraction</td><td>Confirm with arterial line / echo; treat reversible causes (tamponade, pneumothorax, hypovolaemia)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ■■■ CLINICAL USE ■■■ -->
+<div class="page" id="page-clinical">
+  <div class="section-title">Clinical use per scenario</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-header">Sick sinus syndrome (preserved AV conduction)</div>
+      <div class="card-body">
+        <ul>
+          <li>Mode: AAI or DDD (if AV conduction borderline)</li>
+          <li>Rate: 60&ndash;80 bpm</li>
+          <li>Atrial output: &ge;2&times; threshold (usually 5&ndash;8 mA)</li>
+          <li>Atrial sensitivity: 0.5&ndash;1.5 mV (&frac12; of sensed P-wave)</li>
+          <li>AV delay: long (200 ms) to allow intrinsic ventricular conduction</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">Complete heart block</div>
+      <div class="card-body">
+        <ul>
+          <li>Mode: DDD (preferred) or VVI (simple backup)</li>
+          <li>Rate: 70&ndash;90 bpm; adjust to haemodynamic stability</li>
+          <li>AV delay: 120&ndash;180 ms (capture ventricle before escape)</li>
+          <li>Upper rate: 110&ndash;120 bpm (prevent 2:1 block)</li>
+          <li>PMT &rarr; extend PVARP to 350 ms or switch to DDI</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">Post-cardiac surgery (epicardial leads)</div>
+      <div class="card-body">
+        <ul>
+          <li>Mode: DDD or DDI</li>
+          <li>Rate: 80 bpm initially, then wean</li>
+          <li>AV delay: 150 ms (auto mode often suitable)</li>
+          <li>Output: start 10 mA; final &ge;2&times; threshold</li>
+          <li>Atrial output limit: 10 mA (device maximum)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">Overdrive pacing for atrial flutter / SVT</div>
+      <div class="card-body">
+        <ul>
+          <li>Mode: AOO via Menu #3 (burst 80&ndash;800 min&#8315;&#185;)</li>
+          <li>Set burst rate 10&ndash;30% above intrinsic atrial rate</li>
+          <li>Deliver burst 5&ndash;15 s; re-evaluate rhythm</li>
+        </ul>
+        <div class="alert">Risk of rapid ventricular response or AF induction. Defibrillator must be immediately available.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ■■■ TROUBLESHOOTING ■■■ -->
+<div class="page" id="page-trouble">
+  <div class="section-title">Troubleshooting &mdash; failure to pace, capture, sense</div>
+  <div class="card">
+    <div class="card-body">
+      <table>
+        <thead><tr><th>Problem</th><th>Possible causes</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td><strong>No pacing spikes</strong></td><td>Dead battery; loose connection; device off; broken lead wire</td><td>Replace 9&nbsp;V battery; inspect all connections; increase rate to confirm spikes</td></tr>
+          <tr><td><strong>Spikes present, no capture</strong></td><td>Lead dislodgement; high threshold (oedema, fibrosis); low output; <strong>hyperkalaemia</strong> or acidosis; myocardial ischaemia</td><td>Increase output (max 20 mA ventricular); CXR for lead; correct electrolytes &mdash; exclude <strong>hyperkalaemia</strong> first</td></tr>
+          <tr><td><strong>Undersensing</strong> (spikes fire regardless)</td><td>Sensitivity too low (mV too high); lead fracture; poor contact; MI at tip</td><td>Increase sensitivity (decrease mV) until indicator flashes with each QRS</td></tr>
+          <tr><td><strong>Oversensing</strong> (no pacing despite bradycardia)</td><td>Sensitivity too high (mV too low); T-wave oversensing; myopotentials; cross-talk</td><td>Decrease sensitivity (increase mV); T-wave oversensing &rarr; extend PVARP or switch to VVI</td></tr>
+          <tr><td><strong>PMT</strong></td><td>Retrograde P-wave sensed after V-paced beat &rarr; triggers V pacing at upper rate</td><td>Extend PVARP (250&rarr;350 ms) or switch to DDI. Magnet application is not a standard intervention for PMT with external temporary generators.</td></tr>
+          <tr><td><strong>Diaphragmatic stimulation</strong></td><td>High output; lead near phrenic nerve (LV epicardial)</td><td>Reduce output if capture margin allows; reposition lead</td></tr>
+        </tbody>
+      </table>
+      <div class="tip">Systematic approach: Failure to pace &rarr; Failure to capture &rarr; Failure to sense. If sensing uncertain, switch to VOO/DOO temporarily (R-on-T risk applies).</div>
+    </div>
+  </div>
+</div>
+
+<!-- ■■■ SPECIAL CASES ■■■ -->
+<div class="page" id="page-special">
+  <div class="section-title">Special clinical situations</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-header">Paediatric pacing</div>
+      <div class="card-body">
+        <ul>
+          <li>Smaller transvenous leads (4&ndash;5 Fr) or epicardial wires</li>
+          <li>Higher basal rates: neonate 120&ndash;150, infant 100&ndash;140, child 80&ndash;100 bpm</li>
+          <li>Lower output threshold &mdash; start 2 mA ventricular</li>
+          <li>Adjust sensitivity carefully &mdash; avoid oversensing of high-amplitude paediatric QRS</li>
+          <li>VVI or DDD if AV sequential pacing required</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">Electrocautery / EMI</div>
+      <div class="card-body">
+        <ul>
+          <li>Electrocautery may cause oversensing (inhibition) or trigger asynchronous pacing</li>
+          <li>Switch to VOO or DOO <strong>before</strong> electrocautery</li>
+          <li>Manual mode selection preferred; magnet behaviour is device-dependent and unreliable in external temporary generators</li>
+          <li>After electrocautery, revert to demand mode and re-assess capture and sensing</li>
+        </ul>
+        <div class="alert">DOO prevents inhibition but carries R-on-T risk. Use only when necessary.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">IABP interaction &amp; MRI safety</div>
+      <div class="card-body">
+        <ul>
+          <li>IABP may misinterpret pacing spikes as QRS &rarr; trigger at wrong timing; switch IABP to arterial pressure trigger</li>
+          <li>External pacemaker generators and epicardial wires are MRI-unsafe; never enter MRI suite with generator attached</li>
+          <li>Epicardial wires in situ: retrieve or cut close to skin before MRI</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ■■■ TRANSCUTANEOUS ■■■ -->
+<div class="page" id="page-transcutaneous">
+  <div class="section-title">Transcutaneous pacing &mdash; bridge to transvenous/epicardial access</div>
+  <div class="card">
+    <div class="card-body">
+      <div class="two-col">
+        <div>
+          <strong>Technique &amp; setup</strong>
+          <ul style="margin-top:8px">
+            <li>Anterior-posterior pad placement preferred (lower capture threshold); anterior-lateral is acceptable</li>
+            <li>Start at 40&ndash;80 mA; increase by 10 mA until wide QRS on ECG (electrical capture)</li>
+            <li>Typical capture 50&ndash;100 mA; may reach 200 mA</li>
+            <li>Rate: 60&ndash;80 bpm for bradycardia; 90&ndash;110 bpm for torsades</li>
+          </ul>
+        </div>
+        <div>
+          <strong>Key clinical points</strong>
+          <ul style="margin-top:8px">
+            <li><strong>Confirm mechanical capture</strong> by pulse or arterial waveform &mdash; chest wall contractions can mimic QRS on ECG</li>
+            <li>Provide analgesia/sedation (e.g., morphine 1&ndash;2 mg + midazolam 1&ndash;2 mg IV) &mdash; transcutaneous pacing is painful</li>
+            <li>Temporising measure only; arrange definitive pacing promptly</li>
+            <li>May be ineffective in severe hypothermia (&lt;30&deg;C)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="warn">Skeletal muscle contractions can mimic ECG capture. <strong>Always confirm mechanical capture by pulse or arterial line.</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ■■■ POST-SURGERY / TdP ■■■ -->
+<div class="page" id="page-postcardiac">
+  <div class="section-title">Post-cardiac surgery pacing &amp; torsades de pointes</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-header">Post-cardiac surgery (CABG, valve, TAVI)</div>
+      <div class="card-body">
+        <ul>
+          <li><strong>AV block after AVR:</strong> Common; DDD pacing restores AV synchrony and cardiac output</li>
+          <li><strong>Junctional rhythm:</strong> Atrial pacing at 80&ndash;90 bpm (just above junctional rate) restores AV synchrony post-bypass</li>
+          <li><strong>After TAVI:</strong> New LBBB or complete AV block in up to 25%; temporary transvenous pacing until recovery or permanent pacemaker</li>
+          <li><strong>Epicardial wire removal:</strong>
+            <ul>
+              <li>Steady continuous traction &mdash; stop if significant resistance (risk of laceration/haemopericardium)</li>
+              <li>Observe 2&ndash;4 h post-removal for tamponade</li>
+              <li>Have pericardiocentesis equipment available</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">Torsades de pointes (TdP) &mdash; temporary pacing</div>
+      <div class="card-body">
+        <ul>
+          <li>Increase pacing rate to <strong>90&ndash;110 bpm</strong> (ventricular) to shorten QT and suppress pause-dependent TdP</li>
+          <li>Mode: VVI or DDD depending on AV status</li>
+          <li><strong>Simultaneously treat underlying causes:</strong>
+            <ul>
+              <li>IV magnesium sulphate 2 g over 10&ndash;15 min (correct hypomagnesaemia)</li>
+              <li>Target K&#8314; &ge;4.5 mmol/L (correct hypokalaemia)</li>
+              <li>Withdraw / replace all QT-prolonging drugs</li>
+            </ul>
+          </li>
+          <li>Pacing is a bridge &mdash; not a cure. Address the underlying QT abnormality.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ■■■ EMERGENCY / RAP ■■■ -->
+<div class="page" id="page-emergency">
+  <div class="section-title">Emergency asynchronous pacing (DOO) &amp; burst RAP</div>
+  <div class="card">
+    <div class="card-body">
+      <div class="two-col">
+        <div>
+          <strong>Emergency key (DOO mode)</strong>
+          <ul style="margin-top:8px">
+            <li>Press EMERGENCY key &rarr; immediately switches to DOO at 80 bpm / 20 mA</li>
+            <li>Use when capture is lost or in profound bradycardia / asystole</li>
+            <li>DOO ignores all sensing &rarr; R-on-T risk. Use only in genuine emergency.</li>
+            <li>To exit DOO: press key again or select another mode</li>
+            <li><strong>Confirm mechanical capture</strong> by pulse or arterial waveform after activating</li>
+          </ul>
+        </div>
+        <div>
+          <strong>Rapid Atrial Pacing (RAP) &mdash; burst mode</strong>
+          <ul style="margin-top:8px">
+            <li>Access via Menu #3 (RAP menu)</li>
+            <li>Rate 80&ndash;800 min&#8315;&#185; in AOO or DDD mode</li>
+            <li>Overdrive pacing for atrial flutter / SVT termination</li>
+            <li>Burst 5&ndash;15 s; then re-evaluate rhythm</li>
+            <li>Defibrillator must be immediately available</li>
+          </ul>
+        </div>
+      </div>
+      <div class="warn">Battery: replace 9&nbsp;V when low-battery indicator appears (alkaline 7&ndash;9 days; lithium 16 days). Always use fresh battery for each new patient.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ■■■ SAFETY ■■■ -->
+<div class="page" id="page-safety">
+  <div class="section-title">Safety, microshock precautions &amp; surveillance</div>
+  <div class="card">
+    <div class="card-body">
+      <div class="two-col">
+        <div>
+          <strong>Microshock prevention</strong>
+          <ul style="margin-top:8px">
+            <li>Patients with intracardiac leads risk VF from currents as low as 10 &micro;A delivered directly to the myocardium</li>
+            <li>Use only patient-isolated pacing cables</li>
+            <li>All electrical equipment must share common ground</li>
+            <li>Cover exposed wire terminals with non-conductive caps when not connected</li>
+            <li>Discharge static before handling terminals (touch bed frame first)</li>
+          </ul>
+        </div>
+        <div>
+          <strong>Defibrillation with pacemaker in situ</strong>
+          <ul style="margin-top:8px">
+            <li>External defibrillation is safe with precautions</li>
+            <li>Place paddles/pads &ge;15 cm from generator and leads</li>
+            <li>Disconnect pacemaker before shock if feasible</li>
+            <li>Re-assess capture and sensing after defibrillation &mdash; thresholds may transiently rise</li>
+            <li>External generator has built-in defibrillation protection</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tip">Perform full pacemaker check (capture, sensing, battery, connections) after every patient transport, procedure, and defibrillation event.</div>
+    </div>
+  </div>
+  <div class="page-footer">
+    Sources: LITFL (Transcutaneous, Epicardial, Transvenous Pacing), Deranged Physiology (Sensitivity &amp; Output), ESC 2025 temporary pacing guidelines, Bojar &amp; Marino cardiac surgery / critical care references, FDA MAUDE pacing failure reports. Always consult your hospital&rsquo;s pacing protocol and the manufacturer&rsquo;s instructions for use.
+  </div>
+</div>
+
+  </div><!-- /content -->
+</div><!-- /body -->
+</div><!-- /shell -->
+
+<script>
+function sp(id, btn) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('page-' + id).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('content').scrollTop = 0;
+}
+</script>
 </body>
 </html>
