@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-06-23 03:49
+  updated: 2026-06-23 11:18
 
 sections:
   - id: calculators
@@ -197,7 +197,7 @@ sections:
         visible: true
         tags: []
       - id: external_pacing
-        title: "Medtronic 5388 – Temporary External Pacing Guide"
+        title: "Temporary External Pacing – Clinical Reference"
         file: books/cheatsheets/external_pacing.html
         type: cheatsheet
         visible: true
