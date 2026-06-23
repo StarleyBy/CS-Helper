@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-06-16 03:12
+  updated: 2026-06-22 19:07
 
 sections:
   - id: calculators
@@ -172,6 +172,12 @@ sections:
         type: cheatsheet
         visible: true
         tags: [liver, cirrhosis, hepatology]
+      - id: cp-rcm
+        title: "Constrictive Pericarditis vs Restrictive Cardiomyopathy"
+        file: books/cheatsheets/cp-rcm.html
+        type: cheatsheet
+        visible: true
+        tags: []
       - id: duke
         title: "Duke Criteria for Infective Endocarditis | 2023 ISCVID vs 2015 Modified Duke"
         file: books/cheatsheets/duke.html
