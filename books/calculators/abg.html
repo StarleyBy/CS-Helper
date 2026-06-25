@@ -365,6 +365,80 @@ td strong{color:var(--text)}
       </div>
     </div>
   </div>
+
+  <div class="dv"></div>
+
+  <!-- AG Albumin Correction — Prominent box -->
+  <div class="card">
+    <h3 style="color:var(--amber)">⚠️ Albumin-Corrected Anion Gap — Never skip this step</h3>
+    <div class="box box-amber"><strong>AG<sub>corr</sub> = AG + 2.5 × (4.0 − Albumin<sub>g/dL</sub>)</strong><br>
+    Each 1 g/dL drop in albumin below 4 g/dL lowers the measured AG by ~2.5 mEq/L — masking a true high-AG acidosis.
+    </div>
+    <div class="g2" style="margin-top:10px">
+      <div>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:8px">Clinical example: Septic ICU patient with albumin 1.8 g/dL, AG 12 (apparently normal). Corrected AG = 12 + 2.5×(4.0−1.8) = <strong style="color:var(--amber)">17.5 mEq/L — elevated</strong>. A significant high-AG acidosis was hidden.</p>
+        <div class="box box-red"><strong>Rule: Never interpret a normal anion gap in severe hypoalbuminemia without albumin correction.</strong> Post-cardiac surgery patients frequently have hypoalbuminemia — always correct.</div>
+      </div>
+      <div>
+        <div class="tw"><table>
+          <tr><th>Albumin (g/dL)</th><th>AG correction needed</th><th>Clinical setting</th></tr>
+          <tr><td>3.5–4.0</td><td>+1–2 mEq/L (minor)</td><td>Mild hypoalbuminemia</td></tr>
+          <tr><td>2.5–3.5</td><td>+2–4 mEq/L (significant)</td><td>ICU, malnutrition</td></tr>
+          <tr><td>1.5–2.5</td><td>+4–6 mEq/L (major)</td><td>Liver failure, severe sepsis</td></tr>
+          <tr><td>&lt;1.5</td><td>&gt;6 mEq/L (critical)</td><td>Always correct — baseline AG may be negative</td></tr>
+        </table></div>
+        <p style="font-size:11.5px;color:var(--muted);margin-top:6px">Normal AG varies by laboratory methodology (modern ion-selective electrode analysers: 6–11 mEq/L; older methods: 12±4). Always use your laboratory's reference range. The calculator uses the conventional threshold of 11 mEq/L.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- VBG vs ABG -->
+  <div class="card">
+    <h3 style="color:var(--cyan)">🩸 Venous Blood Gas (VBG) vs Arterial Blood Gas (ABG)</h3>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:10px">VBG can substitute for ABG in many ICU situations — avoiding arterial puncture — but agreement varies by parameter.</p>
+    <div class="tw"><table>
+      <thead><tr><th>Parameter</th><th>VBG–ABG Agreement</th><th>VBG offset</th><th>Clinically usable?</th></tr></thead>
+      <tbody>
+        <tr><td><strong>pH</strong></td><td style="color:var(--green)">Good (±0.03–0.05)</td><td>VBG pH typically 0.03–0.05 lower</td><td style="color:var(--green)">Yes — for acid-base trend monitoring</td></tr>
+        <tr><td><strong>HCO₃⁻</strong></td><td style="color:var(--green)">Good (±2 mEq/L)</td><td>~1–2 mEq/L lower in VBG</td><td style="color:var(--green)">Yes — for metabolic assessment</td></tr>
+        <tr><td><strong>PvCO₂</strong></td><td style="color:var(--amber)">Moderate (±5 mmHg)</td><td>VBG CO₂ typically 5–6 mmHg higher</td><td style="color:var(--amber)">Yes for trend; not for exact target</td></tr>
+        <tr><td><strong>PaO₂</strong></td><td style="color:var(--red)">Poor</td><td>VBG PO₂ 30–40+ mmHg lower</td><td style="color:var(--red)">No — venous PO₂ does not reflect arterial oxygenation</td></tr>
+        <tr><td><strong>Lactate</strong></td><td style="color:var(--green)">Good</td><td>Minimal difference</td><td style="color:var(--green)">Yes — lactate from VBG is reliable</td></tr>
+        <tr><td><strong>ScvO₂</strong></td><td style="color:var(--green)">Good surrogate for SvO₂</td><td>ScvO₂ typically 5–8% higher than SvO₂</td><td style="color:var(--green)">Yes — central venous oxygen saturation reflects DO₂/VO₂ balance</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box box-cyan"><strong>Practical rule:</strong> Use VBG for pH, HCO₃⁻, and lactate trend monitoring. Use ABG when precise PaO₂ assessment is needed (ARDS diagnosis, P/F ratio, A-a gradient) or when SpO₂ is unreliable.</div>
+  </div>
+
+  <!-- Stewart approach + O2 Delivery -->
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--purple)">⚛️ Stewart Physicochemical Approach</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:10px">Modern physicochemical framework for acid-base analysis — particularly relevant after cardiac surgery with large crystalloid volumes.</p>
+      <div class="box box-purple"><strong>Three independent variables determine pH:</strong><br>
+        1. <strong>SID (Strong Ion Difference)</strong> = Na⁺ + K⁺ − Cl⁻ − lactate (normal 40–44 mEq/L)<br>
+        2. <strong>Total weak acids (A<sub>tot</sub>)</strong> = primarily albumin and phosphate<br>
+        3. <strong>PaCO₂</strong>
+      </div>
+      <ul style="font-size:13px;color:var(--muted)">
+        <li><strong>↓ SID → metabolic acidosis.</strong> Hyperchloremia (large NS volumes) ↓SID → acidosis. After CPB with NS prime: Cl⁻ rises → SID falls → hyperchloremic acidosis. Switch to balanced crystalloids (LR, Plasma-Lyte).</li>
+        <li><strong>↓ Albumin → metabolic alkalosis tendency.</strong> Hypoalbuminemia ↓A<sub>tot</sub> → explains why low albumin patients have occult alkalosis and corrected AG rises.</li>
+        <li><strong>Hyperchloremia → ↓SID → metabolic acidosis</strong> — this is why saline-induced acidosis is a physicochemical phenomenon, not a dilutional one.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--blue)">🫀 Oxygen Delivery &amp; Consumption</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:8px">Normal PaO₂ does not exclude tissue hypoxia — oxygen delivery depends on cardiac output AND haemoglobin content.</p>
+      <div class="box box-blue">
+        <strong>DO₂ = CO × CaO₂ × 10</strong><br>
+        CaO₂ = (Hb × 1.34 × SaO₂) + (PaO₂ × 0.0031)<br>
+        Normal DO₂: 950–1150 mL/min<br>
+        Normal VO₂: 200–250 mL/min<br>
+        O₂ extraction ratio (OER) = VO₂/DO₂ ≈ 0.20–0.30
+      </div>
+      <div class="box box-red"><strong>Clinical implication:</strong> A patient with Hb 6 g/dL, SaO₂ 98%, CO 3 L/min has severely reduced DO₂ despite normal PaO₂ and SpO₂. Lactic acidosis in this setting = DO₂ inadequate for VO₂. Elevating PaO₂ further has minimal benefit — transfuse and/or support cardiac output.</div>
+    </div>
+  </div>
 </section>
 <!-- ══════════════════════ TAB 1: CALCULATOR ══════════════════════ -->
 <section class="tab" id="t1">
@@ -601,7 +675,7 @@ td strong{color:var(--text)}
         <li><strong>2–4:</strong> Mild — identify cause, monitor</li>
         <li><strong>4–8:</strong> Significant — aggressive resuscitation</li>
         <li><strong>8–15:</strong> Severe — high mortality (&gt;50%)</li>
-        <li><strong>&gt;15:</strong> Critical — &gt;80% mortality without MCS</li>
+        <li><strong>&gt;15:</strong> Critical — associated with extremely high mortality; urgent evaluation for tissue perfusion failure and consideration of mechanical circulatory support (ECMO/IABP)</li>
       </ul>
     </div>
     <div class="card">
@@ -617,6 +691,87 @@ td strong{color:var(--text)}
       <div class="box box-amber">Normalization of lactate &lt;2 mmol/L within 24h is a key prognostic marker post-CS. Persistent lactate &gt;4 mmol/L at 24h = consider tamponade, graft failure, ECMO/IABP.</div>
     </div>
   </div>
+
+  <!-- Permissive Hypercapnia -->
+  <div class="card">
+    <h3 style="color:var(--blue)">🫁 Permissive Hypercapnia</h3>
+    <p style="color:var(--muted);font-size:13px">Intentional tolerance of elevated PaCO₂ to achieve lower tidal volumes and driving pressures — prioritising lung protection over normocapnia.</p>
+    <div class="g2" style="margin-top:12px">
+      <div>
+        <div class="box box-blue"><strong>Acceptable parameters:</strong><br>
+          &bull; PaCO₂ up to 60–80 mmHg if haemodynamically tolerated<br>
+          &bull; Minimum acceptable pH: ≥7.20–7.25<br>
+          &bull; Avoid rapid CO₂ changes (arrhythmia risk)<br>
+          &bull; NaHCO₃ may temporise if pH &lt;7.20 (controversial; tidal correction only)
+        </div>
+        <div class="box box-green"><strong>Benefit:</strong> Modest hypercapnic acidosis may have direct anti-inflammatory, lung-protective effects. Allows Vt ≤6 mL/kg PBW, Pplat ≤30 cmH₂O, and driving pressure ≤15 cmH₂O without sacrificing ventilation targets.</div>
+      </div>
+      <div>
+        <strong style="color:var(--text);font-size:13px">Contraindications &amp; cautions:</strong>
+        <ul style="margin-top:6px">
+          <li><strong>Intracranial hypertension (TBI, neurosurgery):</strong> CO₂ is a potent cerebral vasodilator → hypercapnia worsens ICP. Avoid.</li>
+          <li><strong>Pulmonary hypertension:</strong> Hypercapnia and acidosis ↑PVR → worsens RV failure.</li>
+          <li><strong>Post-cardiac surgery RV failure:</strong> Maintain normocapnia — hypercapnia ↑RV afterload.</li>
+          <li><strong>Severe metabolic acidosis (pH &lt;7.20):</strong> Additional respiratory acidosis is dangerous.</li>
+          <li><strong>Cardiac arrhythmias</strong> attributable to acidosis.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ECMO -->
+  <div class="card">
+    <h3 style="color:var(--purple)">🔄 ECMO — Acid-Base &amp; Gas Exchange Considerations</h3>
+    <p style="color:var(--muted);font-size:13px">ECMO fundamentally alters the relationship between ventilator settings and arterial blood gas results.</p>
+    <div class="g2" style="margin-top:12px">
+      <div>
+        <div class="box box-purple"><strong>VA-ECMO (venoarterial):</strong><br>
+          &bull; <strong>Differential hypoxia (Harlequin syndrome):</strong> ECMO oxygenates blood from the venous side. If LV function recovers, native cardiac output competes with ECMO flow — upper body may receive poorly oxygenated native blood while lower body receives ECMO-oxygenated blood. SpO₂ on right hand (pre-mixing) may be lower than left foot (post-mixing).<br>
+          &bull; <strong>Monitor:</strong> Right radial arterial line for upper body oxygenation; SpO₂ on both hands.<br>
+          &bull; High venous saturation (SvO₂ &gt;75%) expected — reflects reduced O₂ extraction with ECMO support.<br>
+          &bull; Serial lactate clearance: target &lt;2 mmol/L within 6–12h indicates adequate perfusion.
+        </div>
+      </div>
+      <div>
+        <div class="box box-adv" style="border-color:var(--purple)"><strong>VV-ECMO (venovenous):</strong><br>
+          &bull; Supports oxygenation and CO₂ removal; does NOT support cardiac output.<br>
+          &bull; ABG shows dramatically improved PaO₂ after initiation — ventilator can be set to lung rest settings (Vt 3–4 mL/kg PBW, Ppeak ≤25, PEEP 10–15).<br>
+          &bull; CO₂ clearance on ECMO circuit is very efficient — may develop alkalosis; adjust sweep gas flow (the "respiratory rate" of ECMO).<br>
+          &bull; Recirculation: oxygenated blood returning from ECMO may be drawn back into the circuit → watch for high outlet saturation without improvement in SaO₂.
+        </div>
+        <div class="box box-red"><strong>Lactate on ECMO:</strong> Rising lactate despite ECMO support → suspect circuit malfunction, cardiac stun, limb ischemia (VA-ECMO distal perfusion catheter), or heparin-induced thrombosis. Do not attribute rising lactate to the ECMO circuit itself without ruling out these causes.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vasoplegic syndrome + Mesenteric ischemia -->
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--red)">🔴 Vasoplegic Syndrome after Cardiac Surgery</h3>
+      <div class="box box-red"><strong>Definition:</strong> Severe systemic vasodilation after CPB — low SVR despite normal or high cardiac index. Results from contact activation, cytokine release, and nitric oxide overproduction during bypass.</div>
+      <strong style="color:var(--text);font-size:13px;display:block;margin:8px 0 4px">ABG pattern:</strong>
+      <ul>
+        <li>Lactic acidosis — despite high or normal CI (distributive physiology)</li>
+        <li>Normal or elevated SvO₂ (impaired O₂ extraction at tissue level)</li>
+        <li>Low SVR on pulmonary artery catheter (&lt;700 dyn·s/cm⁵)</li>
+        <li>High cardiac index (CI &gt;2.5 L/min/m²) — differentiates from cardiogenic shock</li>
+      </ul>
+      <div class="box box-amber"><strong>Treatment:</strong> Vasopressors (noradrenaline, vasopressin, methylene blue). Investigate concurrent causes of lactate elevation (ischemia, hepatic dysfunction). Target MAP ≥65 mmHg, lactate clearance &gt;10%/hr.</div>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--amber)">⚠️ Mesenteric Ischaemia post-Cardiac Surgery</h3>
+      <div class="box box-amber"><strong>Why it occurs:</strong> Low cardiac output states during and after CPB → splanchnic hypoperfusion → bowel ischaemia. Incidence 1–3% post-CS; mortality 60–80%.</div>
+      <strong style="color:var(--text);font-size:13px;display:block;margin:8px 0 4px">ABG clues:</strong>
+      <ul>
+        <li><strong>Unexplained high-AG metabolic acidosis</strong> — lactate rising despite adequate global haemodynamics</li>
+        <li>Lactate &gt;4 mmol/L without obvious haemodynamic cause (cardiac output appears adequate)</li>
+        <li>Minimal or absent abdominal symptoms initially — classic diagnostic trap</li>
+        <li>Progressive lactic acidosis refractory to resuscitation</li>
+      </ul>
+      <div class="box box-red"><strong>⚠️ High index of suspicion required:</strong> Unexplained persistent lactic acidosis after cardiac surgery, especially after prolonged CPB, in elderly, or with atherosclerosis. Early CT-angiography or surgical exploration. Delay = bowel necrosis = death.</div>
+    </div>
+  </div>
+
 </section>
 
 <!-- ══════════════════════ TAB 3: QUIZ ══════════════════════ -->
@@ -695,16 +850,49 @@ function runCalc() {
   const metAcidosis   = hco3 < 22;
   const metAlkalosis  = hco3 > 26;
 
-  if (acidemia && respAcidosis)  { primary = 'Respiratory Acidosis'; disorders.push('resp-acid'); }
-  else if (acidemia && metAcidosis)  { primary = 'Metabolic Acidosis'; disorders.push('met-acid'); }
-  else if (alkalemia && respAlkalosis) { primary = 'Respiratory Alkalosis'; disorders.push('resp-alk'); }
-  else if (alkalemia && metAlkalosis)  { primary = 'Metabolic Alkalosis'; disorders.push('met-alk'); }
-  else if (normalPH) {
-    // Mixed or normal
-    if (metAcidosis && respAlkalosis) { primary = 'Mixed: Metabolic Acidosis + Respiratory Alkalosis'; disorders = ['met-acid','resp-alk']; }
-    else if (metAlkalosis && respAcidosis) { primary = 'Mixed: Metabolic Alkalosis + Respiratory Acidosis'; disorders = ['met-alk','resp-acid']; }
+  // ── REVISED PRIMARY DISORDER LOGIC (Rose / Marino / Berend approach) ──
+  // Both PaCO₂ and HCO₃⁻ are assessed independently before declaring primary disorder.
+  // When both parameters are abnormal in the SAME pH direction, it is a TRUE MIXED
+  // disorder — not a single disorder with compensation.
+  // Example: pH 7.21, CO₂ 70, HCO₃ 16 → both worsening acidemia = mixed resp+met acidosis.
+  if (acidemia) {
+    if (respAcidosis && metAcidosis) {
+      // CO₂ elevated AND HCO₃⁻ reduced during acidemia → true simultaneous mixed disorder
+      primary = 'Mixed: Respiratory Acidosis + Metabolic Acidosis';
+      disorders = ['resp-acid', 'met-acid'];
+      mixedNotes.push('⚠️ TRUE MIXED DISORDER — PaCO₂ ' + co2 + ' mmHg (elevated) AND HCO₃⁻ ' + hco3 + ' mEq/L (reduced) are both independently driving acidemia. In isolated respiratory acidosis, HCO₃⁻ should be normal or ELEVATED (renal compensation). In isolated metabolic acidosis, CO₂ should be LOW (respiratory compensation). Here both parameters worsen the pH simultaneously = mixed disorder. Compensation analysis below confirms both components.');
+    } else if (respAcidosis) {
+      primary = 'Respiratory Acidosis';
+      disorders = ['resp-acid'];
+    } else if (metAcidosis) {
+      primary = 'Metabolic Acidosis';
+      disorders = ['met-acid'];
+    } else {
+      primary = 'Acidemia — borderline values; correlate clinically';
+      disorders = ['mixed'];
+    }
+  } else if (alkalemia) {
+    if (respAlkalosis && metAlkalosis) {
+      // CO₂ reduced AND HCO₃⁻ elevated during alkalemia → true simultaneous mixed disorder
+      primary = 'Mixed: Respiratory Alkalosis + Metabolic Alkalosis';
+      disorders = ['resp-alk', 'met-alk'];
+      mixedNotes.push('⚠️ TRUE MIXED DISORDER — PaCO₂ ' + co2 + ' mmHg (reduced) AND HCO₃⁻ ' + hco3 + ' mEq/L (elevated) are both independently driving alkalemia. In isolated respiratory alkalosis, HCO₃⁻ should be normal or LOW (renal compensation). In isolated metabolic alkalosis, CO₂ should be HIGH (respiratory compensation). Both being abnormal in the alkalosis direction = mixed disorder.');
+    } else if (respAlkalosis) {
+      primary = 'Respiratory Alkalosis';
+      disorders = ['resp-alk'];
+    } else if (metAlkalosis) {
+      primary = 'Metabolic Alkalosis';
+      disorders = ['met-alk'];
+    } else {
+      primary = 'Alkalemia — borderline values; correlate clinically';
+      disorders = ['mixed'];
+    }
+  } else if (normalPH) {
+    // Normal pH — either compensated single disorder or two opposing disorders neutralizing each other
+    if (metAcidosis && respAlkalosis) { primary = 'Mixed (Normal pH): Metabolic Acidosis + Respiratory Alkalosis'; disorders = ['met-acid','resp-alk']; }
+    else if (metAlkalosis && respAcidosis) { primary = 'Mixed (Normal pH): Metabolic Alkalosis + Respiratory Acidosis'; disorders = ['met-alk','resp-acid']; }
     else if (!metAcidosis && !metAlkalosis && !respAcidosis && !respAlkalosis) { primary = 'Normal ABG'; disorders = ['normal']; }
-    else { primary = 'Mixed Disorder — Normal pH'; disorders = ['mixed']; }
+    else { primary = 'Compensated Disorder — Normal pH'; disorders = ['mixed']; }
   }
 
   // pH severity
@@ -787,10 +975,10 @@ function runCalc() {
     if (disorders.includes('met-acid') && ag > 12) {
       const dd = (ag - 12) / (24 - hco3);
       ddRatio = `<div class="box box-purple"><strong>Delta-Delta ratio:</strong> ${dd.toFixed(2)}<br>` +
-        (dd < 0.4 ? '→ Hyperchloremic normal AG acidosis (± high AG co-existing)' :
-         dd < 1   ? '→ Mixed high-AG + normal-AG metabolic acidosis' :
-         dd < 2   ? '→ Pure high-AG metabolic acidosis (appropriate HCO₃⁻ fall)' :
-                    '→ High-AG acidosis + concurrent METABOLIC ALKALOSIS (HCO₃⁻ higher than expected for AG)') + '</div>';
+        (dd < 0.4 ? '→ Pure NAGMA (normal anion gap metabolic acidosis) — no significant HAGMA component' :
+         dd < 0.8 ? '→ Mixed HAGMA + NAGMA (high-AG and normal-AG acidosis co-existing)' :
+         dd < 2   ? '→ Pure HAGMA (high anion gap metabolic acidosis — HCO₃⁻ reduction proportional to AG rise)' :
+                    '→ HAGMA + concurrent METABOLIC ALKALOSIS (HCO₃⁻ inappropriately high relative to AG elevation)') + '</div>';
     }
   } else if (disorders.includes('met-acid')) {
     agSection = '<div class="box box-amber">💡 Enter Na⁺ and Cl⁻ to calculate Anion Gap and Delta-Delta ratio for more precise interpretation.</div>';
@@ -811,8 +999,8 @@ function runCalc() {
       const normalAAG = 7 + 0.1 * Math.min(70, 40); // simplified
       const aaInterp = aag < 15 ? '🟢 Normal A-a gradient — hypoventilation or ↓FiO₂ cause' : aag < 30 ? '🟡 Mildly elevated — V/Q mismatch' : aag < 50 ? '🟠 Moderately elevated — significant V/Q mismatch or shunt' : '🔴 Markedly elevated — large shunt or diffusion impairment';
       const pfi = (po2 / fio2).toFixed(0);
-      let pfiInterp = pfi > 400 ? '🟢 Normal P/F ratio' : pfi > 300 ? '🟡 Mild impairment' : pfi > 200 ? '🟠 Moderate — ARDS criteria (Berlin)' : pfi > 100 ? '🔴 Severe — ARDS' : '🔴 CRITICAL — Severe ARDS';
-      o2Section = `<div class="box box-purple"><strong>PaO₂:</strong> ${po2} mmHg — ${hypox}<br><strong>A-a gradient:</strong> ${aag.toFixed(1)} mmHg — ${aaInterp}<br><strong>P/F ratio:</strong> ${pfi} — ${pfiInterp}</div>`;
+      let pfiInterp = pfi > 300 ? '🟢 Normal (P/F >300 — no ARDS on PEEP ≥5 cmH₂O)' : pfi > 200 ? '🟡 Mild ARDS — Berlin: P/F 201–300 on PEEP ≥5 cmH₂O' : pfi > 100 ? '🟠 Moderate ARDS — Berlin: P/F 101–200 on PEEP ≥5 cmH₂O' : '🔴 Severe ARDS — Berlin: P/F ≤100 on PEEP ≥5 cmH₂O';
+      o2Section = `<div class="box box-purple"><strong>PaO₂:</strong> ${po2} mmHg — ${hypox}<br><strong>A-a gradient:</strong> ${aag.toFixed(1)} mmHg — ${aaInterp}<br><strong>P/F ratio:</strong> ${pfi} — ${pfiInterp}<br><span style="font-size:11px;opacity:.7">⚠️ Berlin ARDS classification requires PEEP ≥5 cmH₂O on mechanical ventilation — cannot be diagnosed on room air or minimal supplemental O₂.</span></div>`;
     } else {
       o2Section = `<div class="box box-purple"><strong>PaO₂:</strong> ${po2} mmHg — ${hypox}</div>`;
     }
@@ -827,10 +1015,11 @@ function runCalc() {
 
   // 7. Base Excess estimate
   const be = hco3 - 24 + 16 * (pH - 7.40);
-  const beInterp = be > 2 ? '↑ Base excess → metabolic alkalosis contribution' : be < -2 ? '↓ Base deficit → metabolic acidosis contribution' : '≈ Normal base excess';
+  const beInterp = be > 2 ? '↑ Estimated base excess → metabolic alkalosis contribution' : be < -2 ? '↓ Estimated base deficit → metabolic acidosis contribution' : '≈ Normal estimated base excess';
 
   // ── BUILD RESULT ──
-  const primaryColor = disorders.includes('resp-acid') ? 'var(--red)' :
+  const primaryColor = (disorders.length > 1 && !disorders.includes('normal')) ? 'var(--purple)' :
+                       disorders.includes('resp-acid') ? 'var(--red)' :
                        disorders.includes('resp-alk')  ? 'var(--blue)' :
                        disorders.includes('met-acid')  ? 'var(--amber)' :
                        disorders.includes('met-alk')   ? 'var(--green)' :
@@ -839,6 +1028,7 @@ function runCalc() {
   const html = `
 <div class="card" style="border-top:3px solid ${primaryColor}">
   <h3 style="color:${primaryColor};font-size:18px">🩸 ${primary}</h3>
+  ${mixedNotes.length ? `<div class="box box-red" style="margin:8px 0 12px">${mixedNotes.join('<br>')}</div>` : ''}
   <div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:14px;display:flex;flex-wrap:wrap;gap:12px">
     <span>pH: <strong style="color:var(--text)">${pH}</strong></span>
     <span>PaCO₂: <strong style="color:var(--text)">${co2}</strong> mmHg</span>
@@ -849,7 +1039,7 @@ function runCalc() {
 
   <div class="box" style="background:rgba(0,200,224,.08);border-left:3px solid var(--cyan)">
     <strong>pH Status:</strong> ${severity}<br>
-    ${be !== null ? `<strong>Estimated Base Excess:</strong> ${be.toFixed(1)} mEq/L — ${beInterp}` : ''}
+    ${`<strong>Estimated BE</strong> <span style='font-size:10px;opacity:.6'>(formula approximation, not laboratory value)</span><strong>:</strong> ${be.toFixed(1)} mEq/L — ${beInterp}`}
     ${acuteVsChronic ? '<br><strong>Acuity:</strong> ' + acuteVsChronic : ''}
   </div>
 
@@ -917,7 +1107,7 @@ const QDATA = [
     q: 'pH 7.55 · PaCO₂ 24 mmHg · HCO₃⁻ 21 mEq/L. Young woman, 26 weeks pregnant.',
     opts: ['Pathological respiratory alkalosis','Metabolic alkalosis','Physiological respiratory alkalosis of pregnancy','Mixed metabolic alkalosis + respiratory alkalosis'],
     ans: 2,
-    exp: '<strong>Physiological respiratory alkalosis of pregnancy.</strong> Progesterone directly stimulates the respiratory centre → chronic hyperventilation → PaCO₂ 28–32 mmHg (normal in pregnancy). Renal compensation: HCO₃⁻ falls to 18–22. pH 7.44–7.47 is normal in pregnancy. This patient has slightly more alkalosis (pH 7.55) — could indicate mild superimposed pathology (fever, anxiety) but the base pattern is physiological. Normal PaCO₂ in pregnancy = 38–42 would be relative HYPOVENTILATION.'
+    exp: '<strong>Respiratory alkalosis of pregnancy — with superimposed hyperventilation. Note: pH 7.55 exceeds the normal pregnancy range.</strong> The underlying process is physiological: progesterone stimulates medullary respiratory centres → chronic hyperventilation → in normal pregnancy: PaCO₂ 28–32 mmHg, HCO₃⁻ 18–22, pH 7.44–7.47. HOWEVER, this patient has pH 7.55 and PaCO₂ 24 — both outside the normal physiological pregnancy range. This indicates superimposed pathological hyperventilation on top of baseline pregnancy alkalosis — likely from pain, anxiety, fever, or concurrent illness. A purely physiological pregnancy alkalosis does not produce pH 7.55. Clinical action: identify and treat the cause of excessive hyperventilation. Normal PaCO₂ 38–42 in a pregnant woman = relative hypoventilation.'
   },
   {
     q: 'pH 7.10 · PaCO₂ 25 mmHg · HCO₃⁻ 8 mEq/L. Type 1 DM, stopped insulin, glucose 480 mg/dL.',
