@@ -2,1184 +2,1125 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Inotropes & Vasoactive Drugs | Cardiac Surgery Guide</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inotropes &amp; Vasoactive Drugs | Cardiac Surgery ICU</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #eef2f8;
-  --card: #ffffff;
-  --teal-dark: #1a3a3f;
-  --teal-mid: #1f5e6e;
-  --teal-light: #2a7d90;
-  --teal-pale: #edf5fa;
-  --teal-border: #c8dfe8;
-  --orange: #e8822a;
-  --orange-pale: #fff7ec;
-  --red: #c73e2d;
-  --red-pale: #ffeceb;
-  --green: #1a7a4a;
-  --green-pale: #edfaf3;
-  --green-border: #b2dfc5;
-  --purple: #5b3d8a;
-  --purple-pale: #f3effe;
-  --purple-border: #c9b8e8;
-  --blue: #1a4f8a;
-  --blue-pale: #e8f0fb;
-  --blue-border: #b0c8ee;
-  --text: #1a2c3e;
-  --muted: #4a6070;
-  --border: #e2ebf3;
-  --mono: 'JetBrains Mono', monospace;
+:root{
+  --bg:#080f1a;--bg2:#0d1826;--bg3:#111f30;--bg4:#162438;
+  --rim:rgba(255,255,255,0.07);--glass:rgba(255,255,255,0.03);
+  --text:#d8e8f8;--muted:#6a88a8;--dim:#3a5068;
+  --cyan:#00c8e0;--cyan-d:rgba(0,200,224,0.12);--cyan-b:rgba(0,200,224,0.25);
+  --red:#f05060;--red-d:rgba(240,80,96,0.13);
+  --blue:#4090f0;--blue-d:rgba(64,144,240,0.13);
+  --green:#30c880;--green-d:rgba(48,200,128,0.12);
+  --amber:#f0a030;--amber-d:rgba(240,160,48,0.13);
+  --purple:#a060f0;--purple-d:rgba(160,96,240,0.13);
+  --mono:'Space Mono',monospace;--sans:'Space Grotesk',sans-serif;
+  --r:12px;--r2:20px;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  font-family: 'Inter', system-ui, sans-serif;
-  line-height: 1.55;
-  padding: 28px 20px;
-  color: var(--text);
-  font-size: 14px;
-}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;overflow-x:hidden;min-height:100vh}
+::selection{background:rgba(0,200,224,.3)}
 
-/* ── CONTAINER ── */
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  background: var(--card);
-  border-radius: 32px;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.09);
-  overflow: hidden;
-}
+/* HEADER */
+.hdr{background:linear-gradient(135deg,#060d18 0%,#0a1830 50%,#0d2040 100%);border-bottom:1px solid var(--rim);padding:20px 20px 16px;text-align:center;position:relative}
+.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% -20%,rgba(0,200,224,.15) 0%,transparent 70%);pointer-events:none}
+.hdr-title{font-family:var(--mono);font-size:20px;font-weight:700;letter-spacing:.05em;color:var(--cyan);text-shadow:0 0 28px rgba(0,200,224,.4)}
+.hdr-title span{color:var(--text);opacity:.7}
+.hdr-sub{font-size:12px;color:var(--muted);margin-top:5px;letter-spacing:.03em}
+.hdr-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:10px}
+.hdr-bdg{font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:.03em}
+.hdr-bdg-c{background:var(--cyan-d);color:var(--cyan);border:1px solid var(--cyan-b)}
+.hdr-bdg-a{background:var(--amber-d);color:var(--amber);border:1px solid rgba(240,160,48,.25)}
+.hdr-bdg-p{background:var(--purple-d);color:var(--purple);border:1px solid rgba(160,96,240,.25)}
+.hdr-bdg-g{background:var(--green-d);color:var(--green);border:1px solid rgba(48,200,128,.25)}
 
-/* ── HEADER ── */
-.header {
-  background: linear-gradient(135deg, #1a3a3f 0%, #1f5e6e 60%, #2a7d90 100%);
-  padding: 32px 38px;
-  color: white;
-}
-.header h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.3px; }
-.header h1 span { font-weight: 400; opacity: .85; }
-.badge {
-  background: #ff9f4a; color: #1a3a3f;
-  padding: 4px 14px; border-radius: 40px;
-  font-size: 12px; font-weight: 800;
-  display: inline-block; margin-top: 10px;
-}
-.subhead {
-  font-size: 13.5px; opacity: .88; margin-top: 8px;
-  border-left: 3px solid #ffb347; padding-left: 14px;
-}
+/* TAB NAV */
+.tab-grid-wrap{background:var(--bg2);border-bottom:1px solid var(--rim);padding:10px 14px;position:sticky;top:0;z-index:200}
+.tab-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-width:780px;margin:0 auto}
+.tg{display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:8px 4px 6px;cursor:pointer;transition:all .16s;font-family:inherit}
+.tg:hover{border-color:var(--cyan-b);background:var(--cyan-d)}
+.tg.active{background:var(--cyan-d);border-color:var(--cyan);box-shadow:0 0 0 1px var(--cyan)}
+.tg-icon{font-size:17px;line-height:1}
+.tg-lbl{font-size:9.5px;font-weight:600;color:var(--muted);text-align:center;line-height:1.25;letter-spacing:.02em}
+.tg.active .tg-lbl{color:var(--cyan)}.tg:hover .tg-lbl{color:var(--text)}
 
-/* ── NAV ── */
-.drug-nav {
-  display: flex; flex-wrap: wrap; gap: 8px;
-  margin-bottom: 28px; padding: 22px 38px 18px;
-  border-bottom: 2px solid var(--border);
-  background: #f7fbfe;
-}
-.nav-pill {
-  background: var(--teal-pale); color: var(--teal-mid);
-  padding: 5px 16px; border-radius: 40px;
-  font-size: 13px; font-weight: 600;
-  text-decoration: none; cursor: pointer;
-  border: 1px solid var(--teal-border);
-  transition: all .18s;
-}
-.nav-pill:hover { background: #c8dfe8; color: var(--teal-dark); }
+/* LAYOUT */
+.page{max-width:960px;margin:0 auto;padding:18px 16px 60px}
+.tab{display:none}.tab.active{display:block}
 
-/* ── CONTENT ── */
-.content { padding: 12px 38px 38px; }
+/* SECTION HEADS */
+.sh{margin-bottom:14px}
+.sh h2{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--cyan);letter-spacing:.04em;display:flex;align-items:center;gap:9px}
+.sh p{color:var(--muted);font-size:12.5px;margin-top:4px}
 
-/* ── SECTION TITLE ── */
-.sec-title {
-  font-size: 13px; font-weight: 700; letter-spacing: .08em;
-  text-transform: uppercase; color: var(--teal-mid);
-  margin: 32px 0 14px; padding-left: 12px;
-  border-left: 3px solid var(--teal-light);
-}
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:18px;margin-bottom:12px}
+.card h3{font-size:13.5px;font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.card p,.card li{color:var(--muted);font-size:13px;line-height:1.6}
+.card ul,.card ol{padding-left:16px}.card li{margin-bottom:4px}.card li strong{color:var(--text)}
 
-/* ── ACCORDION CARD ── */
-.drug-card {
-  background: var(--card);
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-  overflow: hidden;
-}
-.drug-summary {
-  padding: 16px 22px;
-  font-weight: 700; font-size: 18px;
-  cursor: pointer; user-select: none;
-  border-bottom: 1px solid transparent;
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; transition: background .14s;
-}
-.drug-summary:hover { filter: brightness(.97); }
-.drug-summary::after {
-  content: "▼"; font-size: 12px; color: inherit; opacity: .5;
-  transition: transform .2s; flex-shrink: 0;
-}
-.drug-card.open .drug-summary::after { transform: rotate(180deg); }
-.drug-body { display: none; padding: 22px 26px; background: white; }
-.drug-card.open .drug-body { display: block; }
+/* DRUG ACCORDION CARDS */
+.drug-card{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);margin-bottom:10px;overflow:hidden}
+.drug-summary{padding:13px 18px;font-family:var(--mono);font-size:13.5px;font-weight:700;cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between;gap:10px;transition:background .14s;letter-spacing:.02em}
+.drug-summary:hover{background:rgba(255,255,255,.03)}
+.drug-summary::after{content:"&#9660;";font-size:10px;opacity:.35;transition:transform .2s;flex-shrink:0}
+.drug-card.open .drug-summary::after{transform:rotate(180deg)}
+.drug-body{display:none;padding:18px 20px;border-top:1px solid var(--rim)}
+.drug-card.open .drug-body{display:block}
+/* Color themes */
+.dc-cat .drug-summary{color:var(--cyan)}
+.dc-pde .drug-summary{color:var(--purple)}
+.dc-vaso .drug-summary{color:var(--amber)}
+.dc-spec .drug-summary{color:var(--green)}
+.dc-algo .drug-summary{color:var(--text)}
+.dc-adv .drug-summary{color:var(--red)}
 
-/* colour themes per drug type */
-.theme-cat .drug-summary  { background: #f0f9fc; color: #0e5068; border-bottom-color: #cce7f0; }
-.theme-pde .drug-summary  { background: #f2f0fb; color: var(--purple);  border-bottom-color: var(--purple-border); }
-.theme-vaso .drug-summary { background: #fff5f0; color: #7a3010; border-bottom-color: #fcd5be; }
-.theme-spec .drug-summary { background: #f0fbf5; color: var(--green);  border-bottom-color: var(--green-border); }
-.theme-algo .drug-summary { background: #fffbf0; color: #7a4e10; border-bottom-color: #f5dfa0; }
-.theme-adv .drug-summary  { background: #fff0f0; color: var(--red);    border-bottom-color: #f5c0b8; }
+/* INNER LAYOUT */
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
 
-/* ── INNER LAYOUT ── */
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-@media(max-width: 860px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+/* SECTION HEADS INSIDE DRUG BODY */
+.drug-body h3{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--cyan);letter-spacing:.05em;text-transform:uppercase;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--rim)}
+.drug-body h3:first-child{margin-top:0}
+.drug-body h4{font-size:12.5px;font-weight:700;color:var(--text);margin:12px 0 5px}
+.drug-body p{color:var(--muted);font-size:13px;line-height:1.65;margin-bottom:7px}
+.drug-body ul,.drug-body ol{padding-left:17px;color:var(--muted);font-size:13px}
+.drug-body li{margin-bottom:5px;line-height:1.6}
+.drug-body li strong{color:var(--text)}
 
-/* ── SECTION HEADS INSIDE CARDS ── */
-.drug-body h3 {
-  font-size: 15px; font-weight: 700; color: var(--teal-dark);
-  margin: 20px 0 8px; padding-bottom: 4px;
-  border-bottom: 2px solid var(--border);
-  display: flex; align-items: center; gap: 7px;
-}
-.drug-body h3:first-child { margin-top: 0; }
-.drug-body h4 {
-  font-size: 13px; font-weight: 700; color: var(--muted);
-  margin: 12px 0 5px; text-transform: uppercase; letter-spacing: .05em;
-}
-.drug-body p { color: var(--muted); font-size: 13.5px; line-height: 1.65; margin-bottom: 8px; }
-.drug-body ul, .drug-body ol { padding-left: 18px; color: var(--muted); font-size: 13.5px; }
-.drug-body li { margin-bottom: 5px; line-height: 1.6; }
-.drug-body li strong { color: var(--text); }
+/* CALLOUTS */
+.box{border-radius:var(--r);padding:11px 14px;margin:10px 0;font-size:13px;line-height:1.6;color:var(--text)}
+.box-cyan  {background:var(--cyan-d); border-left:3px solid var(--cyan)}
+.box-red   {background:var(--red-d);  border-left:3px solid var(--red)}
+.box-blue  {background:var(--blue-d); border-left:3px solid var(--blue)}
+.box-green {background:var(--green-d);border-left:3px solid var(--green)}
+.box-amber {background:var(--amber-d);border-left:3px solid var(--amber)}
+.box-purple{background:var(--purple-d);border-left:3px solid var(--purple)}
+.box strong{font-weight:700}
+.box-cyan strong{color:var(--cyan)}.box-red strong{color:var(--red)}
+.box-blue strong{color:var(--blue)}.box-green strong{color:var(--green)}
+.box-amber strong{color:var(--amber)}.box-purple strong{color:var(--purple)}
 
-/* ── CALLOUT BOXES ── */
-.box {
-  border-radius: 12px; padding: 12px 16px; margin: 12px 0;
-  font-size: 13px; line-height: 1.6;
-}
-.box-orange { background: var(--orange-pale); border-left: 4px solid var(--orange); }
-.box-red    { background: var(--red-pale);    border-left: 4px solid var(--red); }
-.box-green  { background: var(--green-pale);  border-left: 4px solid var(--green); }
-.box-purple { background: var(--purple-pale); border-left: 4px solid var(--purple); }
-.box-blue   { background: var(--blue-pale);   border-left: 4px solid var(--blue); }
-.box-teal   { background: var(--teal-pale);   border-left: 4px solid var(--teal-mid); }
+/* TABLE */
+.tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--rim);margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:var(--bg3);color:var(--cyan);font-weight:700;padding:8px 10px;text-align:left;border-bottom:1px solid var(--rim);letter-spacing:.04em;white-space:nowrap;font-family:var(--mono)}
+td{padding:7px 10px;border-bottom:1px solid var(--rim);color:var(--muted);vertical-align:top;line-height:1.5}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(0,200,224,.04)}
+td strong{color:var(--text)}
+.arr-up{color:#f87878;font-weight:800}
+.arr-dn{color:#4be0a0;font-weight:800}
+.arr-flat{color:var(--muted)}
 
-/* ── DOSE GRADIENT BAR ── */
-.dose-bar-wrap { margin: 14px 0; }
-.dose-bar-label {
-  display: flex; justify-content: space-between;
-  font-size: 11px; font-weight: 700; color: var(--muted);
-  margin-bottom: 4px;
-}
-.dose-bar {
-  height: 20px; border-radius: 10px; position: relative;
-  overflow: hidden; background: var(--border);
-}
-.dose-segment {
-  position: absolute; top: 0; height: 100%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 700; color: white;
-  border-right: 2px solid white;
-}
+/* PK GRID */
+.pk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:7px;margin:10px 0}
+.pk-cell{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:8px 9px;text-align:center}
+.pk-val{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--cyan);display:block}
+.pk-key{font-size:10px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
 
-/* ── PK TABLE ── */
-.pk-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 8px; margin: 10px 0;
-}
-.pk-cell {
-  background: var(--teal-pale); border: 1px solid var(--teal-border);
-  border-radius: 10px; padding: 8px 10px; text-align: center;
-}
-.pk-cell .pk-val {
-  font-family: var(--mono); font-size: 15px; font-weight: 600;
-  color: var(--teal-dark); display: block;
-}
-.pk-cell .pk-key {
-  font-size: 10px; color: var(--muted); font-weight: 600;
-  text-transform: uppercase; letter-spacing: .05em;
-}
+/* RECEPTOR TAGS */
+.rec-row{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.rec-tag{font-family:var(--mono);font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px}
+.rec-label{font-size:11px;color:var(--muted);font-weight:600;min-width:60px}
+.rec-strong{background:var(--cyan-d);color:var(--cyan);border:1px solid var(--cyan-b)}
+.rec-mod{background:var(--blue-d);color:var(--blue);border:1px solid rgba(64,144,240,.25)}
+.rec-weak{background:var(--bg3);color:var(--muted);border:1px solid var(--rim)}
+.rec-none{background:var(--bg3);color:var(--dim);border:1px solid var(--rim);text-decoration:line-through}
 
-/* ── RECEPTOR TABLE ── */
-.rec-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin: 8px 0; }
-.rec-tag {
-  font-family: var(--mono); font-size: 11.5px; font-weight: 600;
-  padding: 3px 10px; border-radius: 6px;
-}
-.rec-strong { background: #1a3a3f; color: white; }
-.rec-mod    { background: #2a7d90; color: white; }
-.rec-weak   { background: #c8dfe8; color: #1a3a3f; }
-.rec-none   { background: #eee; color: #999; text-decoration: line-through; }
-.rec-label  { font-size: 11px; color: var(--muted); font-weight: 600; min-width: 60px; }
+/* DOSE BAR */
+.dose-bar-wrap{margin:12px 0}
+.dose-bar-label{display:flex;justify-content:space-between;font-size:10.5px;font-weight:700;color:var(--muted);font-family:var(--mono);margin-bottom:5px}
+.dose-bar{height:22px;border-radius:10px;position:relative;overflow:hidden;background:var(--bg3);border:1px solid var(--rim)}
+.dose-seg{position:absolute;top:0;height:100%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;border-right:2px solid rgba(0,0,0,.3)}
 
-/* ── DRUG TABLE (summary) ── */
-.drug-table {
-  width: 100%; border-collapse: collapse; font-size: 13px; margin: 14px 0;
-}
-.drug-table th, .drug-table td {
-  padding: 9px 10px; border-bottom: 1px solid var(--border);
-  text-align: left; vertical-align: top;
-}
-.drug-table th { background: #f5faff; font-weight: 700; color: var(--teal-dark); }
-.drug-table tr:last-child td { border-bottom: none; }
-.drug-table tr:hover td { background: #fafcfe; }
-.drug-table td strong { color: var(--text); }
+/* IND LIST */
+.ind-list{list-style:none;padding:0}
+.ind-list li{padding:5px 0;border-bottom:1px solid var(--rim);font-size:12.5px;display:flex;gap:8px;color:var(--muted)}
+.ind-list li:last-child{border-bottom:none}
+.ind-list li strong{color:var(--text)}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px}
 
-/* ── EFFECT ARROWS ── */
-.arr-up   { color: #c73e2d; font-weight: 800; }
-.arr-dn   { color: #1a7a4a; font-weight: 800; }
-.arr-flat { color: #7a90a4; }
+/* BADGES */
+.bdg{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin:1px;letter-spacing:.03em}
+.bdg-c{background:var(--cyan-d);color:var(--cyan)}
+.bdg-a{background:var(--amber-d);color:var(--amber)}
+.bdg-p{background:var(--purple-d);color:var(--purple)}
+.bdg-g{background:var(--green-d);color:var(--green)}
+.bdg-r{background:var(--red-d);color:var(--red)}
 
-/* ── CI/CONTRA LISTS ── */
-.ind-list  { list-style: none; padding: 0; }
-.ind-list li { padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 13px; display: flex; gap: 8px; }
-.ind-list li:last-child { border-bottom: none; }
-.ind-list .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+/* PHENOTYPE CARDS */
+.ph-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0}
+.ph-card{border-radius:var(--r2);overflow:hidden;border:1px solid var(--rim)}
+.ph-head{padding:11px 15px;font-weight:700;font-size:13.5px;font-family:var(--mono)}
+.ph-body{padding:12px 15px;background:var(--bg2)}
+.ph-tag{font-family:var(--mono);font-size:9.5px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-bottom:8px}
+.ph-list{list-style:none;padding:0;font-size:12.5px;color:var(--muted)}
+.ph-list li{padding:4px 0;border-bottom:1px solid var(--rim)}
+.ph-list li:last-child{border-bottom:none}
+.ph-list li strong{color:var(--text)}
+.ph-cat .ph-head{background:rgba(0,200,224,.12);color:var(--cyan);border-bottom:1px solid var(--cyan-b)}
+.ph-amb .ph-head{background:rgba(240,160,48,.12);color:var(--amber);border-bottom:1px solid rgba(240,160,48,.3)}
+.ph-blu .ph-head{background:rgba(64,144,240,.12);color:var(--blue);border-bottom:1px solid rgba(64,144,240,.3)}
+.ph-pur .ph-head{background:rgba(160,96,240,.12);color:var(--purple);border-bottom:1px solid rgba(160,96,240,.3)}
 
-/* ── BADGE ── */
-.mini-bdg {
-  display: inline-block; font-size: 10.5px; font-weight: 700;
-  padding: 2px 8px; border-radius: 30px; margin: 1px;
-}
-.bdg-teal   { background: var(--teal-pale); color: var(--teal-mid); }
-.bdg-orange { background: #fff0e0; color: #a05010; }
-.bdg-red    { background: var(--red-pale); color: var(--red); }
-.bdg-green  { background: var(--green-pale); color: var(--green); }
-.bdg-purple { background: var(--purple-pale); color: var(--purple); }
+/* ALGO STEPS */
+.algo-step{display:flex;gap:13px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--rim)}
+.algo-step:last-child{border-bottom:none}
+.algo-num{width:28px;height:28px;border-radius:50%;background:var(--cyan-d);color:var(--cyan);border:1px solid var(--cyan-b);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;font-family:var(--mono);flex-shrink:0;margin-top:1px}
+.algo-content h4{color:var(--text);font-size:13.5px;margin-bottom:4px;font-family:var(--mono)}
+.algo-content p{font-size:12.5px;color:var(--muted);line-height:1.6}
 
-/* ── ALGORITHM ── */
-.algo-step {
-  display: flex; gap: 14px; align-items: flex-start;
-  padding: 12px 0; border-bottom: 1px solid var(--border);
-}
-.algo-step:last-child { border-bottom: none; }
-.algo-num {
-  width: 30px; height: 30px; border-radius: 50%;
-  background: var(--teal-mid); color: white;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 13px; flex-shrink: 0; margin-top: 1px;
-}
-.algo-content h4 { color: var(--teal-dark); font-size: 14px; margin-bottom: 4px; }
-.algo-content p  { font-size: 13px; color: var(--muted); }
+/* DIVIDER + FOOTNOTE */
+.dv{height:1px;background:var(--rim);margin:18px 0}
+.footnote{text-align:center;font-size:11px;color:var(--dim);padding:20px 0 0;border-top:1px solid var(--rim);margin-top:28px}
 
-/* ── FOOTNOTE ── */
-.footnote {
-  font-size: 11px; color: #6a7f9b; margin-top: 24px;
-  border-top: 1px dashed var(--border); padding-top: 12px;
-  text-align: center;
-}
-
-@media(max-width: 720px) {
-  .content { padding: 12px 18px 28px; }
-  .header { padding: 20px; }
-  .drug-nav { padding: 14px 18px; }
-  .drug-summary { font-size: 16px; padding: 13px 16px; }
-  .drug-body { padding: 16px; }
+@media(max-width:600px){
+  .hdr-title{font-size:16px}.tab-grid{grid-template-columns:repeat(2,1fr)}
+  .g2,.g3{grid-template-columns:1fr}.ph-grid{grid-template-columns:1fr}
+  .dose-bar-label span:nth-child(2){display:none}
 }
 </style>
 </head>
 <body>
-<div class="container">
 
-  <div class="header">
-    <h1>📘 Inotropic &amp; Vasoactive Drugs <span>— Cardiac Surgery Reference</span></h1>
-    <div class="badge">Receptor Pharmacology · PK/PD · Dose-Dependent Effects · Clinical Protocols</div>
-    <div class="subhead">Complete pharmacological profiles, hemodynamic targets, and stepwise selection for post-cardiotomy low-output syndrome and vasoplegia. Based on Bojar 6th ed., Hensley &amp; Martin, Butterworth, and current literature.</div>
+<div class="hdr">
+  <div class="hdr-title">INOTROPES <span>/</span> VASOACTIVE DRUGS</div>
+  <div class="hdr-sub">Cardiac Surgery ICU &middot; Receptor Pharmacology &middot; PK/PD &middot; Phenotype-Guided Selection &middot; Decision Algorithm</div>
+  <div class="hdr-badges">
+    <span class="hdr-bdg hdr-bdg-c">Catecholamines</span>
+    <span class="hdr-bdg hdr-bdg-p">PDE-III Inhibitors</span>
+    <span class="hdr-bdg hdr-bdg-a">Vasopressors</span>
+    <span class="hdr-bdg hdr-bdg-g">Calcium Sensitizers</span>
   </div>
+</div>
 
-  <!-- NAV -->
-  <div class="drug-nav" id="navLinks">
-    <span class="nav-pill" data-drug="epi">💉 Epinephrine</span>
-    <span class="nav-pill" data-drug="dobu">💉 Dobutamine</span>
-    <span class="nav-pill" data-drug="mil">💉 Milrinone</span>
-    <span class="nav-pill" data-drug="dopa">💉 Dopamine</span>
-    <span class="nav-pill" data-drug="iso">💉 Isoproterenol</span>
-    <span class="nav-pill" data-drug="norepi">💉 Norepinephrine</span>
-    <span class="nav-pill" data-drug="phenyl">💉 Phenylephrine</span>
-    <span class="nav-pill" data-drug="vaso">💉 Vasopressin</span>
-    <span class="nav-pill" data-drug="levo">⚡ Levosimendan</span>
-    <span class="nav-pill" data-drug="calcium">⚡ Calcium chloride</span>
-    <span class="nav-pill" data-drug="t3">⚡ Triiodothyronine (T₃)</span>
-    <span class="nav-pill" data-drug="tables">📊 Tables</span>
-    <span class="nav-pill" data-drug="algo">📐 Algorithm</span>
-    <span class="nav-pill" data-drug="adv">⚠️ AE &amp; Weaning</span>
+<div class="tab-grid-wrap">
+  <div class="tab-grid">
+    <button class="tg active" onclick="gt(0,this)"><span class="tg-icon">💉</span><span class="tg-lbl">Catecholamines</span></button>
+    <button class="tg" onclick="gt(1,this)"><span class="tg-icon">💊</span><span class="tg-lbl">Agents &amp; Vasopressors</span></button>
+    <button class="tg" onclick="gt(2,this)"><span class="tg-icon">📊</span><span class="tg-lbl">Tables &amp; Phenotype</span></button>
+    <button class="tg" onclick="gt(3,this)"><span class="tg-icon">📐</span><span class="tg-lbl">Algorithm &amp; Monitoring</span></button>
   </div>
+</div>
 
-  <div class="content">
+<main class="page">
 
-  <!-- ════ SUMMARY TABLES ════ -->
-  <div class="sec-title" id="tables">📊 Summary Tables</div>
+<!-- ═══════════════════════════════════════════════════════════════
+     TAB 0 — CATECHOLAMINES
+═══════════════════════════════════════════════════════════════ -->
+<section class="tab active" id="t0">
+  <div class="sh"><h2>💉 Catecholamines</h2><p>Click any drug to expand. First-line inotropes and vasopressors for post-cardiotomy low-output syndrome.</p></div>
 
-  <div class="drug-card theme-algo" id="tableHemodynamics">
-    <div class="drug-summary">📊 Hemodynamic effects of vasoactive medications</div>
-    <div class="drug-body">
-      <table class="drug-table">
-        <thead><tr><th>Drug</th><th>SVR</th><th>HR</th><th>PCWP</th><th>CI</th><th>MAP</th><th>PVR</th><th>MVO₂</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Epinephrine (low)</strong></td><td class="arr-dn">↓</td><td class="arr-up">↑↑</td><td class="arr-dn">↓</td><td class="arr-up">↑↑</td><td class="arr-up">↑</td><td class="arr-dn">↓</td><td class="arr-up">↑↑</td></tr>
-          <tr><td><strong>Epinephrine (high)</strong></td><td class="arr-up">↑↑</td><td class="arr-up">↑↑</td><td class="arr-up">↑</td><td class="arr-up">↑</td><td class="arr-up">↑↑</td><td class="arr-up">↑</td><td class="arr-up">↑↑↑</td></tr>
-          <tr><td><strong>Dobutamine</strong></td><td class="arr-dn">↓</td><td class="arr-up">↑↑</td><td class="arr-dn">↓</td><td class="arr-up">↑↑</td><td class="arr-flat">↔↑</td><td class="arr-dn">↓</td><td class="arr-up">↑</td></tr>
-          <tr><td><strong>Milrinone</strong></td><td class="arr-dn">↓↓</td><td class="arr-up">↑</td><td class="arr-dn">↓↓</td><td class="arr-up">↑↑</td><td class="arr-dn">↓</td><td class="arr-dn">↓↓</td><td class="arr-flat">↔↑</td></tr>
-          <tr><td><strong>Dopamine (low)</strong></td><td class="arr-dn">↓</td><td class="arr-up">↑</td><td class="arr-flat">↔</td><td class="arr-up">↑</td><td class="arr-flat">↔</td><td class="arr-flat">↔</td><td class="arr-up">↑</td></tr>
-          <tr><td><strong>Dopamine (high)</strong></td><td class="arr-up">↑↑</td><td class="arr-up">↑↑↑</td><td class="arr-up">↑</td><td class="arr-up">↑</td><td class="arr-up">↑↑</td><td class="arr-up">↑</td><td class="arr-up">↑↑</td></tr>
-          <tr><td><strong>Isoproterenol</strong></td><td class="arr-dn">↓↓</td><td class="arr-up">↑↑↑↑</td><td class="arr-dn">↓</td><td class="arr-up">↑↑</td><td class="arr-dn">↓↑</td><td class="arr-dn">↓↓</td><td class="arr-up">↑↑↑</td></tr>
-          <tr><td><strong>Norepinephrine</strong></td><td class="arr-up">↑↑↑</td><td class="arr-up">↑</td><td class="arr-up">↑</td><td class="arr-up">↑</td><td class="arr-up">↑↑↑</td><td class="arr-up">↑</td><td class="arr-up">↑↑</td></tr>
-          <tr><td><strong>Phenylephrine</strong></td><td class="arr-up">↑↑</td><td class="arr-dn">↓ (reflex)</td><td class="arr-up">↑</td><td class="arr-flat">↔↓</td><td class="arr-up">↑↑↑</td><td class="arr-flat">↔</td><td class="arr-flat">↔↑</td></tr>
-          <tr><td><strong>Vasopressin</strong></td><td class="arr-up">↑↑↑</td><td class="arr-flat">↔</td><td class="arr-up">↑</td><td class="arr-flat">↔</td><td class="arr-up">↑↑↑</td><td class="arr-flat">↔</td><td class="arr-flat">↔</td></tr>
-          <tr><td><strong>Levosimendan</strong></td><td class="arr-dn">↓↓</td><td class="arr-up">↑</td><td class="arr-dn">↓↓</td><td class="arr-up">↑↑</td><td class="arr-dn">↓</td><td class="arr-dn">↓↓</td><td class="arr-flat">↔ (no ↑)</td></tr>
-          <tr><td><strong>Calcium chloride</strong></td><td class="arr-up">↑</td><td class="arr-flat">↔</td><td class="arr-up">↑</td><td class="arr-up">↑</td><td class="arr-up">↑↑</td><td class="arr-flat">↔</td><td class="arr-up">↑</td></tr>
-        </tbody>
-      </table>
-      <div class="footnote">↑ increased · ↓ decreased · ↔ no change. Double arrows = stronger effect. Low-dose epinephrine = &lt;2 μg/min; high = &gt;4 μg/min. Low-dose dopamine = &lt;3 μg/kg/min; high = &gt;8 μg/kg/min.</div>
-    </div>
-  </div>
-
-  <div class="drug-card theme-algo" id="tableDosing">
-    <div class="drug-summary">💉 Standard mixes, dosing ranges &amp; infusion rates</div>
-    <div class="drug-body">
-      <table class="drug-table">
-        <thead><tr><th>Drug</th><th>Standard mix</th><th>Dose range</th><th>Typical infusion rate*</th><th>Class</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Epinephrine</strong></td><td>1 mg/250 mL (4 μg/mL)</td><td>0.01–0.1 μg/kg/min</td><td>1–4 μg/min → ~15–60 mL/h (70 kg)</td><td><span class="mini-bdg bdg-teal">Catecholamine</span></td></tr>
-          <tr><td><strong>Dobutamine</strong></td><td>500 mg/250 mL (2 mg/mL)</td><td>2–20 μg/kg/min</td><td>5 μg/kg/min → ~10.5 mL/h (70 kg)</td><td><span class="mini-bdg bdg-teal">Catecholamine</span></td></tr>
-          <tr><td><strong>Milrinone</strong></td><td>20 mg/200 mL (0.1 mg/mL)</td><td>0.25–0.75 μg/kg/min</td><td>Bolus 50 μg/kg over 10 min → 0.375 μg/kg/min</td><td><span class="mini-bdg bdg-purple">PDE-III inhibitor</span></td></tr>
-          <tr><td><strong>Dopamine</strong></td><td>400 mg/250 mL (1.6 mg/mL)</td><td>2–20 μg/kg/min</td><td>5 μg/kg/min → ~13 mL/h (70 kg)</td><td><span class="mini-bdg bdg-teal">Catecholamine</span></td></tr>
-          <tr><td><strong>Isoproterenol</strong></td><td>1 mg/250 mL (4 μg/mL)</td><td>0.01–0.1 μg/kg/min</td><td>0.5–10 μg/min → 7.5–150 mL/h</td><td><span class="mini-bdg bdg-teal">Catecholamine</span></td></tr>
-          <tr><td><strong>Norepinephrine</strong></td><td>4 mg/250 mL (16 μg/mL)</td><td>0.01–0.3 μg/kg/min</td><td>1–30 μg/min → 3.75–112 mL/h</td><td><span class="mini-bdg bdg-orange">Vasopressor</span></td></tr>
-          <tr><td><strong>Phenylephrine</strong></td><td>40 mg/250 mL (160 μg/mL)</td><td>0.05–1.5 μg/kg/min</td><td>5–150 μg/min → 1.9–56 mL/h</td><td><span class="mini-bdg bdg-orange">Vasopressor</span></td></tr>
-          <tr><td><strong>Vasopressin</strong></td><td>40 U/80 mL (0.5 U/mL)</td><td>0.01–0.1 U/min</td><td>0.01–0.04 U/min → 1.2–4.8 mL/h</td><td><span class="mini-bdg bdg-orange">Vasopressor</span></td></tr>
-          <tr><td><strong>Levosimendan</strong></td><td>12.5 mg/500 mL (0.025 mg/mL)</td><td>0.05–0.2 μg/kg/min</td><td>Load: 12–24 μg/kg over 10 min; infusion 24h</td><td><span class="mini-bdg bdg-green">Ca-sensitizer</span></td></tr>
-        </tbody>
-      </table>
-      <div class="box box-orange">💡 <strong>Central line mandatory for all vasoactive infusions.</strong> Use dedicated lumen — never mix incompatible drugs in the same line. Infusion pump accuracy critical at low rates. *Rates are approximate for 70 kg adult; always calculate weight-based.</div>
-    </div>
-  </div>
-
-  <!-- ════ INDIVIDUAL DRUG CARDS ════ -->
-  <div class="sec-title">💉 Individual Drug Profiles — Click to expand</div>
-
-  <!-- ═══ EPINEPHRINE ═══ -->
-  <div class="drug-card theme-cat" id="epi">
+  <!-- EPINEPHRINE -->
+  <div class="drug-card dc-cat" id="epi">
     <div class="drug-summary">💉 Epinephrine (Adrenaline)</div>
     <div class="drug-body">
-
-      <div class="two-col">
+      <div class="g2">
         <div>
-          <h3>🔬 Mechanism of Action</h3>
-          <p>Epinephrine is an endogenous catecholamine that acts on all adrenergic receptors (α₁, α₂, β₁, β₂) with potency that is <strong>dose-dependent</strong>. It increases myocardial cAMP via adenylyl cyclase activation, enhancing calcium influx through L-type channels, increasing the rate and force of myocardial contraction (positive inotropy and chronotropy). Simultaneously, it accelerates Ca²⁺ reuptake into the SR (positive lusitropy).</p>
+          <h3>Mechanism of Action</h3>
+          <p>Endogenous catecholamine acting on all adrenergic receptors (&#945;&#8321;, &#945;&#8322;, &#946;&#8321;, &#946;&#8322;) with <strong>dose-dependent potency</strong>. Increases myocardial cAMP via adenylyl cyclase &#8594; &#8593;Ca&#178;&#8314; influx &#8594; &#8593;force and rate of contraction (positive inotropy, chronotropy, lusitropy).</p>
           <div class="rec-row">
             <span class="rec-label">Receptors:</span>
-            <span class="rec-tag rec-strong">β₁ ●●●●</span>
-            <span class="rec-tag rec-strong">β₂ ●●●</span>
-            <span class="rec-tag rec-strong">α₁ ●●●</span>
-            <span class="rec-tag rec-mod">α₂ ●●</span>
+            <span class="rec-tag rec-strong">&#946;&#8321; &#9679;&#9679;&#9679;&#9679;</span>
+            <span class="rec-tag rec-strong">&#946;&#8322; &#9679;&#9679;&#9679;</span>
+            <span class="rec-tag rec-strong">&#945;&#8321; &#9679;&#9679;&#9679;</span>
+            <span class="rec-tag rec-mod">&#945;&#8322; &#9679;&#9679;</span>
           </div>
         </div>
         <div>
-          <h3>⏱ Pharmacokinetics</h3>
+          <h3>Pharmacokinetics</h3>
           <div class="pk-grid">
-            <div class="pk-cell"><span class="pk-val">1–2 min</span><span class="pk-key">Onset</span></div>
-            <div class="pk-cell"><span class="pk-val">~2 min</span><span class="pk-key">t½</span></div>
-            <div class="pk-cell"><span class="pk-val">Hepatic</span><span class="pk-key">Metabolism</span></div>
-            <div class="pk-cell"><span class="pk-val">COMT/MAO</span><span class="pk-key">Enzymes</span></div>
-            <div class="pk-cell"><span class="pk-val">IV only</span><span class="pk-key">Route</span></div>
-            <div class="pk-cell"><span class="pk-val">Central</span><span class="pk-key">Line req.</span></div>
+            <div class="pk-cell"><span class="pk-val">1&ndash;2 min</span><span class="pk-key">Onset</span></div>
+            <div class="pk-cell"><span class="pk-val">~2 min</span><span class="pk-key">t&frac12;</span></div>
+            <div class="pk-cell"><span class="pk-val">COMT/MAO</span><span class="pk-key">Metabolism</span></div>
+            <div class="pk-cell"><span class="pk-val">IV central</span><span class="pk-key">Route</span></div>
           </div>
-          <p style="margin-top:8px">Cleared rapidly by COMT and MAO in liver, kidney, plasma. Negligible accumulation — immediate titration possible. Crosses placenta.</p>
+          <p>Cleared rapidly &mdash; immediate titration. No accumulation.</p>
         </div>
       </div>
-
-      <h3>📈 Dose-Dependent Effects</h3>
+      <h3>Dose-Dependent Effects</h3>
       <div class="dose-bar-wrap">
-        <div class="dose-bar-label"><span>0.01 μg/kg/min</span><span>0.05 μg/kg/min</span><span>0.1+ μg/kg/min</span></div>
-        <div class="dose-bar" style="height:28px">
-          <div class="dose-segment" style="left:0;width:35%;background:#2a7d90">β₁+β₂ dominant → ↑CO, ↓SVR</div>
-          <div class="dose-segment" style="left:35%;width:35%;background:#1f5e6e">β+α mixed → ↑CO, ↑SVR</div>
-          <div class="dose-segment" style="left:70%;width:30%;background:#1a3a3f">α dominant → ↑↑SVR, ↑MAP</div>
+        <div class="dose-bar-label"><span>&lt;0.03 &mu;g/kg/min</span><span>0.03&ndash;0.07</span><span>&gt;0.1 &mu;g/kg/min</span></div>
+        <div class="dose-bar">
+          <div class="dose-seg" style="left:0;width:35%;background:rgba(0,200,224,.5);color:#003">&#946;&#8321;+&#946;&#8322; &rarr; &#8593;CO, &#8595;SVR</div>
+          <div class="dose-seg" style="left:35%;width:35%;background:rgba(64,144,240,.5);color:#003">Mixed &#946;+&#945; &rarr; &#8593;CO, &#8593;SVR</div>
+          <div class="dose-seg" style="left:70%;width:30%;background:rgba(240,80,96,.5);color:#fff">&#945; dominant &rarr; &#8593;&#8593;SVR</div>
         </div>
       </div>
-      <div class="three-col" style="margin-top:12px">
-        <div class="box box-teal"><strong>Low dose (&lt;0.03 μg/kg/min / &lt;2 μg/min)</strong><br>β₁ inotropy + β₂ vasodilation → ↑CO with modest ↓SVR. Best tolerated. Preferred post-CPB starting point. May cause lactic acidosis via β₂ glycogenolysis — not a sign of hypoperfusion.</div>
-        <div class="box box-orange"><strong>Moderate (0.03–0.07 μg/kg/min)</strong><br>Mixed β+α effect. ↑HR, ↑contractility, SVR rises. Significant tachycardia risk. MVO₂ increases substantially. Monitor for arrhythmias.</div>
-        <div class="box box-red"><strong>High dose (&gt;0.1 μg/kg/min)</strong><br>α-dominated vasoconstriction ↑↑SVR, ↑MAP. Risk of end-organ ischemia, hyperglycemia, hypokalemia. Use only in refractory shock as bridge to MCS.</div>
+      <div class="g3">
+        <div class="box box-cyan"><strong>Low (&lt;0.03 &mu;g/kg/min)</strong> &mdash; &#946;&#8321; inotropy + &#946;&#8322; vasodilation &rarr; &#8593;CO with modest &#8595;SVR. Preferred post-CPB starting point. May cause lactic acidosis via &#946;&#8322; glycogenolysis &mdash; not hypoperfusion.</div>
+        <div class="box box-amber"><strong>Moderate (0.03&ndash;0.07)</strong> &mdash; Mixed &#946;+&#945;. &#8593;HR, &#8593;contractility, SVR rises. Significant tachycardia. &#8593;MVO&#8322;. Monitor arrhythmias.</div>
+        <div class="box box-red"><strong>High (&gt;0.1 &mu;g/kg/min)</strong> &mdash; &#945;-dominated vasoconstriction. &#8593;&#8593;SVR. End-organ ischemia, hyperglycemia, hypokalemia risk. Bridge to MCS only.</div>
       </div>
-
-      <div class="two-col">
+      <div class="g2">
         <div>
-          <h3>✅ Indications</h3>
+          <h3>Indications</h3>
           <ul class="ind-list">
-            <li><span class="dot" style="background:var(--green)"></span><strong>First-line inotrope</strong> for borderline CO without tachycardia/ectopy post-CPB</li>
-            <li><span class="dot" style="background:var(--green)"></span>Hypertrophied hearts, slow sinus node (better HR response than dobutamine at equiinotropic doses)</li>
-            <li><span class="dot" style="background:var(--green)"></span>Cardiac arrest — ventricular fibrillation, PEA, asystole (ACLS)</li>
+            <li><span class="dot" style="background:var(--green)"></span><strong>Common first-line inotrope in many centers</strong> for borderline CO post-CPB (practice varies; dobutamine or milrinone preferred in others)</li>
+            <li><span class="dot" style="background:var(--green)"></span>Hypertrophied hearts, slow sinus node &mdash; good HR response</li>
+            <li><span class="dot" style="background:var(--green)"></span>Cardiac arrest (VF, PEA, asystole) &mdash; ACLS</li>
             <li><span class="dot" style="background:var(--green)"></span>Anaphylaxis (IM or IV)</li>
-            <li><span class="dot" style="background:var(--green)"></span>Bronchospasm with hemodynamic compromise</li>
             <li><span class="dot" style="background:var(--green)"></span>Bridge to IABP or ECMO in refractory cardiogenic shock</li>
           </ul>
         </div>
         <div>
-          <h3>❌ Contraindications / Cautions</h3>
+          <h3>Contraindications / Cautions</h3>
           <ul class="ind-list">
-            <li><span class="dot" style="background:var(--red)"></span>Significant tachycardia (&gt;100–110 bpm) — further ↑HR worsens diastolic filling</li>
-            <li><span class="dot" style="background:var(--red)"></span>Active myocardial ischemia — ↑MVO₂ can extend infarct</li>
-            <li><span class="dot" style="background:var(--red)"></span>Hypertrophic obstructive cardiomyopathy (HOCM) — ↑obstruction</li>
-            <li><span class="dot" style="background:var(--red)"></span>Ventricular arrhythmias — lowers threshold for VT/VF</li>
-            <li><span class="dot" style="background:var(--red)"></span>Halothane anesthesia (sensitises myocardium — not used in CS)</li>
+            <li><span class="dot" style="background:var(--red)"></span>Tachycardia (&gt;100&ndash;110 bpm) &mdash; worsens diastolic filling</li>
+            <li><span class="dot" style="background:var(--red)"></span>Active myocardial ischemia &mdash; &#8593;MVO&#8322; extends infarct</li>
+            <li><span class="dot" style="background:var(--red)"></span>HOCM &mdash; &#8593;dynamic outflow obstruction</li>
+            <li><span class="dot" style="background:var(--red)"></span>Ventricular arrhythmias &mdash; lowers VT/VF threshold</li>
           </ul>
         </div>
       </div>
-
-      <h3>⭐ Advantages vs Other Inotropes</h3>
-      <ul>
-        <li><strong>Unique hemodynamic profile:</strong> at low doses, combines inotropy + mild vasodilation → improves CO without ↑afterload</li>
-        <li><strong>Chronotropic advantage:</strong> less tachycardia than dobutamine at equipotent inotropic dose (≈2 μg/min epi ≈ 10 μg/kg/min dobutamine)</li>
-        <li><strong>Versatility:</strong> can be titrated from inodilator to vasopressor in one drug</li>
-        <li><strong>Short t½:</strong> immediate response to dose changes, easy to wean</li>
-        <li><strong>Bronchodilation (β₂):</strong> useful in bronchospasm complicating post-op course</li>
-      </ul>
-      <div class="box box-red"><strong>⚠️ Metabolic note:</strong> Epinephrine causes dose-dependent lactic acidosis via β₂-mediated hepatic glycogenolysis and inhibition of pyruvate dehydrogenase — this is not an indicator of tissue hypoperfusion. Distinguish from true ischemic lactate by clinical context and mixed venous O₂ saturation.</div>
+      <div class="box box-red"><strong>&#9888;&#65039; Metabolic note:</strong> Epinephrine causes dose-dependent lactic acidosis via &#946;&#8322;-mediated hepatic glycogenolysis and inhibition of pyruvate dehydrogenase &mdash; not an indicator of tissue hypoperfusion. Distinguish from true ischemic lactate by clinical context and SvO&#8322;. <strong>Lactate clearance kinetics remain useful</strong> &mdash; a rising trend despite adequate haemodynamics still warrants evaluation for graft failure, mesenteric ischaemia, or other causes.</div>
     </div>
   </div>
 
-  <!-- ═══ DOBUTAMINE ═══ -->
-  <div class="drug-card theme-cat" id="dobu">
+  <!-- DOBUTAMINE -->
+  <div class="drug-card dc-cat" id="dobu">
     <div class="drug-summary">💉 Dobutamine</div>
     <div class="drug-body">
-      <div class="two-col">
+      <div class="g2">
         <div>
-          <h3>🔬 Mechanism of Action</h3>
-          <p>Dobutamine is a synthetic catecholamine existing as a racemic mixture. The (+) isomer is a potent β₁ and β₂ agonist; the (−) isomer is a mild α₁ agonist. Net result: <strong>dominant β₁ inotropy</strong> with mild β₂-mediated vasodilation and negligible net α effect. Increases cAMP → PKA-mediated phosphorylation of cardiac proteins → ↑Ca²⁺ transient → ↑contractility. Unlike catecholamines, does NOT stimulate dopamine receptors.</p>
+          <h3>Mechanism of Action</h3>
+          <p>Synthetic catecholamine (racemic mixture). Net: <strong>dominant &#946;&#8321; inotropy</strong> with mild &#946;&#8322;-mediated vasodilation; negligible net &#945; effect. &#8593;cAMP &#8594; PKA &#8594; &#8593;Ca&#178;&#8314; transient &#8594; &#8593;contractility. Does NOT stimulate dopamine receptors.</p>
           <div class="rec-row">
             <span class="rec-label">Receptors:</span>
-            <span class="rec-tag rec-strong">β₁ ●●●●</span>
-            <span class="rec-tag rec-mod">β₂ ●●</span>
-            <span class="rec-tag rec-weak">α₁ ● (net ≈0)</span>
-            <span class="rec-tag rec-none">DA —</span>
+            <span class="rec-tag rec-strong">&#946;&#8321; &#9679;&#9679;&#9679;&#9679;</span>
+            <span class="rec-tag rec-mod">&#946;&#8322; &#9679;&#9679;</span>
+            <span class="rec-tag rec-weak">&#945;&#8321; &#9679; (net &#8776;0)</span>
+            <span class="rec-tag rec-none">DA &mdash;</span>
           </div>
         </div>
         <div>
-          <h3>⏱ Pharmacokinetics</h3>
+          <h3>Pharmacokinetics</h3>
           <div class="pk-grid">
-            <div class="pk-cell"><span class="pk-val">1–2 min</span><span class="pk-key">Onset</span></div>
-            <div class="pk-cell"><span class="pk-val">2–3 min</span><span class="pk-key">t½</span></div>
-            <div class="pk-cell"><span class="pk-val">Hepatic</span><span class="pk-key">Metabolism</span></div>
-            <div class="pk-cell"><span class="pk-val">COMT</span><span class="pk-key">Enzymes</span></div>
-            <div class="pk-cell"><span class="pk-val">Urine</span><span class="pk-key">Excretion</span></div>
+            <div class="pk-cell"><span class="pk-val">1&ndash;2 min</span><span class="pk-key">Onset</span></div>
+            <div class="pk-cell"><span class="pk-val">2&ndash;3 min</span><span class="pk-key">t&frac12;</span></div>
+            <div class="pk-cell"><span class="pk-val">Hepatic COMT</span><span class="pk-key">Metabolism</span></div>
             <div class="pk-cell"><span class="pk-val">IV central</span><span class="pk-key">Route</span></div>
           </div>
-          <p style="margin-top:8px">Steady-state in 10–12 min. Rapid offset when discontinued. Tachyphylaxis may develop after 72–96h continuous infusion (receptor downregulation). No renal dose adjustment required.</p>
+          <p>Steady-state in 10&ndash;12 min. Tachyphylaxis after 72&ndash;96h (&#946;-receptor downregulation). No renal dose adjustment needed.</p>
         </div>
       </div>
-
-      <h3>📈 Dose-Dependent Effects</h3>
+      <h3>Dose-Dependent Effects</h3>
       <div class="dose-bar-wrap">
-        <div class="dose-bar-label"><span>2 μg/kg/min</span><span>10 μg/kg/min</span><span>20 μg/kg/min</span></div>
-        <div class="dose-bar" style="height:28px">
-          <div class="dose-segment" style="left:0;width:30%;background:#2a7d90">Mild inotropy, ↓SVR</div>
-          <div class="dose-segment" style="left:30%;width:40%;background:#1f5e6e">↑CO, ↑HR, ↑MVO₂</div>
-          <div class="dose-segment" style="left:70%;width:30%;background:#a05010">↑↑Tachycardia, arrhythmias</div>
+        <div class="dose-bar-label"><span>2 &mu;g/kg/min</span><span>10 &mu;g/kg/min</span><span>20 &mu;g/kg/min</span></div>
+        <div class="dose-bar">
+          <div class="dose-seg" style="left:0;width:30%;background:rgba(0,200,224,.4);color:#003">Mild inotropy, &#8595;SVR</div>
+          <div class="dose-seg" style="left:30%;width:40%;background:rgba(64,144,240,.5);color:#fff">&#8593;CO, &#8593;HR, &#8593;MVO&#8322;</div>
+          <div class="dose-seg" style="left:70%;width:30%;background:rgba(240,80,96,.45);color:#fff">&#8593;&#8593;Tachycardia, arrhythmia</div>
         </div>
       </div>
-      <div class="three-col" style="margin-top:10px">
-        <div class="box box-teal"><strong>2–5 μg/kg/min</strong><br>Modest inotropy + mild ↓SVR. Good starting point in low-output + mildly elevated SVR. Often maintains MAP via improved CO.</div>
-        <div class="box box-orange"><strong>5–15 μg/kg/min</strong><br>↑CI by 30–50%. Tachycardia becomes limiting. ↓PCWP, ↓PVR useful in mild RV failure. Preferred range in clinical use.</div>
-        <div class="box box-red"><strong>&gt;15 μg/kg/min</strong><br>Proportionally more tachycardia and arrhythmia; diminishing returns on CO. Avoid prolonged high-dose — receptor downregulation and ↑arrhythmia risk. Switch to or add milrinone.</div>
+      <div class="g3">
+        <div class="box box-cyan"><strong>2&ndash;5 &mu;g/kg/min</strong> &mdash; Modest inotropy + mild &#8595;SVR. Good starting point in low-output + elevated SVR. Often maintains MAP via improved CO.</div>
+        <div class="box box-amber"><strong>5&ndash;15 &mu;g/kg/min</strong> &mdash; &#8593;CI by 30&ndash;50%. Tachycardia becomes limiting. &#8595;PCWP, &#8595;PVR useful in mild RV failure. Most commonly used range.</div>
+        <div class="box box-red"><strong>&gt;15 &mu;g/kg/min</strong> &mdash; Proportionally more tachycardia; diminishing CO returns. Switch or add milrinone.</div>
       </div>
-
-      <div class="two-col">
+      <div class="g2">
         <div>
-          <h3>✅ Indications</h3>
+          <h3>Indications</h3>
           <ul class="ind-list">
             <li><span class="dot" style="background:var(--green)"></span>Low CO with normal-to-high SVR post-CPB</li>
-            <li><span class="dot" style="background:var(--green)"></span>Mild RV failure + moderate PVR elevation — ↓pulmonary afterload</li>
-            <li><span class="dot" style="background:var(--green)"></span>Advanced HF pre-transplant (ambulatory dobutamine bridge)</li>
-            <li><span class="dot" style="background:var(--green)"></span>Stress echocardiography protocol (non-cardiac)</li>
-            <li><span class="dot" style="background:var(--green)"></span>Adjunct to milrinone in severe low-output state — synergistic via cAMP increase through different mechanisms</li>
+            <li><span class="dot" style="background:var(--green)"></span>Mild RV failure + moderate PVR elevation</li>
+            <li><span class="dot" style="background:var(--green)"></span>Advanced HF pre-transplant (ambulatory bridge)</li>
+            <li><span class="dot" style="background:var(--green)"></span>Adjunct to milrinone &mdash; synergistic via cAMP</li>
           </ul>
         </div>
         <div>
-          <h3>❌ Contraindications / Cautions</h3>
+          <h3>Contraindications / Cautions</h3>
           <ul class="ind-list">
-            <li><span class="dot" style="background:var(--red)"></span>HOCM — ↑dynamic outflow obstruction</li>
-            <li><span class="dot" style="background:var(--red)"></span>Significant tachycardia (&gt;110 bpm) — tachyarrhythmia risk</li>
-            <li><span class="dot" style="background:var(--red)"></span>Uncorrected hypovolemia — vasodilator effect drops MAP</li>
-            <li><span class="dot" style="background:var(--red)"></span>Atrial fibrillation with rapid ventricular response — can ↑rate further</li>
-            <li><span class="dot" style="background:var(--red)"></span>Hypersensitivity to sulfite preservatives (some formulations)</li>
+            <li><span class="dot" style="background:var(--red)"></span>HOCM &mdash; &#8593;dynamic outflow obstruction</li>
+            <li><span class="dot" style="background:var(--red)"></span>Tachycardia (&gt;110 bpm)</li>
+            <li><span class="dot" style="background:var(--red)"></span>Uncorrected hypovolemia &mdash; vasodilator drops MAP</li>
+            <li><span class="dot" style="background:var(--red)"></span>AF with rapid ventricular response &mdash; can &#8593;rate</li>
           </ul>
         </div>
       </div>
-      <div class="box box-orange">💡 <strong>Tachyphylaxis:</strong> After 72–96h continuous infusion, β-receptor downregulation reduces efficacy. Consider switching to or adding milrinone (cAMP-independent inotropy path) if prolonged support needed. Dobutamine does not require renal dose adjustment, unlike milrinone.</div>
+      <div class="box box-amber"><strong>Tachyphylaxis:</strong> After 72&ndash;96h continuous infusion, &#946;-receptor downregulation reduces efficacy. Switch to or add milrinone (post-receptor, cAMP-independent pathway) if prolonged support needed.</div>
     </div>
   </div>
 
-  <!-- ═══ MILRINONE ═══ -->
-  <div class="drug-card theme-pde" id="mil">
-    <div class="drug-summary">💉 Milrinone (Primacor) — PDE-III inhibitor</div>
+  <!-- DOPAMINE -->
+  <div class="drug-card dc-cat" id="dopa">
+    <div class="drug-summary">💉 Dopamine</div>
     <div class="drug-body">
-      <div class="two-col">
+      <div class="g2">
         <div>
-          <h3>🔬 Mechanism of Action</h3>
-          <p>Milrinone selectively inhibits <strong>phosphodiesterase type III</strong> (PDE-III) in both myocardium and vascular smooth muscle. By preventing cAMP degradation, it amplifies the downstream effects of cAMP: in the heart — ↑Ca²⁺ cycling → positive inotropy + lusitropy (enhanced relaxation); in vasculature — ↑PKA → smooth muscle relaxation → ↓SVR and ↓PVR. Mechanism is <strong>post-receptor</strong> — bypasses downregulated β-receptors, hence additive with catecholamines even in receptor-saturated states.</p>
+          <h3>Mechanism of Action</h3>
+          <p>Immediate precursor of norepinephrine. Acts on <strong>DA&#8321;, DA&#8322;, &#946;&#8321;, &#946;&#8322;, &#945;&#8321;</strong> receptors with markedly dose-dependent affinity. Also releases NE from sympathetic terminals (indirect effect).</p>
+          <div class="rec-row">
+            <span class="rec-label">Receptors:</span>
+            <span class="rec-tag rec-strong">DA&#8321; &#9679;&#9679;&#9679; (low)</span>
+            <span class="rec-tag rec-strong">&#946;&#8321; &#9679;&#9679;&#9679; (mid)</span>
+            <span class="rec-tag rec-strong">&#945;&#8321; &#9679;&#9679;&#9679;&#9679; (high)</span>
+          </div>
+        </div>
+        <div>
+          <h3>Pharmacokinetics</h3>
+          <div class="pk-grid">
+            <div class="pk-cell"><span class="pk-val">2&ndash;4 min</span><span class="pk-key">Onset</span></div>
+            <div class="pk-cell"><span class="pk-val">~2 min</span><span class="pk-key">t&frac12;</span></div>
+            <div class="pk-cell"><span class="pk-val">COMT/MAO</span><span class="pk-key">Enzymes</span></div>
+            <div class="pk-cell"><span class="pk-val">IV central</span><span class="pk-key">Route</span></div>
+          </div>
+          <p>Rapid onset and offset. Does not cross BBB at standard doses.</p>
+        </div>
+      </div>
+      <h3>The "Three Zones" &mdash; Dose-Dependent</h3>
+      <div class="dose-bar-wrap">
+        <div class="dose-bar-label"><span>1&ndash;3 &mu;g/kg/min</span><span>3&ndash;10 &mu;g/kg/min</span><span>&gt;10 &mu;g/kg/min</span></div>
+        <div class="dose-bar">
+          <div class="dose-seg" style="left:0;width:25%;background:rgba(48,200,128,.5);color:#002">DA&#8321;: renal vasodilation</div>
+          <div class="dose-seg" style="left:25%;width:40%;background:rgba(64,144,240,.5);color:#fff">&#946;&#8321;: &#8593;CO, &#8593;HR</div>
+          <div class="dose-seg" style="left:65%;width:35%;background:rgba(240,80,96,.5);color:#fff">&#945;&#8321;: &#8593;&#8593;SVR, &#8593;MVO&#8322;</div>
+        </div>
+      </div>
+      <div class="g3">
+        <div class="box box-cyan"><strong>&ldquo;Renal dose&rdquo; 1&ndash;3 &mu;g/kg/min</strong> &mdash; DA&#8321; renal vasodilation &#8594; &#8593;urine output. <em>Does NOT confer renal protection</em> (ANZICS 2000, multiple meta-analyses). Concept discredited for AKI prevention.</div>
+        <div class="box box-amber"><strong>&ldquo;Cardiac dose&rdquo; 3&ndash;10 &mu;g/kg/min</strong> &mdash; &#946;&#8321; inotropy + chronotropy &#8594; &#8593;CO. Significant tachycardia and arrhythmia (PVCs, AF) more common than with epinephrine.</div>
+        <div class="box box-red"><strong>&ldquo;Vasopressor dose&rdquo; &gt;10 &mu;g/kg/min</strong> &mdash; Predominantly &#945;&#8321; &#8594; &#8593;&#8593;SVR. Visceral ischemia. NE is preferred at this range &mdash; more predictable, less arrhythmogenic.</div>
+      </div>
+      <div class="g2">
+        <div>
+          <h3>Limited Indications (post-CS)</h3>
+          <ul class="ind-list">
+            <li><span class="dot" style="background:var(--green)"></span>Low CO + low SVR when epi/NE unavailable</li>
+            <li><span class="dot" style="background:var(--green)"></span>Oliguria &mdash; <em>not recommended solely to improve urine output</em>; use only if bradycardia with low CO co-exists</li>
+            <li><span class="dot" style="background:var(--green)"></span>Bradycardia with hemodynamic compromise (bridge to pacing)</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Relative Contraindications</h3>
+          <ul class="ind-list">
+            <li><span class="dot" style="background:var(--red)"></span>Highest arrhythmia risk among catecholamines &mdash; avoid in AF, VT</li>
+            <li><span class="dot" style="background:var(--red)"></span>Pheochromocytoma &mdash; paradoxical hypertension</li>
+            <li><span class="dot" style="background:var(--red)"></span>MAO inhibitor therapy &mdash; markedly potentiated</li>
+          </ul>
+        </div>
+      </div>
+      <div class="box box-red"><strong>Clinical position 2025:</strong> Dopamine largely replaced by epi + NE in cardiac surgery. SOAP-II trial: higher mortality and arrhythmia vs NE in shock. ESC/ACC guidelines prefer NE as first-line vasopressor.</div>
+    </div>
+  </div>
+
+  <!-- ISOPROTERENOL -->
+  <div class="drug-card dc-cat" id="iso">
+    <div class="drug-summary">💉 Isoproterenol (Isoprenaline)</div>
+    <div class="drug-body">
+      <div class="g2">
+        <div>
+          <h3>Mechanism of Action</h3>
+          <p>Synthetic catecholamine with <strong>pure &#946;&#8321; and &#946;&#8322; agonism</strong> &mdash; zero &#945; activity. &#946;&#8321;: marked &#8593;HR and &#8593;contractility. &#946;&#8322;: &#8595;SVR, &#8595;&#8595;PVR, bronchodilation. Dominant effect is <strong>profound tachycardia</strong>. Also &#8593;AV node conduction velocity (useful in complete heart block).</p>
+          <div class="rec-row">
+            <span class="rec-label">Receptors:</span>
+            <span class="rec-tag rec-strong">&#946;&#8321; &#9679;&#9679;&#9679;&#9679;&#9679;</span>
+            <span class="rec-tag rec-strong">&#946;&#8322; &#9679;&#9679;&#9679;&#9679;</span>
+            <span class="rec-tag rec-none">&#945;&#8321; &mdash; (zero)</span>
+          </div>
+        </div>
+        <div>
+          <h3>Pharmacokinetics</h3>
+          <div class="pk-grid">
+            <div class="pk-cell"><span class="pk-val">&lt;1 min</span><span class="pk-key">Onset</span></div>
+            <div class="pk-cell"><span class="pk-val">~2 min</span><span class="pk-key">t&frac12;</span></div>
+            <div class="pk-cell"><span class="pk-val">Hepatic/lung COMT</span><span class="pk-key">Metabolism</span></div>
+            <div class="pk-cell"><span class="pk-val">IV central</span><span class="pk-key">Route</span></div>
+          </div>
+          <p>Extremely short t&frac12; &mdash; ideal for precise HR titration. Not taken up by sympathetic terminals unlike other catecholamines.</p>
+        </div>
+      </div>
+      <div class="g3">
+        <div class="box box-cyan"><strong>Low 0.01&ndash;0.02 &mu;g/kg/min</strong> &mdash; Modest &#8593;HR (+10&ndash;20 bpm), mild &#8595;PVR. Maintain HR 90&ndash;100 bpm post-transplant or in heart block awaiting pacemaker.</div>
+        <div class="box box-amber"><strong>Mid 0.02&ndash;0.05 &mu;g/kg/min</strong> &mdash; Pronounced tachycardia, &#8593;CO via HR. &#8595;&#8595;SVR, &#8595;&#8595;PVR. May need &#945;-agonist for MAP. Major &#8593;MVO&#8322;.</div>
+        <div class="box box-red"><strong>High &gt;0.05 &mu;g/kg/min</strong> &mdash; Extreme tachycardia, high VT/VF risk. Hypotension from vasodilation. Absolute bridge use only.</div>
+      </div>
+      <div class="g2">
+        <div>
+          <h3>Indications</h3>
+          <ul class="ind-list">
+            <li><span class="dot" style="background:var(--green)"></span><strong>Orthotopic heart transplant</strong> &mdash; denervated heart; target HR 90&ndash;110 bpm. CO relies more heavily on heart rate than in the innervated heart &mdash; chronotropy is the primary CO determinant.</li>
+            <li><span class="dot" style="background:var(--green)"></span>Post-mitral valve RV failure + &#8593;PVR &mdash; &#8595;&#8595;PVR via &#946;&#8322;</li>
+            <li><span class="dot" style="background:var(--green)"></span>Bradycardia (sinus, AV block) as bridge to pacing</li>
+            <li><span class="dot" style="background:var(--green)"></span>Torsades de Pointes (&#8593;HR shortens QT)</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Contraindications</h3>
+          <ul class="ind-list">
+            <li><span class="dot" style="background:var(--red)"></span>Tachycardia or tachyarrhythmias &mdash; absolute CI</li>
+            <li><span class="dot" style="background:var(--red)"></span>Active myocardial ischemia &mdash; extreme &#8593;MVO&#8322;</li>
+            <li><span class="dot" style="background:var(--red)"></span>Hypertrophic cardiomyopathy</li>
+            <li><span class="dot" style="background:var(--red)"></span>Digitalis toxicity</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOREPINEPHRINE -->
+  <div class="drug-card dc-vaso" id="norepi">
+    <div class="drug-summary">💉 Norepinephrine — First-line vasopressor</div>
+    <div class="drug-body">
+      <div class="g2">
+        <div>
+          <h3>Mechanism of Action</h3>
+          <p>Primary endogenous vasopressor. Potent <strong>&#945;&#8321; and moderate &#946;&#8321;</strong>; minimal &#946;&#8322;. Dominant effect: <strong>vasoconstriction</strong> (&#8593;SVR) via &#945;&#8321; &#8594; &#8593;MAP. &#946;&#8321; provides mild inotropy, usually offset by baroreflex bradycardia (&#8593;MAP &#8594; &#8593;vagal tone). Reflex bradycardia improves diastolic filling.</p>
+          <div class="rec-row">
+            <span class="rec-label">Receptors:</span>
+            <span class="rec-tag rec-strong">&#945;&#8321; &#9679;&#9679;&#9679;&#9679;&#9679;</span>
+            <span class="rec-tag rec-strong">&#946;&#8321; &#9679;&#9679;&#9679;</span>
+            <span class="rec-tag rec-weak">&#946;&#8322; &#9679;</span>
+          </div>
+        </div>
+        <div>
+          <h3>Pharmacokinetics</h3>
+          <div class="pk-grid">
+            <div class="pk-cell"><span class="pk-val">1&ndash;3 min</span><span class="pk-key">Onset</span></div>
+            <div class="pk-cell"><span class="pk-val">~2 min</span><span class="pk-key">t&frac12;</span></div>
+            <div class="pk-cell"><span class="pk-val">Neuronal uptake</span><span class="pk-key">Clearance</span></div>
+            <div class="pk-cell"><span class="pk-val">IV central only</span><span class="pk-key">Route</span></div>
+          </div>
+          <p><strong>Extravasation causes tissue necrosis</strong> &mdash; dedicated central line mandatory.</p>
+        </div>
+      </div>
+      <div class="g3">
+        <div class="box box-cyan"><strong>Low 0.01&ndash;0.05 &mu;g/kg/min</strong> &mdash; &#8593;SVR, &#8593;MAP. Mild &#8593;CI via improved coronary perfusion + baroreflex inotropy. First-line range for post-CPB vasoplegia with adequate CO.</div>
+        <div class="box box-amber"><strong>Moderate 0.05&ndash;0.15 &mu;g/kg/min</strong> &mdash; Significant vasoconstriction. If CI &lt;2.0, must add inotrope &mdash; NE alone insufficient for CO. Mesenteric/renal vasoconstriction risk.</div>
+        <div class="box box-red"><strong>High &gt;0.2 &mu;g/kg/min</strong> &mdash; Severe vasoconstriction. Visceral ischemia, digital necrosis, metabolic acidosis. Add vasopressin, consider methylene blue, evaluate underlying cause.</div>
+      </div>
+      <div class="g2">
+        <div>
+          <h3>Indications</h3>
+          <ul class="ind-list">
+            <li><span class="dot" style="background:var(--green)"></span><strong>Vasoplegic syndrome</strong> post-CPB &mdash; low SVR + adequate CO</li>
+            <li><span class="dot" style="background:var(--green)"></span>Low CO + low SVR combined with inotrope</li>
+            <li><span class="dot" style="background:var(--green)"></span>Septic shock (SOAP-II: &#8595;arrhythmia, &#8595;mortality vs dopamine)</li>
+            <li><span class="dot" style="background:var(--green)"></span>Rebound hypotension after milrinone loading</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Contraindications / Cautions</h3>
+          <ul class="ind-list">
+            <li><span class="dot" style="background:var(--red)"></span>Uncorrected hypovolemia &mdash; vasoconstriction without volume = &#8595;CO</li>
+            <li><span class="dot" style="background:var(--red)"></span>Arterial graft spasm risk (ITA, radial) &mdash; maintain diltiazem/NTG</li>
+            <li><span class="dot" style="background:var(--red)"></span>Elevated PVR: excessive NE doses may &#8593;PVR. However, NE is not contraindicated in RV failure &mdash; improved MAP benefits RV coronary perfusion. Combine with pulmonary vasodilator if RV afterload elevated.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="box box-amber"><strong>Arterial graft consideration:</strong> NE causes &#945;&#8321;-mediated spasm of ITA and radial conduits. When NE required, maintain diltiazem 0.1 mg/kg/h IV or NTG 0.5&ndash;1 &mu;g/kg/min to protect graft patency.</div>
+    </div>
+  </div>
+
+  <!-- PHENYLEPHRINE -->
+  <div class="drug-card dc-vaso" id="phenyl">
+    <div class="drug-summary">💉 Phenylephrine &mdash; Pure &#945;&#8321; agonist</div>
+    <div class="drug-body">
+      <div class="g2">
+        <div>
+          <h3>Mechanism of Action</h3>
+          <p><strong>Pure selective &#945;&#8321; agonist</strong> &mdash; no &#946; activity. Dose-dependent peripheral vasoconstriction &#8594; &#8593;SVR &#8594; &#8593;MAP &#8594; reflex bradycardia (baroreceptor). No direct inotropy, chronotropy, or lusitropy. CO may fall if reflex bradycardia is significant (CO = HR &times; SV).</p>
+          <div class="rec-row">
+            <span class="rec-label">Receptors:</span>
+            <span class="rec-tag rec-strong">&#945;&#8321; &#9679;&#9679;&#9679;&#9679;&#9679;</span>
+            <span class="rec-tag rec-none">&#946;&#8321; &mdash; (zero)</span>
+            <span class="rec-tag rec-none">&#946;&#8322; &mdash; (zero)</span>
+          </div>
+        </div>
+        <div>
+          <h3>Pharmacokinetics</h3>
+          <div class="pk-grid">
+            <div class="pk-cell"><span class="pk-val">1&ndash;3 min</span><span class="pk-key">Onset</span></div>
+            <div class="pk-cell"><span class="pk-val">~5 min</span><span class="pk-key">t&frac12;</span></div>
+            <div class="pk-cell"><span class="pk-val">Hepatic/MAO</span><span class="pk-key">Metabolism</span></div>
+            <div class="pk-cell"><span class="pk-val">IV/IM bolus</span><span class="pk-key">Routes</span></div>
+          </div>
+          <p>Peripheral IV acceptable for bolus; continuous infusion needs central line. Slightly longer offset than NE.</p>
+        </div>
+      </div>
+      <div class="g2">
+        <div>
+          <h3>Indications</h3>
+          <ul class="ind-list">
+            <li><span class="dot" style="background:var(--green)"></span>Hypotension with <strong>adequate CI &gt;2.2</strong> &mdash; isolated vasodilation</li>
+            <li><span class="dot" style="background:var(--green)"></span><strong>HOCM / SAM</strong> after mitral repair &mdash; &#8593;SVR prevents outflow obstruction</li>
+            <li><span class="dot" style="background:var(--green)"></span>Spinal/epidural hypotension</li>
+            <li><span class="dot" style="background:var(--green)"></span>SVT termination via reflex bradycardia</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Contraindications</h3>
+          <ul class="ind-list">
+            <li><span class="dot" style="background:var(--red)"></span>Low CO state &mdash; pure vasoconstriction &#8595;CO further</li>
+            <li><span class="dot" style="background:var(--red)"></span>Arterial graft conduits &mdash; highest spasm risk</li>
+            <li><span class="dot" style="background:var(--red)"></span>Severe bradycardia &mdash; reflex &#8595;HR dangerous</li>
+            <li><span class="dot" style="background:var(--red)"></span>Aortic insufficiency &mdash; &#8593;SVR worsens regurgitation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">Central line mandatory for all vasoactive infusions. Dedicated lumen &mdash; never mix incompatible drugs in the same line. Always calculate weight-based rates.</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TAB 1 — INODILATORS & VASOPRESSORS
+═══════════════════════════════════════════════════════════════ -->
+<section class="tab" id="t1">
+  <div class="sh"><h2>💊 Inodilators &amp; Special Agents</h2><p>PDE-III inhibitors, non-catecholamine vasopressors, calcium sensitizers, and salvage inotropes.</p></div>
+
+  <!-- MILRINONE -->
+  <div class="drug-card dc-pde" id="mil">
+    <div class="drug-summary">💊 Milrinone (Primacor) &mdash; PDE-III Inhibitor</div>
+    <div class="drug-body">
+      <div class="g2">
+        <div>
+          <h3>Mechanism of Action</h3>
+          <p>Selectively inhibits <strong>phosphodiesterase type III</strong> in myocardium and vascular smooth muscle. Prevents cAMP degradation &#8594; amplifies cAMP effects: in heart &#8594; &#8593;Ca&#178;&#8314; cycling &#8594; positive inotropy + lusitropy; in vasculature &#8594; smooth muscle relaxation &#8594; &#8595;SVR, &#8595;&#8595;PVR. <strong>Post-receptor mechanism</strong> &mdash; bypasses downregulated &#946;-receptors; additive with catecholamines.</p>
           <div class="rec-row">
             <span class="rec-label">Mechanism:</span>
             <span class="rec-tag rec-strong">PDE-III inhibitor</span>
-            <span class="rec-tag rec-mod">cAMP ↑↑</span>
-            <span class="rec-tag rec-weak">β-receptor independent</span>
+            <span class="rec-tag rec-mod">cAMP &#8593;&#8593;</span>
+            <span class="rec-tag rec-weak">&#946;-receptor independent</span>
           </div>
         </div>
         <div>
-          <h3>⏱ Pharmacokinetics</h3>
+          <h3>Pharmacokinetics</h3>
           <div class="pk-grid">
-            <div class="pk-cell"><span class="pk-val">5–15 min</span><span class="pk-key">Onset</span></div>
-            <div class="pk-cell"><span class="pk-val">1.5–2.5 h</span><span class="pk-key">t½ (normal)</span></div>
-            <div class="pk-cell"><span class="pk-val">3–5 h</span><span class="pk-key">t½ (renal fail)</span></div>
-            <div class="pk-cell"><span class="pk-val">80–85%</span><span class="pk-key">Renal excretion</span></div>
-            <div class="pk-cell"><span class="pk-val">Minimal</span><span class="pk-key">Hepatic</span></div>
-            <div class="pk-cell"><span class="pk-val">~0.45 L/kg</span><span class="pk-key">Vd</span></div>
+            <div class="pk-cell"><span class="pk-val">5&ndash;15 min</span><span class="pk-key">Onset</span></div>
+            <div class="pk-cell"><span class="pk-val">1.5&ndash;2.5 h</span><span class="pk-key">t&frac12; (normal)</span></div>
+            <div class="pk-cell"><span class="pk-val">3&ndash;5 h</span><span class="pk-key">t&frac12; (renal fail)</span></div>
+            <div class="pk-cell"><span class="pk-val">80&ndash;85%</span><span class="pk-key">Renal excretion</span></div>
           </div>
-          <p style="margin-top:8px"><strong>⚠️ Renal dose adjustment required:</strong> Milrinone is 85% renally excreted. Reduce or avoid loading bolus in CrCl &lt;30 mL/min. t½ doubles in renal failure — prolonged hemodynamic effects, hypotension risk after weaning.</p>
+          <p><strong>&#9888;&#65039; Renal dose adjustment required:</strong> 85% renally excreted. Reduce/avoid bolus in CrCl &lt;30 mL/min. t&frac12; doubles in renal failure &mdash; prolonged hypotension risk after weaning.</p>
         </div>
       </div>
-
-      <h3>📈 Dose-Dependent Effects</h3>
-      <div class="three-col">
-        <div class="box box-purple"><strong>Loading bolus: 25–50 μg/kg over 10 min</strong><br>Produces immediate ↓SVR (vasodilation often prominent), modest ↑CO. Often causes transient hypotension requiring α-agonist co-administration. <em>Consider omitting bolus or using 25 μg/kg in haemodynamically fragile patients.</em></div>
-        <div class="box box-purple"><strong>Maintenance: 0.25–0.5 μg/kg/min</strong><br>Steady inodilator effect: ↓PCWP 15–30%, ↓PVR 20–40%, ↑CI 20–40%. Preferred range in post-CPB low-output + elevated PVR. Usually requires norepinephrine to maintain MAP.</div>
-        <div class="box box-purple"><strong>High dose: 0.5–0.75 μg/kg/min</strong><br>↑Vasodilation (hypotension), modest additional inotropy. Arrhythmia risk (PVCs, VT) increases. Usually not superior to mid-range + norepinephrine combination. Accumulates in renal failure.</div>
+      <h3>Dosing Protocol</h3>
+      <div class="g3">
+        <div class="box box-purple"><strong>Loading bolus: 25&ndash;50 &mu;g/kg over 10 min</strong> &mdash; Immediate &#8595;SVR, modest &#8593;CO. Often causes transient hypotension requiring &#945;-agonist co-administration. <em>Many contemporary cardiac surgery programs omit the loading dose entirely to avoid hypotension &mdash; begin maintenance infusion directly (STS / Bojar 6th ed.).</em></div>
+        <div class="box box-purple"><strong>Maintenance: 0.25&ndash;0.5 &mu;g/kg/min</strong> &mdash; &#8595;PCWP 15&ndash;30%, &#8595;PVR 20&ndash;40%, &#8593;CI 20&ndash;40%. Preferred range for post-CPB low-output + elevated PVR. Usually requires NE to maintain MAP.</div>
+        <div class="box box-purple"><strong>High: 0.5&ndash;0.75 &mu;g/kg/min</strong> &mdash; &#8593;Vasodilation. Arrhythmia risk (PVCs, VT) increases. Not superior to mid-range + NE combination. Accumulates in renal failure.</div>
       </div>
-
-      <div class="two-col">
+      <div class="g2">
         <div>
-          <h3>✅ Indications</h3>
+          <h3>Indications</h3>
           <ul class="ind-list">
-            <li><span class="dot" style="background:var(--purple)"></span>Persistent low CO despite adequate catecholamine support</li>
-            <li><span class="dot" style="background:var(--purple)"></span><strong>RV failure with elevated PVR</strong> — post-mitral valve surgery, orthotopic heart transplant, pulmonary hypertension</li>
-            <li><span class="dot" style="background:var(--purple)"></span>Diastolic dysfunction — improves LV compliance (lusitropy)</li>
-            <li><span class="dot" style="background:var(--purple)"></span>Coronary artery spasm / conduit spasm (ITA, radial) — smooth muscle relaxation</li>
-            <li><span class="dot" style="background:var(--purple)"></span>Inhaled milrinone: selective pulmonary vasodilation without systemic hypotension</li>
-            <li><span class="dot" style="background:var(--purple)"></span>Advanced decompensated HF — β-receptor downregulated patients</li>
+            <li><span class="dot" style="background:var(--purple)"></span>Persistent low CO despite catecholamine support</li>
+            <li><span class="dot" style="background:var(--purple)"></span><strong>RV failure with elevated PVR</strong> &mdash; post-mitral, transplant, PH</li>
+            <li><span class="dot" style="background:var(--purple)"></span>Diastolic dysfunction &mdash; improves LV compliance (lusitropy)</li>
+            <li><span class="dot" style="background:var(--purple)"></span>Coronary/conduit spasm (ITA, radial) &mdash; smooth muscle relaxation</li>
+            <li><span class="dot" style="background:var(--purple)"></span>Inhaled milrinone: selective pulmonary vasodilation without systemic effects</li>
           </ul>
         </div>
         <div>
-          <h3>❌ Contraindications / Cautions</h3>
+          <h3>Contraindications / Cautions</h3>
           <ul class="ind-list">
-            <li><span class="dot" style="background:var(--red)"></span>Severe hypotension without adequate vasopressor support</li>
-            <li><span class="dot" style="background:var(--red)"></span>Significant renal failure — halve dose, avoid loading bolus</li>
-            <li><span class="dot" style="background:var(--red)"></span>Outflow tract obstruction (HOCM)</li>
-            <li><span class="dot" style="background:var(--red)"></span>Atrial fibrillation with rapid response — may ↑ventricular rate via ↑AV conduction</li>
-            <li><span class="dot" style="background:var(--red)"></span>Pre-existing ventricular arrhythmias — can be pro-arrhythmic</li>
+            <li><span class="dot" style="background:var(--red)"></span>Severe hypotension without vasopressor support</li>
+            <li><span class="dot" style="background:var(--red)"></span>Significant renal failure &mdash; halve dose, avoid loading bolus</li>
+            <li><span class="dot" style="background:var(--red)"></span>HOCM &mdash; outflow tract obstruction</li>
+            <li><span class="dot" style="background:var(--red)"></span>AF with rapid ventricular response &mdash; &#8593;AV conduction</li>
+            <li><span class="dot" style="background:var(--red)"></span>Pre-existing ventricular arrhythmias</li>
+            <li><span class="dot" style="background:var(--red)"></span>Chronic oral PDE inhibitors (sildenafil, tadalafil) &mdash; attenuated response</li>
           </ul>
         </div>
       </div>
-      <div class="box box-red">⚠️ <strong>Mortality signal:</strong> OPTIME-CHF trial (2002) showed milrinone increased arrhythmias and hypotension without mortality benefit in decompensated HF. However, in post-cardiotomy low-output state with high PVR, milrinone remains the preferred inodilator. <strong>Inhaled milrinone</strong> (5 mg nebulized) provides selective pulmonary vasodilation with minimal systemic effects — excellent for RV failure post-transplant or post-mitral surgery.</div>
+      <div class="box box-red"><strong>&#9888;&#65039; OPTIME-CHF trial:</strong> Milrinone &#8593;arrhythmias and hypotension without mortality benefit in decompensated HF. In post-cardiotomy low-output with high PVR, milrinone remains the preferred inodilator. <strong>Inhaled milrinone</strong> (5 mg nebulized) provides selective pulmonary vasodilation with minimal systemic effects.</div>
     </div>
   </div>
 
-  <!-- ═══ DOPAMINE ═══ -->
-  <div class="drug-card theme-cat" id="dopa">
-    <div class="drug-summary">💉 Dopamine</div>
+  <!-- VASOPRESSIN -->
+  <div class="drug-card dc-vaso" id="vaso">
+    <div class="drug-summary">💉 Vasopressin (ADH / AVP) &mdash; Non-catecholamine vasopressor</div>
     <div class="drug-body">
-      <div class="two-col">
+      <div class="g2">
         <div>
-          <h3>🔬 Mechanism of Action</h3>
-          <p>Dopamine is the immediate precursor of norepinephrine. It acts on <strong>dopaminergic (DA₁, DA₂)</strong>, β₁, β₂, and α₁ receptors with markedly different receptor affinity depending on dose. DA₁ receptors in renal, mesenteric, and coronary vasculature mediate vasodilation via cAMP; β₁ receptors mediate inotropy at intermediate doses; α₁ receptors cause vasoconstriction at high doses. Dopamine also releases norepinephrine from sympathetic nerve terminals (indirect effect).</p>
+          <h3>Mechanism of Action</h3>
+          <p>Acts on <strong>V&#8321; receptors</strong> in vascular smooth muscle &#8594; Gq &#8594; IP&#8323; &#8594; &#8593;intracellular Ca&#178;&#8314; &#8594; vasoconstriction. <strong>Entirely independent of adrenergic receptors</strong> &mdash; effective in catecholamine-refractory shock. At therapeutic doses, does <strong>NOT increase PVR</strong> (selective systemic vasculature) &mdash; advantage in RV failure.</p>
           <div class="rec-row">
             <span class="rec-label">Receptors:</span>
-            <span class="rec-tag rec-strong">DA₁ ●●● (low)</span>
-            <span class="rec-tag rec-strong">β₁ ●●● (mid)</span>
-            <span class="rec-tag rec-strong">α₁ ●●●● (high)</span>
-            <span class="rec-tag rec-mod">β₂ ●● (mid)</span>
+            <span class="rec-tag rec-strong">V&#8321; &#9679;&#9679;&#9679;&#9679;&#9679; (vascular)</span>
+            <span class="rec-tag rec-mod">V&#8322; &#9679;&#9679; (renal)</span>
+            <span class="rec-tag rec-none">&#945;/&#946; &mdash; (none)</span>
           </div>
         </div>
         <div>
-          <h3>⏱ Pharmacokinetics</h3>
+          <h3>Pharmacokinetics</h3>
           <div class="pk-grid">
-            <div class="pk-cell"><span class="pk-val">2–4 min</span><span class="pk-key">Onset</span></div>
-            <div class="pk-cell"><span class="pk-val">~2 min</span><span class="pk-key">t½</span></div>
-            <div class="pk-cell"><span class="pk-val">Hepatic/renal</span><span class="pk-key">Metabolism</span></div>
-            <div class="pk-cell"><span class="pk-val">COMT/MAO</span><span class="pk-key">Enzymes</span></div>
-            <div class="pk-cell"><span class="pk-val">IV central</span><span class="pk-key">Route</span></div>
-            <div class="pk-cell"><span class="pk-val">Urine</span><span class="pk-key">Excretion</span></div>
-          </div>
-          <p style="margin-top:8px">Rapid onset and offset. Does not cross blood-brain barrier at standard doses. Reduce dose in severe hepatic failure. No specific renal dose adjustment needed for pharmacokinetics (though renal effects are dose-dependent).</p>
-        </div>
-      </div>
-
-      <h3>📈 Dose-Dependent Effects — The "Three Zones"</h3>
-      <div class="dose-bar-wrap">
-        <div class="dose-bar-label"><span>1–3 μg/kg/min</span><span>3–10 μg/kg/min</span><span>&gt;10 μg/kg/min</span></div>
-        <div class="dose-bar" style="height:28px">
-          <div class="dose-segment" style="left:0;width:25%;background:#2a9d8f">DA₁: renal vasodilation</div>
-          <div class="dose-segment" style="left:25%;width:40%;background:#1f5e6e">β₁: ↑CO, ↑HR</div>
-          <div class="dose-segment" style="left:65%;width:35%;background:#8b1a1a">α₁: ↑↑SVR, ↑MVO₂</div>
-        </div>
-      </div>
-      <div class="three-col" style="margin-top:10px">
-        <div class="box box-teal"><strong>"Renal dose" 1–3 μg/kg/min</strong><br>DA₁-mediated renal and mesenteric vasodilation → ↑urine output. <em>Does NOT confer renal protection</em> in clinical trials (ANZICS 2000, numerous meta-analyses). Concept now discredited for "kidney protection." Use if urine output drops, but don't rely on it for AKI prevention.</div>
-        <div class="box box-orange"><strong>"Cardiac dose" 3–10 μg/kg/min</strong><br>β₁ inotropy + chronotropy → ↑CO. Significant tachycardia and arrhythmia (PVCs, AF) more common than with epinephrine. Norepinephrine release from nerve terminals contributes. Higher risk of V/Q mismatch due to pulmonary vasoconstriction.</div>
-        <div class="box box-red"><strong>"Vasopressor dose" &gt;10 μg/kg/min</strong><br>Predominantly α₁ → ↑↑SVR. Visceral ischemia risk (splanchnic vasoconstriction). Arrhythmias common. In this range, norepinephrine is preferred — more predictable, less arrhythmogenic, better hemodynamic profile.</div>
-      </div>
-
-      <div class="two-col">
-        <div>
-          <h3>✅ Limited Indications (post-CS)</h3>
-          <ul class="ind-list">
-            <li><span class="dot" style="background:var(--green)"></span>Low CO + low SVR when epinephrine/norepinephrine combination not available</li>
-            <li><span class="dot" style="background:var(--green)"></span>Oliguria post-CPB — augment urine output (low dose, not as AKI prophylaxis)</li>
-            <li><span class="dot" style="background:var(--green)"></span>Bradycardia with hemodynamic compromise (if pacing unavailable)</li>
-          </ul>
-        </div>
-        <div>
-          <h3>❌ Relative Contraindications / Disadvantages</h3>
-          <ul class="ind-list">
-            <li><span class="dot" style="background:var(--red)"></span>Highest arrhythmia risk among catecholamines — avoid in AF, VT history</li>
-            <li><span class="dot" style="background:var(--red)"></span>Pheochromocytoma — paradoxical hypertension</li>
-            <li><span class="dot" style="background:var(--red)"></span>Significant tachycardia — chronotropic effect poorly controlled</li>
-            <li><span class="dot" style="background:var(--red)"></span>MAO inhibitor therapy — markedly potentiated effect</li>
-          </ul>
-        </div>
-      </div>
-      <div class="box box-red">⚠️ <strong>Clinical position 2025:</strong> Dopamine has largely been replaced by epinephrine + norepinephrine in cardiac surgery. The SOAP-II trial showed higher mortality and arrhythmia rate vs norepinephrine in shock. ESC/ACC guidelines now prefer norepinephrine as first-line vasopressor. Dopamine may still be used in specific bradycardic low-output states or when alternatives are unavailable.</div>
-    </div>
-  </div>
-
-  <!-- ═══ ISOPROTERENOL ═══ -->
-  <div class="drug-card theme-cat" id="iso">
-    <div class="drug-summary">💉 Isoproterenol (Isoprenaline)</div>
-    <div class="drug-body">
-      <div class="two-col">
-        <div>
-          <h3>🔬 Mechanism of Action</h3>
-          <p>Isoproterenol is a synthetic catecholamine with <strong>pure β₁ and β₂ agonism</strong> — no α-adrenergic activity whatsoever. β₁ stimulation produces marked ↑HR and ↑contractility; β₂ stimulation causes systemic and pulmonary vasodilation (↓SVR, ↓↓PVR) and bronchodilation. The dominant effect is <strong>profound tachycardia</strong>, often the dose-limiting factor. It also ↑conduction velocity through the AV node (useful in complete heart block).</p>
-          <div class="rec-row">
-            <span class="rec-label">Receptors:</span>
-            <span class="rec-tag rec-strong">β₁ ●●●●●</span>
-            <span class="rec-tag rec-strong">β₂ ●●●●</span>
-            <span class="rec-tag rec-none">α₁ — (zero)</span>
-            <span class="rec-tag rec-none">DA — (zero)</span>
-          </div>
-        </div>
-        <div>
-          <h3>⏱ Pharmacokinetics</h3>
-          <div class="pk-grid">
-            <div class="pk-cell"><span class="pk-val">&lt;1 min</span><span class="pk-key">Onset</span></div>
-            <div class="pk-cell"><span class="pk-val">~2 min</span><span class="pk-key">t½</span></div>
-            <div class="pk-cell"><span class="pk-val">Hepatic/lung</span><span class="pk-key">Metabolism</span></div>
-            <div class="pk-cell"><span class="pk-val">COMT</span><span class="pk-key">Enzymes</span></div>
-            <div class="pk-cell"><span class="pk-val">IV central</span><span class="pk-key">Route</span></div>
-            <div class="pk-cell"><span class="pk-val">Urine</span><span class="pk-key">Excretion</span></div>
-          </div>
-          <p style="margin-top:8px">Extremely short t½ — ideal for immediate HR control. Unlike other catecholamines, is not taken up by sympathetic nerve terminals (COMT-mediated degradation). Adjust infusion rate for precise HR titration.</p>
-        </div>
-      </div>
-
-      <h3>📈 Dose-Dependent Effects</h3>
-      <div class="three-col">
-        <div class="box box-teal"><strong>Low 0.01–0.02 μg/kg/min</strong><br>Modest ↑HR (+10–20 bpm), mild ↓PVR. Used to maintain HR 90–100 bpm post-transplant or in complete heart block awaiting pacemaker.</div>
-        <div class="box box-orange"><strong>Mid 0.02–0.05 μg/kg/min</strong><br>Pronounced tachycardia, ↑CO via HR. ↓↓SVR and ↓↓PVR — significant vasodilation. May require α-agonist to maintain MAP. Major ↑MVO₂.</div>
-        <div class="box box-red"><strong>High &gt;0.05 μg/kg/min</strong><br>Extreme tachycardia, high arrhythmia risk (VT, VF). Hypotension from vasodilation. Reserved for refractory bradycardia as absolute bridge. Myocardial ischemia risk from demand/supply mismatch.</div>
-      </div>
-
-      <div class="two-col">
-        <div>
-          <h3>✅ Indications</h3>
-          <ul class="ind-list">
-            <li><span class="dot" style="background:var(--green)"></span><strong>Orthotopic heart transplant</strong> — denervated heart; target HR 90–110 bpm to maintain CO (SV fixed)</li>
-            <li><span class="dot" style="background:var(--green)"></span>Post-mitral valve surgery RV failure + ↑PVR — ↓↓PVR via β₂</li>
-            <li><span class="dot" style="background:var(--green)"></span>Bradycardia (sinus, AV block) as bridge to pacing</li>
-            <li><span class="dot" style="background:var(--green)"></span>Bronchospasm with need for inotropy</li>
-            <li><span class="dot" style="background:var(--green)"></span>Torsades de Pointes (↑HR → shortens QT)</li>
-          </ul>
-        </div>
-        <div>
-          <h3>❌ Contraindications</h3>
-          <ul class="ind-list">
-            <li><span class="dot" style="background:var(--red)"></span>Tachycardia or tachyarrhythmias — absolute contraindication</li>
-            <li><span class="dot" style="background:var(--red)"></span>Active myocardial ischemia — extreme ↑MVO₂</li>
-            <li><span class="dot" style="background:var(--red)"></span>Hypertrophic cardiomyopathy — worsens obstruction and ischemia</li>
-            <li><span class="dot" style="background:var(--red)"></span>Digitalis toxicity — arrhythmia sensitization</li>
-            <li><span class="dot" style="background:var(--red)"></span>Aortic stenosis — fixed obstruction limits CO response</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ NOREPINEPHRINE ═══ -->
-  <div class="drug-card theme-vaso" id="norepi">
-    <div class="drug-summary">💉 Norepinephrine (Levophed) — First-line vasopressor</div>
-    <div class="drug-body">
-      <div class="two-col">
-        <div>
-          <h3>🔬 Mechanism of Action</h3>
-          <p>Norepinephrine is the primary endogenous vasopressor catecholamine, released from sympathetic nerve terminals. It has <strong>potent α₁ and moderate β₁</strong> activity with minimal β₂. The dominant effect is <strong>vasoconstriction</strong> (↑SVR) via α₁ in arterioles, raising MAP. β₁ stimulation provides mild inotropy and chronotropy — usually offset by baroreflex-mediated bradycardia (↑MAP → ↑vagal tone). Reflex bradycardia can actually be beneficial by improving diastolic filling.</p>
-          <div class="rec-row">
-            <span class="rec-label">Receptors:</span>
-            <span class="rec-tag rec-strong">α₁ ●●●●●</span>
-            <span class="rec-tag rec-strong">β₁ ●●●</span>
-            <span class="rec-tag rec-weak">β₂ ●</span>
-            <span class="rec-tag rec-none">DA — (zero)</span>
-          </div>
-        </div>
-        <div>
-          <h3>⏱ Pharmacokinetics</h3>
-          <div class="pk-grid">
-            <div class="pk-cell"><span class="pk-val">1–3 min</span><span class="pk-key">Onset</span></div>
-            <div class="pk-cell"><span class="pk-val">~2 min</span><span class="pk-key">t½</span></div>
-            <div class="pk-cell"><span class="pk-val">Neuronal uptake</span><span class="pk-key">Primary clearance</span></div>
-            <div class="pk-cell"><span class="pk-val">COMT/MAO</span><span class="pk-key">Enzymes</span></div>
-            <div class="pk-cell"><span class="pk-val">IV central</span><span class="pk-key">Route</span></div>
-            <div class="pk-cell"><span class="pk-val">Urine</span><span class="pk-key">Excretion</span></div>
-          </div>
-          <p style="margin-top:8px">Rapid on/off kinetics — immediate titration. Extravasation causes severe tissue necrosis — dedicated central line mandatory. Half-life slightly longer than epinephrine due to re-uptake dependence.</p>
-        </div>
-      </div>
-
-      <h3>📈 Dose-Dependent Effects</h3>
-      <div class="three-col">
-        <div class="box box-teal"><strong>Low: 0.01–0.05 μg/kg/min (1–4 μg/min)</strong><br>↑SVR, ↑MAP. Mild ↑CI from improved coronary perfusion and baroreceptor-mediated ↑contractility. Preferred first-line range in post-CPB vasoplegia with adequate CO.</div>
-        <div class="box box-orange"><strong>Moderate: 0.05–0.15 μg/kg/min</strong><br>Significant vasoconstriction. If CI is &lt;2.0, must add separate inotrope — NE alone doesn't adequately augment CI at this range. Risk of mesenteric and renal vasoconstriction increases.</div>
-        <div class="box box-red"><strong>High: &gt;0.2 μg/kg/min (&gt;20 μg/min)</strong><br>Severe vasoconstriction — visceral ischemia, digital necrosis, metabolic acidosis. Indicates catecholamine-refractory vasoplegic shock. Add vasopressin, consider methylene blue, evaluate for underlying cause.</div>
-      </div>
-
-      <div class="two-col">
-        <div>
-          <h3>✅ Indications (first-line vasopressor)</h3>
-          <ul class="ind-list">
-            <li><span class="dot" style="background:var(--green)"></span><strong>Vasoplegic syndrome</strong> post-CPB — low SVR + adequate CO (warm, pink patient)</li>
-            <li><span class="dot" style="background:var(--green)"></span>Low CO + low SVR — combined with inotrope (epi/dobutamine)</li>
-            <li><span class="dot" style="background:var(--green)"></span>Septic shock — preferred over dopamine (SOAP-II trial: ↓arrhythmia, ↓mortality trend)</li>
-            <li><span class="dot" style="background:var(--green)"></span>Rebound hypotension after milrinone loading</li>
-            <li><span class="dot" style="background:var(--green)"></span>Anaphylaxis (adjunct to epinephrine)</li>
-          </ul>
-        </div>
-        <div>
-          <h3>❌ Contraindications / Cautions</h3>
-          <ul class="ind-list">
-            <li><span class="dot" style="background:var(--red)"></span>Uncorrected hypovolemia — vasoconstriction without volume = ↓CO</li>
-            <li><span class="dot" style="background:var(--red)"></span>Arterial graft spasm risk (ITA, radial artery) — α-agonists can precipitate conduit spasm; maintain diltiazem/NTG</li>
-            <li><span class="dot" style="background:var(--red)"></span>High PVR — NE ↑PVR; avoid if RV failure dominant</li>
-            <li><span class="dot" style="background:var(--red)"></span>Peripheral vascular disease — distal ischemia</li>
-          </ul>
-        </div>
-      </div>
-      <div class="box box-orange">💡 <strong>Arterial graft consideration:</strong> Norepinephrine causes spasm of ITA and radial artery conduits via α₁ receptors in the graft wall. When NE is required, maintain concurrent intracoronary or systemic diltiazem (0.1 mg/kg/h) or nitroglycerin (0.5–1 μg/kg/min) to protect graft patency.</div>
-    </div>
-  </div>
-
-  <!-- ═══ PHENYLEPHRINE ═══ -->
-  <div class="drug-card theme-vaso" id="phenyl">
-    <div class="drug-summary">💉 Phenylephrine (Neo‑Synephrine) — Pure α₁ agonist</div>
-    <div class="drug-body">
-      <div class="two-col">
-        <div>
-          <h3>🔬 Mechanism of Action</h3>
-          <p>Phenylephrine is a <strong>pure selective α₁ agonist</strong> with essentially no β activity. It causes dose-dependent peripheral vasoconstriction (arterial &gt; venous) → ↑SVR → ↑MAP → reflex bradycardia (baroreceptor-mediated ↑vagal tone). Has no direct inotropic, chronotropic, or lusitropy effect. Because CO = HR × SV, the reflex bradycardia combined with fixed SV may actually ↓CO — this is the key limitation. Venous constriction also ↑preload (↑CVP).</p>
-          <div class="rec-row">
-            <span class="rec-label">Receptors:</span>
-            <span class="rec-tag rec-strong">α₁ ●●●●●</span>
-            <span class="rec-tag rec-none">β₁ — (zero)</span>
-            <span class="rec-tag rec-none">β₂ — (zero)</span>
-            <span class="rec-tag rec-none">DA — (zero)</span>
-          </div>
-        </div>
-        <div>
-          <h3>⏱ Pharmacokinetics</h3>
-          <div class="pk-grid">
-            <div class="pk-cell"><span class="pk-val">1–3 min</span><span class="pk-key">Onset</span></div>
-            <div class="pk-cell"><span class="pk-val">~5 min</span><span class="pk-key">t½</span></div>
-            <div class="pk-cell"><span class="pk-val">Hepatic/MAO</span><span class="pk-key">Metabolism</span></div>
-            <div class="pk-cell"><span class="pk-val">Urine</span><span class="pk-key">Excretion</span></div>
-            <div class="pk-cell"><span class="pk-val">IV / IM bolus</span><span class="pk-key">Routes</span></div>
-            <div class="pk-cell"><span class="pk-val">Central/periph</span><span class="pk-key">Line</span></div>
-          </div>
-          <p style="margin-top:8px">Slightly longer t½ than NE — less rapid offset. May become refractory after several hours (α-receptor saturation or relative volume depletion). Peripheral IV acceptable for bolus dosing in anesthesia; continuous infusion requires central line.</p>
-        </div>
-      </div>
-
-      <h3>📈 Dose-Dependent Effects</h3>
-      <div class="three-col">
-        <div class="box box-teal"><strong>0.05–0.3 μg/kg/min</strong><br>↑SVR, ↑MAP. Reflex ↓HR. Adequate ventricular function maintained if CO was normal prior. Preferred dose range for vasoplegia with preserved CO.</div>
-        <div class="box box-orange"><strong>0.3–1.0 μg/kg/min</strong><br>Significant vasoconstriction. Reflex bradycardia may reduce CO. Venous capacitance ↓ → ↑PCWP. Monitor CI — if drops, switch to NE or add inotrope.</div>
-        <div class="box box-red"><strong>&gt;1.0–1.5 μg/kg/min</strong><br>Severe vasoconstriction with pronounced ↓HR and potentially ↓CO. Visceral ischemia, graft spasm risk. Tachyphylaxis common. Switch to norepinephrine at this dose range.</div>
-      </div>
-
-      <div class="two-col">
-        <div>
-          <h3>✅ Indications</h3>
-          <ul class="ind-list">
-            <li><span class="dot" style="background:var(--green)"></span>Hypotension with <strong>adequate CI &gt;2.2</strong> — isolated vasodilation (vasoplegia, post-CPB warming)</li>
-            <li><span class="dot" style="background:var(--green)"></span><strong>HOCM / SAM</strong> after mitral repair — ↑SVR prevents dynamic outflow obstruction (combined with volume + β-blocker)</li>
-            <li><span class="dot" style="background:var(--green)"></span>Spinal/epidural hypotension (cardiac anesthesia context)</li>
-            <li><span class="dot" style="background:var(--green)"></span>Supraventricular tachycardia (reflex bradycardia terminates AVNRT in some cases)</li>
-          </ul>
-        </div>
-        <div>
-          <h3>❌ Contraindications / Cautions</h3>
-          <ul class="ind-list">
-            <li><span class="dot" style="background:var(--red)"></span>Low CO state — pure vasoconstriction without inotropy further ↓CO</li>
-            <li><span class="dot" style="background:var(--red)"></span>Arterial graft conduits — highest spasm risk among vasopressors</li>
-            <li><span class="dot" style="background:var(--red)"></span>Severe bradycardia — reflex ↓HR may be dangerous</li>
-            <li><span class="dot" style="background:var(--red)"></span>Aortic insufficiency — ↑SVR worsens regurgitation</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ VASOPRESSIN ═══ -->
-  <div class="drug-card theme-vaso" id="vaso">
-    <div class="drug-summary">💉 Vasopressin (ADH / AVP) — Non-catecholamine vasopressor</div>
-    <div class="drug-body">
-      <div class="two-col">
-        <div>
-          <h3>🔬 Mechanism of Action</h3>
-          <p>Vasopressin (antidiuretic hormone) acts on <strong>V₁ receptors</strong> in vascular smooth muscle → Gq protein → IP₃ pathway → ↑intracellular Ca²⁺ → vasoconstriction. This pathway is <strong>entirely independent of adrenergic receptors</strong> — hence effective in catecholamine-refractory shock (downregulated α-receptors). V₁ stimulation also causes mesenteric, renal, and coronary vasoconstriction. V₂ receptors in renal collecting duct → water reabsorption (antidiuretic effect). At therapeutic doses, vasopressin does <strong>NOT increase PVR</strong> (selective for systemic vasculature) — a major advantage over NE/phenylephrine in patients with RV failure.</p>
-          <div class="rec-row">
-            <span class="rec-label">Receptors:</span>
-            <span class="rec-tag rec-strong">V₁ ●●●●● (vascular)</span>
-            <span class="rec-tag rec-mod">V₂ ●● (renal)</span>
-            <span class="rec-tag rec-none">α — (no)</span>
-            <span class="rec-tag rec-none">β — (no)</span>
-          </div>
-        </div>
-        <div>
-          <h3>⏱ Pharmacokinetics</h3>
-          <div class="pk-grid">
-            <div class="pk-cell"><span class="pk-val">2–5 min</span><span class="pk-key">Onset</span></div>
-            <div class="pk-cell"><span class="pk-val">10–35 min</span><span class="pk-key">t½</span></div>
-            <div class="pk-cell"><span class="pk-val">Liver/kidney</span><span class="pk-key">Metabolism</span></div>
+            <div class="pk-cell"><span class="pk-val">2&ndash;5 min</span><span class="pk-key">Onset</span></div>
+            <div class="pk-cell"><span class="pk-val">10&ndash;35 min</span><span class="pk-key">t&frac12;</span></div>
             <div class="pk-cell"><span class="pk-val">Vasopressinase</span><span class="pk-key">Enzymes</span></div>
-            <div class="pk-cell"><span class="pk-val">Urine</span><span class="pk-key">Excretion</span></div>
             <div class="pk-cell"><span class="pk-val">IV central</span><span class="pk-key">Route</span></div>
           </div>
-          <p style="margin-top:8px">Longer t½ than catecholamines — slower offset when weaning. Vasopressin is endogenously depleted in prolonged vasoplegic shock (relative vasopressin deficiency) — this is the rationale for exogenous replacement at low doses (0.01–0.04 U/min) rather than pharmacologic doses.</p>
+          <p>Longer t&frac12; than catecholamines &mdash; slower offset when weaning. Endogenous depletion occurs in prolonged vasoplegic shock (rationale for exogenous replacement).</p>
         </div>
       </div>
-
-      <h3>📈 Dose-Dependent Effects</h3>
-      <div class="three-col">
-        <div class="box box-green"><strong>Physiologic replacement: 0.01–0.04 U/min</strong><br>Restores endogenous vasopressin to normal levels. ↑MAP with ↓NE requirements. No significant mesenteric ischemia risk. This is the VASST trial dose range — first-line adjunct to NE in vasodilatory shock.</div>
-        <div class="box box-orange"><strong>Moderate: 0.04–0.1 U/min</strong><br>Significant vasoconstriction. Mesenteric, renal, and cutaneous blood flow ↓. CO may ↓ if LV afterload increases significantly. Risk of digital/bowel ischemia. Titrate carefully with PAC or echo guidance.</div>
-        <div class="box box-red"><strong>High: &gt;0.1 U/min</strong><br>Severe splanchnic ischemia. Myocardial ischemia (coronary vasoconstriction via V₁). Hepatic necrosis reported. Rarely indicated — only in refractory vasodilatory shock as absolute bridge to MCS.</div>
+      <div class="g3">
+        <div class="box box-green"><strong>Physiologic: 0.01&ndash;0.04 U/min</strong> &mdash; Restores endogenous AVP. &#8593;MAP with &#8595;NE requirements. No significant mesenteric ischemia risk. VASST trial dose range.</div>
+        <div class="box box-amber"><strong>Moderate: 0.04&ndash;0.1 U/min</strong> &mdash; Significant vasoconstriction. Mesenteric, renal, and cutaneous flow &#8595;. CO may &#8595; if LV afterload increases significantly.</div>
+        <div class="box box-red"><strong>High: &gt;0.1 U/min</strong> &mdash; Severe splanchnic ischemia. Myocardial ischemia (coronary V&#8321;). Hepatic necrosis reported. Rarely indicated.</div>
       </div>
-
-      <div class="two-col">
+      <div class="g2">
         <div>
-          <h3>✅ Indications</h3>
+          <h3>Indications</h3>
           <ul class="ind-list">
-            <li><span class="dot" style="background:var(--green)"></span><strong>Vasoplegic syndrome</strong> refractory to catecholamines — post-CPB, protamine reaction, post-VAD</li>
-            <li><span class="dot" style="background:var(--green)"></span>NE dose reduction strategy — add vasopressin to ↓NE requirement (catecholamine-sparing)</li>
-            <li><span class="dot" style="background:var(--green)"></span>RV failure + high PVR — preferred over NE/phenyephrine (doesn't ↑PVR)</li>
-            <li><span class="dot" style="background:var(--green)"></span>Diabetes insipidus post-operative (V₂-mediated ADH replacement)</li>
+            <li><span class="dot" style="background:var(--green)"></span><strong>Vasoplegic syndrome</strong> refractory to catecholamines &mdash; post-CPB, protamine reaction</li>
+            <li><span class="dot" style="background:var(--green)"></span>NE dose reduction (catecholamine-sparing)</li>
+            <li><span class="dot" style="background:var(--green)"></span>RV failure + high PVR &mdash; preferred (doesn't &#8593;PVR)</li>
+            <li><span class="dot" style="background:var(--green)"></span>Diabetes insipidus post-operative (V&#8322;-ADH replacement)</li>
           </ul>
         </div>
         <div>
-          <h3>❌ Contraindications / Cautions</h3>
+          <h3>Contraindications</h3>
           <ul class="ind-list">
-            <li><span class="dot" style="background:var(--red)"></span>Low CO state without adequate inotrope — pure vasoconstriction ↑afterload, ↓CO</li>
-            <li><span class="dot" style="background:var(--red)"></span>Mesenteric ischemia risk — monitor bowel sounds, lactate, pH</li>
-            <li><span class="dot" style="background:var(--red)"></span>CAD — coronary vasoconstriction at high doses</li>
-            <li><span class="dot" style="background:var(--red)"></span>Hyponatraemia (relative) — V₂-mediated water retention</li>
+            <li><span class="dot" style="background:var(--red)"></span>Low CO without inotrope &mdash; pure vasoconstriction &#8595;CO</li>
+            <li><span class="dot" style="background:var(--red)"></span>Mesenteric ischemia risk &mdash; monitor bowel, lactate</li>
+            <li><span class="dot" style="background:var(--red)"></span>CAD &mdash; coronary vasoconstriction at high doses</li>
+            <li><span class="dot" style="background:var(--red)"></span>Hyponatraemia &mdash; V&#8322; water retention</li>
           </ul>
         </div>
       </div>
-      <div class="box box-blue">🧬 <strong>Pharmacological rationale:</strong> In prolonged vasodilatory shock, endogenous AVP stores are depleted (half-life of depletion ~1–2h). Exogenous vasopressin at 0.03 U/min restores plasma levels to normal — this is replacement therapy, not pharmacologic vasoconstriction. The VASST trial showed non-inferior outcomes vs NE in vasoplegic shock, with lower NE requirements and reduced progression to severe shock.</div>
+      <div class="box box-blue"><strong>Pharmacological rationale:</strong> In prolonged vasodilatory shock, endogenous AVP stores deplete (t&frac12; of depletion ~1&ndash;2h). Exogenous vasopressin at 0.03 U/min restores plasma levels to normal &mdash; replacement therapy, not pharmacologic vasoconstriction. VASST trial: non-inferior to NE with lower NE requirements.</div>
     </div>
   </div>
 
-  <!-- ═══ LEVOSIMENDAN ═══ -->
-  <div class="drug-card theme-spec" id="levo">
-    <div class="drug-summary">⚡ Levosimendan (Simdax) — Calcium sensitizer + inodilator</div>
+  <!-- LEVOSIMENDAN -->
+  <div class="drug-card dc-spec" id="levo">
+    <div class="drug-summary">&#9889; Levosimendan (Simdax) &mdash; Calcium Sensitizer + Inodilator</div>
     <div class="drug-body">
-      <div class="two-col">
+      <div class="g2">
         <div>
-          <h3>🔬 Mechanism of Action</h3>
-          <p>Levosimendan has a <strong>dual mechanism</strong> unique among inotropes. (1) <strong>Calcium sensitization:</strong> binds troponin C in a Ca²⁺-dependent manner → stabilizes troponin C-Ca²⁺ complex during systole → ↑contractile force without increasing intracellular Ca²⁺ concentration → no ↑MVO₂. During diastole, the compound dissociates as Ca²⁺ falls — normal relaxation preserved. (2) <strong>KATP channel opening</strong> in vascular smooth muscle and mitochondria → vasodilation (↓SVR, ↓↓PVR) + cardioprotection via ischemic preconditioning-like mechanism. Active metabolite <strong>OR-1896</strong> (t½ ~75–80h) perpetuates effects for up to 7–9 days after a single 24h infusion.</p>
+          <h3>Dual Mechanism of Action</h3>
+          <p>(1) <strong>Calcium sensitization:</strong> binds troponin C in a Ca&#178;&#8314;-dependent manner &#8594; stabilizes TnC-Ca&#178;&#8314; complex during systole &#8594; &#8593;contractile force without &#8593;intracellular Ca&#178;&#8314; &#8594; <strong>no &#8593;MVO&#8322;</strong>. (2) <strong>K<sub>ATP</sub> channel opening:</strong> vasodilation (&#8595;SVR, &#8595;&#8595;PVR) + cardioprotection. Active metabolite <strong>OR-1896</strong> (t&frac12; 75&ndash;80h) perpetuates effects for 7&ndash;9 days after 24h infusion.</p>
           <div class="rec-row">
             <span class="rec-label">Mechanism:</span>
             <span class="rec-tag rec-strong">TnC sensitizer</span>
-            <span class="rec-tag rec-strong">KATP opener</span>
+            <span class="rec-tag rec-strong">K<sub>ATP</sub> opener</span>
             <span class="rec-tag rec-mod">PDE-III (mild)</span>
           </div>
         </div>
         <div>
-          <h3>⏱ Pharmacokinetics</h3>
+          <h3>Pharmacokinetics</h3>
           <div class="pk-grid">
-            <div class="pk-cell"><span class="pk-val">5–10 min</span><span class="pk-key">Onset</span></div>
-            <div class="pk-cell"><span class="pk-val">~1 h</span><span class="pk-key">t½ parent</span></div>
-            <div class="pk-cell"><span class="pk-val">75–80 h</span><span class="pk-key">t½ OR-1896</span></div>
-            <div class="pk-cell"><span class="pk-val">7–9 days</span><span class="pk-key">Duration effect</span></div>
-            <div class="pk-cell"><span class="pk-val">Hepatic</span><span class="pk-key">Metabolism</span></div>
-            <div class="pk-cell"><span class="pk-val">Urine/feces</span><span class="pk-key">Excretion</span></div>
+            <div class="pk-cell"><span class="pk-val">5&ndash;10 min</span><span class="pk-key">Onset</span></div>
+            <div class="pk-cell"><span class="pk-val">~1 h</span><span class="pk-key">t&frac12; parent</span></div>
+            <div class="pk-cell"><span class="pk-val">75&ndash;80 h</span><span class="pk-key">t&frac12; OR-1896</span></div>
+            <div class="pk-cell"><span class="pk-val">7&ndash;9 days</span><span class="pk-key">Duration effect</span></div>
           </div>
-          <p style="margin-top:8px">The prolonged effect of OR-1896 metabolite means that clinical effects last up to a week after a single 24h infusion. Reduces need for repeat inotrope dosing. Caution: if hypotension develops, effects cannot be quickly reversed.</p>
+          <p>Prolonged effect of OR-1896 means effects last up to a week. Cannot be rapidly reversed if hypotension develops.</p>
         </div>
       </div>
-
-      <h3>📈 Dosing Protocol</h3>
-      <div class="three-col">
-        <div class="box box-green"><strong>Loading bolus: 12–24 μg/kg over 10 min</strong><br>Produces rapid ↑CO and ↓PCWP. Often causes transient hypotension (vasodilation) — requires α-agonist co-administration. <em>Consider omitting in systolic BP &lt;90 mmHg or in STEMI context.</em></div>
-        <div class="box box-green"><strong>Maintenance: 0.05–0.2 μg/kg/min × 24h</strong><br>Sustained inodilator effect. ↑CI 25–40%, ↓SVR 20–30%, ↓PVR 30–40%. Notably: no ↑MVO₂ despite inotropy. Most patients require α-agonist (NE 0.05–0.1 μg/kg/min) throughout infusion.</div>
-        <div class="box box-green"><strong>Post-infusion (OR-1896 phase): 24h–9 days</strong><br>Hemodynamic benefit persists. Plasma NE levels fall (↓catecholamine dependence). Gradual HR normalization. Monitor for delayed hypotension if vasopressors weaned too quickly.</div>
+      <div class="g3">
+        <div class="box box-green"><strong>Loading: 12&ndash;24 &mu;g/kg over 10 min</strong> &mdash; Rapid &#8593;CO, &#8595;PCWP. Often causes transient hypotension. <em>Consider omitting if SBP &lt;90 or STEMI context.</em></div>
+        <div class="box box-green"><strong>Maintenance: 0.05&ndash;0.2 &mu;g/kg/min &times; 24h</strong> &mdash; &#8593;CI 25&ndash;40%, &#8595;SVR 20&ndash;30%, &#8595;PVR 30&ndash;40%. No &#8593;MVO&#8322;. Most patients need NE throughout.</div>
+        <div class="box box-green"><strong>Post-infusion (OR-1896): 24h&ndash;9 days</strong> &mdash; Benefit persists. Plasma NE falls (&#8595;catecholamine dependence). Monitor for delayed hypotension if vasopressors weaned too quickly.</div>
       </div>
-
-      <div class="two-col">
+      <div class="g2">
         <div>
-          <h3>✅ Indications</h3>
+          <h3>Indications</h3>
           <ul class="ind-list">
-            <li><span class="dot" style="background:var(--green)"></span>Pre-operative optimization of high-risk cardiac surgery (preconditioning)</li>
-            <li><span class="dot" style="background:var(--green)"></span>Post-cardiotomy RV or LV failure — ↓PVR + ↑RV contractility</li>
+            <li><span class="dot" style="background:var(--green)"></span>Pre-operative optimization of high-risk cardiac surgery</li>
+            <li><span class="dot" style="background:var(--green)"></span>Post-cardiotomy RV or LV failure &mdash; &#8595;PVR + &#8593;RV contractility</li>
             <li><span class="dot" style="background:var(--green)"></span>Weaning from CPB in severely impaired LV (EF &lt;30%)</li>
-            <li><span class="dot" style="background:var(--green)"></span>Decompensated HF in β-receptor downregulated patients (LIDO, RUSSLAN trials)</li>
-            <li><span class="dot" style="background:var(--green)"></span>Ischemic cardiomyopathy — possible cardioprotective effect via mitochondrial KATP</li>
-            <li><span class="dot" style="background:var(--green)"></span>Heart transplant — post-reperfusion primary graft dysfunction</li>
+            <li><span class="dot" style="background:var(--green)"></span>&#946;-receptor downregulated HF patients</li>
+            <li><span class="dot" style="background:var(--green)"></span>Heart transplant &mdash; post-reperfusion primary graft dysfunction</li>
           </ul>
         </div>
         <div>
-          <h3>❌ Contraindications / Cautions</h3>
+          <h3>Contraindications</h3>
           <ul class="ind-list">
-            <li><span class="dot" style="background:var(--red)"></span>Severe hypotension (SBP &lt;85 mmHg) without vasopressor support</li>
-            <li><span class="dot" style="background:var(--red)"></span>Significant hypovolemia — vasodilation ↓↓MAP</li>
-            <li><span class="dot" style="background:var(--red)"></span>Severe renal failure (CrCl &lt;15 mL/min) — OR-1896 accumulation</li>
-            <li><span class="dot" style="background:var(--red)"></span>Severe hepatic failure — impaired parent drug clearance</li>
-            <li><span class="dot" style="background:var(--red)"></span>Tachycardia — ↑HR common; use with caution in AF with fast ventricular rate</li>
-            <li><span class="dot" style="background:var(--red)"></span>Hypokalemia — ↑arrhythmia risk via KATP opening; correct K⁺ before/during infusion</li>
+            <li><span class="dot" style="background:var(--red)"></span>Severe hypotension (SBP &lt;85) without vasopressor support</li>
+            <li><span class="dot" style="background:var(--red)"></span>Significant hypovolemia &mdash; vasodilation &#8595;&#8595;MAP</li>
+            <li><span class="dot" style="background:var(--red)"></span>Severe renal failure (CrCl &lt;15) &mdash; OR-1896 accumulation</li>
+            <li><span class="dot" style="background:var(--red)"></span>Hypokalemia &mdash; K<sub>ATP</sub> opening &#8593;arrhythmia risk; correct K&#8314; first</li>
           </ul>
         </div>
       </div>
-      <div class="box box-blue">⚡ <strong>Key advantage:</strong> Levosimendan is the only inotrope that improves contractility WITHOUT increasing MVO₂ (calcium sensitization ≠ ↑Ca²⁺ cycling). This makes it uniquely suitable for ischemic hearts where catecholamine-induced Ca²⁺ overload could extend injury. The SURVIVE trial (vs dobutamine in AHF) did not show mortality benefit, but the post-CS RV failure literature and CABG pre-conditioning data are more favorable.</div>
+      <div class="box box-blue"><strong>Key advantage:</strong> Only inotrope that improves contractility <em>without</em> increasing MVO&#8322; (Ca&#178;&#8314; sensitization &#8800; &#8593;Ca&#178;&#8314; cycling). Uniquely suitable for ischemic hearts where catecholamine-induced Ca&#178;&#8314; overload could extend injury.</div>
     </div>
   </div>
 
-  <!-- ═══ CALCIUM CHLORIDE ═══ -->
-  <div class="drug-card theme-spec" id="calcium">
-    <div class="drug-summary">⚡ Calcium Chloride (CaCl₂)</div>
+  <!-- CALCIUM CHLORIDE -->
+  <div class="drug-card dc-spec" id="calcium">
+    <div class="drug-summary">&#9889; Calcium Chloride (CaCl&#8322;)</div>
     <div class="drug-body">
-      <div class="two-col">
+      <div class="g2">
         <div>
-          <h3>🔬 Mechanism of Action</h3>
-          <p>Extracellular Ca²⁺ is the trigger for intracellular Ca²⁺-induced Ca²⁺ release (CICR) from the SR. IV calcium bolus transiently ↑plasma ionized Ca²⁺ → ↑Ca²⁺ influx via L-type channels → ↑SR release → ↑contractility. Also ↑SVR via vascular smooth muscle contraction. However: in the post-ischemic/reperfused heart, intracellular Ca²⁺ is already elevated — additional Ca²⁺ may worsen Ca²⁺ overload and reperfusion injury. Calcium also attenuates catecholamine effects by ↑membrane potential and inhibiting adenylyl cyclase (high concentrations).</p>
-          <div class="pk-grid" style="margin-top:12px">
-            <div class="pk-cell"><span class="pk-val">1–2 min</span><span class="pk-key">Onset</span></div>
-            <div class="pk-cell"><span class="pk-val">15–30 min</span><span class="pk-key">Duration</span></div>
-            <div class="pk-cell"><span class="pk-val">CaCl₂ vs gluconate</span><span class="pk-key">Note</span></div>
-            <div class="pk-cell"><span class="pk-val">3× more</span><span class="pk-key">CaCl₂ elemental Ca</span></div>
+          <h3>Mechanism</h3>
+          <p>IV calcium &#8593; plasma ionized Ca&#178;&#8314; &#8594; &#8593;Ca&#178;&#8314; influx via L-type channels &#8594; &#8593;SR release &#8594; transient &#8593;contractility. Also &#8593;SVR via vascular smooth muscle. In post-ischemic/reperfused heart, intracellular Ca&#178;&#8314; already elevated &mdash; additional Ca&#178;&#8314; may worsen reperfusion injury.</p>
+          <div class="pk-grid">
+            <div class="pk-cell"><span class="pk-val">1&ndash;2 min</span><span class="pk-key">Onset</span></div>
+            <div class="pk-cell"><span class="pk-val">15&ndash;30 min</span><span class="pk-key">Duration</span></div>
+            <div class="pk-cell"><span class="pk-val">272 mg/g</span><span class="pk-key">Elemental Ca (CaCl&#8322;)</span></div>
+            <div class="pk-cell"><span class="pk-val">90 mg/g</span><span class="pk-key">Elemental Ca (gluconate)</span></div>
           </div>
         </div>
         <div>
-          <h3>⚠️ Clinical Evidence — Controversial Use</h3>
-          <div class="box box-red"><strong>Routine use post-CPB is NOT recommended.</strong><br>Multiple studies (DiNardo, Royster, Hensley) show: (1) Transient contractility ↑ but equivalent to catecholamines; (2) May worsen reperfusion injury in stunned myocardium; (3) No mortality benefit. Many centers have abandoned routine CaCl₂ at separation from CPB.</div>
-          <div class="box box-orange"><strong>CaCl₂ vs Calcium Gluconate:</strong><br>CaCl₂ 1g = 272 mg elemental Ca²⁺. Gluconate 1g = 90 mg elemental Ca²⁺. CaCl₂ preferred for immediate effect — does not require hepatic metabolism for ionized Ca²⁺ release. Use CaCl₂ in emergencies; gluconate acceptable for prophylaxis/maintenance.</div>
+          <h3>Evidence &mdash; Controversial</h3>
+          <div class="box box-red"><strong>Routine post-CPB use NOT recommended.</strong> Multiple studies show: (1) Transient &#8593;contractility equivalent to catecholamines; (2) May worsen reperfusion injury in stunned myocardium; (3) No mortality benefit. Many centers abandoned routine CaCl&#8322; at CPB separation.</div>
+          <div class="box box-amber"><strong>CaCl&#8322; vs Gluconate:</strong> CaCl&#8322; preferred for immediate effect &mdash; no hepatic metabolism needed for ionized Ca&#178;&#8314; release. Use CaCl&#8322; in emergencies; gluconate for prophylaxis/maintenance.</div>
         </div>
       </div>
-
-      <h3>✅ Evidence-Based Indications</h3>
-      <div class="three-col">
-        <div class="box box-green"><strong>1. Hypocalcemia</strong><br>Ionized Ca²⁺ &lt;1.1 mmol/L (common post-CPB due to citrate from blood products, hemodilution, hypothermia). True indication: replace to normal before calling for inotropes.</div>
-        <div class="box box-green"><strong>2. Hyperkalemia</strong><br>K⁺ &gt;6.0–6.5 mEq/L — calcium stabilizes myocardial membrane (cardiac membrane protection), not a treatment for hyperkalemia per se. Acts within 1–2 min. Duration ~30 min. Must treat underlying cause.</div>
-        <div class="box box-orange"><strong>3. Calcium channel blocker toxicity</strong><br>IV CaCl₂ reverses negative inotropy/chronotropy from CCB overdose or iatrogenic hypotension (verapamil, diltiazem bolus). High doses may be needed (repeated 1g boluses).</div>
+      <div class="g3">
+        <div class="box box-green"><strong>1. Hypocalcemia</strong> &mdash; Ionized Ca&#178;&#8314; &lt;1.1 mmol/L (common post-CPB: citrate, hemodilution, hypothermia). True indication: replace to normal before calling for inotropes.</div>
+        <div class="box box-green"><strong>2. Hyperkalemia</strong> &mdash; K&#8314; &gt;6.0&ndash;6.5 mEq/L: calcium stabilizes myocardial membrane. Acts 1&ndash;2 min, duration 30 min. Does not treat underlying hyperkalemia.</div>
+        <div class="box box-amber"><strong>3. CCB toxicity</strong> &mdash; IV CaCl&#8322; reverses negative inotropy/chronotropy from CCB overdose. High repeated doses may be needed.</div>
       </div>
-      <div class="box box-red">⚠️ <strong>ACLS 2025:</strong> Routine calcium in cardiac arrest is NOT recommended (Class III: harm) unless in the context of hyperkalemia, hypocalcemia, or CCB toxicity. In cardiac surgery, avoid routine bolus at separation from CPB — measure ionized Ca²⁺ first and replace only if &lt;1.1 mmol/L.</div>
+      <div class="box box-red"><strong>ACLS 2025:</strong> Routine calcium in cardiac arrest NOT recommended (Class III: harm) unless hyperkalemia, hypocalcemia, or CCB toxicity. Measure ionized Ca&#178;&#8314; first &mdash; replace only if &lt;1.1 mmol/L.</div>
     </div>
   </div>
 
-  <!-- ═══ T3 ═══ -->
-  <div class="drug-card theme-spec" id="t3">
-    <div class="drug-summary">⚡ Triiodothyronine (T₃) — Salvage inotrope</div>
+  <!-- T3 -->
+  <div class="drug-card dc-spec" id="t3">
+    <div class="drug-summary">&#9889; Triiodothyronine (T&#8323;) &mdash; Salvage Inotrope</div>
     <div class="drug-body">
-      <div class="two-col">
+      <div class="g2">
         <div>
-          <h3>🔬 Mechanism of Action</h3>
-          <p>T₃ (liothyronine) is the active form of thyroid hormone. It acts on <strong>nuclear thyroid hormone receptors</strong> to ↑transcription of: α-myosin heavy chain (↑contractile protein), SERCA2a (↑Ca²⁺ reuptake → improved contractility and lusitropy), β₁-adrenergic receptors (↑catecholamine sensitivity), and Na⁺/K⁺-ATPase. Genomic effects take hours; non-genomic effects (↑Na⁺/Ca²⁺ exchanger, ↓SVR via vascular K⁺ channels) occur within minutes. Mechanism is entirely <strong>β-receptor independent</strong> — works even in fully downregulated states.</p>
+          <h3>Mechanism of Action</h3>
+          <p>T&#8323; (liothyronine) acts on <strong>nuclear thyroid hormone receptors</strong> &#8594; &#8593;transcription of: &#945;-myosin heavy chain, SERCA2a (&#8593;Ca&#178;&#8314; reuptake), &#946;&#8321;-adrenergic receptors. Mechanism is entirely <strong>&#946;-receptor independent</strong> &mdash; works even in fully downregulated states. Cardiac surgery causes T&#8323; to fall 50&ndash;70% within hours (&ldquo;euthyroid sick syndrome&rdquo;).</p>
           <div class="rec-row">
             <span class="rec-label">Mechanism:</span>
             <span class="rec-tag rec-strong">Nuclear TH receptor</span>
-            <span class="rec-tag rec-mod">SERCA2a ↑</span>
-            <span class="rec-tag rec-mod">β₁-receptor upregulation</span>
+            <span class="rec-tag rec-mod">SERCA2a &#8593;</span>
+            <span class="rec-tag rec-mod">&#946;&#8321; upregulation</span>
           </div>
         </div>
         <div>
-          <h3>⏱ Pharmacokinetics</h3>
+          <h3>Pharmacokinetics</h3>
           <div class="pk-grid">
             <div class="pk-cell"><span class="pk-val">Minutes</span><span class="pk-key">Non-genomic onset</span></div>
             <div class="pk-cell"><span class="pk-val">Hours</span><span class="pk-key">Genomic onset</span></div>
-            <div class="pk-cell"><span class="pk-val">~1 day</span><span class="pk-key">t½</span></div>
-            <div class="pk-cell"><span class="pk-val">Hepatic</span><span class="pk-key">Metabolism</span></div>
-            <div class="pk-cell"><span class="pk-val">IV bolus</span><span class="pk-key">Route</span></div>
+            <div class="pk-cell"><span class="pk-val">~1 day</span><span class="pk-key">t&frac12;</span></div>
             <div class="pk-cell"><span class="pk-val">Salvage only</span><span class="pk-key">Indication tier</span></div>
           </div>
-          <p style="margin-top:8px"><strong>Post-CPB euthyroid sick syndrome:</strong> Cardiac surgery reliably causes T₃ levels to fall 50–70% within hours of CPB (even without pre-existing thyroid disease) — "non-thyroidal illness syndrome." Low T₃ correlates with low CO syndrome and poor prognosis.</p>
+          <div class="box box-cyan"><strong>Dose:</strong> 0.8 &mu;g/kg IV bolus (max 20 &mu;g) &#8594; infusion 0.113 &mu;g/kg/h &times; 6h. Evidence: mainly observational; Klemperer 1995, Bennett-Guerrero 1996.</div>
         </div>
       </div>
-
-      <div class="two-col">
+      <div class="g2">
         <div>
-          <h3>✅ Indications</h3>
+          <h3>Indications</h3>
           <ul class="ind-list">
-            <li><span class="dot" style="background:var(--green)"></span><strong>Salvage:</strong> IABP + maximal catecholamines + milrinone insufficient (last-resort before MCS)</li>
-            <li><span class="dot" style="background:var(--green)"></span>Refractory low CO with suspected post-CPB T₃ deficiency</li>
-            <li><span class="dot" style="background:var(--green)"></span>Brain-dead donor heart preparation — maintains T₃ levels in donor</li>
-            <li><span class="dot" style="background:var(--green)"></span>Neonatal/pediatric cardiac surgery — higher T₃ sensitivity</li>
+            <li><span class="dot" style="background:var(--green)"></span><strong>Salvage:</strong> IABP + maximal catecholamines + milrinone insufficient</li>
+            <li><span class="dot" style="background:var(--green)"></span>Refractory low CO with suspected T&#8323; deficiency post-CPB</li>
+            <li><span class="dot" style="background:var(--green)"></span>Brain-dead donor heart preparation</li>
+            <li><span class="dot" style="background:var(--green)"></span>Neonatal/pediatric cardiac surgery</li>
           </ul>
-          <div class="box box-teal"><strong>Dose:</strong> 0.8 μg/kg IV bolus (max 20 μg) → infusion 0.113 μg/kg/h × 6h. Alternative: 10–20 μg IV bolus. Evidence base: mainly observational; TRICC-HF trial ongoing.</div>
         </div>
         <div>
-          <h3>⚠️ Limitations &amp; Evidence</h3>
+          <h3>Limitations</h3>
           <ul class="ind-list">
-            <li><span class="dot" style="background:var(--red)"></span>Randomized data limited — Klemperer 1995, Bennett-Guerrero 1996 show modest benefit</li>
+            <li><span class="dot" style="background:var(--red)"></span>Randomized data limited; modest benefit in trials</li>
             <li><span class="dot" style="background:var(--red)"></span>Tachycardia and arrhythmia risk at higher doses</li>
-            <li><span class="dot" style="background:var(--red)"></span>Drug availability — limited in many countries (access, cost)</li>
-            <li><span class="dot" style="background:var(--red)"></span>Not a substitute for mechanical support when truly indicated</li>
+            <li><span class="dot" style="background:var(--red)"></span>Drug availability limited in many countries</li>
+            <li><span class="dot" style="background:var(--red)"></span>Not a substitute for MCS when truly indicated</li>
           </ul>
-          <div class="box box-orange">Considered experimental/salvage — use only when conventional inotropes, IABP, and levosimendan have failed or are contraindicated. Some centres use prophylactically in high-risk reoperations or transplant.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ════ ALGORITHM ════ -->
-  <div class="sec-title" id="algo">📐 Clinical Decision Algorithm</div>
-  <div class="drug-card theme-algo">
-    <div class="drug-summary">📐 Stepwise Vasoactive Drug Selection — Post-Cardiotomy</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TAB 2 — TABLES & PHENOTYPE
+═══════════════════════════════════════════════════════════════ -->
+<section class="tab" id="t2">
+  <div class="sh"><h2>📊 Tables &amp; Phenotype Guide</h2><p>Hemodynamic effects, dosing, phenotype-guided selection, drug combinations, drugs to avoid, and hemodynamic targets.</p></div>
+
+  <!-- HEMODYNAMIC EFFECTS TABLE -->
+  <div class="card" style="padding:0;overflow:hidden">
+    <div style="padding:14px 18px;border-bottom:1px solid var(--rim)"><span style="font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--cyan);letter-spacing:.04em">HEMODYNAMIC EFFECTS</span></div>
+    <div class="tw" style="margin:0;border:none;border-radius:0">
+      <table>
+        <thead><tr><th>Drug</th><th>SVR</th><th>HR</th><th>PCWP</th><th>CI</th><th>MAP</th><th>PVR</th><th>MVO&#8322;</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Epinephrine (low)</strong></td><td class="arr-dn" title="Dose- and state-dependent; may be &#8596; in high-SVR states">&#8595;/&#8596;</td><td class="arr-up">&#8593;&#8593;</td><td class="arr-dn">&#8595;</td><td class="arr-up">&#8593;&#8593;</td><td class="arr-up">&#8593;</td><td class="arr-dn">&#8595;</td><td class="arr-up">&#8593;&#8593;</td></tr>
+          <tr><td><strong>Epinephrine (high)</strong></td><td class="arr-up">&#8593;&#8593;</td><td class="arr-up">&#8593;&#8593;</td><td class="arr-up">&#8593;</td><td class="arr-up">&#8593;</td><td class="arr-up">&#8593;&#8593;</td><td class="arr-up">&#8593;</td><td class="arr-up">&#8593;&#8593;&#8593;</td></tr>
+          <tr><td><strong>Dobutamine</strong></td><td class="arr-dn">&#8595;</td><td class="arr-up">&#8593;&#8593;</td><td class="arr-dn">&#8595;</td><td class="arr-up">&#8593;&#8593;</td><td class="arr-flat" title="May fall in vasoplegic patients">&#8596;/&#8595;</td><td class="arr-dn">&#8595;</td><td class="arr-up">&#8593;</td></tr>
+          <tr><td><strong>Milrinone</strong></td><td class="arr-dn">&#8595;&#8595;</td><td class="arr-up">&#8593;</td><td class="arr-dn">&#8595;&#8595;</td><td class="arr-up">&#8593;&#8593;</td><td class="arr-dn">&#8595;</td><td class="arr-dn">&#8595;&#8595;</td><td class="arr-flat">&#8596;&#8593;</td></tr>
+          <tr><td><strong>Dopamine (low)</strong></td><td class="arr-dn">&#8595;</td><td class="arr-up">&#8593;</td><td class="arr-flat">&#8596;</td><td class="arr-up">&#8593;</td><td class="arr-flat">&#8596;</td><td class="arr-flat">&#8596;</td><td class="arr-up">&#8593;</td></tr>
+          <tr><td><strong>Dopamine (high)</strong></td><td class="arr-up">&#8593;&#8593;</td><td class="arr-up">&#8593;&#8593;&#8593;</td><td class="arr-up">&#8593;</td><td class="arr-up">&#8593;</td><td class="arr-up">&#8593;&#8593;</td><td class="arr-up">&#8593;</td><td class="arr-up">&#8593;&#8593;</td></tr>
+          <tr><td><strong>Isoproterenol</strong></td><td class="arr-dn">&#8595;&#8595;</td><td class="arr-up">&#8593;&#8593;&#8593;&#8593;</td><td class="arr-dn">&#8595;</td><td class="arr-up">&#8593;&#8593;</td><td class="arr-dn">&#8595;&#8593;</td><td class="arr-dn">&#8595;&#8595;</td><td class="arr-up">&#8593;&#8593;&#8593;</td></tr>
+          <tr><td><strong>Norepinephrine</strong></td><td class="arr-up">&#8593;&#8593;&#8593;</td><td class="arr-up">&#8593;</td><td class="arr-up">&#8593;</td><td class="arr-up">&#8593;</td><td class="arr-up">&#8593;&#8593;&#8593;</td><td class="arr-up">&#8593;</td><td class="arr-up">&#8593;&#8593;</td></tr>
+          <tr><td><strong>Phenylephrine</strong></td><td class="arr-up">&#8593;&#8593;</td><td class="arr-dn">&#8595; (reflex)</td><td class="arr-up">&#8593;</td><td class="arr-flat">&#8596;&#8595;</td><td class="arr-up">&#8593;&#8593;&#8593;</td><td class="arr-flat">&#8596;</td><td class="arr-flat">&#8596;&#8593;</td></tr>
+          <tr><td><strong>Vasopressin</strong></td><td class="arr-up">&#8593;&#8593;&#8593;</td><td class="arr-flat">&#8596;</td><td class="arr-up">&#8593;</td><td class="arr-flat">&#8596;</td><td class="arr-up">&#8593;&#8593;&#8593;</td><td class="arr-flat">&#8596;</td><td class="arr-flat">&#8596;</td></tr>
+          <tr><td><strong>Levosimendan</strong></td><td class="arr-dn">&#8595;&#8595;</td><td class="arr-up">&#8593;</td><td class="arr-dn">&#8595;&#8595;</td><td class="arr-up">&#8593;&#8593;</td><td class="arr-dn">&#8595;</td><td class="arr-dn">&#8595;&#8595;</td><td class="arr-flat">&#8596; (no &#8593;)</td></tr>
+          <tr><td><strong>Calcium chloride</strong></td><td class="arr-up">&#8593;</td><td class="arr-flat">&#8596;</td><td class="arr-up">&#8593;</td><td class="arr-up">&#8593;</td><td class="arr-up">&#8593;&#8593;</td><td class="arr-flat">&#8596;</td><td class="arr-up">&#8593;</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="padding:8px 14px;font-size:11px;color:var(--dim)">&#8593; increased &middot; &#8595; decreased &middot; &#8596; no change. Low epi = &lt;2 &mu;g/min; high = &gt;4 &mu;g/min. Low dopamine = &lt;3 &mu;g/kg/min; high = &gt;8 &mu;g/kg/min.</div>
+  </div>
+
+  <!-- DOSING TABLE -->
+  <div class="card" style="padding:0;overflow:hidden;margin-top:14px">
+    <div style="padding:14px 18px;border-bottom:1px solid var(--rim)"><span style="font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--cyan);letter-spacing:.04em">STANDARD MIXES &amp; DOSING RANGES</span></div>
+    <div class="tw" style="margin:0;border:none;border-radius:0">
+      <table>
+        <thead><tr><th>Drug</th><th>Standard mix</th><th>Dose range</th><th>Infusion rate (70 kg)</th><th>Class</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Epinephrine</strong></td><td>1 mg/250 mL (4 &mu;g/mL)</td><td>0.01&ndash;0.1 &mu;g/kg/min</td><td>1&ndash;4 &mu;g/min &#8594; ~15&ndash;60 mL/h</td><td><span class="bdg bdg-c">Catecholamine</span></td></tr>
+          <tr><td><strong>Dobutamine</strong></td><td>500 mg/250 mL (2 mg/mL)</td><td>2&ndash;20 &mu;g/kg/min</td><td>5 &mu;g/kg/min &#8594; ~10.5 mL/h</td><td><span class="bdg bdg-c">Catecholamine</span></td></tr>
+          <tr><td><strong>Milrinone</strong></td><td>20 mg/200 mL (0.1 mg/mL)</td><td>0.25&ndash;0.75 &mu;g/kg/min</td><td>Bolus 50 &mu;g/kg over 10 min &#8594; 0.375 &mu;g/kg/min</td><td><span class="bdg bdg-p">PDE-III inhibitor</span></td></tr>
+          <tr><td><strong>Dopamine</strong></td><td>400 mg/250 mL (1.6 mg/mL)</td><td>2&ndash;20 &mu;g/kg/min</td><td>5 &mu;g/kg/min &#8594; ~13 mL/h</td><td><span class="bdg bdg-c">Catecholamine</span></td></tr>
+          <tr><td><strong>Isoproterenol</strong></td><td>1 mg/250 mL (4 &mu;g/mL)</td><td>0.01&ndash;0.1 &mu;g/kg/min</td><td>0.5&ndash;10 &mu;g/min &#8594; 7.5&ndash;150 mL/h</td><td><span class="bdg bdg-c">Catecholamine</span></td></tr>
+          <tr><td><strong>Norepinephrine</strong></td><td>4 mg/250 mL (16 &mu;g/mL)</td><td>0.01&ndash;0.3 &mu;g/kg/min</td><td>1&ndash;30 &mu;g/min &#8594; 3.75&ndash;112 mL/h</td><td><span class="bdg bdg-a">Vasopressor</span></td></tr>
+          <tr><td><strong>Phenylephrine</strong></td><td>40 mg/250 mL (160 &mu;g/mL)</td><td>0.05&ndash;1.5 &mu;g/kg/min</td><td>5&ndash;150 &mu;g/min &#8594; 1.9&ndash;56 mL/h</td><td><span class="bdg bdg-a">Vasopressor</span></td></tr>
+          <tr><td><strong>Vasopressin</strong></td><td>40 U/80 mL (0.5 U/mL)</td><td>0.01&ndash;0.1 U/min</td><td>0.01&ndash;0.04 U/min &#8594; 1.2&ndash;4.8 mL/h</td><td><span class="bdg bdg-a">Vasopressor</span></td></tr>
+          <tr><td><strong>Levosimendan</strong></td><td>12.5 mg/500 mL (0.025 mg/mL)</td><td>0.05&ndash;0.2 &mu;g/kg/min</td><td>Load 12&ndash;24 &mu;g/kg over 10 min; infusion 24h</td><td><span class="bdg bdg-g">Ca-sensitizer</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box box-amber" style="margin:10px 14px 14px"><strong>Central line mandatory for all vasoactive infusions.</strong> Dedicated lumen &mdash; never mix incompatible drugs. *Rates approximate for 70 kg adult; always calculate weight-based.</div>
+  </div>
+
+  <!-- PHENOTYPE GUIDE -->
+  <div class="dv"></div>
+  <div class="sh" style="margin-top:4px"><h2>🎯 Phenotype-Guided Drug Selection</h2><p>Choose by hemodynamic phenotype (CI, SVR, MAP) &mdash; not by drug name. Volume-optimize first.</p></div>
+
+  <div class="ph-grid">
+    <div class="ph-card">
+      <div class="ph-head ph-cat">📉 Low CI + High SVR</div>
+      <div class="ph-body">
+        <div class="ph-tag">Cold, clamped &mdash; adequate or high BP</div>
+        <ul class="ph-list">
+          <li><strong>1st:</strong> Dobutamine 5&ndash;10 &mu;g/kg/min</li>
+          <li><strong>Alt:</strong> Milrinone 0.25&ndash;0.5 &mu;g/kg/min</li>
+          <li><strong>If MAP &#8595;:</strong> Add NE 0.03&ndash;0.05 &mu;g/kg/min</li>
+          <li><strong>Refractory:</strong> Levosimendan + NE</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ph-card">
+      <div class="ph-head ph-amb">📉 Low CI + Low SVR</div>
+      <div class="ph-body">
+        <div class="ph-tag">Cold, vasodilated &mdash; low BP</div>
+        <ul class="ph-list">
+          <li><strong>1st:</strong> Epinephrine 1&ndash;4 &mu;g/min</li>
+          <li><strong>Combination:</strong> Dobutamine + NE</li>
+          <li><strong>Severe:</strong> Epi + NE + Vasopressin</li>
+          <li><strong>MCS:</strong> IABP / ECMO if refractory</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ph-card">
+      <div class="ph-head ph-blu">&#8596; Normal CI + Low SVR</div>
+      <div class="ph-body">
+        <div class="ph-tag">Warm, vasodilated &mdash; vasoplegia</div>
+        <ul class="ph-list">
+          <li><strong>1st:</strong> Norepinephrine 0.01&ndash;0.1 &mu;g/kg/min</li>
+          <li><strong>2nd:</strong> Add Vasopressin 0.03 U/min</li>
+          <li><strong>3rd:</strong> Methylene blue 1&ndash;2 mg/kg IV</li>
+          <li><strong>Exclude:</strong> Anaphylaxis, adrenal crisis</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ph-card">
+      <div class="ph-head ph-pur">🫀 RV Failure + &#8593;PVR</div>
+      <div class="ph-body">
+        <div class="ph-tag">RV dilation &mdash; &#8593;CVP, low CO, &#8593;PVR</div>
+        <ul class="ph-list">
+          <li><strong>1st:</strong> Milrinone &plusmn; inhaled milrinone</li>
+          <li><strong>Add:</strong> Isoproterenol (&#8595;PVR, &#8593;HR)</li>
+          <li><strong>Pulmonary:</strong> iNO / inhaled prostacyclin</li>
+          <li><strong>Systemic:</strong> Low-dose NE if MAP low</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRUG COMBINATIONS -->
+  <div class="card" style="padding:0;overflow:hidden;margin-top:6px">
+    <div style="padding:12px 18px;border-bottom:1px solid var(--rim)"><span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--cyan);letter-spacing:.04em">OPTIMAL DRUG COMBINATIONS</span></div>
+    <div class="tw" style="margin:0;border:none;border-radius:0"><table>
+      <thead><tr><th>Clinical situation</th><th>Combination</th><th>Rationale</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Low CO + vasoplegia</strong></td><td><span class="bdg bdg-c">Dobutamine</span> + <span class="bdg bdg-a">Norepinephrine</span></td><td>Dobutamine &#8593;CO; NE &#8593;SVR. Avoids excessive tachycardia of high-dose epinephrine.</td></tr>
+        <tr><td><strong>RV failure + systemic vasodilation</strong></td><td><span class="bdg bdg-p">Milrinone</span> + <span class="bdg bdg-a">NE (low dose)</span></td><td>Milrinone &#8595;PVR + &#8593;RV contractility; NE prevents systemic hypotension.</td></tr>
+        <tr><td><strong>Severe LV dysfunction + tachycardia</strong></td><td><span class="bdg bdg-c">Epinephrine (low)</span> + <span class="bdg bdg-p">Milrinone</span></td><td>Synergistic cAMP elevation via different mechanisms. Post-receptor bypass overcomes &#946;-receptor downregulation.</td></tr>
+        <tr><td><strong>Refractory vasoplegic shock</strong></td><td><span class="bdg bdg-a">NE</span> + <span class="bdg bdg-a">Vasopressin</span></td><td>Complementary mechanisms: &#945;&#8321; + V&#8321; receptor pathways. Vasopressin is NE-sparing.</td></tr>
+        <tr><td><strong>Catecholamine-refractory vasoplegia</strong></td><td><span class="bdg bdg-a">NE</span> + <span class="bdg bdg-a">Vasopressin</span> + <strong style="color:var(--text)">Methylene blue</strong></td><td>Triple vasopressor: &#945;&#8321; + V&#8321; + guanylate cyclase inhibition. Reserve for protamine reaction or SIRS-driven post-CPB vasoplegia.</td></tr>
+        <tr><td><strong>Post-transplant RV + bradycardia</strong></td><td><span class="bdg bdg-c">Isoproterenol</span> + <span class="bdg bdg-p">Milrinone</span></td><td>Isoproterenol &#8593;HR + &#8595;PVR; milrinone &#8593;RV contractility. Target HR 90&ndash;110 bpm.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- DRUGS TO AVOID -->
+  <div class="card" style="padding:0;overflow:hidden;margin-top:12px">
+    <div style="padding:12px 18px;border-bottom:1px solid var(--rim)"><span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--red);letter-spacing:.04em">DRUGS TO AVOID &mdash; PHENOTYPE-SPECIFIC</span></div>
+    <div class="tw" style="margin:0;border:none;border-radius:0"><table>
+      <thead><tr><th>Condition</th><th>Avoid</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td><strong>HOCM / SAM after mitral repair</strong></td><td><span class="bdg bdg-c">Dobutamine</span> <span class="bdg bdg-c">Epinephrine</span></td><td>&#8593;Dynamic outflow obstruction. Use phenylephrine + volume + &#946;-blockade instead.</td></tr>
+        <tr><td><strong>Sinus tachycardia (&gt;110 bpm)</strong></td><td><span class="bdg bdg-c">Isoproterenol</span> <span class="bdg bdg-c">High-dose dobutamine</span></td><td>Further &#8593;HR worsens diastolic filling; VT/VF risk.</td></tr>
+        <tr><td><strong>AF with rapid ventricular response</strong></td><td><span class="bdg bdg-c">Dopamine</span> <span class="bdg bdg-p">High-dose milrinone</span></td><td>&#8593;AV conduction &#8594; &#8593;ventricular rate. Rate control first.</td></tr>
+        <tr><td><strong>Isolated RV failure</strong></td><td><span class="bdg bdg-a">Phenylephrine</span></td><td>Pure &#945;&#8321; &mdash; no inotropy &#8594; &#8593;RV afterload without contractility benefit.</td></tr>
+        <tr><td><strong>Arterial graft concern (ITA, radial)</strong></td><td><span class="bdg bdg-a">Phenylephrine</span> <span class="bdg bdg-a">High-dose NE (unprotected)</span></td><td>&#945;&#8321;-mediated conduit vasospasm. Maintain diltiazem/NTG if vasopressor required.</td></tr>
+        <tr><td><strong>Transplanted (denervated) heart</strong></td><td><strong style="color:var(--text)">Atropine</strong> &nbsp;<strong style="color:var(--text)">Digoxin (for rate)</strong></td><td>Both require intact autonomic innervation &mdash; ineffective in the denervated heart.</td></tr>
+        <tr><td><strong>Significant uncorrected hypovolemia</strong></td><td><span class="bdg bdg-a">Any vasopressor alone</span></td><td>Vasoconstriction masks volume deficit and &#8595;CO. Volume-optimize first, always.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- HEMODYNAMIC TARGETS -->
+  <div class="card" style="padding:0;overflow:hidden;margin-top:12px">
+    <div style="padding:12px 18px;border-bottom:1px solid var(--rim)"><span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--cyan);letter-spacing:.04em">TARGET HEMODYNAMIC GOALS &mdash; POST-CARDIAC SURGERY SICU</span></div>
+    <div class="tw" style="margin:0;border:none;border-radius:0"><table>
+      <thead><tr><th>Parameter</th><th>Target</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>MAP</strong></td><td>65&ndash;75 mmHg</td><td>&#8805;70 in CAD; 55&ndash;65 in aortic surgery</td></tr>
+        <tr><td><strong>Cardiac Index (CI)</strong></td><td>&#8805;2.2 L/min/m&#178;</td><td>&lt;2.0 = low output; &lt;1.8 = shock; &gt;3.5 = hyperdynamic</td></tr>
+        <tr><td><strong>SVR</strong></td><td>800&ndash;1200 dyn&middot;s/cm&#8309;</td><td>&lt;600 = vasoplegia; &gt;1600 = excessive afterload</td></tr>
+        <tr><td><strong>SvO&#8322; / ScvO&#8322;</strong></td><td>&#8805;65% / &#8805;70%</td><td>&lt;60% = DO&#8322;/VO&#8322; mismatch; &gt;80% = distributive or shunting</td></tr>
+        <tr><td><strong>Lactate</strong></td><td>&lt;2 mmol/L</td><td>Clearance &gt;10%/h; normalise within 6&ndash;12h post-CPB</td></tr>
+        <tr><td><strong>CVP</strong></td><td>8&ndash;12 mmHg</td><td>12&ndash;16 in RV failure; lower post-transplant</td></tr>
+        <tr><td><strong>PCWP</strong></td><td>12&ndash;18 mmHg</td><td>&gt;20 = volume overload; &lt;8 = hypovolemia</td></tr>
+        <tr><td><strong>Heart rate</strong></td><td>70&ndash;90 bpm</td><td>90&ndash;110 post-transplant; &gt;100 = reassess drug choice</td></tr>
+        <tr><td><strong>PVR (RV failure)</strong></td><td>&lt;240 dyn&middot;s/cm&#8309;</td><td>&lt;3 Wood units; escalate pulmonary vasodilators if above</td></tr>
+        <tr><td><strong>Urine output</strong></td><td>&#8805;0.5 mL/kg/h</td><td>Avoid over-diuresing in RV failure (preload-dependent)</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TAB 3 — ALGORITHM & MONITORING
+═══════════════════════════════════════════════════════════════ -->
+<section class="tab" id="t3">
+  <div class="sh"><h2>📐 Algorithm &amp; Monitoring</h2><p>Stepwise vasoactive drug selection, special situations, adverse effects, and weaning strategy.</p></div>
+
+  <!-- DECISION ALGORITHM -->
+  <div class="drug-card dc-algo" id="algo">
+    <div class="drug-summary">📐 Stepwise Vasoactive Drug Selection &mdash; Post-Cardiotomy</div>
     <div class="drug-body">
-      <div class="two-col">
+      <div class="g2">
         <div>
           <div class="algo-step">
             <div class="algo-num">0</div>
             <div class="algo-content">
               <h4>Optimize before pharmacology</h4>
-              <p>Volume: CVP 8–12, PCWP 12–16 mmHg. Correct rhythm (brady/tachy). Pacing at 80–90 bpm if node is slow. Temperature: ≥36.5°C. Ionized Ca²⁺ ≥1.1 mmol/L. Hb ≥7–8 g/dL. Rule out tamponade (echo or re-exploration if high suspicion).</p>
+              <p>Volume: CVP 8&ndash;12, PCWP 12&ndash;16 mmHg. Correct rhythm (brady/tachy). Pacing 80&ndash;90 bpm if slow. Temperature &#8805;36.5&#176;C. Ionized Ca&#178;&#8314; &#8805;1.1 mmol/L. Hb &#8805;7&ndash;8 g/dL. Rule out tamponade (echo).</p>
             </div>
           </div>
           <div class="algo-step">
             <div class="algo-num">1</div>
             <div class="algo-content">
-              <h4>CI ≥2.2, MAP &lt;70 — Vasodilatory (vasoplegia)</h4>
-              <p><strong>First:</strong> Norepinephrine 0.01–0.1 μg/kg/min<br><strong>If refractory:</strong> Add Vasopressin 0.01–0.04 U/min<br><strong>If graft concern:</strong> Substitute or reduce phenylephrine; maintain diltiazem/NTG<br><strong>Refractory:</strong> Methylene blue 1–2 mg/kg IV (guanylate cyclase inhibitor)</p>
+              <h4>CI &#8805;2.2, MAP &lt;70 &mdash; Vasodilatory (vasoplegia)</h4>
+              <p><strong>First:</strong> Norepinephrine 0.01&ndash;0.1 &mu;g/kg/min<br><strong>Refractory:</strong> Add Vasopressin 0.01&ndash;0.04 U/min<br><strong>Graft concern:</strong> Maintain diltiazem/NTG<br><strong>Refractory:</strong> Methylene blue 1&ndash;2 mg/kg IV</p>
             </div>
           </div>
           <div class="algo-step">
             <div class="algo-num">2</div>
             <div class="algo-content">
-              <h4>CI &lt;2.2 — Low output state</h4>
-              <p><strong>First-line:</strong> Epinephrine 1–4 μg/min (0.01–0.05 μg/kg/min) — best balance of inotropy vs tachycardia<br><strong>Alternative:</strong> Dobutamine 5–10 μg/kg/min if SVR elevated<br><strong>If tachycardia limiting:</strong> Prefer milrinone over dobutamine</p>
+              <h4>CI &lt;2.2 &mdash; Low output state</h4>
+              <p><strong>First-line:</strong> Epinephrine 1&ndash;4 &mu;g/min &mdash; best balance of inotropy vs tachycardia<br><strong>Alternative:</strong> Dobutamine 5&ndash;10 &mu;g/kg/min if SVR elevated<br><strong>Tachycardia limiting:</strong> Prefer milrinone over dobutamine</p>
             </div>
           </div>
           <div class="algo-step">
             <div class="algo-num">3</div>
             <div class="algo-content">
               <h4>CI &lt;2.2 despite catecholamines</h4>
-              <p><strong>Add Milrinone:</strong> 25–50 μg/kg bolus → 0.25–0.5 μg/kg/min (synergistic with β-agonists; avoid in hypotension without NE cover)<br><strong>Consider Levosimendan</strong> if ischemic etiology or β-receptor downregulation suspected: 12 μg/kg load → 0.1 μg/kg/min × 24h<br><strong>Add norepinephrine</strong> to counteract vasodilation from PDE-III/levosimendan</p>
+              <p><strong>Add Milrinone:</strong> 25&ndash;50 &mu;g/kg bolus &#8594; 0.25&ndash;0.5 &mu;g/kg/min (synergistic; add NE to prevent hypotension)<br><strong>Consider Levosimendan</strong> if ischemic etiology or &#946;-receptor downregulation: 12 &mu;g/kg load &#8594; 0.1 &mu;g/kg/min &times; 24h</p>
             </div>
           </div>
           <div class="algo-step">
             <div class="algo-num">4</div>
             <div class="algo-content">
               <h4>Refractory low output (CI &lt;1.8 despite above)</h4>
-              <p><strong>IABP</strong> — ↑diastolic perfusion, ↓afterload; most immediate MCS option<br><strong>T₃ salvage:</strong> 0.8 μg/kg IV if post-CPB euthyroid sick syndrome suspected<br><strong>Impella CP / VA-ECMO</strong> — if no improvement with IABP in 1–2h<br><strong>Consider re-exploration</strong> to exclude surgical cause, tamponade, or tension pneumothorax</p>
+              <p><strong>IABP</strong> &mdash; &#8593;diastolic perfusion, &#8595;afterload; most immediate MCS option<br><strong>T&#8323; salvage:</strong> 0.8 &mu;g/kg IV if euthyroid sick syndrome suspected<br><strong>Impella CP / VA-ECMO</strong> &mdash; if no improvement with IABP in 1&ndash;2h<br><strong>Re-exploration</strong> to exclude surgical cause, tamponade, tension PTX</p>
             </div>
           </div>
         </div>
         <div>
-          <h4 style="margin-bottom:12px">🎯 Special Situations</h4>
-          <div class="box box-purple"><strong>RV failure + ↑PVR</strong><br>Milrinone (± inhaled) + Isoproterenol or Levosimendan + Inhaled NO/prostacyclin. Avoid NE and phenylephrine (↑PVR). Target: PVR &lt;240 dyn·s/cm⁵, RV-PA coupling ratio &gt;0.7.</div>
-          <div class="box box-orange"><strong>Vasoplegic syndrome (warm, high CO, low BP)</strong><br>NE first-line + Vasopressin 0.03 U/min. If refractory: Methylene blue 1.5 mg/kg IV over 1h. Angiotensin II (investigational). Exclude protamine reaction, anaphylaxis, adrenal insufficiency.</div>
-          <div class="box box-teal"><strong>ITA / radial artery graft spasm risk</strong><br>Minimise α-agonists. Maintain diltiazem 0.1 mg/kg/h IV. NTG 0.5–1 μg/kg/min. If vasopressor needed: NE &lt; phenylephrine for graft spasm risk (NE has β₁ co-activation that ↑graft flow).</div>
-          <div class="box box-red"><strong>Tachycardia + low output</strong><br>Prefer milrinone ± low-dose epinephrine (&lt;2 μg/min) over dobutamine or dopamine. Rate control (β-blockade only if tolerated). If AF: amiodarone or cardioversion before increasing inotropes.</div>
-          <div class="box box-green"><strong>Post-transplant denervated heart</strong><br>Isoproterenol first-line (target HR 90–110 bpm — CO is HR-dependent). Milrinone for PVR. Avoid drugs requiring cardiac nerves (digoxin, atropine ineffective on rate). Early CRT if bradycardia persists.</div>
-          <div class="box box-orange"><strong>Weaning order</strong><br>① Wean α-agonists first (as patient warms, SVR normalises) → ② ↓catecholamines (epi to &lt;2 μg/min, dobu to &lt;5 μg/kg/min) → ③ Wean milrinone last (long t½ — halve every 4h; watch for rebound ↑SVR). IABP removal: CI ≥2.2 + single low-dose inotrope.</div>
+          <h3>Special Situations</h3>
+          <div class="box box-purple"><strong>RV failure + &#8593;PVR</strong><br>Milrinone (&plusmn; inhaled) + Isoproterenol or Levosimendan + Inhaled NO/prostacyclin. <strong>Phenylephrine:</strong> avoid in isolated RV failure (no inotropy, &#8593;RV afterload). <strong>NE:</strong> use cautiously &mdash; improved MAP often benefits RV coronary perfusion; combine with pulmonary vasodilator. Target: PVR &lt;240 dyn&middot;s/cm&#8309;, RV-PA coupling ratio &gt;0.7.</div>
+          <div class="box box-amber"><strong>Vasoplegic syndrome (warm, high CO, low BP)</strong><br>NE first-line + Vasopressin 0.03 U/min. Refractory: Methylene blue 1.5 mg/kg IV over 1h. Exclude protamine reaction, anaphylaxis, adrenal insufficiency.</div>
+          <div class="box box-cyan"><strong>ITA / radial artery graft spasm risk</strong><br>Minimise &#945;-agonists. Maintain diltiazem 0.1 mg/kg/h IV. NTG 0.5&ndash;1 &mu;g/kg/min. If vasopressor needed: NE &lt; phenylephrine for spasm risk (NE has &#946;&#8321; co-activation that &#8593;graft flow).</div>
+          <div class="box box-red"><strong>Tachycardia + low output</strong><br>Prefer milrinone &plusmn; low-dose epinephrine (&lt;2 &mu;g/min). Rate control if tolerated. If AF: amiodarone or cardioversion before increasing inotropes.</div>
+          <div class="box box-green"><strong>Post-transplant denervated heart</strong><br>Isoproterenol first-line (target HR 90&ndash;110 bpm &mdash; CO is HR-dependent). Milrinone for PVR. Atropine and digoxin ineffective on rate (denervated). Early CRT if bradycardia persists.</div>
+          <div class="box box-amber"><strong>Weaning order</strong><br>&#9312; Wean &#945;-agonists first (as patient warms, SVR normalises) &#8594; &#9313; &#8595;catecholamines &#8594; &#9314; Wean milrinone last (t&frac12; 2h &mdash; halve every 4h). IABP removal: CI &#8805;2.2 + single low-dose inotrope.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ════ ADVERSE EFFECTS ════ -->
-  <div class="sec-title" id="adv">⚠️ Adverse Effects &amp; Monitoring</div>
-  <div class="drug-card theme-adv">
-    <div class="drug-summary">⚠️ Adverse Effects, Monitoring &amp; Weaning Strategy</div>
+  <!-- ADVERSE EFFECTS -->
+  <div class="drug-card dc-adv" id="adv">
+    <div class="drug-summary">&#9888;&#65039; Adverse Effects &amp; Monitoring</div>
     <div class="drug-body">
-      <div class="two-col">
+      <div class="g2">
         <div>
-          <h3>🚨 Major Adverse Effects by Class</h3>
-          <table class="drug-table">
-            <thead><tr><th>Adverse Effect</th><th>Main Culprits</th><th>Monitoring / Management</th></tr></thead>
+          <h3>Major Adverse Effects by Class</h3>
+          <div class="tw" style="margin:0"><table>
+            <thead><tr><th>Adverse Effect</th><th>Main Culprits</th><th>Management</th></tr></thead>
             <tbody>
-              <tr><td><strong>Tachyarrhythmias (VT, AF, PVCs)</strong></td><td>Dobutamine, Dopamine, Isoproterenol, high-dose Epi</td><td>Continuous ECG. Reduce dose or switch to milrinone. Amiodarone if VT. Cardiovert if haemodynamically compromised AF.</td></tr>
-              <tr><td><strong>Hypertension</strong></td><td>High-dose NE, phenylephrine, vasopressin, high-dose epi</td><td>Titrate dose. Add NTG or nitroprusside. Target MAP 65–85 mmHg post-CS.</td></tr>
-              <tr><td><strong>Hypotension</strong></td><td>Milrinone, levosimendan, dobutamine (high dose)</td><td>Add/↑α-agonist (NE). Volume if EDP low. Reduce inodilator dose.</td></tr>
-              <tr><td><strong>Myocardial ischemia (↑MVO₂)</strong></td><td>All inotropes (except levosimendan), high-dose vasopressors</td><td>ECG monitoring. Target HR &lt;100. ST-segment trending. Echo wall motion.</td></tr>
-              <tr><td><strong>Visceral / digital ischemia</strong></td><td>High-dose NE (&gt;0.2 μg/kg/min), vasopressin, phenylephrine</td><td>Bowel sounds, lactate, mesenteric Doppler. Reduce dose; consider MCS.</td></tr>
-              <tr><td><strong>Metabolic acidosis</strong></td><td>Epinephrine (β₂-glycogenolysis), tissue hypoperfusion</td><td>Distinguish epi-induced (SvO₂ normal) from ischemic (↓SvO₂, ↑lactate).</td></tr>
-              <tr><td><strong>Hyperglycemia</strong></td><td>Epinephrine, high-dose catecholamines</td><td>Insulin infusion. Target glucose 140–180 mg/dL (perioperative SICU).</td></tr>
-              <tr><td><strong>Hypokalemia</strong></td><td>Epinephrine (β₂ → K⁺ into cells), furosemide co-treatment</td><td>Hourly K⁺ in SICU. Supplement to ≥3.5 mEq/L to reduce arrhythmia risk.</td></tr>
-              <tr><td><strong>Graft spasm (ITA/radial)</strong></td><td>Phenylephrine, high-dose NE, vasopressin</td><td>New ST changes, ↓CO unexpectedly. Immediate NTG/diltiazem. Consider exploration.</td></tr>
+              <tr><td><strong>Tachyarrhythmias</strong></td><td>Dobutamine, Dopamine, Isoproterenol, high Epi</td><td>Continuous ECG. Reduce dose or switch to milrinone. Amiodarone if VT.</td></tr>
+              <tr><td><strong>Hypertension</strong></td><td>High NE, phenylephrine, vasopressin</td><td>Titrate dose. Add NTG or nitroprusside.</td></tr>
+              <tr><td><strong>Hypotension</strong></td><td>Milrinone, levosimendan, dobutamine</td><td>Add/&#8593; &#945;-agonist (NE). Volume if EDP low.</td></tr>
+              <tr><td><strong>Myocardial ischemia</strong></td><td>All inotropes except levosimendan</td><td>ECG monitoring. Target HR &lt;100. ST trending.</td></tr>
+              <tr><td><strong>Visceral ischemia</strong></td><td>High NE (&gt;0.2 &mu;g/kg/min), vasopressin</td><td>Lactate, bowel sounds. Reduce dose; consider MCS.</td></tr>
+              <tr><td><strong>Metabolic acidosis</strong></td><td>Epinephrine (&#946;&#8322;), tissue hypoperfusion</td><td>Distinguish epi-induced (SvO&#8322; normal) from ischemic (&#8595;SvO&#8322;, &#8593;lactate).</td></tr>
+              <tr><td><strong>Hyperglycemia</strong></td><td>Epinephrine, high catecholamines</td><td>Insulin infusion. Target 140&ndash;180 mg/dL.</td></tr>
+              <tr><td><strong>Hypokalemia</strong></td><td>Epinephrine (&#946;&#8322; &#8594; K&#8314; into cells)</td><td>Hourly K&#8314; in SICU. Supplement to &#8805;3.5 mEq/L.</td></tr>
+              <tr><td><strong>Graft spasm (ITA/radial)</strong></td><td>Phenylephrine, high NE, vasopressin</td><td>New ST changes, &#8595;CO. NTG/diltiazem immediately.</td></tr>
             </tbody>
-          </table>
+          </table></div>
         </div>
         <div>
-          <h3>📋 Daily SICU Monitoring Checklist</h3>
+          <h3>Daily SICU Monitoring Checklist</h3>
           <ul class="ind-list">
-            <li><span class="dot" style="background:var(--teal-mid)"></span>CI / SvO₂ / ScvO₂ — trend every 4h or continuous PA cath</li>
-            <li><span class="dot" style="background:var(--teal-mid)"></span>MAP — target 65–85 mmHg (coronary: ≥70 in CAD)</li>
-            <li><span class="dot" style="background:var(--teal-mid)"></span>HR — target 70–90 bpm; &gt;100 = reassess drug choice</li>
-            <li><span class="dot" style="background:var(--teal-mid)"></span>Urine output — target ≥0.5 mL/kg/h</li>
-            <li><span class="dot" style="background:var(--teal-mid)"></span>Lactate — normal &lt;2 mmol/L; rising lactate = ↓CO or ↑vasoconstriction</li>
-            <li><span class="dot" style="background:var(--teal-mid)"></span>Ionized Ca²⁺ — replace if &lt;1.1 mmol/L</li>
-            <li><span class="dot" style="background:var(--teal-mid)"></span>K⁺ — replace to ≥3.5 mEq/L</li>
-            <li><span class="dot" style="background:var(--teal-mid)"></span>Temperature — cool patients have ↑SVR; warm to normothermia</li>
-            <li><span class="dot" style="background:var(--teal-mid)"></span>Hemoglobin — maintain ≥7 g/dL (higher in ischemic heart disease)</li>
-            <li><span class="dot" style="background:var(--teal-mid)"></span>Assess volume status before increasing inotrope dose</li>
+            <li><span class="dot" style="background:var(--cyan)"></span>CI / SvO&#8322; / ScvO&#8322; &mdash; trend every 4h or continuous PA catheter</li>
+            <li><span class="dot" style="background:var(--cyan)"></span>MAP &mdash; target 65&ndash;85 mmHg (CAD: &#8805;70)</li>
+            <li><span class="dot" style="background:var(--cyan)"></span>HR &mdash; target 70&ndash;90 bpm; &gt;100 = reassess drug choice</li>
+            <li><span class="dot" style="background:var(--cyan)"></span>Urine output &mdash; &#8805;0.5 mL/kg/h</li>
+            <li><span class="dot" style="background:var(--cyan)"></span>Lactate &mdash; normal &lt;2 mmol/L; rising = &#8595;CO or &#8593;vasoconstriction</li>
+            <li><span class="dot" style="background:var(--cyan)"></span>Ionized Ca&#178;&#8314; &mdash; replace if &lt;1.1 mmol/L</li>
+            <li><span class="dot" style="background:var(--cyan)"></span>K&#8314; &mdash; replace to &#8805;3.5 mEq/L</li>
+            <li><span class="dot" style="background:var(--cyan)"></span>Temperature &mdash; cool patients have &#8593;SVR; warm to normothermia</li>
+            <li><span class="dot" style="background:var(--cyan)"></span>Hemoglobin &mdash; maintain &#8805;7 g/dL (higher in ischemic HD)</li>
+            <li><span class="dot" style="background:var(--cyan)"></span>Assess volume status before increasing any inotrope</li>
           </ul>
-
-          <h3>⬇️ Weaning Strategy</h3>
-          <div class="box box-teal"><strong>Order of weaning (Bojar 6th ed. protocol):</strong><br>
-          <strong>1.</strong> As patient warms → SVR normalises → ↓phenylephrine / vasopressin first<br>
-          <strong>2.</strong> Reduce NE when MAP stable &gt;70 without rising lactate<br>
-          <strong>3.</strong> Taper epinephrine to ≤1–2 μg/min; dobutamine to ≤5 μg/kg/min<br>
-          <strong>4.</strong> Wean milrinone last (t½ 2h) — halve dose every 4–6h; observe for rebound ↑SVR (may require brief NE bump)<br>
-          <strong>5.</strong> IABP removal: CI ≥2.2, on single low-dose inotrope (epi ≤1 μg/min or dobu ≤10 μg/kg/min), MAP stable ≥70<br>
-          <strong>6.</strong> Levosimendan: no active weaning needed (OR-1896 effect self-resolves over 7–9 days)</div>
+          <h3 style="margin-top:18px">Weaning Strategy (Bojar 6th ed.)</h3>
+          <div class="box box-cyan"><strong>1.</strong> &#8595; phenylephrine / vasopressin first (as patient warms, SVR normalises)<br><strong>2.</strong> Reduce NE when MAP stable &gt;70<br><strong>3.</strong> Taper epi to &#8804;1&ndash;2 &mu;g/min; dobu to &#8804;5 &mu;g/kg/min<br><strong>4.</strong> Wean milrinone last (t&frac12; 2h) &mdash; halve every 4&ndash;6h; watch for rebound &#8593;SVR<br><strong>5.</strong> IABP removal: CI &#8805;2.2, single low-dose inotrope, MAP stable &#8805;70<br><strong>6.</strong> Levosimendan: no active weaning (OR-1896 self-resolves 7&ndash;9 days)</div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="footnote">
-    Based on: Bojar RM — Manual of Perioperative Care in Adult Cardiac Surgery, 6th ed. (Ch. 11); Hensley FA, Martin DE — A Practical Approach to Cardiac Anesthesia, 5th ed.; Butterworth JF — Morgan &amp; Mikhail's Clinical Anesthesiology; Mebazaa A et al. (levosimendan), SOAP-II Trial (dopamine vs NE), VASST Trial (vasopressin), OPTIME-CHF (milrinone). ACLS 2020/2025 guidelines. Clinical protocols may vary — always verify with local formulary and current guidelines.
+    Based on: Bojar RM &mdash; Manual of Perioperative Care in Adult Cardiac Surgery, 6th ed. &middot; Hensley FA &amp; Martin DE &mdash; Cardiac Anesthesia, 5th ed. &middot; SOAP-II Trial &middot; VASST Trial (vasopressin) &middot; OPTIME-CHF (milrinone) &middot; Mebazaa A et al. (levosimendan) &middot; ACLS 2025 guidelines. Clinical protocols may vary &mdash; always verify with local formulary and current guidelines.<br>
+    Cardiac Surgery Clinical Education &middot; StarleyBy &middot; 2025
   </div>
-  </div><!-- /content -->
-</div><!-- /container -->
+</section>
+
+</main>
 
 <script>
-// Accordion
-document.querySelectorAll('.drug-card').forEach(card => {
+const tabs = document.querySelectorAll('.tab');
+const tgs = document.querySelectorAll('.tg');
+function gt(i, b) {
+  tabs.forEach(t => t.classList.remove('active'));
+  tgs.forEach(t => t.classList.remove('active'));
+  tabs[i].classList.add('active');
+  b.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Drug card accordion
+document.querySelectorAll('.drug-card').forEach((card, idx) => {
   const summary = card.querySelector('.drug-summary');
   if (!summary) return;
   summary.addEventListener('click', () => card.classList.toggle('open'));
-});
-
-// Nav pills — scroll & open
-document.querySelectorAll('.nav-pill').forEach(pill => {
-  pill.addEventListener('click', () => {
-    const id = pill.getAttribute('data-drug');
-    const target = document.getElementById(id);
-    if (!target) return;
-    if (!target.classList.contains('open')) target.classList.add('open');
-    const y = target.getBoundingClientRect().top + window.scrollY - 16;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-    target.style.transition = 'box-shadow .2s';
-    target.style.boxShadow = '0 0 0 3px #ffb347';
-    setTimeout(() => { target.style.boxShadow = ''; }, 1400);
-  });
-});
-
-// Auto-open first 2 cards on load
-document.querySelectorAll('.drug-card').forEach((c, i) => {
-  if (i < 1) c.classList.add('open');
+  // Auto-open first card in each tab
+  if (idx === 0) card.classList.add('open');
 });
 </script>
 </body>
