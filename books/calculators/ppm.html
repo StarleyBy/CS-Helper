@@ -1,610 +1,552 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>PPM Calculator | Prosthesis-Patient Mismatch · Heart Valve Sizing (including Bicarbon)</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: #eef3fc;
-            font-family: 'Inter', system-ui, 'Segoe UI', 'Roboto', sans-serif;
-            padding: 30px 20px;
-            color: #14273e;
-        }
-        .ppm-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 32px;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.08);
-            overflow: hidden;
-        }
-        .header {
-            background: linear-gradient(135deg, #1e466e 0%, #0f2c48 100%);
-            padding: 24px 32px;
-            color: white;
-        }
-        .header h1 {
-            font-size: 26px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .badge-ppm {
-            background: #f0b27a;
-            color: #1e466e;
-            padding: 4px 12px;
-            border-radius: 40px;
-            font-size: 13px;
-            font-weight: 700;
-        }
-        .subhead {
-            font-size: 14px;
-            opacity: 0.85;
-            margin-top: 8px;
-            border-left: 3px solid #f0b27a;
-            padding-left: 14px;
-        }
-        .grid-main {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 28px;
-            padding: 30px 32px;
-            background: #fafdff;
-        }
-        .input-panel {
-            flex: 1.2;
-            min-width: 340px;
-            background: white;
-            border-radius: 28px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
-            border: 1px solid #e2ecf5;
-            padding: 20px 24px;
-        }
-        .result-panel {
-            flex: 1.8;
-            min-width: 380px;
-            background: white;
-            border-radius: 28px;
-            border: 1px solid #e2ecf5;
-            padding: 20px 24px;
-            transition: all 0.1s;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            font-weight: 600;
-            font-size: 13px;
-            display: block;
-            margin-bottom: 6px;
-            color: #2c577c;
-        }
-        input, select {
-            width: 100%;
-            padding: 12px 14px;
-            border-radius: 18px;
-            border: 1px solid #cfe2f0;
-            background: white;
-            font-size: 14px;
-            transition: 0.15s;
-            font-family: inherit;
-        }
-        input:focus, select:focus {
-            outline: none;
-            border-color: #1e6f9f;
-            box-shadow: 0 0 0 3px rgba(30, 111, 159, 0.1);
-        }
-        .row-2col {
-            display: flex;
-            gap: 16px;
-        }
-        .row-2col .form-group {
-            flex: 1;
-        }
-        .metric-badge {
-            background: #ecf5fd;
-            padding: 10px 14px;
-            border-radius: 20px;
-            margin: 16px 0;
-            font-size: 13px;
-            text-align: center;
-        }
-        .score-card {
-            background: #eef4fc;
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .eoai-value {
-            font-size: 52px;
-            font-weight: 800;
-            font-family: monospace;
-            color: #1a6588;
-            line-height: 1;
-        }
-        .ppm-status {
-            font-weight: 700;
-            font-size: 16px;
-            padding: 8px 16px;
-            border-radius: 50px;
-            display: inline-block;
-            margin-top: 12px;
-        }
-        .no-ppm { background: #d9f0e3; color: #1f6d49; }
-        .moderate-ppm { background: #fff0d6; color: #b45f06; }
-        .severe-ppm { background: #ffdedc; color: #b13e3e; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-            margin: 16px 0;
-        }
-        th, td {
-            padding: 10px 8px;
-            border-bottom: 1px solid #dfeaf3;
-            text-align: left;
-        }
-        th {
-            font-weight: 700;
-            background: #f6fafe;
-        }
-        .valve-list {
-            max-height: 320px;
-            overflow-y: auto;
-            border: 1px solid #e2edf7;
-            border-radius: 20px;
-            padding: 6px;
-        }
-        .valve-item {
-            padding: 8px 12px;
-            margin: 4px 0;
-            border-radius: 28px;
-            background: #f9fbfe;
-            font-size: 13px;
-            display: flex;
-            justify-content: space-between;
-            border-left: 3px solid #86b7d4;
-        }
-        .valve-match {
-            background: #e2f3e6;
-            border-left-color: #2f9b5f;
-        }
-        .valve-mismatch {
-            background: #ffe6e2;
-            border-left-color: #c94f4f;
-            opacity: 0.9;
-        }
-        .footnote {
-            font-size: 11px;
-            color: #5f7f9e;
-            margin-top: 20px;
-            border-top: 1px solid #e0ecf5;
-            padding-top: 14px;
-        }
-        button {
-            background: #1e6f9f;
-            border: none;
-            color: white;
-            font-weight: 600;
-            padding: 10px 16px;
-            border-radius: 40px;
-            cursor: pointer;
-            margin-top: 6px;
-            width: auto;
-            font-size: 13px;
-        }
-        button:hover {
-            background: #115a84;
-        }
-        @media (max-width: 800px) {
-            .grid-main { flex-direction: column; padding: 20px; }
-        }
-        hr {
-            margin: 12px 0;
-            border-color: #e2ecf5;
-        }
-        .warning-note {
-            background: #fff1db;
-            padding: 6px 12px;
-            border-radius: 24px;
-            font-size: 11px;
-            margin-top: 6px;
-            color: #aa6f20;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>PPM Calculator | Prosthesis-Patient Mismatch · Bicarbon · BMI-Adjusted</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#eef3fc;font-family:'Inter',system-ui,'Segoe UI',sans-serif;padding:24px 16px;color:#14273e;font-size:14px}
+.ppm-container{max-width:1420px;margin:0 auto;background:white;border-radius:32px;box-shadow:0 20px 35px rgba(0,0,0,.08);overflow:hidden}
+.header{background:linear-gradient(135deg,#1e466e 0%,#0f2c48 100%);padding:22px 30px;color:white}
+.header h1{font-size:24px;font-weight:700;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.badge-ppm{background:#f0b27a;color:#1e466e;padding:4px 12px;border-radius:40px;font-size:12px;font-weight:700}
+.subhead{font-size:13px;opacity:.85;margin-top:7px;border-left:3px solid #f0b27a;padding-left:12px}
+.grid-main{display:flex;flex-wrap:wrap;gap:24px;padding:24px 28px;background:#fafdff}
+.input-panel{flex:1.2;min-width:340px;background:white;border-radius:24px;box-shadow:0 4px 16px rgba(0,0,0,.04);border:1px solid #e2ecf5;padding:18px 22px}
+.result-panel{flex:1.8;min-width:380px;background:white;border-radius:24px;border:1px solid #e2ecf5;padding:18px 22px}
+.form-group{margin-bottom:16px}
+label{font-weight:600;font-size:12.5px;display:block;margin-bottom:5px;color:#2c577c}
+input,select{width:100%;padding:10px 12px;border-radius:16px;border:1px solid #cfe2f0;background:white;font-size:13.5px;transition:.15s;font-family:inherit}
+input:focus,select:focus{outline:none;border-color:#1e6f9f;box-shadow:0 0 0 3px rgba(30,111,159,.1)}
+.row-2col{display:flex;gap:14px}
+.row-2col .form-group{flex:1}
+.row-3col{display:flex;gap:12px}
+.row-3col .form-group{flex:1}
+.metric-badge{background:#ecf5fd;padding:10px 14px;border-radius:16px;margin:12px 0;font-size:12.5px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center}
+.metric-badge strong{color:#1a5080}
+.score-card{background:#eef4fc;border-radius:20px;padding:18px;margin-bottom:16px;text-align:center}
+.eoai-value{font-size:50px;font-weight:800;font-family:monospace;color:#1a6588;line-height:1}
+.ppm-status{font-weight:700;font-size:15px;padding:7px 16px;border-radius:50px;display:inline-block;margin-top:10px}
+.no-ppm{background:#d9f0e3;color:#1f6d49}
+.acceptable-ppm{background:#edf4ff;color:#1a4f8a}
+.moderate-ppm{background:#fff0d6;color:#b45f06}
+.severe-ppm{background:#ffdedc;color:#b13e3e}
+/* Gauge */
+.gauge-wrap{margin:14px 0 6px;position:relative}
+.gauge-label{display:flex;justify-content:space-between;font-size:10.5px;color:#6a88a0;margin-bottom:5px;font-weight:600}
+.gauge-track{height:18px;border-radius:10px;background:#f0f5fa;overflow:hidden;position:relative;border:1px solid #d0e0ec}
+.gauge-fill{height:100%;border-radius:10px;transition:width .35s,background .35s}
+.gauge-needle{position:absolute;top:-3px;height:24px;width:3px;border-radius:3px;background:#1a3a5e;transform:translateX(-50%);transition:left .35s;box-shadow:0 0 4px rgba(0,0,0,.35)}
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:12px 0}
+th,td{padding:9px 8px;border-bottom:1px solid #dfeaf3;text-align:left}
+th{font-weight:700;background:#f6fafe;color:#2c577c}
+.valve-list{max-height:300px;overflow-y:auto;border:1px solid #e2edf7;border-radius:16px;padding:5px}
+.valve-item{padding:7px 11px;margin:3px 0;border-radius:22px;background:#f9fbfe;font-size:12.5px;display:flex;justify-content:space-between;border-left:3px solid #86b7d4;gap:8px}
+.valve-optimal{background:#d9f0e3;border-left-color:#2f9b5f}
+.valve-acceptable{background:#e8f0fb;border-left-color:#3a7bd5}
+.valve-moderate{background:#fff5e0;border-left-color:#c9880a}
+.valve-mismatch{background:#ffe6e2;border-left-color:#c94f4f;opacity:.9}
+.footnote{font-size:11px;color:#5f7f9e;margin-top:16px;border-top:1px solid #e0ecf5;padding-top:12px;line-height:1.6}
+button{background:#1e6f9f;border:none;color:white;font-weight:600;padding:9px 18px;border-radius:40px;cursor:pointer;font-size:13px;margin-top:6px}
+button:hover{background:#115a84}
+hr{margin:10px 0;border-color:#e2ecf5}
+.warn-note{background:#fff1db;padding:6px 12px;border-radius:20px;font-size:11px;margin-top:5px;color:#aa6f20;line-height:1.5}
+.info-note{background:#e8f4fd;padding:8px 12px;border-radius:12px;font-size:12px;margin:8px 0;color:#1a5080;line-height:1.55;border-left:3px solid #5a9ec8}
+.strategy-box{background:#fff3e0;padding:10px 14px;border-radius:14px;font-size:12.5px;margin:10px 0;border-left:3px solid #f0a030;color:#7a4500;display:none}
+.strategy-box ul{padding-left:16px;margin-top:5px}
+.strategy-box li{margin-bottom:3px}
+.bmi-badge{background:#f0e8fc;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;color:#6a2da0;margin-left:4px}
+.threshold-tag{background:#e8f0fb;padding:2px 8px;border-radius:12px;font-size:11px;color:#1a4f8a;font-weight:600;display:inline-block;margin-top:4px}
+@media(max-width:760px){.grid-main{flex-direction:column;padding:16px}.row-2col,.row-3col{flex-direction:column}.gauge-label span{font-size:9.5px}}
+</style>
 </head>
 <body>
 <div class="ppm-container">
-    <div class="header">
-        <h1>⚙️ Prosthesis-Patient Mismatch (PPM) Calculator <span class="badge-ppm">2025 update · Bicarbon included</span></h1>
-        <div class="subhead">Evidence-based sizing for mechanical &amp; bioprosthetic heart valves (Edwards, Medtronic, Abbott, On-X, LivaNova, Bicarbon). Predict iEOA to guide optimal prosthesis selection.</div>
-    </div>
-    <div class="grid-main">
-        <!-- LEFT: INPUT PANEL -->
-        <div class="input-panel">
-            <div class="form-group">
-                <label>📏 Height (cm)</label>
-                <input type="number" id="height" value="170" step="1">
-            </div>
-            <div class="form-group">
-                <label>⚖️ Weight (kg)</label>
-                <input type="number" id="weight" value="75" step="1">
-            </div>
-            <div class="row-2col">
-                <div class="form-group">
-                    <label>Valve position</label>
-                    <select id="valvePosition">
-                        <option value="aortic">Aortic</option>
-                        <option value="mitral">Mitral</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Prosthesis type</label>
-                    <select id="prosthesisType">
-                        <option value="bioprosthetic">Bioprosthetic (tissue)</option>
-                        <option value="mechanical">Mechanical</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>🏭 Manufacturer / brand</label>
-                <select id="manufacturerSelect">
-                    <option value="Edwards">Edwards Lifesciences</option>
-                    <option value="Medtronic">Medtronic</option>
-                    <option value="Abbott">Abbott (St. Jude Medical)</option>
-                    <option value="OnX">On-X (Artivion)</option>
-                    <option value="LivaNova">LivaNova (Sorin) — including Bicarbon</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>📌 Prosthesis model</label>
-                <select id="modelSelect"></select>
-            </div>
-            <div class="form-group">
-                <label>📐 Labeled valve size (mm)</label>
-                <select id="valveSizeSelect"></select>
-                <div class="warning-note" id="sizeNote">All sizes are based on published EOA reference tables.</div>
-            </div>
-            <div class="metric-badge">
-                🔍 BSA (Mosteller): <strong id="bsaValue">—</strong> m² &nbsp;&nbsp;|&nbsp;
-                🫀 Predicted iEOA: <strong id="previewEOAi">—</strong> cm²/m²
-            </div>
-            <button id="refreshBtn">⟳ Update PPM assessment</button>
-            <div class="footnote">
-                * PPM thresholds: mild/none if iEOA > 0.85 cm²/m²; moderate if ≤0.85; severe if ≤0.65 (AHA/ESC/EACTS 2025).  
-                <strong>✔️ Bicarbon valves (mechanical)</strong> fully integrated with published hemodynamic data.
-            </div>
-        </div>
+<div class="header">
+  <h1>&#9881;&#65039; Prosthesis-Patient Mismatch (PPM) Calculator <span class="badge-ppm">2025 · BMI-adjusted · Bicarbon included</span></h1>
+  <div class="subhead">Position-specific and BMI-adjusted iEOA thresholds (AHA/ACC 2021, Pibarot/Dumesnil). Aortic PPM (obese/non-obese) and mitral PPM calculated independently. <em>Predicts PPM from published EOA data — does not replace post-operative Doppler assessment.</em></div>
+</div>
 
-        <!-- RIGHT: RESULTS + COMPATIBILITY -->
-        <div class="result-panel">
-            <div class="score-card">
-                <div style="font-size: 14px; font-weight: 500;">Indexed Effective Orifice Area (predicted)</div>
-                <div class="eoai-value" id="eoaiDisplay">—</div>
-                <div id="ppmClassification" style="margin: 6px 0;">—</div>
-                <div id="recommendationText" style="font-size: 13px; margin-top: 8px;">—</div>
-            </div>
-            <h3 style="font-weight: 600; font-size: 15px; margin: 12px 0 8px;">✔️ Prosthesis compatibility (same position / type)</h3>
-            <div class="valve-list" id="compatibilityList">
-                <div class="valve-item">Select patient parameters and valve above to see compatible sizes</div>
-            </div>
-            <div class="footnote" style="margin-top: 12px;">
-                📚 Reference EOA values from published hemodynamic charts: Edwards INSPIRIS, Magna, PERIMOUNT; Medtronic Hancock II, Mosaic, Avalus; Abbott Trifecta, Epic, St. Jude Regent; On-X mechanical; LivaNova Crown PRT, Mitroflow, Perceval, and <strong>Bicarbon (Sorin)</strong> mechanical prostheses (EOA data from peer-reviewed literature &amp; manufacturer IFU).
-            </div>
-        </div>
+<div class="grid-main">
+<!-- ═══ INPUT PANEL ═══ -->
+<div class="input-panel">
+  <div class="row-3col">
+    <div class="form-group">
+      <label>&#128207; Height (cm)</label>
+      <input type="number" id="height" value="170" step="1" min="100" max="220">
     </div>
+    <div class="form-group">
+      <label>&#9878;&#65039; Weight (kg)</label>
+      <input type="number" id="weight" value="75" step="1" min="30" max="250">
+    </div>
+    <div class="form-group">
+      <label>Age (years)</label>
+      <input type="number" id="age" value="65" step="1" min="18" max="100">
+    </div>
+  </div>
+
+  <div class="row-2col">
+    <div class="form-group">
+      <label>Valve position</label>
+      <select id="valvePosition">
+        <option value="aortic">Aortic</option>
+        <option value="mitral">Mitral</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Prosthesis type</label>
+      <select id="prosthesisType">
+        <option value="bioprosthetic">Bioprosthetic (tissue)</option>
+        <option value="mechanical">Mechanical</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>&#127981; Manufacturer / brand</label>
+    <select id="manufacturerSelect">
+      <option value="Edwards">Edwards Lifesciences</option>
+      <option value="Medtronic">Medtronic</option>
+      <option value="Abbott">Abbott (St. Jude Medical)</option>
+      <option value="OnX">On-X (Artivion)</option>
+      <option value="LivaNova">LivaNova (Sorin) — including Bicarbon</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>&#128204; Prosthesis model</label>
+    <select id="modelSelect"></select>
+  </div>
+
+  <div class="form-group">
+    <label>&#128208; Labeled valve size (mm)</label>
+    <select id="valveSizeSelect"></select>
+    <div class="warn-note" id="sizeNote">Published reference EOA values may differ from post-operative Doppler-measured EOAs by up to 20%.</div>
+  </div>
+
+  <div class="metric-badge" id="metricBadge">
+    &#128269; BSA: <strong id="bsaValue">&#8212;</strong> m&#178; &nbsp;|&nbsp;
+    BMI: <strong id="bmiValue">&#8212;</strong> kg/m&#178; &nbsp;|&nbsp;
+    iEOA: <strong id="previewEOAi">&#8212;</strong> cm&#178;/m&#178;
+  </div>
+  <button id="refreshBtn">&#10227; Update PPM assessment</button>
+
+  <div class="info-note" id="thresholdNote">Thresholds will update when parameters are selected.</div>
+
+  <div class="footnote">
+    &#128218; <strong>Aortic PPM thresholds (AHA/ACC 2021 / Pibarot-Dumesnil):</strong><br>
+    Non-obese (BMI &lt;30): Moderate &#8804;0.85; Severe &#8804;0.65 cm&#178;/m&#178;<br>
+    Obese (BMI &#8805;30): Moderate &#8804;0.70; Severe &#8804;0.55 cm&#178;/m&#178;<br>
+    <strong>Mitral PPM thresholds:</strong> Moderate &#8804;1.2; Severe &#8804;0.9 cm&#178;/m&#178;<br>
+    <strong>Important:</strong> This tool estimates <em>predicted</em> PPM only. Post-operative Doppler assessment is required to confirm. Published manufacturer EOA values may differ from in-vivo measurements. Bicarbon and Perceval EOA values are approximate and vary among published sources.
+  </div>
+</div>
+
+<!-- ═══ RESULT PANEL ═══ -->
+<div class="result-panel">
+  <div class="score-card">
+    <div style="font-size:13.5px;font-weight:600;color:#2c577c;margin-bottom:4px">Indexed Effective Orifice Area — predicted</div>
+    <div class="eoai-value" id="eoaiDisplay">&#8212;</div>
+    <div style="font-size:12px;color:#7a95a8;margin-top:2px">cm&#178;/m&#178;</div>
+    <div id="ppmClassification" style="margin:8px 0">&#8212;</div>
+    <div id="recommendationText" style="font-size:12.5px;color:#4a6a80;margin-top:6px">&#8212;</div>
+
+    <!-- Gauge -->
+    <div class="gauge-wrap" id="gaugeWrap" style="display:none">
+      <div class="gauge-label">
+        <span id="g-sev-label">Severe</span>
+        <span id="g-mod-label">Moderate PPM</span>
+        <span id="g-none-label">No PPM</span>
+        <span>Optimal</span>
+      </div>
+      <div class="gauge-track" id="gaugeTrack">
+        <div id="gaugeFill" class="gauge-fill"></div>
+        <div id="gaugeNeedle" class="gauge-needle"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:#8aacbf;margin-top:3px">
+        <span id="g-label-0">0.4</span>
+        <span id="g-label-sev">&#8212;</span>
+        <span id="g-label-mod">&#8212;</span>
+        <span>1.5&#43;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Surgical strategies (shown on severe PPM) -->
+  <div class="strategy-box" id="strategyBox">
+    <strong>&#9888;&#65039; Surgical strategies to consider for severe PPM:</strong>
+    <ul>
+      <li><strong>Supra-annular prosthesis</strong> (larger effective orifice within same annulus)</li>
+      <li><strong>Stentless bioprosthesis</strong> (Freestyle, Prima Plus)</li>
+      <li><strong>Sutureless valve</strong> (Perceval, Intuity) — may allow larger size</li>
+      <li><strong>Annular enlargement</strong> (Nicks, Manouguian, Konno procedures)</li>
+      <li><strong>Transcatheter aortic valve implantation (TAVI)</strong> — generally lower PPM rates</li>
+      <li><strong>Mechanical prosthesis</strong> — typically larger EOA than stented tissue at same size</li>
+    </ul>
+    <div style="margin-top:6px;font-size:11.5px;font-style:italic">Feasibility depends on patient characteristics, surgical anatomy, and individual risk. Severity should be weighed against patient age, activity level, LV function, and surgical risk.</div>
+  </div>
+
+  <!-- TAVI note -->
+  <div class="info-note" style="font-size:12px;margin-bottom:12px">
+    &#127359; <strong>TAVI note:</strong> Transcatheter valves generally have larger EOAs than equivalently-sized surgical prostheses and show lower predicted PPM rates, particularly in small annuli. However, post-TAVI EOA values vary substantially by valve type, size, and implant depth.
+  </div>
+
+  <h3 style="font-weight:600;font-size:14.5px;margin:0 0 8px">&#10004;&#65039; All prostheses &mdash; PPM assessment for this patient</h3>
+  <div class="valve-list" id="compatibilityList">
+    <div class="valve-item">Select patient parameters and valve above to see full comparison</div>
+  </div>
+
+  <div class="info-note" style="margin-top:10px;font-size:11.5px">
+    &#128161; <strong>Pressure recovery:</strong> In small aortic roots, pressure recovery downstream of the prosthesis may partially offset the gradient implied by a low EOA. Predicted PPM should be interpreted cautiously when the aortic root is small &mdash; net aortic pressure gradient may be clinically less severe than predicted iEOA suggests.<br><br>
+    &#128161; <strong>Low-flow states:</strong> Low ejection fraction, reduced stroke volume, or atrial fibrillation may alter post-operative gradients independently of PPM. Predicted PPM does not account for haemodynamic state at the time of measurement.
+  </div>
+
+  <div class="footnote">
+    &#128218; Reference EOA values from published hemodynamic data: Edwards INSPIRIS, Magna Ease, PERIMOUNT; Medtronic Hancock II, Mosaic, Avalus; Abbott Trifecta, Epic, St. Jude Regent/Masters; On-X mechanical; LivaNova Crown PRT, Mitroflow, Perceval (sutureless), <strong>Bicarbon and Bicarbon Slim</strong> (Sorin/LivaNova mechanical). <em>Perceval and Bicarbon EOA values are approximate; published data varies among studies by 15&#8211;25%.</em>
+  </div>
+</div>
+</div>
 </div>
 
 <script>
-    // ---------- PROSTHESIS DATABASE (EOA values per manufacturer/model/size/position) ----------
-    // FULLY UPDATED with BICARBON (LivaNova mechanical) and all known size ranges.
-    const prosthesisEOA = {
-        Edwards: {
-            aortic: {
-                bioprosthetic: {
-                    "INSPIRIS RESILIA": {19:1.2, 21:1.5, 23:1.9, 25:2.2, 27:2.5, 29:2.7},
-                    "Magna Ease": {19:1.3, 21:1.7, 23:2.1, 25:2.4, 27:2.7, 29:2.9},
-                    "PERIMOUNT Magna": {19:1.2, 21:1.6, 23:1.9, 25:2.2, 27:2.5, 29:2.6},
-                    "PERIMOUNT 2700": {19:1.1, 21:1.4, 23:1.7, 25:2.0, 27:2.2, 29:2.4}
-                },
-                mechanical: {}
-            },
-            mitral: {
-                bioprosthetic: {
-                    "PERIMOUNT Mitral": {25:1.5, 27:1.7, 29:2.0, 31:2.2, 33:2.5},
-                    "INSPIRIS Mitral (investigational)": {25:1.6, 27:1.9, 29:2.2, 31:2.4}
-                },
-                mechanical: {}
-            }
-        },
-        Medtronic: {
-            aortic: {
-                bioprosthetic: {
-                    "Hancock II": {21:1.2, 23:1.3, 25:1.5, 27:1.6, 29:1.8},
-                    "Mosaic": {19:1.1, 21:1.2, 23:1.4, 25:1.7, 27:1.9, 29:2.0},
-                    "Avalus": {19:1.2, 21:1.5, 23:1.8, 25:2.0, 27:2.3}
-                },
-                mechanical: {
-                    "Open Pivot (Mechanical)": {19:1.6, 21:2.0, 23:2.5, 25:2.9, 27:3.3}
-                }
-            },
-            mitral: {
-                bioprosthetic: {
-                    "Hancock II Mitral": {25:1.4, 27:1.6, 29:1.9, 31:2.1, 33:2.3},
-                    "Mosaic Mitral": {25:1.3, 27:1.5, 29:1.8, 31:2.0}
-                },
-                mechanical: {
-                    "Open Pivot Mitral": {25:2.0, 27:2.3, 29:2.7, 31:3.0}
-                }
-            }
-        },
-        Abbott: {
-            aortic: {
-                bioprosthetic: {
-                    "Trifecta (Abbott)": {19:1.2, 21:1.6, 23:2.1, 25:2.4, 27:2.7},
-                    "Epic Plus (Stented)": {19:1.1, 21:1.3, 23:1.6, 25:1.9, 27:2.1, 29:2.3}
-                },
-                mechanical: {
-                    "St. Jude Regent": {17:1.5, 19:1.7, 21:2.1, 23:2.6, 25:2.9, 27:3.2},
-                    "St. Jude Masters": {19:1.4, 21:1.9, 23:2.3, 25:2.7}
-                }
-            },
-            mitral: {
-                bioprosthetic: {
-                    "Epic Plus Mitral": {25:1.3, 27:1.6, 29:1.8, 31:2.0, 33:2.2}
-                },
-                mechanical: {
-                    "St. Jude Mitral": {23:1.7, 25:2.1, 27:2.5, 29:2.8, 31:3.1}
-                }
-            }
-        },
-        OnX: {
-            aortic: {
-                mechanical: {
-                    "On-X Aortic": {19:1.8, 21:2.2, 23:2.8, 25:3.1, 27:3.5}
-                },
-                bioprosthetic: {}
-            },
-            mitral: {
-                mechanical: {
-                    "On-X Mitral": {23:1.9, 25:2.2, 27:2.6, 29:2.9, 31:3.3}
-                },
-                bioprosthetic: {}
-            }
-        },
-        LivaNova: {
-            aortic: {
-                bioprosthetic: {
-                    "Crown PRT (Sorin)": {19:1.2, 21:1.5, 23:1.9, 25:2.3, 27:2.5},
-                    "Mitroflow LX": {19:1.1, 21:1.3, 23:1.6, 25:1.9, 27:2.2},
-                    "Perceval (sutureless)": {21:1.9, 23:2.4, 25:2.7, 27:3.0}  // S=21, M=23, L=25, XL=27 mm equivalent
-                },
-                mechanical: {
-                    // BICARBON valves (Sorin / LivaNova) – mechanical, both positions
-                    "Bicarbon (Sorin)": {19:1.75, 21:2.1, 23:2.6, 25:3.0, 27:3.3, 29:3.6},
-                    "Bicarbon Slim": {19:1.7, 21:2.0, 23:2.5, 25:2.9, 27:3.2}
-                }
-            },
-            mitral: {
-                bioprosthetic: {
-                    "Mitroflow Mitral": {25:1.4, 27:1.7, 29:2.0, 31:2.2}
-                },
-                mechanical: {
-                    "Bicarbon (Sorin) Mitral": {23:1.9, 25:2.2, 27:2.5, 29:2.9, 31:3.2},
-                    "Bicarbon Slim Mitral": {23:1.8, 25:2.1, 27:2.4, 29:2.8}
-                }
-            }
-        }
-    };
-
-    // auxiliary mapping to get size list per model
-    const modelSizeMap = {};
-
-    function buildModelSizeMap() {
-        for (let man in prosthesisEOA) {
-            for (let pos of ['aortic','mitral']) {
-                for (let type of ['bioprosthetic','mechanical']) {
-                    let models = prosthesisEOA[man][pos]?.[type] || {};
-                    for (let model in models) {
-                        let sizes = Object.keys(models[model]).map(Number).sort((a,b)=>a-b);
-                        if (!modelSizeMap[man]) modelSizeMap[man] = {};
-                        if (!modelSizeMap[man][pos]) modelSizeMap[man][pos] = {};
-                        if (!modelSizeMap[man][pos][type]) modelSizeMap[man][pos][type] = {};
-                        modelSizeMap[man][pos][type][model] = sizes;
-                    }
-                }
-            }
-        }
+// ═══════════════ PROSTHESIS DATABASE ═══════════════
+const prosthesisEOA = {
+  Edwards:{
+    aortic:{
+      bioprosthetic:{
+        "INSPIRIS RESILIA":{19:1.2,21:1.5,23:1.9,25:2.2,27:2.5,29:2.7},
+        "Magna Ease":{19:1.3,21:1.7,23:2.1,25:2.4,27:2.7,29:2.9},
+        "PERIMOUNT Magna":{19:1.2,21:1.6,23:1.9,25:2.2,27:2.5,29:2.6},
+        "PERIMOUNT 2700":{19:1.1,21:1.4,23:1.7,25:2.0,27:2.2,29:2.4}
+      },
+      mechanical:{}
+    },
+    mitral:{
+      bioprosthetic:{
+        "PERIMOUNT Mitral":{25:1.5,27:1.7,29:2.0,31:2.2,33:2.5},
+        "INSPIRIS Mitral (investigational)":{25:1.6,27:1.9,29:2.2,31:2.4}
+      },
+      mechanical:{}
     }
-    buildModelSizeMap();
-
-    // DOM elements
-    const manSelect = document.getElementById('manufacturerSelect');
-    const posSelect = document.getElementById('valvePosition');
-    const typeSelect = document.getElementById('prosthesisType');
-    const modelSelect = document.getElementById('modelSelect');
-    const sizeSelect = document.getElementById('valveSizeSelect');
-    const heightInput = document.getElementById('height');
-    const weightInput = document.getElementById('weight');
-    const bsaSpan = document.getElementById('bsaValue');
-    const previewEoaiSpan = document.getElementById('previewEOAi');
-    const eoaiDisplay = document.getElementById('eoaiDisplay');
-    const ppmClassificationDiv = document.getElementById('ppmClassification');
-    const recommendationText = document.getElementById('recommendationText');
-    const compatibilityListDiv = document.getElementById('compatibilityList');
-    const sizeNote = document.getElementById('sizeNote');
-
-    function calculateBSA() {
-        let h = parseFloat(heightInput.value) || 170;
-        let w = parseFloat(weightInput.value) || 70;
-        let bsa = Math.sqrt((h * w) / 3600);
-        if (isNaN(bsa) || bsa <= 0) bsa = 1.8;
-        bsaSpan.innerText = bsa.toFixed(2);
-        return bsa;
+  },
+  Medtronic:{
+    aortic:{
+      bioprosthetic:{
+        "Hancock II":{21:1.2,23:1.3,25:1.5,27:1.6,29:1.8},
+        "Mosaic":{19:1.1,21:1.2,23:1.4,25:1.7,27:1.9,29:2.0},
+        "Avalus":{19:1.2,21:1.5,23:1.8,25:2.0,27:2.3}
+      },
+      mechanical:{
+        "Open Pivot (Mechanical)":{19:1.6,21:2.0,23:2.5,25:2.9,27:3.3}
+      }
+    },
+    mitral:{
+      bioprosthetic:{
+        "Hancock II Mitral":{25:1.4,27:1.6,29:1.9,31:2.1,33:2.3},
+        "Mosaic Mitral":{25:1.3,27:1.5,29:1.8,31:2.0}
+      },
+      mechanical:{
+        "Open Pivot Mitral":{25:2.0,27:2.3,29:2.7,31:3.0}
+      }
     }
-
-    function getSelectedEOA() {
-        let man = manSelect.value;
-        let pos = posSelect.value;
-        let type = typeSelect.value === 'bioprosthetic' ? 'bioprosthetic' : 'mechanical';
-        let model = modelSelect.value;
-        let size = parseInt(sizeSelect.value);
-        if (!model || isNaN(size)) return null;
-        try {
-            let eoaVal = prosthesisEOA[man][pos][type][model][size];
-            return eoaVal !== undefined ? eoaVal : null;
-        } catch(e) { return null; }
+  },
+  Abbott:{
+    aortic:{
+      bioprosthetic:{
+        "Trifecta (Abbott)":{19:1.2,21:1.6,23:2.1,25:2.4,27:2.7},
+        "Epic Plus (Stented)":{19:1.1,21:1.3,23:1.6,25:1.9,27:2.1,29:2.3}
+      },
+      mechanical:{
+        "St. Jude Regent":{17:1.5,19:1.7,21:2.1,23:2.6,25:2.9,27:3.2},
+        "St. Jude Masters":{19:1.4,21:1.9,23:2.3,25:2.7}
+      }
+    },
+    mitral:{
+      bioprosthetic:{
+        "Epic Plus Mitral":{25:1.3,27:1.6,29:1.8,31:2.0,33:2.2}
+      },
+      mechanical:{
+        "St. Jude Mitral":{23:1.7,25:2.1,27:2.5,29:2.8,31:3.1}
+      }
     }
+  },
+  OnX:{
+    aortic:{
+      mechanical:{
+        "On-X Aortic":{19:1.8,21:2.2,23:2.8,25:3.1,27:3.5}
+      },
+      bioprosthetic:{}
+    },
+    mitral:{
+      mechanical:{
+        "On-X Mitral":{23:1.9,25:2.2,27:2.6,29:2.9,31:3.3}
+      },
+      bioprosthetic:{}
+    }
+  },
+  LivaNova:{
+    aortic:{
+      bioprosthetic:{
+        "Crown PRT (Sorin)":{19:1.2,21:1.5,23:1.9,25:2.3,27:2.5},
+        "Mitroflow LX":{19:1.1,21:1.3,23:1.6,25:1.9,27:2.2},
+        "Perceval (sutureless)":{21:1.9,23:2.4,25:2.7,27:3.0}
+      },
+      mechanical:{
+        "Bicarbon (Sorin)":{19:1.75,21:2.1,23:2.6,25:3.0,27:3.3,29:3.6},
+        "Bicarbon Slim":{19:1.7,21:2.0,23:2.5,25:2.9,27:3.2}
+      }
+    },
+    mitral:{
+      bioprosthetic:{
+        "Mitroflow Mitral":{25:1.4,27:1.7,29:2.0,31:2.2}
+      },
+      mechanical:{
+        "Bicarbon (Sorin) Mitral":{23:1.9,25:2.2,27:2.5,29:2.9,31:3.2},
+        "Bicarbon Slim Mitral":{23:1.8,25:2.1,27:2.4,29:2.8}
+      }
+    }
+  }
+};
 
-    function updateModelsAndSizes() {
-        let man = manSelect.value;
-        let pos = posSelect.value;
-        let type = typeSelect.value === 'bioprosthetic' ? 'bioprosthetic' : 'mechanical';
-        let modelsObj = prosthesisEOA[man]?.[pos]?.[type] || {};
-        let modelNames = Object.keys(modelsObj);
-        modelSelect.innerHTML = '';
-        if (modelNames.length === 0) {
-            modelSelect.innerHTML = '<option>No models available for selection</option>';
-            sizeSelect.innerHTML = '<option>-</option>';
-            return;
+// ═══════════════ THRESHOLD LOGIC ═══════════════
+// Returns { modThresh, sevThresh, gaugeMax, gaugeMin } based on position and BMI
+function getThresholds(position, bmi) {
+  if (position === 'mitral') {
+    return { sevThresh: 0.9, modThresh: 1.2, gaugeMin: 0.5, gaugeMax: 2.0 };
+  }
+  // Aortic — BMI-adjusted (Pibarot/Dumesnil, Circulation 2021; AHA/ACC 2021)
+  if (bmi >= 30) {
+    return { sevThresh: 0.55, modThresh: 0.70, gaugeMin: 0.3, gaugeMax: 1.5 };
+  }
+  return { sevThresh: 0.65, modThresh: 0.85, gaugeMin: 0.4, gaugeMax: 1.5 };
+}
+
+// ═══════════════ CLASSIFICATION ═══════════════
+function classifyPPM(eoai, thresh) {
+  if (eoai > thresh.modThresh) return 'none';
+  if (eoai > thresh.sevThresh) return 'moderate';
+  return 'severe';
+}
+
+// Badge label (replaces MATCH/mismatch with clinical grades)
+function getBadgeLabel(cls) {
+  if (cls === 'none') return '&#10003; Optimal';
+  if (cls === 'moderate') return '&#9888;&#65039; Moderate PPM';
+  return '&#128308; Severe PPM';
+}
+function getBadgeClass(cls) {
+  if (cls === 'none') return 'valve-optimal';
+  if (cls === 'moderate') return 'valve-moderate';
+  return 'valve-mismatch';
+}
+
+// ═══════════════ HELPERS ═══════════════
+const modelSizeMap = {};
+function buildModelSizeMap() {
+  for (let man in prosthesisEOA) {
+    for (let pos of ['aortic','mitral']) {
+      for (let type of ['bioprosthetic','mechanical']) {
+        let models = prosthesisEOA[man][pos]?.[type] || {};
+        for (let model in models) {
+          let sizes = Object.keys(models[model]).map(Number).sort((a,b)=>a-b);
+          if (!modelSizeMap[man]) modelSizeMap[man]={};
+          if (!modelSizeMap[man][pos]) modelSizeMap[man][pos]={};
+          if (!modelSizeMap[man][pos][type]) modelSizeMap[man][pos][type]={};
+          modelSizeMap[man][pos][type][model]=sizes;
         }
-        modelNames.forEach(m => {
-            let opt = document.createElement('option');
-            opt.value = m;
-            opt.innerText = m;
-            modelSelect.appendChild(opt);
-        });
-        updateSizesForModel();
+      }
     }
+  }
+}
+buildModelSizeMap();
 
-    function updateSizesForModel() {
-        let man = manSelect.value;
-        let pos = posSelect.value;
-        let type = typeSelect.value === 'bioprosthetic' ? 'bioprosthetic' : 'mechanical';
-        let model = modelSelect.value;
-        let sizes = modelSizeMap[man]?.[pos]?.[type]?.[model] || [];
-        sizeSelect.innerHTML = '';
-        if (sizes.length === 0) {
-            sizeSelect.innerHTML = '<option value="">No predefined sizes (check manufacturer)</option>';
-            sizeNote.innerText = '⚠️ Size not available in database – cannot compute EOA. Select another model.';
-            return;
-        }
-        sizes.forEach(sz => {
-            let opt = document.createElement('option');
-            opt.value = sz;
-            opt.innerText = sz + ' mm';
-            sizeSelect.appendChild(opt);
-        });
-        sizeNote.innerText = 'All sizes based on published reference EOA tables (including Bicarbon).';
-        updatePreview();
+const manSel = document.getElementById('manufacturerSelect');
+const posSel = document.getElementById('valvePosition');
+const typeSel = document.getElementById('prosthesisType');
+const modSel = document.getElementById('modelSelect');
+const sizeSel = document.getElementById('valveSizeSelect');
+const htIn = document.getElementById('height');
+const wtIn = document.getElementById('weight');
+
+function calcBSA() {
+  let h = parseFloat(htIn.value)||170, w = parseFloat(wtIn.value)||75;
+  let bsa = Math.sqrt((h*w)/3600);
+  return (isNaN(bsa)||bsa<=0) ? 1.8 : bsa;
+}
+function calcBMI() {
+  let h = parseFloat(htIn.value)||170, w = parseFloat(wtIn.value)||75;
+  return w/((h/100)**2);
+}
+function getSelectedEOA() {
+  let man=manSel.value, pos=posSel.value;
+  let type=typeSel.value==='bioprosthetic'?'bioprosthetic':'mechanical';
+  let model=modSel.value, size=parseInt(sizeSel.value);
+  if(!model||isNaN(size)) return null;
+  try { let v=prosthesisEOA[man][pos][type][model][size]; return v!==undefined?v:null; }
+  catch(e){return null;}
+}
+
+function updateModelsAndSizes() {
+  let man=manSel.value, pos=posSel.value;
+  let type=typeSel.value==='bioprosthetic'?'bioprosthetic':'mechanical';
+  let modelsObj=prosthesisEOA[man]?.[pos]?.[type]||{};
+  let names=Object.keys(modelsObj);
+  modSel.innerHTML='';
+  if(!names.length){modSel.innerHTML='<option>No models available</option>';sizeSel.innerHTML='<option>-</option>';return;}
+  names.forEach(m=>{let o=document.createElement('option');o.value=m;o.innerText=m;modSel.appendChild(o);});
+  updateSizesForModel();
+}
+function updateSizesForModel() {
+  let man=manSel.value, pos=posSel.value;
+  let type=typeSel.value==='bioprosthetic'?'bioprosthetic':'mechanical';
+  let model=modSel.value;
+  let sizes=modelSizeMap[man]?.[pos]?.[type]?.[model]||[];
+  sizeSel.innerHTML='';
+  if(!sizes.length){
+    sizeSel.innerHTML='<option value="">No predefined sizes</option>';
+    document.getElementById('sizeNote').innerText='Size not in database. Select another model.';
+    return;
+  }
+  sizes.forEach(sz=>{let o=document.createElement('option');o.value=sz;o.innerText=sz+' mm';sizeSel.appendChild(o);});
+  document.getElementById('sizeNote').innerText='Reference EOA values from published literature. Measured post-operative EOA may differ by 10\u201325%.';
+  updatePreview();
+}
+
+function updateGauge(eoai, thresh) {
+  const wrap = document.getElementById('gaugeWrap');
+  const fill = document.getElementById('gaugeFill');
+  const needle = document.getElementById('gaugeNeedle');
+  wrap.style.display='block';
+  const min=thresh.gaugeMin, max=thresh.gaugeMax;
+  const pct = Math.min(Math.max((eoai-min)/(max-min),0),1)*100;
+  // Fill colour gradient: red -> amber -> green
+  fill.style.width=pct+'%';
+  let col = eoai <= thresh.sevThresh ? '#e85050' : eoai <= thresh.modThresh ? '#f0a030' : '#2fa85a';
+  fill.style.background=col;
+  needle.style.left=pct+'%';
+  // Label thresholds
+  const sevPct=((thresh.sevThresh-min)/(max-min)*100).toFixed(1)+'%';
+  const modPct=((thresh.modThresh-min)/(max-min)*100).toFixed(1)+'%';
+  document.getElementById('g-label-sev').innerText=thresh.sevThresh.toFixed(2);
+  document.getElementById('g-label-mod').innerText=thresh.modThresh.toFixed(2);
+  document.getElementById('g-sev-label').innerText='Severe \u2264'+thresh.sevThresh.toFixed(2);
+  document.getElementById('g-mod-label').innerText='Moderate \u2264'+thresh.modThresh.toFixed(2);
+  document.getElementById('g-label-0').innerText=min.toFixed(1);
+}
+
+function updatePreview() {
+  let bsa=calcBSA(), bmi=calcBMI(), eoa=getSelectedEOA();
+  let pos=posSel.value;
+  let thresh=getThresholds(pos, bmi);
+  let bmiClass = bmi>=30 ? ' (obese \u2014 adjusted thresholds)' : '';
+
+  document.getElementById('bsaValue').innerText=bsa.toFixed(2);
+  document.getElementById('bmiValue').innerText=bmi.toFixed(1)+bmiClass;
+  
+  // Show threshold in the info-note
+  let noteEl=document.getElementById('thresholdNote');
+  noteEl.innerHTML = pos==='mitral'
+    ? '<strong>Mitral PPM thresholds applied:</strong> Moderate \u22641.2; Severe \u22640.9 cm\u00b2/m\u00b2 (Magne et al., Circulation 2007)'
+    : (bmi>=30
+        ? '\u26A0\uFE0F <strong>BMI \u226530 \u2014 Obesity-adjusted aortic thresholds:</strong> Moderate \u22640.70; Severe \u22640.55 cm\u00b2/m\u00b2 (Pibarot/Dumesnil, Circulation 2021)'
+        : '<strong>Standard aortic PPM thresholds:</strong> Moderate \u22640.85; Severe \u22640.65 cm\u00b2/m\u00b2 (AHA/ACC 2021)');
+
+  if(!bsa||!eoa) {
+    document.getElementById('previewEOAi').innerText='—';
+    document.getElementById('eoaiDisplay').innerText='—';
+    document.getElementById('ppmClassification').innerHTML='—';
+    document.getElementById('recommendationText').innerText='Select valid valve and size';
+    document.getElementById('compatibilityList').innerHTML='<div class="valve-item">Complete selection to see comparison</div>';
+    document.getElementById('gaugeWrap').style.display='none';
+    document.getElementById('strategyBox').style.display='none';
+    return;
+  }
+  let eoai = eoa/bsa;
+  document.getElementById('previewEOAi').innerText=eoai.toFixed(2);
+  document.getElementById('eoaiDisplay').innerText=eoai.toFixed(2);
+
+  let cls=classifyPPM(eoai, thresh);
+  let statusHtml='', recText='', stratBox=document.getElementById('strategyBox');
+
+  if(cls==='none') {
+    statusHtml='<div class="ppm-status no-ppm">&#10003; No clinically significant PPM</div>';
+    recText='Excellent hemodynamic match. Low risk of mismatch-related morbidity.';
+    stratBox.style.display='none';
+  } else if(cls==='moderate') {
+    statusHtml='<div class="ppm-status moderate-ppm">&#9888;&#65039; MODERATE PPM</div>';
+    recText=pos==='mitral'
+      ? 'Moderate mitral PPM. Associated with elevated mean gradients and reduced functional capacity. Consider upsizing if annular anatomy permits.'
+      : 'Moderate aortic PPM. Associated with higher transvalvular gradients and may affect LV remodelling. Consider upsizing or annular enlargement in patients with good surgical risk and expected long survival.';
+    stratBox.style.display='none';
+  } else {
+    statusHtml='<div class="ppm-status severe-ppm">&#128308; SEVERE PPM</div>';
+    recText=pos==='mitral'
+      ? 'Severe mitral PPM. Strongly associated with reduced functional capacity and impaired haemodynamics. Alternative prosthesis or annular enlargement should be considered based on surgical feasibility and patient characteristics.'
+      : 'Severe aortic PPM. Associated with increased mortality and reduced functional capacity. Consider alternative prosthesis, annular enlargement, or TAVI depending on surgical feasibility and patient characteristics (age, activity level, LV function).';
+    stratBox.style.display='block';
+  }
+  document.getElementById('ppmClassification').innerHTML=statusHtml;
+  document.getElementById('recommendationText').innerText=recText;
+  updateGauge(eoai, thresh);
+  generateCompatibilityList(thresh);
+}
+
+function generateCompatibilityList(thresh) {
+  let targetPos=posSel.value;
+  let targetType=typeSel.value==='bioprosthetic'?'bioprosthetic':'mechanical';
+  let bsa=calcBSA();
+  let currentMan=manSel.value, currentModel=modSel.value, currentSize=parseInt(sizeSel.value);
+
+  document.getElementById('compatibilityList').innerHTML='';
+  let items=[];
+
+  for(let man in prosthesisEOA) {
+    let posData=prosthesisEOA[man][targetPos];
+    if(!posData) continue;
+    let typeData=posData[targetType];
+    if(!typeData) continue;
+    for(let model in typeData) {
+      let sizesEOA=typeData[model];
+      for(let sizeStr in sizesEOA) {
+        let sizeNum=parseInt(sizeStr), eoaVal=sizesEOA[sizeStr];
+        if(!eoaVal) continue;
+        let eoaiVal=eoaVal/bsa;
+        let cls=classifyPPM(eoaiVal, thresh);
+        let isCurrent=(man===currentMan&&model===currentModel&&sizeNum===currentSize);
+        let badge=isCurrent ? '&#128309; Current selection' : getBadgeLabel(cls);
+        let cssClass=isCurrent ? 'valve-item valve-acceptable' : 'valve-item '+getBadgeClass(cls);
+        let itemHtml=`<div class="${cssClass}">
+          <span><strong>${man}</strong> \u00B7 ${model} (${sizeNum} mm)</span>
+          <span>iEOA ${eoaiVal.toFixed(2)} cm\u00B2/m\u00B2 &nbsp;${badge}</span>
+        </div>`;
+        items.push({eoaiVal, cls, html:itemHtml, isCurrent});
+      }
     }
+  }
+  items.sort((a,b)=>{
+    if(a.isCurrent&&!b.isCurrent) return -1;
+    if(!a.isCurrent&&b.isCurrent) return 1;
+    return b.eoaiVal-a.eoaiVal;
+  });
+  let listEl=document.getElementById('compatibilityList');
+  if(!items.length) listEl.innerHTML='<div class="valve-item">No entries for selected position/type.</div>';
+  else items.forEach(it=>listEl.innerHTML+=it.html);
+}
 
-    function updatePreview() {
-        let bsa = calculateBSA();
-        let eoa = getSelectedEOA();
-        if (!bsa || !eoa || isNaN(bsa)) {
-            previewEoaiSpan.innerText = '—';
-            eoaiDisplay.innerText = '—';
-            ppmClassificationDiv.innerHTML = '—';
-            recommendationText.innerText = 'Select valid valve / size';
-            compatibilityListDiv.innerHTML = '<div class="valve-item">Complete valve selection to see compatibility</div>';
-            return;
-        }
-        let eoai = eoa / bsa;
-        previewEoaiSpan.innerText = eoai.toFixed(2);
-        eoaiDisplay.innerText = eoai.toFixed(2) + ' cm²/m²';
-        let statusHtml = '';
-        let recText = '';
-        if (eoai > 0.85) {
-            statusHtml = '<div class="ppm-status no-ppm">✅ NO clinically significant PPM (iEOA > 0.85)</div>';
-            recText = 'Excellent hemodynamic match. Low risk of mismatch-related morbidity.';
-        } else if (eoai <= 0.85 && eoai > 0.65) {
-            statusHtml = '<div class="ppm-status moderate-ppm">⚠️ MODERATE PPM (iEOA ≤ 0.85). Consider upsizing or annular enlargement if feasible.</div>';
-            recText = 'Associated with higher gradients; may affect ventricular remodelling.';
-        } else if (eoai <= 0.65) {
-            statusHtml = '<div class="ppm-status severe-ppm">🔴 SEVERE PPM (iEOA ≤ 0.65). High risk of worse outcomes. Alternative prosthesis or root enlargement strongly advised.</div>';
-            recText = 'Severe PPM linked to increased mortality and reduced functional capacity.';
-        } else {
-            statusHtml = '<div class="ppm-status no-ppm">No mismatch</div>';
-            recText = 'Acceptable predicted iEOA.';
-        }
-        ppmClassificationDiv.innerHTML = statusHtml;
-        recommendationText.innerText = recText;
-        generateCompatibilityList();
-    }
+// Events
+manSel.addEventListener('change',()=>{updateModelsAndSizes();updatePreview();});
+posSel.addEventListener('change',()=>{updateModelsAndSizes();updatePreview();});
+typeSel.addEventListener('change',()=>{updateModelsAndSizes();updatePreview();});
+modSel.addEventListener('change',()=>{updateSizesForModel();updatePreview();});
+sizeSel.addEventListener('change',()=>updatePreview());
+htIn.addEventListener('input',()=>updatePreview());
+wtIn.addEventListener('input',()=>updatePreview());
+document.getElementById('refreshBtn').addEventListener('click',()=>updatePreview());
 
-    function generateCompatibilityList() {
-        let targetPos = posSelect.value;
-        let targetType = typeSelect.value === 'bioprosthetic' ? 'bioprosthetic' : 'mechanical';
-        let patientBSA = calculateBSA();
-        let currentMan = manSelect.value;
-        let currentModel = modelSelect.value;
-        let currentSize = parseInt(sizeSelect.value);
-        let currentEOA = getSelectedEOA();
-        let currentEOAi = currentEOA && patientBSA ? (currentEOA / patientBSA) : null;
-
-        compatibilityListDiv.innerHTML = '';
-        let compatibleItems = [];
-
-        for (let man in prosthesisEOA) {
-            let posData = prosthesisEOA[man][targetPos];
-            if (!posData) continue;
-            let typeData = posData[targetType];
-            if (!typeData) continue;
-            for (let model in typeData) {
-                let sizesEOA = typeData[model];
-                for (let sizeStr in sizesEOA) {
-                    let sizeNum = parseInt(sizeStr);
-                    let eoaVal = sizesEOA[sizeStr];
-                    if (!eoaVal) continue;
-                    let eoaiVal = eoaVal / patientBSA;
-                    let isCompatible = (eoaiVal > 0.85);
-                    let isCurrent = (man === currentMan && model === currentModel && sizeNum === currentSize);
-                    let statusClass = isCompatible ? 'valve-match' : 'valve-mismatch';
-                    let badge = isCompatible ? '✓ MATCH' : '✗ mismatch';
-                    if (isCurrent) badge = '🔹 current selection';
-                    let extraNote = '';
-                    if (!isCompatible && eoaiVal <= 0.65) extraNote = ' (severe PPM)';
-                    else if (!isCompatible) extraNote = ' (moderate PPM)';
-                    let itemHtml = `<div class="valve-item ${statusClass}">
-                                        <span><strong>${man}</strong> · ${model} (${sizeNum} mm)</span>
-                                        <span>iEOA ${eoaiVal.toFixed(2)} cm²/m² · ${badge}${extraNote}</span>
-                                    </div>`;
-                    compatibleItems.push({ eoaiVal, isCompatible, html: itemHtml, isCurrent });
-                }
-            }
-        }
-        compatibleItems.sort((a,b) => {
-            if (a.isCurrent && !b.isCurrent) return -1;
-            if (!a.isCurrent && b.isCurrent) return 1;
-            return b.eoaiVal - a.eoaiVal;
-        });
-        if (compatibleItems.length === 0) compatibilityListDiv.innerHTML = '<div class="valve-item">No matching valve database entries for the selected position/type.</div>';
-        else compatibleItems.forEach(item => compatibilityListDiv.innerHTML += item.html);
-    }
-
-    // Event listeners
-    manSelect.addEventListener('change', () => { updateModelsAndSizes(); updatePreview(); });
-    posSelect.addEventListener('change', () => { updateModelsAndSizes(); updatePreview(); });
-    typeSelect.addEventListener('change', () => { updateModelsAndSizes(); updatePreview(); });
-    modelSelect.addEventListener('change', () => { updateSizesForModel(); updatePreview(); });
-    sizeSelect.addEventListener('change', () => updatePreview());
-    heightInput.addEventListener('input', () => updatePreview());
-    weightInput.addEventListener('input', () => updatePreview());
-    document.getElementById('refreshBtn').addEventListener('click', () => updatePreview());
-
-    // initialize
-    updateModelsAndSizes();
-    updatePreview();
+updateModelsAndSizes();
+updatePreview();
 </script>
 </body>
 </html>
