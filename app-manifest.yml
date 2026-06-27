@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-06-25 08:36
+  updated: 2026-06-27 18:26
 
 sections:
   - id: calculators
@@ -209,7 +209,7 @@ sections:
         visible: true
         tags: []
       - id: inotrops
-        title: "Inotropes & Vasoactive Drugs | Cardiac Surgery Guide"
+        title: "Inotropes &amp; Vasoactive Drugs | Cardiac Surgery ICU"
         file: books/cheatsheets/inotrops.html
         type: cheatsheet
         visible: true
