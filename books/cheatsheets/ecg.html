@@ -747,7 +747,8 @@
                     <ul>
                         <li><span class="bold">Right Ventricular Hypertrophy (RVH):</span>
                             <ul>
-                                <li>Sokolow-Lyon RV Index: <span class="mono">R(V1) + S(V5/V6) &gt; 10.5 mm</span>.</li>
+                                <li>Sokolow-Lyon RV Index: <span class="mono">R(V1) + S(V5/V6) &gt; 10.5 mm</span> — one of several supporting criteria.</li>
+                                <li class="tip" style="background:var(--bg-tip);border-left:3px solid var(--warning);padding:6px 10px;border-radius:0 6px 6px 0;font-size:13px;"><strong>Note:</strong> No single ECG criterion reliably diagnoses RVH. Diagnostic confidence increases when multiple criteria coexist: R/S &gt;1 in V1, R &gt;7 mm in V1, right axis deviation, qR in V1, and RV strain pattern V1–V3. Consider echocardiography to confirm.</li>
                                 <li>Dominant R wave in V1 with an <span class="mono">R/S ratio &gt; 1.0</span>; right axis deviation present.</li>
                                 <li>RV Strain Pattern: ST depression and T-wave inversion across V1–V3 and inferior leads.</li>
                             </ul>
@@ -777,15 +778,15 @@
                     <p><span class="bold">Atrial Flutter:</span></p>
                     <ul>
                         <li><span class="bold">Typical (Cavo-Tricuspid Isthmus Dependent):</span> Counter-clockwise re-entry yields deep negative "sawtooth" configurations in leads II, III, aVF, and upright positive waves in V1. Clockwise variants flip these directional polarities.</li>
-                        <li><span class="bold">Conduction Ratios:</span> Usually locked at fixed ratios (2:1, 3:1, 4:1). A critical danger occurs during 1:1 rapid conduction, mimicking hyper-unstable wide Ventricular Tachycardia if aberrant pathways co-exist.</li>
+                        <li><span class="bold">Conduction Ratios:</span> Fixed conduction ratios (2:1, 3:1, 4:1) are common, but variable AV conduction frequently occurs, producing an irregularly irregular rhythm that can mimic atrial fibrillation. A critical danger occurs during 1:1 rapid conduction, mimicking hyper-unstable wide Ventricular Tachycardia if aberrant pathways co-exist.</li>
                     </ul>
-                    <p><span class="bold">Atrial Fibrillation (AF):</span> Completely chaotic, multiple micro-reentrant waves. Irregularly irregular ventricular response pattern. Coarse variants imply structural trial enlargement metrics.</p>
+                    <p><span class="bold">Atrial Fibrillation (AF):</span> Completely chaotic, multiple micro-reentrant waves. Irregularly irregular ventricular response pattern. Coarse AF fibrillatory morphology may be associated with structural atrial enlargement but is nonspecific — it may also occur with elevated vagal tone, acute ischaemia, or electrolyte disturbances.</p>
                 </div>
                 <div class="card">
                     <h3>⚡ Focal & Chaotic Ectopic Arrhythmias</h3>
                     <ul>
                         <li><span class="bold">Multifocal Atrial Tachycardia (MAT):</span> Heart tracking rate exceeding <span class="mono">&gt;100 bpm</span> featuring <span class="bold">&ge; 3 morphologically distinct P waves</span> with completely varying, changing PP, PR, and RR intervals. Strongly linked with acute COPD exacerbation, severe hypoxemia, and acute hypomagnesemia.</li>
-                        <li><span class="bold">The Ashman Phenomenon:</span> Occurs when a long RR interval is immediately followed by a short RR cycle. The premature impulse tracks into the refractory period of one of the bundle branches (typically the Right Bundle branch), inducing an aberrant QRS complex tracking pattern. Mimics single or ventricular ectopy salvos.</li>
+                        <li><span class="bold">The Ashman Phenomenon:</span> Occurs when a long RR interval is immediately followed by a short RR cycle. The premature impulse tracks into the refractory period of one of the bundle branches (typically the Right Bundle branch), inducing an aberrant QRS complex tracking pattern. Most commonly observed during atrial fibrillation. Mimics isolated ventricular ectopic beats or short salvos.</li>
                     </ul>
                 </div>
             </div>
@@ -803,8 +804,8 @@
                     <tbody>
                         <tr><td><span class="bold">First-Degree</span></td><td>AV Nodal (Usually)</td><td>Constant prolonged PR interval <span class="mono">&gt;200 ms</span>. Every P wave conducts successfully.</td><td>Benign. Monitor for drug interactions.</td></tr>
                         <tr><td><span class="bold">Second-Degree Mobitz I</span></td><td>AV Nodal</td><td>Progressive PR prolongation cycle until a QRS is completely dropped. Grouped beating pattern.</td><td>Usually transient, stable. Reversible cause likely.</td></tr>
-                        <tr><td><span class="bold">Second-Degree Mobitz II</span></td><td>Infranodal (His-Purkinje)</td><td>Intermittent dropped QRS complexes with completely fixed, constant PR intervals on conducted complexes.</td><td><span class="red">Highly unstable</span>. High progression rate to complete block. Permanent pacemaker mandatory.</td></tr>
-                        <tr><td><span class="bold">Third-Degree (Complete)</span></td><td>Nodal or Infranodal</td><td>Complete AV dissociation. Atrial and ventricular rates independent. P-P and R-R intervals fixed.</td><td>Escape rhythm dictates stability: Narrow junctional (40-60 bpm, stable) vs Wide Ventricular (20-40 bpm, unstable).</td></tr>
+                        <tr><td><span class="bold">Second-Degree Mobitz II</span></td><td>Infranodal (His-Purkinje)</td><td>Intermittent dropped QRS complexes with completely fixed, constant PR intervals on conducted complexes.</td><td><span class="red">Highly unstable</span>. High progression rate to complete block. Permanent pacing is generally indicated unless a clearly reversible cause exists (e.g., Lyme carditis, acute myocardial infarction, drug toxicity, or severe hyperkalemia).</td></tr>
+                        <tr><td><span class="bold">Third-Degree (Complete)</span></td><td>Nodal or Infranodal</td><td>Complete AV dissociation. Atrial and ventricular rates independent. P-P and R-R intervals fixed.</td><td>Escape rhythm dictates stability: Narrow junctional (40-60 bpm, stable) vs Wide Ventricular (20–40 bpm, often unstable and associated with higher risk of syncope and asystole — haemodynamic compromise is common but not universal; a minority with chronic complete block and adequate rate may be relatively stable).</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -921,6 +922,30 @@
             </div>
         </div>
 
+
+            <div class="card">
+                <h3>📊 VT vs. SVT-with-Aberrancy: Rapid Comparison Matrix</h3>
+                <table>
+                    <thead>
+                        <tr><th>Criterion</th><th>Favours VT</th><th>Favours SVT-A</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>AV Dissociation</strong></td><td class="green">Pathognomonic for VT (when present)</td><td class="red">Absent — P waves track with QRS</td></tr>
+                        <tr><td><strong>Capture Beats</strong></td><td class="green">Narrow QRS breaks = VT confirmed</td><td class="red">Not seen</td></tr>
+                        <tr><td><strong>Fusion Beats</strong></td><td class="green">Hybrid morphology = VT confirmed</td><td class="red">Not seen</td></tr>
+                        <tr><td><strong>Initial R in aVR</strong></td><td class="green">Dominant upright R in aVR → VT</td><td class="red">Usually negative or equiphasic</td></tr>
+                        <tr><td><strong>R/S ratio &gt;0.7 in aVR</strong></td><td class="green">Strongly favours VT (Vereckei)</td><td class="red">Uncommon</td></tr>
+                        <tr><td><strong>Precordial concordance</strong></td><td class="green">All positive or all negative V1–V6 = VT</td><td class="red">Normal R-wave progression</td></tr>
+                        <tr><td><strong>QRS width</strong></td><td class="green">&gt;160 ms (especially LBBB-type VT)</td><td class="red">Usually &lt;140 ms in aberrancy</td></tr>
+                        <tr><td><strong>Response to adenosine</strong></td><td class="red">Usually no effect (diagnostic — does not terminate true VT)</td><td class="green">May terminate if AVNRT or AVRT circuit</td></tr>
+                        <tr><td><strong>Clinical history</strong></td><td class="green">Structural heart disease, prior MI, low EF</td><td class="red">Young, no structural disease, prior similar SVT</td></tr>
+                    </tbody>
+                </table>
+                <div class="tip">
+                    💡 <span class="bold">Remember:</span> All regular wide complex tachycardias should be treated as VT until proven otherwise. Haemodynamic stability does NOT differentiate VT from SVT — VT can be well tolerated, and SVT can cause shock. Adenosine (6–12 mg IV) may be used diagnostically in stable wide complex tachycardia of uncertain origin, but should only be administered with defibrillation immediately available.
+                </div>
+            </div>
+
         <div id="sec9" class="section-panel">
             <h2>9. Ventricular Arrhythmias and Topographic Mapping</h2>
             <div class="section-desc">Ectopic mapping, pathway tracking, and idiopathic channel focuses.</div>
@@ -1033,7 +1058,7 @@
             <div class="card">
                 <h3>🫀 Cardiomyopathic Sudden Death Triggers</h3>
                 <ul>
-                    <li><span class="bold">Hypertrophic Cardiomyopathy (HCM):</span> Displays huge precordial voltages. Features deep, sharp, narrow "dagger-like" Q waves inside lateral and inferior leads (septal hypertrophy vectors). Apical HCM (<span class="bold">Yamaguchi Syndrome</span>) displays giant, deeply inverted precordial T waves ($&gt; -10 \text{ mm}$) tracking from V3 through V6.</li>
+                    <li><span class="bold">Hypertrophic Cardiomyopathy (HCM):</span> Displays huge precordial voltages. Features deep, sharp, narrow "dagger-like" Q waves inside lateral and inferior leads (septal hypertrophy vectors). Apical HCM (<span class="bold">Yamaguchi Syndrome</span>) displays giant, deeply inverted precordial T waves (often &gt;10 mm — not a universal absolute criterion; depth may be less pronounced in some variants) tracking from V3 through V6.</li>
                     <li><span class="bold">Arrhythmogenic Right Ventricular Cardiomyopathy (ARVC):</span>
                         <ul>
                             <li><span class="bold">The Epsilon Wave:</span> A distinct, low-amplitude electrical notch or post-excitation deflection between the end of the QRS complex and the start of the ST segment inside right precordial leads V1–V3.</li>
@@ -1054,10 +1079,10 @@
                         <tr><th>Pathology / Agent</th><th>Early / Moderate ECG Indicators</th><th>Advanced / Critical Lethal Phases</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td><span class="bold">Hyperkalemia</span></td><td>Narrow, symmetrically peaked, "tent-shaped" T waves with a tight base (best seen in $V_2$–$V_4$).</td><td>P wave flattens and disappears, PR prolongs, QRS widens diffusely, culminating in a terminal <span class="red">Sine Wave configuration</span>.</td></tr>
+                        <tr><td><span class="bold">Hyperkalemia</span></td><td>Narrow, symmetrically peaked, "tent-shaped" T waves with a tight base (best seen in $V_2$–$V_4$). <em>Sequence (peaked T &rarr; PR prolongation &rarr; P loss &rarr; QRS widening) is classic but not obligatory.</em></td><td>P wave flattens and disappears, PR prolongs, QRS widens diffusely, culminating in a terminal <span class="red">Sine Wave configuration</span>. <strong>Important:</strong> ECG manifestations are highly variable and may not correlate with serum potassium concentration. Severe hyperkalaemia can present with minimal ECG changes, and normal-appearing ECG does not exclude dangerous levels.</td></tr>
                         <tr><td><span class="bold">Hypokalemia</span></td><td>ST segment depression, T wave flattening, development of prominent <span class="bold">U waves ($U &gt; 1 \text{ mm}$ or $U &gt; T$ amplitude)</span>.</td><td>T-U wave fusion sequence creates apparent pseudo-prolongation of the QT interval (QU interval). High risk for TdP.</td></tr>
                         <tr><td><span class="bold">Hypercalcemia</span></td><td>Shortening of the ST segment, moving the T wave up against the QRS complex; short QTc.</td><td>Severe ventricular automaticity triggers.</td></tr>
-                        <tr><td><span class="bold">Hypocalcemia</span></td><td>Prolongation of the ST segment, causing rate-independent lengthening of the QTc interval. T wave remains normal.</td><td>Increases vulnerability to triggered ventricular tachyarrhythmias.</td></tr>
+                        <tr><td><span class="bold">Hypocalcemia</span></td><td>Prolongation of the ST segment, causing rate-independent lengthening of the QTc interval. T waves are usually preserved, but may flatten or invert in severe or prolonged hypocalcaemia.</td><td>Increases vulnerability to triggered ventricular tachyarrhythmias.</td></tr>
                         <tr><td><span class="bold">Digitalis Effect</span></td><td>Downsloping "scooped" ST depression resembling a reverse check mark (<span class="bold">"Salvador Dali mustache" sign</span>), short QT.</td><td>Reflects therapeutic level, <span class="green">not toxic status</span>.</td></tr>
                         <tr><td><span class="bold">Digitalis Toxicity</span></td><td>Increased automaticity paired with conduction inhibition. Ventricular bigeminy salvos.</td><td>Highly specific: <span class="red">Paroxysmal Atrial Tachycardia with AV block</span> or true bidirectional VT.</td></tr>
                         <tr><td><span class="bold">Tricyclic (TCA) Overdose</span></td><td>QRS widening ($&gt;100 \text{ ms}$ predicts seizures, $&gt;160 \text{ ms}$ predicts VT/VF risks), prolonged QTc interval.</td><td>Highly specific tracking marker: <span class="red">Terminal R wave &gt; 3 mm in lead aVR</span> with an $R/S \text{ ratio} &gt; 0.7$ in aVR.</td></tr>
@@ -1117,6 +1142,47 @@
             </div>
         </div>
 
+
+            <div class="card" style="margin-top: 16px;">
+                <h3 style="color: var(--danger);">❤️‍🩹 Post-Cardiac Surgery: Temporary Epicardial Pacing Wires</h3>
+                <p style="font-size: 13.5px; margin-bottom: 12px;">Temporary epicardial pacing wires are routinely placed at the end of cardiac surgery. Atrial wires are sutured to the right atrium; ventricular wires to the right ventricle. Management requires understanding of pacing modes, capture, and sensing.</p>
+                <div class="grid-2">
+                    <div>
+                        <p><span class="bold">Standard pacing modes (NBG code):</span></p>
+                        <table>
+                            <thead><tr><th>Mode</th><th>Paces</th><th>Senses</th><th>Typical use post-CS</th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="mono">AAI</span></td><td>Atrium</td><td>Atrium</td><td>Sinus bradycardia with intact AV conduction; preserves AV synchrony</td></tr>
+                                <tr><td><span class="mono">VVI</span></td><td>Ventricle</td><td>Ventricle</td><td>AF with slow ventricular response; simplest mode; loses AV synchrony</td></tr>
+                                <tr><td><span class="mono">DDD</span></td><td>Both</td><td>Both</td><td>Complete AV block; AV sequential pacing; requires both wire sets</td></tr>
+                                <tr><td><span class="mono">DOO</span></td><td>Both</td><td>Neither</td><td>Asynchronous fallback if oversensing; used with magnet application</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <p><span class="bold">AV delay optimisation:</span></p>
+                        <ul style="font-size: 13px;">
+                            <li>Standard AV delay: <span class="mono">150–200 ms</span> (shorter than native PR to avoid fusion)</li>
+                            <li>Short AV delay (100–120 ms): used when atrial sensing is unreliable</li>
+                            <li>Optimal AV delay can be guided by echocardiography (maximise VTI, avoid truncated A-wave)</li>
+                        </ul>
+                        <p style="margin-top: 12px;"><span class="bold">Wire management:</span></p>
+                        <ul style="font-size: 13px;">
+                            <li>Check capture threshold daily: <span class="mono">≤2× capture threshold</span> safety margin</li>
+                            <li>Sensing threshold: set at <span class="mono">50–70%</span> of sensed amplitude</li>
+                            <li>Remove atrial wires before ventricular (lower bleeding risk from atrial wire sites)</li>
+                            <li>Removal contraindicated if anticoagulated (INR &gt;1.5) or on dual antiplatelet therapy</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tip">
+                    ⚠️ <span class="bold">Failure to capture post-CS:</span> Common causes: wire dislodgement, oedema at electrode tip (most common first 24–48 h), electrolyte imbalance (hypokalemia, acidosis), antiarrhythmic drugs (amiodarone ↑ threshold), cardiac tamponade. First intervention: ↑ output to maximum (20 mA); check wire connections; call surgeon if unresolved.
+                </div>
+                <div class="tip" style="border-left-color: var(--danger);">
+                    🚨 <span class="bold">Rapid AF post-CABG (most common arrhythmia, peak day 2–3):</span> Switch to VVI (rate control) or DDD with mode-switching if available. Amiodarone preferred for rhythm control. Do not rely on VVI pacing alone if rate uncontrolled — assess haemodynamics and consider cardioversion.
+                </div>
+            </div>
+
         <div id="sec16" class="section-panel">
             <h2>16. Advanced Pediatric Electrocardiography</h2>
             <div class="section-desc">Evolutionary baseline developments and neonatal structural markers.</div>
@@ -1145,6 +1211,13 @@
                         <div class="tool-field">
                             <label>Patient Heart Rate (bpm):</label>
                             <input type="number" id="hrInput" placeholder="e.g., 75">
+                        </div>
+                        <div class="tool-field">
+                            <label>Biological Sex (for upper limit of normal):</label>
+                            <select id="qtSex">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
                         </div>
                         <button class="btn-calc" onclick="calculateQTc()">Compute QTc Profiles</button>
                     </div>
@@ -1253,16 +1326,30 @@
             // Hodges Linear Model Calculations
             const qtcHodges = Math.round((qt + 1.75 * (hr - 60)));
 
-            let highRiskWarning = (qtcBazett > 500 || qtcFridericia > 500) ? 
-                '<br><span class="badge badge-danger" style="margin-top:8px;">⚠️ CRITICAL TORSDES RISK: QTc &gt; 500 ms</span>' : '';
+            const sex = document.getElementById('qtSex') ? document.getElementById('qtSex').value : 'male';
+            const upperNormal = sex === 'female' ? 460 : 450;
+            const prolonged = sex === 'female' ? 470 : 460;
+            const sexLabel = sex === 'female' ? 'Female (ULN: 460 ms)' : 'Male (ULN: 450 ms)';
+
+            let normalStatus = qtcFridericia <= upperNormal
+                ? '<span class="badge badge-success">✓ Within Normal Limits</span>'
+                : qtcFridericia <= 500
+                    ? '<span class="badge badge-primary">⚠️ Borderline Prolonged — monitor and review QT-prolonging agents</span>'
+                    : '<span class="badge badge-danger">🚨 CRITICAL QTc &gt;500 ms — High TdP Risk</span>';
+
+            let highRiskWarning = (qtcBazett > 500 || qtcFridericia > 500) ?
+                '<br><span class="badge badge-danger" style="margin-top:8px;">⚠️ CRITICAL TORSADES RISK: QTc &gt; 500 ms — Correct electrolytes, review all QT-prolonging drugs, consider continuous monitoring</span>' : '';
 
             resultsDiv.style.display = 'block';
             resultsDiv.innerHTML = `
                 <strong>Calculated Rate-Correction Profiles:</strong><br>
-                • <strong>Bazett Formula:</strong> <span class="mono">${qtcBazett} ms</span> (Note: Overcorrects at high HR)<br>
+                • <strong>Bazett Formula:</strong> <span class="mono">${qtcBazett} ms</span> (Note: Overcorrects at high HR; unreliable at extreme rates)<br>
                 • <strong>Fridericia Formula:</strong> <span class="mono" style="color:var(--primary); font-weight:bold;">${qtcFridericia} ms</span> (Preferred clinical benchmark)<br>
                 • <strong>Framingham Formula:</strong> <span class="mono">${qtcFramingham} ms</span><br>
-                • <strong>Hodges Formula:</strong> <span class="mono">${qtcHodges} ms</span>
+                • <strong>Hodges Formula:</strong> <span class="mono">${qtcHodges} ms</span><br>
+                <br>
+                <strong>Sex-specific interpretation (${sexLabel}):</strong> ${normalStatus}
+                <br><small style="color:var(--text-muted)">Upper limits: Male ≤450 ms; Female ≤460 ms. QTc &gt;500 ms = high TdP risk regardless of sex. (AHA/ACC, ESC 2022)</small>
                 ${highRiskWarning}
             `;
         }

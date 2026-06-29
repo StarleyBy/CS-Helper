@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardiac Auscultation | Clinical Reference · Cardiac Surgery</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080f1a;--bg2:#0d1826;--bg3:#111f30;--bg4:#162438;
+  --rim:rgba(255,255,255,.07);
+  --text:#d8e8f8;--muted:#6a88a8;--dim:#3a5068;
+  --cyan:#00c8e0;--cyan-d:rgba(0,200,224,.12);--cyan-b:rgba(0,200,224,.25);
+  --red:#f05060;--red-d:rgba(240,80,96,.13);
+  --blue:#4090f0;--blue-d:rgba(64,144,240,.13);
+  --green:#30c880;--green-d:rgba(48,200,128,.12);
+  --amber:#f0a030;--amber-d:rgba(240,160,48,.13);
+  --purple:#a060f0;--purple-d:rgba(160,96,240,.13);
+  --mono:'Space Mono',monospace;--sans:'Space Grotesk',sans-serif;
+  --r:12px;--r2:20px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.65;overflow-x:hidden;min-height:100vh}
+::selection{background:rgba(0,200,224,.3)}
+
+.hdr{background:linear-gradient(135deg,#060d18 0%,#0a1830 55%,#0d2040 100%);border-bottom:1px solid var(--rim);padding:20px 20px 16px;text-align:center;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(0,200,224,.18) 0%,transparent 65%),radial-gradient(ellipse 40% 50% at 80% 60%,rgba(160,96,240,.08) 0%,transparent 55%);pointer-events:none}
+.hdr-title{font-family:var(--mono);font-size:20px;font-weight:700;letter-spacing:.05em;color:var(--cyan);text-shadow:0 0 28px rgba(0,200,224,.4);position:relative}
+.hdr-title span{color:var(--text);opacity:.7}
+.hdr-sub{font-size:12.5px;color:var(--muted);margin-top:5px;letter-spacing:.02em;position:relative}
+.hdr-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:10px;position:relative}
+.hdr-bdg{font-size:10.5px;font-weight:600;padding:3px 11px;border-radius:20px;letter-spacing:.03em}
+.hdr-bdg-c{background:var(--cyan-d);color:var(--cyan);border:1px solid var(--cyan-b)}
+.hdr-bdg-r{background:var(--red-d);color:var(--red);border:1px solid rgba(240,80,96,.25)}
+.hdr-bdg-g{background:var(--green-d);color:var(--green);border:1px solid rgba(48,200,128,.25)}
+.hdr-bdg-a{background:var(--amber-d);color:var(--amber);border:1px solid rgba(240,160,48,.25)}
+.hdr-bdg-p{background:var(--purple-d);color:var(--purple);border:1px solid rgba(160,96,240,.25)}
+
+.tab-grid-wrap{background:var(--bg2);border-bottom:1px solid var(--rim);padding:10px 14px;position:sticky;top:0;z-index:200}
+.tab-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:900px;margin:0 auto}
+.tg{display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:8px 4px 6px;cursor:pointer;transition:all .16s;font-family:inherit}
+.tg:hover{border-color:var(--cyan-b);background:var(--cyan-d)}
+.tg.active{background:var(--cyan-d);border-color:var(--cyan);box-shadow:0 0 0 1px var(--cyan)}
+.tg-icon{font-size:17px;line-height:1}
+.tg-lbl{font-size:9.5px;font-weight:600;color:var(--muted);text-align:center;line-height:1.25;letter-spacing:.02em}
+.tg.active .tg-lbl{color:var(--cyan)}.tg:hover .tg-lbl{color:var(--text)}
+
+.page{max-width:1100px;margin:0 auto;padding:20px 18px 60px}
+.tab{display:none}.tab.active{display:block}
+
+.sh{margin-bottom:16px}
+.sh h2{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--cyan);letter-spacing:.04em;display:flex;align-items:center;gap:9px}
+.sh p{color:var(--muted);font-size:12.5px;margin-top:4px}
+.stitle{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:22px 0 10px;padding-left:10px;border-left:2px solid var(--cyan)}
+
+.card{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:18px;margin-bottom:14px}
+.card h3{font-size:13.5px;font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.card p,.card li{color:var(--muted);font-size:13px;line-height:1.65}
+.card ul,.card ol{padding-left:17px}.card li{margin-bottom:5px}.card li strong{color:var(--text)}
+.card h4{font-size:13px;font-weight:700;color:var(--text);margin:12px 0 5px}
+.card p+p{margin-top:7px}
+
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+
+.box{border-radius:var(--r);padding:11px 14px;margin:10px 0;font-size:13px;line-height:1.6;color:var(--text)}
+.box-cyan  {background:var(--cyan-d);border-left:3px solid var(--cyan)}
+.box-red   {background:var(--red-d);border-left:3px solid var(--red)}
+.box-blue  {background:var(--blue-d);border-left:3px solid var(--blue)}
+.box-green {background:var(--green-d);border-left:3px solid var(--green)}
+.box-amber {background:var(--amber-d);border-left:3px solid var(--amber)}
+.box-purple{background:var(--purple-d);border-left:3px solid var(--purple)}
+.box strong{font-weight:700}
+.box-cyan strong{color:var(--cyan)}.box-red strong{color:var(--red)}.box-blue strong{color:var(--blue)}
+.box-green strong{color:var(--green)}.box-amber strong{color:var(--amber)}.box-purple strong{color:var(--purple)}
+
+.tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--rim);margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:460px}
+th{background:var(--bg3);color:var(--cyan);font-weight:700;padding:8px 10px;text-align:left;border-bottom:1px solid var(--rim);letter-spacing:.03em;font-family:var(--mono);white-space:nowrap}
+td{padding:7px 10px;border-bottom:1px solid var(--rim);color:var(--muted);vertical-align:top;line-height:1.5}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(0,200,224,.03)}
+td strong{color:var(--text)}
+
+/* PHONOCARDIOGRAM */
+.phono{background:#020806;border:1px solid var(--rim);border-radius:var(--r);padding:12px 16px;margin:12px 0;font-family:var(--mono);font-size:12px;line-height:1.4;overflow-x:auto}
+.phono .p-label{color:var(--muted);font-size:10px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:5px;font-weight:700}
+.phono .p-ecg{color:#4090f0}
+.phono .p-pcg{color:#00c8e0}
+.phono .p-dim{color:var(--dim)}
+
+/* AUSCULTATION AREA CARD */
+.area-card{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r2);padding:13px 15px;text-align:center}
+.area-card .area-icon{font-size:26px;margin-bottom:6px}
+.area-card .area-name{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:.04em;margin-bottom:3px}
+.area-card .area-loc{font-size:11.5px;color:var(--muted);margin-bottom:6px}
+.area-card .area-best{font-size:11px;color:var(--text);font-weight:600}
+
+/* MANEUVER TABLE cells */
+.td-up{color:var(--red);font-weight:700}
+.td-dn{color:var(--green);font-weight:700}
+.td-nc{color:var(--muted)}
+.td-var{color:var(--amber);font-weight:700}
+
+/* MURMUR TIMING BARS */
+.timing-bar{display:flex;gap:3px;align-items:center;margin:8px 0;height:22px}
+.tb-seg{height:100%;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#000;letter-spacing:.03em}
+.tb-sys{background:var(--red);flex:1}
+.tb-dia{background:var(--blue);flex:1}
+.tb-blank{background:var(--bg3);border:1px solid var(--rim);flex:.2}
+.tb-murmur{background:var(--amber)}
+.tb-label{font-size:10px;color:var(--muted);font-family:var(--mono);white-space:nowrap}
+
+/* ALGO */
+.algo-flow{display:flex;flex-direction:column;gap:8px;margin:12px 0}
+.algo-q{background:var(--cyan-d);border:1px solid var(--cyan-b);border-radius:var(--r);padding:9px 14px;font-weight:700;font-size:13px;color:var(--cyan)}
+.algo-branch{display:flex;gap:12px;margin-left:16px;flex-wrap:wrap}
+.algo-yes{background:var(--green-d);border:1px solid rgba(48,200,128,.3);border-radius:var(--r);padding:7px 13px;font-size:12.5px;color:var(--green);flex:1;min-width:180px}
+.algo-no{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:7px 13px;font-size:12.5px;color:var(--muted);flex:1;min-width:180px}
+.algo-arrow{color:var(--dim);font-size:18px;align-self:center;margin-left:8px}
+
+.bdg{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin:1px;letter-spacing:.03em}
+.bdg-c{background:var(--cyan-d);color:var(--cyan)}.bdg-r{background:var(--red-d);color:var(--red)}
+.bdg-g{background:var(--green-d);color:var(--green)}.bdg-a{background:var(--amber-d);color:var(--amber)}
+.bdg-p{background:var(--purple-d);color:var(--purple)}.bdg-b{background:var(--blue-d);color:var(--blue)}
+
+.dv{height:1px;background:var(--rim);margin:18px 0}
+.footnote{text-align:center;font-size:11px;color:var(--dim);padding:20px 0 0;border-top:1px solid var(--rim);margin-top:28px}
+@media(max-width:600px){
+  .hdr-title{font-size:15px}.tab-grid{grid-template-columns:repeat(5,1fr)}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-title">CARDIAC AUSCULTATION <span>/</span> ATLAS &amp; DECISION GUIDE</div>
+  <div class="hdr-sub">Heart Sounds &middot; Murmurs &middot; Prosthetic Valves &middot; Post-Cardiac Surgery &middot; Dynamic Manoeuvres</div>
+  <div class="hdr-badges">
+    <span class="hdr-bdg hdr-bdg-c">Heart Sounds</span>
+    <span class="hdr-bdg hdr-bdg-r">Systolic Murmurs</span>
+    <span class="hdr-bdg hdr-bdg-b" style="background:var(--blue-d);color:var(--blue);border:1px solid rgba(64,144,240,.25)">Diastolic &amp; Continuous</span>
+    <span class="hdr-bdg hdr-bdg-p">Cardiac Surgery</span>
+    <span class="hdr-bdg hdr-bdg-a">Manoeuvres &amp; Algorithm</span>
+  </div>
+</div>
+
+<div class="tab-grid-wrap">
+  <div class="tab-grid">
+    <button class="tg active" onclick="gt(0,this)"><span class="tg-icon">&#127908;</span><span class="tg-lbl">Foundations &amp; Heart Sounds</span></button>
+    <button class="tg" onclick="gt(1,this)"><span class="tg-icon">&#128308;</span><span class="tg-lbl">Systolic Murmurs</span></button>
+    <button class="tg" onclick="gt(2,this)"><span class="tg-icon">&#128309;</span><span class="tg-lbl">Diastolic &amp; Continuous</span></button>
+    <button class="tg" onclick="gt(3,this)"><span class="tg-icon">&#10084;&#65039;</span><span class="tg-lbl">Cardiac Surgery &amp; Prosthetics</span></button>
+    <button class="tg" onclick="gt(4,this)"><span class="tg-icon">&#128270;</span><span class="tg-lbl">Manoeuvres &amp; Algorithm</span></button>
+  </div>
+</div>
+
+<main class="page">
+
+<!-- ════ TAB 0: FOUNDATIONS & HEART SOUNDS ════════════════════════ -->
+<section class="tab active" id="t0">
+  <div class="sh"><h2>&#127908; Auscultation Foundations &amp; Normal Heart Sounds</h2><p>Mechanism of sound generation, auscultation areas, cardiac cycle correlation, and normal/extra heart sounds.</p></div>
+
+  <!-- ECG-Mechanics-Sound correlation -->
+  <div class="stitle">Electromechanical &mdash; Acoustic Correlation</div>
+  <div class="card">
+    <h3 style="color:var(--cyan)">&#9889; From ECG Event to Audible Sound</h3>
+    <div class="phono">
+      <div class="p-label">ECG</div>
+      <div class="p-ecg">P &mdash;&mdash;&#8212;&#8212;&#8212; QRS &#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212; T &#8212;&#8212;&#8212; P</div>
+      <div class="p-dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</div>
+      <div class="p-pcg">PCG &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S1&#9643;&#9643;&nbsp;&nbsp;&#9135;&#9135;&#9135; SYSTOLE &#9135;&#9135;&#9135;&nbsp;&nbsp;S2&#9643;&#9643;&nbsp;&#9135;&#9135;&#9135; DIASTOLE &#9135;&#9135;&#9135;</div>
+      <div class="p-dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8679;MV/TV close&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8679;AV/PV close</div>
+      <div class="p-dim" style="margin-top:5px">S4 (if present) &#8594; pre-S1 &nbsp;&nbsp;|&nbsp;&nbsp; S3 (if present) &#8594; 120&ndash;200ms after S2 (early diastole)</div>
+    </div>
+    <div class="g2" style="margin-top:12px">
+      <div>
+        <h4>Sound generation mechanisms</h4>
+        <ul>
+          <li><strong>Valve leaflet tension and closure</strong> &mdash; primary source of S1 and S2</li>
+          <li><strong>Turbulent blood flow</strong> &mdash; murmurs from stenotic or regurgitant valves, high-flow states</li>
+          <li><strong>Myocardial vibration</strong> &mdash; contributes to S3 and S4 via ventricular wall oscillations</li>
+          <li><strong>Intracardiac structures</strong> &mdash; chordae, papillary muscles, prosthetic components</li>
+          <li><strong>Pericardial contact</strong> &mdash; friction rubs, pericardial knock</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Auscultation principles</h4>
+        <ul>
+          <li>Use <strong>diaphragm</strong> for high-pitched sounds (S1, S2, AR, MR murmurs)</li>
+          <li>Use <strong>bell</strong> (light pressure) for low-pitched sounds (S3, S4, MS rumble)</li>
+          <li>Listen in <strong>quiet environment</strong>; focus on one event at a time</li>
+          <li><strong>Systole</strong> = interval between S1 and S2; <strong>Diastole</strong> = interval between S2 and next S1</li>
+          <li>Time murmurs to <strong>carotid pulse</strong> (simultaneous with systole)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auscultation areas -->
+  <div class="stitle">Auscultation Areas &amp; Patient Position</div>
+  <div class="g4" style="margin-bottom:16px">
+    <div class="area-card">
+      <div class="area-icon">&#9679;</div>
+      <div class="area-name">AORTIC AREA</div>
+      <div class="area-loc">2nd ICS, right sternal border</div>
+      <div class="area-best">Best for: AS, AR (early), AV prosthetic sounds</div>
+    </div>
+    <div class="area-card">
+      <div class="area-icon">&#9679;</div>
+      <div class="area-name">PULMONIC AREA</div>
+      <div class="area-loc">2nd ICS, left sternal border</div>
+      <div class="area-best">Best for: PR, PS, PDA, physiological S2 splitting, Graham-Steell</div>
+    </div>
+    <div class="area-card">
+      <div class="area-icon">&#9679;</div>
+      <div class="area-name">ERB&rsquo;S POINT</div>
+      <div class="area-loc">3rd ICS, left sternal border</div>
+      <div class="area-best">Best for: AR early diastolic murmur (with patient sitting forward, expiration), VSD</div>
+    </div>
+    <div class="area-card">
+      <div class="area-icon">&#9679;</div>
+      <div class="area-name">TRICUSPID AREA</div>
+      <div class="area-loc">4th&ndash;5th ICS, left sternal border</div>
+      <div class="area-best">Best for: TR, TS, VSD, Carvallo&rsquo;s sign</div>
+    </div>
+    <div class="area-card">
+      <div class="area-icon">&#9679;</div>
+      <div class="area-name">MITRAL (APEX)</div>
+      <div class="area-loc">5th ICS, midclavicular line</div>
+      <div class="area-best">Best for: S3, S4, MR, MS (LLD position), Austin-Flint</div>
+    </div>
+  </div>
+  <div class="box box-cyan">
+    <strong>Patient positions for optimal auscultation:</strong><br>
+    &bull; <strong>Supine:</strong> Standard baseline; most murmurs heard<br>
+    &bull; <strong>Left lateral decubitus (LLD):</strong> Apex moves closer to chest wall &rarr; dramatically enhances S3, S4, MS rumble, MR<br>
+    &bull; <strong>Sitting forward, end-expiration:</strong> Heart moves anteriorly &rarr; best for AR early diastolic murmur and pericardial friction rub<br>
+    &bull; <strong>Standing vs squatting / Valsalva:</strong> See Tab 4 for dynamic manoeuvre effects
+  </div>
+
+  <!-- S1 -->
+  <div class="stitle">S1 &mdash; First Heart Sound</div>
+  <div class="card">
+    <h3 style="color:var(--cyan)">&#128308; S1</h3>
+    <div class="g2">
+      <div>
+        <h4>Mechanism</h4>
+        <p>S1 results from <strong>closure of the mitral (MV) and tricuspid (TV) valves</strong> at the onset of ventricular systole. The MV component (M1) is louder and precedes the TV component (T1) by 20&ndash;30 ms. Normally heard as a single sound.</p>
+        <div class="phono" style="margin-top:10px">
+          <div class="p-label">S1 intensity correlates with</div>
+          <div class="p-pcg">PR interval length &amp; leaflet position at onset of systole</div>
+        </div>
+      </div>
+      <div>
+        <div class="tw" style="margin:0"><table>
+          <tr><th>S1</th><th>Causes</th></tr>
+          <tr><td><strong style="color:var(--green)">Loud S1</strong></td><td>Short PR interval (pre-excitation), mitral stenosis (thickened leaflets, high excursion), tachycardia, hyperkinetic states, thin chest</td></tr>
+          <tr><td><strong style="color:var(--red)">Soft S1</strong></td><td>Long PR (1st-degree AV block &mdash; leaflets drift toward closure before systole), severe MR, LBBB, low cardiac output, thick chest, COPD, pericardial effusion</td></tr>
+          <tr><td><strong>Variable S1</strong></td><td>Complete AV block (RR varies &rarr; PR varies), AF, VT</td></tr>
+        </table></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S2 -->
+  <div class="stitle">S2 &mdash; Second Heart Sound &amp; Splitting</div>
+  <div class="card">
+    <h3 style="color:var(--cyan)">&#128309; S2 &amp; Splitting Patterns</h3>
+    <p>S2 results from <strong>closure of the aortic (A2) and pulmonic (P2) valves</strong>. A2 precedes P2 and is normally louder. P2 is best heard at the pulmonic area; increased P2 suggests pulmonary hypertension.</p>
+    <div class="g2" style="margin-top:12px">
+      <div>
+        <div class="tw" style="margin:0"><table>
+          <tr><th>Pattern</th><th>Mechanism</th><th>Key associations</th></tr>
+          <tr><td><strong>Physiological splitting</strong></td><td>Inspiration &rarr; &#8593;venous return &rarr; &#8593;RV stroke volume &rarr; delayed P2. Normal split widens on inspiration, disappears on expiration.</td><td>Normal finding in young adults</td></tr>
+          <tr><td><strong>Wide splitting</strong></td><td>Delayed P2 (RBBB, PS, acute PE, RV failure) or early A2 (MR, VSD)</td><td>RBBB, PE, PS, large ASD, MR</td></tr>
+          <tr><td><strong>Fixed splitting</strong></td><td>Equal splitting in inspiration and expiration &mdash; RA/RV volume overload eliminates respiratory variation</td><td>Pathognomonic for <strong>ASD (ostium secundum)</strong></td></tr>
+          <tr><td><strong>Paradoxical splitting</strong></td><td>A2 delayed (closes after P2) &rarr; split on expiration, fuses on inspiration. P2 occurs first.</td><td>LBBB, severe AS, HOCM, RV pacing, aortic stenosis with LV failure</td></tr>
+        </table></div>
+      </div>
+      <div>
+        <div class="box box-amber"><strong>P2 intensity:</strong> Normally P2 &lt; A2. Loud P2 (audible at apex) = pulmonary hypertension until proven otherwise. In severe PH, P2 may equal or exceed A2 even at the apex.</div>
+        <div class="box box-blue"><strong>A2 intensity:</strong> Soft or absent A2 suggests severe AS, aortic regurgitation (leaflet immobility), or low cardiac output. Louder A2 in systemic hypertension.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S3 S4 -->
+  <div class="stitle">Extra Heart Sounds: S3 &amp; S4 Gallops</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--amber)">&#128311; S3 &mdash; Third Heart Sound (Protodiastolic Gallop)</h3>
+      <p><strong>Timing:</strong> 120&ndash;200 ms after S2, early diastole (rapid ventricular filling phase).</p>
+      <p><strong>Quality:</strong> Low-pitched, dull &mdash; use bell at apex in left lateral decubitus position.</p>
+      <p><strong>Mnemonic:</strong> S1&ndash;S2&ndash;S3 = &ldquo;Ken&ndash;tuc&ndash;KY&rdquo;</p>
+      <div class="box box-red" style="margin-top:10px"><strong>Pathological S3</strong> (any age) = ventricular volume overload or impaired compliance:<br>
+        &bull; Severe MR, severe AR, VSD, DCM, CHF<br>
+        &bull; High LV filling pressure &rarr; rapid deceleration of blood causes myocardial oscillation<br>
+        &bull; <strong>Strongest predictor of elevated LVEDP</strong> on clinical exam
+      </div>
+      <div class="box box-green"><strong>Physiological S3</strong>: Normal in children, young adults, athletes, and in the 3rd trimester of pregnancy. Benign &mdash; reflects rapid, compliant ventricular filling.</div>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--purple)">&#128312; S4 &mdash; Fourth Heart Sound (Presystolic Gallop)</h3>
+      <p><strong>Timing:</strong> Just before S1, late diastole (atrial contraction &rarr; ventricular filling).</p>
+      <p><strong>Quality:</strong> Low-pitched &mdash; use bell at apex.</p>
+      <p><strong>Mnemonic:</strong> S4&ndash;S1&ndash;S2 = &ldquo;Ten&ndash;nes&ndash;see&rdquo;</p>
+      <div class="box box-purple" style="margin-top:10px"><strong>S4 always pathological</strong> (requires a non-compliant, stiff ventricle resisting atrial filling):<br>
+        &bull; LVH (systemic hypertension, severe AS, HOCM)<br>
+        &bull; Myocardial ischaemia / acute MI<br>
+        &bull; Hypertrophic cardiomyopathy<br>
+        &bull; <strong>Cannot occur in AF</strong> (requires atrial contraction)
+      </div>
+      <div class="box box-amber"><strong>Summation gallop:</strong> At high heart rates, S3 and S4 fuse into a single loud mid-diastolic sound. Occurs when diastole is short; suggests severely impaired ventricular function.</div>
+    </div>
+  </div>
+
+  <div class="footnote">References: Braunwald&rsquo;s Heart Disease 12th ed. &middot; Hurst&rsquo;s The Heart &middot; Physical Examination of the Heart and Circulation (Shaver &amp; Groves) &middot; ESC Guidelines</div>
+</section>
+
+
+<!-- ════ TAB 1: SYSTOLIC MURMURS ════════════════════════════════ -->
+<section class="tab" id="t1">
+  <div class="sh"><h2>&#128308; Systolic Murmurs</h2><p>Ejection and regurgitant systolic murmurs with mechanisms, radiation, severity clues, and manoeuvre responses.</p></div>
+
+  <div class="stitle">Aortic Stenosis (AS)</div>
+  <div class="card">
+    <h3 style="color:var(--red)">&#128308; Aortic Stenosis</h3>
+    <div class="g2">
+      <div>
+        <h4>Mechanism &amp; Auscultation</h4>
+        <p>Turbulent high-velocity jet through a narrowed aortic orifice. <strong>Harsh, crescendo-decrescendo (diamond-shaped) ejection murmur</strong>, best heard at the right 2nd ICS (aortic area), radiating to <strong>carotids and neck</strong>. Starts after S1, peaks in mid-systole, ends before S2.</p>
+        <div class="phono" style="margin-top:8px">
+          <div class="p-label">Timing</div>
+          <div class="p-pcg">S1 &mdash;/&#9651;\&#9654; MID-SYSTOLE PEAK &#9654;/&#9651;\&#9135; S2</div>
+          <div class="p-dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;crescendo &mdash;&mdash;&mdash; decrescendo</div>
+        </div>
+        <h4>Radiation</h4>
+        <ul>
+          <li>Classically to <strong>neck and carotids</strong></li>
+          <li>Gallavardin phenomenon: High-frequency component radiates to apex &mdash; may mimic MR</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Severity clues from auscultation</h4>
+        <div class="tw" style="margin:0"><table>
+          <tr><th>Sign</th><th>Favours severe AS</th></tr>
+          <tr><td>Peak of murmur</td><td>Late systole (late-peaking)</td></tr>
+          <tr><td>A2</td><td>Soft or absent</td></tr>
+          <tr><td>S4</td><td>Present (stiff LV)</td></tr>
+          <tr><td>S2 splitting</td><td>Paradoxical splitting (delayed A2)</td></tr>
+          <tr><td>Carotid pulse</td><td>Pulsus parvus et tardus (slow-rising, small)</td></tr>
+          <tr><td>Murmur intensity</td><td><strong>Not reliable</strong> &mdash; soft murmur in low-flow severe AS</td></tr>
+        </table></div>
+        <div class="box box-red"><strong>&#9888;&#65039; Critical pitfall:</strong> In low-flow, low-gradient severe AS (EF &lt;40%), the murmur may be soft Grade 2/6 or nearly inaudible despite critical stenosis. <em>Never use murmur loudness alone to assess AS severity.</em> Echo and Doppler are mandatory.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">Hypertrophic Obstructive Cardiomyopathy (HOCM)</div>
+  <div class="card">
+    <h3 style="color:var(--amber)">&#128311; HOCM &mdash; Dynamic LVOTO Murmur</h3>
+    <div class="g2">
+      <div>
+        <h4>Mechanism</h4>
+        <p>Systolic anterior motion (SAM) of the mitral valve leaflet against the hypertrophied septum &rarr; dynamic left ventricular outflow tract obstruction. Murmur is <strong>crescendo-decrescendo</strong>, best at <strong>left sternal border</strong>, radiating to apex (but NOT to neck). Often accompanied by MR murmur at apex.</p>
+        <div class="box box-amber"><strong>Key feature:</strong> HOCM murmur is <em>dynamic</em> &mdash; changes dramatically with manoeuvres that alter preload and afterload. Distinguishing from fixed AS is critical.</div>
+      </div>
+      <div>
+        <div class="tw" style="margin:0"><table>
+          <tr><th>Manoeuvre</th><th>Effect on HOCM murmur</th><th>Mechanism</th></tr>
+          <tr><td>Valsalva (strain)</td><td class="td-up">&#8593;&#8593; Louder</td><td>&#8595;Preload &rarr; smaller LV &rarr; more obstruction</td></tr>
+          <tr><td>Standing</td><td class="td-up">&#8593; Louder</td><td>&#8595;Venous return &rarr; &#8595;preload</td></tr>
+          <tr><td>Squatting</td><td class="td-dn">&#8595; Softer</td><td>&#8593;Preload + &#8593;afterload &rarr; larger LV</td></tr>
+          <tr><td>Isometric handgrip</td><td class="td-dn">&#8595; Softer</td><td>&#8593;Afterload &rarr; reduced gradient</td></tr>
+          <tr><td>Passive leg raise</td><td class="td-dn">&#8595; Softer</td><td>&#8593;Preload</td></tr>
+          <tr><td>Amyl nitrite</td><td class="td-up">&#8593;&#8593; Louder</td><td>&#8595;Afterload &rarr; larger gradient</td></tr>
+        </table></div>
+        <div class="box box-red"><strong>Contrast with AS:</strong> AS murmur typically gets <em>louder</em> with squatting (&#8593;preload &#8594; &#8593;stroke volume) and <em>softer</em> with Valsalva &mdash; opposite to HOCM. This contrast is the key clinical differentiator.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">Mitral Regurgitation (MR)</div>
+  <div class="card">
+    <h3 style="color:var(--red)">&#128308; Mitral Regurgitation</h3>
+    <div class="g2">
+      <div>
+        <h4>Mechanism &amp; Auscultation</h4>
+        <p><strong>Pansystolic (holosystolic) murmur</strong> at the apex, radiating to the <strong>left axilla</strong> (posterior MR jet) or to the <strong>left sternal border / base</strong> (anterior jet, e.g., posterior leaflet prolapse). High-pitched, blowing quality. Starts with S1, continues through S2.</p>
+        <div class="phono">
+          <div class="p-label">Chronic MR</div>
+          <div class="p-pcg">S1&nbsp;&#9135;&#9135;&#9135;&#9135; PANSYSTOLIC &#9135;&#9135;&#9135;&#9135;S2&nbsp;(soft)&nbsp;(S3)</div>
+        </div>
+        <h4>Chronic vs Acute MR</h4>
+        <ul>
+          <li><strong>Chronic:</strong> Pansystolic, loud, well-tolerated; LA dilated and compliant &rarr; absorbs regurgitant volume</li>
+          <li><strong>Acute MR</strong> (papillary muscle rupture, chordal rupture, IE): <em>Soft, decrescendo early systolic murmur</em> or even <em>inaudible</em>. Non-compliant LA &rarr; immediate pressure rise &rarr; rapid equalisation of LV&ndash;LA pressures &rarr; gradient disappears in late systole. <strong>Acute severe MR may be nearly silent.</strong></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Mitral Valve Prolapse (MVP)</h4>
+        <div class="box box-purple">
+          <strong>Mid-systolic click + late systolic murmur.</strong><br>
+          Click: from sudden tensing of prolapsing leaflet and chordae.<br>
+          Murmur: starts after click, extends to S2.<br><br>
+          <strong>Dynamic changes (preload-dependent):</strong><br>
+          Standing / Valsalva: click moves <em>earlier</em> in systole (smaller LV)<br>
+          Squatting: click moves <em>later</em> (larger LV) &mdash; may disappear<br>
+          This movement distinguishes MVP from other causes of systolic click.
+        </div>
+        <div class="box box-red"><strong>Acute severe MR pearl for surgeons:</strong> Post-MI papillary muscle rupture (usually posterior PM, RCA territory) or chordal rupture &mdash; presents with sudden pulmonary oedema, often without a loud murmur. Echo immediately. Emergency surgery.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">Tricuspid Regurgitation, VSD &amp; Innocent Murmurs</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--amber)">&#128311; Tricuspid Regurgitation (TR)</h3>
+      <p><strong>Pansystolic murmur</strong> at the <strong>left lower sternal border</strong> (tricuspid area), radiating to the right sternal border.</p>
+      <h4>Carvallo&rsquo;s Sign</h4>
+      <div class="box box-amber"><strong>The TR murmur characteristically increases with inspiration</strong> (Carvallo&rsquo;s sign) &mdash; inspiration &#8593;venous return &rarr; &#8593;RV volume &rarr; &#8593;TR jet velocity. This distinguishes TR from MR (which does not increase with inspiration). Sensitivity ~80%.</div>
+      <p>Severe TR: may be <em>soft or absent</em> despite torrential regurgitation if the low-pressure RV and RA fully equalise (similar to acute MR principle). Look for signs of RV failure, hepatic pulsation, prominent V waves in JVP.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--cyan)">&#128313; VSD &amp; Innocent Murmurs</h3>
+      <h4>Ventricular Septal Defect</h4>
+      <p><strong>Pansystolic murmur</strong> at left 4th&ndash;5th ICS (small: loud and harsh; large: paradoxically soft due to pressure equalisation). Thrill often palpable. Associated with left parasternal heave if large.</p>
+      <h4>Innocent / Physiological Murmurs</h4>
+      <div class="box box-green">
+        <strong>Still&rsquo;s murmur (children):</strong> Musical, vibratory, Grade 1&ndash;2/6, mid-systolic, best at left lower sternal border. Decreases with standing.<br><br>
+        <strong>Pulmonary flow murmur:</strong> Soft ejection murmur at left upper sternal border; common in children, pregnancy, anaemia, fever.<br><br>
+        <strong>Features of all innocent murmurs:</strong> Grade &#8804;2/6 &middot; Systolic only &middot; No radiation &middot; Normal S1/S2 &middot; No thrill &middot; No extra sounds &middot; Varies with position
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">References: Braunwald&rsquo;s Heart Disease &middot; ACC/AHA Valve Guidelines 2021 &middot; Fowler&rsquo;s Physical Diagnosis of Heart Disease</div>
+</section>
+
+
+<!-- ════ TAB 2: DIASTOLIC & CONTINUOUS ════════════════════════════ -->
+<section class="tab" id="t2">
+  <div class="sh"><h2>&#128309; Diastolic &amp; Continuous Murmurs</h2><p>All significant diastolic findings and continuous murmurs require echo confirmation. Diastolic murmur = always pathological.</p></div>
+
+  <div class="box box-red" style="margin-bottom:16px"><strong>Clinical rule:</strong> Every diastolic murmur is pathological until proven otherwise. No innocent diastolic murmur exists in clinical practice.</div>
+
+  <div class="stitle">Aortic Regurgitation (AR)</div>
+  <div class="card">
+    <h3 style="color:var(--blue)" style="color:var(--blue)">&#128309; Aortic Regurgitation</h3>
+    <div class="g2">
+      <div>
+        <h4>Early diastolic murmur</h4>
+        <p><strong>High-pitched, blowing, decrescendo</strong> murmur starting at A2, heard best at <strong>Erb&rsquo;s point</strong> (3rd ICS left) and left sternal border with patient <strong>sitting forward, end-expiration</strong> (brings aortic root closer to stethoscope).</p>
+        <div class="phono">
+          <div class="p-label">Chronic AR</div>
+          <div class="p-pcg">S1&nbsp;&#9135;&#9135;SYSTOLE&#9135;&#9135;&nbsp;S2&nbsp;&#9654;\&#9654;\&#9654; decrescendo DIASTOLE &#9135;&#9135;&nbsp;S1</div>
+        </div>
+        <h4>Acute vs Chronic AR</h4>
+        <ul>
+          <li><strong>Chronic AR:</strong> Long-standing, dilated LV accommodates volume; loud murmur; wide pulse pressure; peripheral signs (Corrigan, de Musset, Quincke, Duroziez)</li>
+          <li><strong>Acute AR</strong> (IE, aortic dissection): LV small and non-compliant &rarr; rapid pressure equalisation &rarr; <em>soft, short, early diastolic murmur</em> or absent. S1 may be soft (elevated LVEDP closes MV early). Pulmonary oedema. Emergency surgery.</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Austin-Flint murmur</h4>
+        <div class="box box-blue"><strong>Mid-to-late diastolic rumble at the apex</strong> in severe AR. Mechanism: AR jet strikes the anterior MV leaflet &rarr; functional MV obstruction &rarr; low-pitched rumble mimicking MS.<br>
+        <strong>Distinguishing from MS:</strong> Austin-Flint has NO opening snap; loudness decreases with amyl nitrite (which improves AR) whereas MS rumble is unaffected.</div>
+        <h4>Peripheral signs of chronic AR</h4>
+        <ul>
+          <li>Wide pulse pressure (e.g., 160/60)</li>
+          <li>Corrigan&rsquo;s pulse: waterhammer, collapsing</li>
+          <li>de Musset&rsquo;s sign: head nodding</li>
+          <li>Quincke&rsquo;s sign: nail bed capillary pulsation</li>
+          <li>Duroziez&rsquo;s sign: systolic/diastolic bruit over femoral with compression</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">Mitral Stenosis (MS)</div>
+  <div class="card">
+    <h3 style="color:var(--blue)">&#128309; Mitral Stenosis</h3>
+    <div class="g2">
+      <div>
+        <h4>Mechanism &amp; Auscultation</h4>
+        <p>Low-pitched, <strong>mid-diastolic rumble</strong> with <strong>presystolic accentuation</strong> (if sinus rhythm), heard best at <strong>apex in left lateral decubitus</strong> using the bell with light pressure. </p>
+        <div class="phono">
+          <div class="p-label">Mitral Stenosis (SR)</div>
+          <div class="p-pcg">S1&nbsp;&#9135;&#9135;SYSTOLE&#9135;&nbsp;S2(loud)&nbsp;OS&nbsp;&#9135;&#9135;rumble&#9135;&#9135;&#9650;presys&#9650;&nbsp;S1</div>
+          <div class="p-dim">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8679;Opening snap</div>
+        </div>
+        <h4>Opening snap</h4>
+        <ul>
+          <li>High-pitched, snapping sound in <strong>early diastole</strong> &mdash; from abrupt halt of domed MS leaflets</li>
+          <li><strong>A2&ndash;OS interval</strong>: inversely correlates with severity. Shorter = more severe (higher LA pressure closes gap between A2 and OS)</li>
+          <li>OS disappears in severe calcific MS (immobile leaflets)</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tw" style="margin:0"><table>
+          <tr><th>Severity clue</th><th>Mild MS</th><th>Severe MS</th></tr>
+          <tr><td>S1</td><td>Loud</td><td>Loud early, may soften with calcification</td></tr>
+          <tr><td>A2&ndash;OS interval</td><td>Long (&gt;100 ms)</td><td>Short (&lt;60&ndash;70 ms)</td></tr>
+          <tr><td>Rumble duration</td><td>Short, limited to early diastole</td><td>Pan-diastolic, to S1</td></tr>
+          <tr><td>Presystolic accentuation</td><td>Present (SR)</td><td>Absent in AF</td></tr>
+          <tr><td>Opening snap</td><td>Present</td><td>May disappear with calcification</td></tr>
+        </table></div>
+        <div class="box box-amber"><strong>MS + AF:</strong> Presystolic accentuation disappears in AF (requires atrial contraction). Rumble becomes variable in duration due to variable RR intervals. The diagnosis becomes harder &mdash; use long RR intervals to hear the full diastolic rumble.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">Other Diastolic Murmurs &amp; Continuous Murmurs</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--blue)">&#128309; Pulmonary Regurgitation &amp; Graham-Steell</h3>
+      <ul>
+        <li><strong>Graham-Steell murmur:</strong> High-pitched early diastolic murmur at left 2nd ICS from pulmonary regurgitation <em>secondary to severe pulmonary hypertension</em>. Mimics AR murmur; increases with inspiration (unlike AR). Key clue: loud P2, right ventricular heave, signs of PHT.</li>
+        <li><strong>Primary PR</strong> (after Ross procedure, post-surgical): Low-pitched, soft; well tolerated; variable duration depending on PA&ndash;RV pressure gradient.</li>
+      </ul>
+      <h4>Tricuspid Stenosis</h4>
+      <p>Rare. Mid-diastolic rumble at left lower sternal border; increases with inspiration (like TR); presystolic accentuation in SR. Associated with rheumatic MS and carcinoid syndrome.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--cyan)">&#9854; Continuous Murmurs</h3>
+      <div class="tw" style="margin:0"><table>
+        <tr><th>Murmur</th><th>Quality &amp; location</th><th>Key feature</th></tr>
+        <tr><td><strong>Patent Ductus Arteriosus (PDA)</strong></td><td>&ldquo;Machinery&rdquo; or &ldquo;train in tunnel&rdquo;; left infraclavicular / 2nd ICS left</td><td>Peaks at S2, continues into diastole; louder in systole. Abolished by closure.</td></tr>
+        <tr><td><strong>AV fistula / coronary fistula</strong></td><td>Variable location over the fistula</td><td>Continuous, systolic &gt; diastolic; thrill often present</td></tr>
+        <tr><td><strong>Venous hum</strong></td><td>Right infraclavicular area, upright</td><td>Soft, innocuous hum from turbulent jugular venous flow. Disappears with supine or gentle neck compression. Normal in children.</td></tr>
+        <tr><td><strong>Mammary souffle</strong></td><td>Breast area</td><td>Continuous; occurs in pregnancy / lactation from &#8593;breast blood flow. Disappears with pressure of stethoscope.</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="stitle">Pericardial Sounds</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--cyan)">Pericardial Friction Rub</h3>
+      <p><strong>Harsh, scratchy, grating sound</strong> with 2&ndash;3 components (ventricular systole, early diastole, late diastole / atrial systole). Best heard at left sternal border with patient <strong>sitting forward, end-expiration</strong>. Variable, transient &mdash; may disappear within hours.</p>
+      <div class="box box-cyan">Heard in: acute pericarditis, post-cardiac surgery (Dressler syndrome), uraemia, post-MI pericarditis. Increased pressure of stethoscope enhances the rub (distinguishes from pleural rub, which diminishes). Can persist in effusion if pericardial layers still in contact.</div>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--purple)">Pericardial Knock &amp; Tumour Plop</h3>
+      <h4>Pericardial knock</h4>
+      <p>Early diastolic sound (earlier and higher-pitched than S3). Caused by <strong>abrupt cessation of ventricular filling</strong> when the rigid, thickened pericardium suddenly restricts expansion. Pathognomonic of <strong>constrictive pericarditis</strong>. Best at left sternal border with the patient leaning forward.</p>
+      <h4>Tumour plop</h4>
+      <div class="box box-purple"><strong>Left atrial myxoma:</strong> Low-pitched mid-diastolic &ldquo;plop&rdquo; as the prolapsing tumour falls through the MV orifice. Position-dependent (loudest in lateral decubitus). May mimic MS opening snap. Always consider when clinical presentation is atypical.</div>
+    </div>
+  </div>
+
+  <div class="footnote">ACC/AHA 2021 Valve Guidelines &middot; ESC 2021 Valvular Heart Disease &middot; Otto CM &mdash; Textbook of Valvular Heart Disease</div>
+</section>
+
+
+<!-- ════ TAB 3: CARDIAC SURGERY & PROSTHETICS ════════════════════ -->
+<section class="tab" id="t3">
+  <div class="sh"><h2>&#10084;&#65039; Cardiac Surgery &amp; Prosthetic Valves</h2><p>Prosthetic valve sounds, dysfunction, post-surgical auscultation findings, and cardiac surgery-specific clinical pearls.</p></div>
+
+  <div class="stitle">Mechanical Prosthetic Valves</div>
+  <div class="card">
+    <h3 style="color:var(--cyan)">&#9881;&#65039; Mechanical Valve Sounds &mdash; Normal vs Pathological</h3>
+    <div class="g2">
+      <div>
+        <h4>Normal mechanical valve sounds</h4>
+        <div class="box box-cyan"><strong>Bileaflet tilting disc (St. Jude, On-X):</strong> Crisp, distinct metallic <em>click</em> at closure (equivalent to S1 for MVR; S2 for AVR). Opening click is softer and may be subtle. Both clicks are high-pitched and metallic.<br><br>
+        <strong>Single tilting disc (Bjork-Shiley, Medtronic-Hall):</strong> Similar crisp click; slightly different pitch. Characteristic &lsquo;clunk&rsquo; quality in some models.<br><br>
+        <strong>Ball-in-cage (Starr-Edwards, historical):</strong> Two sounds per cycle &mdash; opening click and closing click, both prominent.</div>
+        <h4>What to listen for at each visit</h4>
+        <ul>
+          <li>Intensity of closing click &mdash; should be consistent</li>
+          <li>Any new murmur (was previously absent)</li>
+          <li>Change in character of existing click</li>
+          <li>Muffling or dampening of the click</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tw" style="margin:0"><table>
+          <tr><th>Finding</th><th>Likely cause</th><th>Action</th></tr>
+          <tr><td><strong>Soft / muffled closing click</strong></td><td>Prosthetic thrombosis, pannus ingrowth, stuck leaflet &mdash; decreased leaflet excursion</td><td>Urgent echo (TOE preferred), cinefluoroscopy. Emergency if haemodynamically compromised.</td></tr>
+          <tr><td><strong>New systolic murmur (AVR)</strong></td><td>Prosthetic stenosis (thrombosis/pannus), paravalvular leak (PVL) with MR equivalent, patient&ndash;prosthesis mismatch</td><td>Echo with Doppler gradients; compare with baseline</td></tr>
+          <tr><td><strong>New early diastolic murmur (AVR)</strong></td><td>Paravalvular aortic regurgitation, prosthetic valve endocarditis (PVE)</td><td>TOE; blood cultures; CT if endocarditis suspected</td></tr>
+          <tr><td><strong>New pansystolic murmur (MVR)</strong></td><td>PVL, PVE, dehiscence</td><td>TOE mandatory; assess haemolysis (LDH, haptoglobin)</td></tr>
+          <tr><td><strong>New continuous murmur</strong></td><td>Paravalvular fistula, PVL with significant shunt</td><td>Echo/TOE; CT</td></tr>
+        </table></div>
+      </div>
+    </div>
+    <div class="box box-red"><strong>&#9888;&#65039; Prosthetic valve thrombosis (PVT):</strong> Medical emergency. Clinical presentation: muffled or absent closing click, new systolic murmur (if AVR), haemodynamic deterioration. Confirm with TOE or cinefluoroscopy. Treatment: UFH anticoagulation (small non-obstructive thrombus), thrombolysis, or emergency redo surgery based on thrombus size, haemodynamics, and surgical risk.</div>
+  </div>
+
+  <div class="stitle">Bioprostheses &amp; TAVI</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--green)">&#127807; Bioprosthetic Valves</h3>
+      <p>Stented bioprostheses (Edwards PERIMOUNT, Medtronic Mosaic, Hancock II) produce <em>no metallic click</em> &mdash; auscultatory profile similar to a native valve but with:</p>
+      <ul>
+        <li>Soft ejection murmur at base (normal &mdash; from mild turbulence through stent struts)</li>
+        <li>No opening click</li>
+        <li>Grade 1&ndash;2/6 murmur may be present physiologically</li>
+      </ul>
+      <div class="box box-amber"><strong>Structural valve deterioration (SVD):</strong> Progressive restenosis or regurgitation. New or increasing murmur on follow-up. Compare with baseline echo. Stentless valves (Freestyle, Prima Plus) have the most &ldquo;native-like&rdquo; auscultation.</div>
+      <h4>Prosthetic valve endocarditis (PVE)</h4>
+      <div class="box box-red">New or changing murmur in a patient with a prosthetic valve + fever = PVE until proven otherwise. New regurgitant murmur = possible leaflet destruction or dehiscence. TOE is mandatory (TTE often insufficient).</div>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--purple)">&#127358; TAVI (Transcatheter Aortic Valve Implantation)</h3>
+      <p>Post-TAVI auscultation differs from surgical AVR:</p>
+      <ul>
+        <li><strong>No metallic click</strong> (leaflets are biological)</li>
+        <li>Soft systolic flow murmur common (physiological within stent frame)</li>
+        <li><strong>Paravalvular aortic regurgitation:</strong> Very common, especially with self-expanding valves. Low-pitched early diastolic murmur at left sternal border. Moderate or severe PVL is clinically significant.</li>
+        <li><strong>Pacemaker-induced LBBB murmur variation:</strong> RV apical pacing causes altered septal motion &rarr; may change murmur character</li>
+      </ul>
+      <div class="box box-purple"><strong>TAVI + new severe AR murmur:</strong> Urgent echo. May indicate valve embolism, leaflet tear, or severe PVL. Transcatheter valve-in-valve or surgical explantation may be required.</div>
+    </div>
+  </div>
+
+  <div class="stitle">Post-Cardiac Surgery Auscultation Findings</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--amber)">&#128697; Procedure-Specific Post-Op Findings</h3>
+      <div class="tw" style="margin:0"><table>
+        <tr><th>Procedure</th><th>Expected findings</th><th>Abnormal / urgent</th></tr>
+        <tr><td><strong>Post-AVR (mechanical)</strong></td><td>Clear metallic click at S2 position; soft systolic flow murmur grade 1&ndash;2/6</td><td>Muffled click (thrombosis); new AR murmur (PVL/PVE)</td></tr>
+        <tr><td><strong>Post-MVR (mechanical)</strong></td><td>Clear click at S1; quiet systole; soft flow through prosthesis</td><td>Muffled click; new pansystolic murmur (PVL, dehiscence)</td></tr>
+        <tr><td><strong>Post-AVR (bioprosthesis)</strong></td><td>Soft grade 1&ndash;2 ejection murmur; no click; S2 may be softer than native</td><td>New significant murmur; new AR; clinical signs of SVD</td></tr>
+        <tr><td><strong>Ross procedure (pulmonary autograft in aortic position)</strong></td><td>Soft systolic murmur; no click; neopulmonary homograft in RV position may have soft ejection murmur</td><td>New AR (autograft dilation); homograft dysfunction (stenosis/PR)</td></tr>
+        <tr><td><strong>Post-CABG</strong></td><td>No specific valve murmur change expected. Pericardial rub common day 2&ndash;5 (Dressler). LIMA-CABG: continuous murmur at left sternal border is normal (LIMA-to-LAD flow).</td><td>New MR (papillary muscle dysfunction from inadequate revascularisation); new AR (cannulation injury &mdash; rare)</td></tr>
+        <tr><td><strong>Heart transplant</strong></td><td>No murmurs expected. Pericardial rub may be heard early post-op. Two P waves on ECG (donor + recipient remnant).</td><td>Tricuspid regurgitation (RV rejection); MR (rejection-related dilation)</td></tr>
+        <tr><td><strong>Bentall procedure</strong></td><td>Mechanical AVR click (if mechanical conduit) or silent (if bio-Bentall). Coronary anastomosis sites may rarely transmit a soft bruit.</td><td>New AR or stenosis through conduit valve; pseudoaneurysm at anastomosis (continuous murmur)</td></tr>
+      </table></div>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--red)">&#9888;&#65039; Critical Pearls for Cardiac Surgeons &amp; Intensivists</h3>
+      <ul>
+        <li><strong>IABP counterpulsation:</strong> Creates audible diastolic augmentation &mdash; may confuse auscultation. Always note IABP timing during exam.</li>
+        <li><strong>Post-sternotomy:</strong> Subcutaneous air or sternal wires may transmit clicks. Sternal click (not cardiac) is reproducible with palpation of sternum.</li>
+        <li><strong>Early post-op tamponade:</strong> Muffled heart sounds, pulsus paradoxus, tachycardia. Beck&rsquo;s triad (hypotension, JVD, muffled sounds) is specific but late. Echo immediately if suspected.</li>
+        <li><strong>Acute AR post-TAVI or post-AVR:</strong> Presents with haemodynamic collapse and soft/absent new early diastolic murmur &mdash; do not delay echo for clinical diagnosis.</li>
+        <li><strong>Post-cardiac surgery pericarditis (Dressler):</strong> Pleuritic chest pain + friction rub + fever, days 2&ndash;6 post-op. Differentiate from surgical site pain and pneumonia. NSAIDs/colchicine if haemodynamically stable.</li>
+        <li><strong>Haemolysis from PVL:</strong> Chronic intravascular haemolysis (elevated LDH, low haptoglobin, anaemia) &mdash; even without a loud murmur, significant haemolysis warrants re-evaluation.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footnote">Bojar RM &mdash; Manual of Perioperative Care in Adult Cardiac Surgery &middot; ESC/EACTS 2021 Valvular Heart Disease &middot; ACC/AHA 2021 Valvular Guidelines &middot; Zoghbi WA et al., JASE 2009 (Prosthetic Valve Evaluation)</div>
+</section>
+
+
+<!-- ════ TAB 4: MANOEUVRES & ALGORITHM ════════════════════════════ -->
+<section class="tab" id="t4">
+  <div class="sh"><h2>&#128270; Dynamic Manoeuvres &amp; Diagnostic Algorithm</h2><p>Bedside manoeuvres that alter cardiac physiology and change murmur intensity, plus a stepwise diagnostic algorithm for unidentified murmurs.</p></div>
+
+  <div class="stitle">Physiological Basis of Dynamic Manoeuvres</div>
+  <div class="box box-cyan" style="margin-bottom:14px">
+    <strong>Principle:</strong> Murmur intensity changes when preload (ventricular filling), afterload (systemic resistance), or heart rate changes.<br>
+    &bull; <strong>&#8593;Preload</strong> (squatting, PLR, expiration, handgrip for LV): &#8593;ventricular volume &rarr; &#8593;fixed-orifice murmurs; &#8595;dynamic obstruction (HOCM)<br>
+    &bull; <strong>&#8595;Preload</strong> (standing, Valsalva strain): &#8595;ventricular volume &rarr; &#8593;HOCM; &#8595;fixed-orifice murmurs<br>
+    &bull; <strong>&#8593;Afterload</strong> (handgrip): &#8593;LV pressure &rarr; &#8593;MR, AR; &#8595;HOCM, AS<br>
+    &bull; <strong>Inspiration</strong>: &#8593;venous return &rarr; &#8593;right-sided murmurs (TR, PR, PS, TS)
+  </div>
+
+  <div class="stitle">Complete Manoeuvre Reference Table</div>
+  <div class="tw"><table>
+    <thead><tr><th>Manoeuvre</th><th>AS</th><th>HOCM</th><th>MR (chronic)</th><th>AR</th><th>MS</th><th>TR</th><th>MVP (click timing)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Inspiration</strong></td><td class="td-nc">&#8596;</td><td class="td-nc">&#8596;</td><td class="td-nc">&#8596;</td><td class="td-nc">&#8596;</td><td class="td-nc">&#8596;</td><td class="td-up">&#8593;&#8593; Louder</td><td class="td-nc">Later</td></tr>
+      <tr><td><strong>Expiration</strong></td><td class="td-nc">&#8596;</td><td class="td-nc">&#8596;</td><td class="td-nc">&#8596;</td><td class="td-up">&#8593; Louder (AR)</td><td class="td-up">&#8593; (rumble)</td><td class="td-dn">&#8595;</td><td class="td-nc">Earlier</td></tr>
+      <tr><td><strong>Valsalva (strain phase)</strong></td><td class="td-dn">&#8595; Softer</td><td class="td-up">&#8593;&#8593; Louder</td><td class="td-dn">&#8595; Softer</td><td class="td-dn">&#8595;</td><td class="td-dn">&#8595;</td><td class="td-dn">&#8595;</td><td class="td-up">Earlier (click)</td></tr>
+      <tr><td><strong>Valsalva release</strong></td><td class="td-up">&#8593; Louder</td><td class="td-dn">&#8595;</td><td class="td-up">&#8593; Louder</td><td class="td-up">&#8593;</td><td class="td-up">&#8593;</td><td class="td-up">&#8593;</td><td class="td-dn">Later (click)</td></tr>
+      <tr><td><strong>Standing (from squat)</strong></td><td class="td-dn">&#8595; Softer</td><td class="td-up">&#8593;&#8593; Louder</td><td class="td-dn">&#8595;</td><td class="td-nc">&#8596;</td><td class="td-dn">&#8595;</td><td class="td-nc">&#8596;</td><td class="td-up">Earlier (click)</td></tr>
+      <tr><td><strong>Squatting</strong></td><td class="td-up">&#8593; Louder</td><td class="td-dn">&#8595;&#8595; Softer</td><td class="td-up">&#8593;</td><td class="td-up">&#8593;</td><td class="td-up">&#8593;</td><td class="td-up">&#8593;</td><td class="td-dn">Later (click)</td></tr>
+      <tr><td><strong>Isometric handgrip</strong></td><td class="td-dn">&#8595; Softer</td><td class="td-dn">&#8595; Softer</td><td class="td-up">&#8593; Louder</td><td class="td-up">&#8593; Louder</td><td class="td-up">&#8593;</td><td class="td-nc">&#8596;</td><td class="td-dn">Later</td></tr>
+      <tr><td><strong>Passive leg raise</strong></td><td class="td-up">&#8593;</td><td class="td-dn">&#8595; Softer</td><td class="td-up">&#8593;</td><td class="td-up">&#8593;</td><td class="td-up">&#8593;</td><td class="td-up">&#8593;</td><td class="td-dn">Later</td></tr>
+      <tr><td><strong>Amyl nitrite (inhaled)</strong></td><td class="td-up">&#8593;&#8593; Louder</td><td class="td-up">&#8593;&#8593; Louder</td><td class="td-dn">&#8595; Softer</td><td class="td-dn">&#8595;</td><td class="td-up">&#8593;</td><td class="td-up">&#8593;</td><td class="td-up">Earlier</td></tr>
+      <tr><td><strong>Post-PVC pause</strong></td><td class="td-up">&#8593;&#8593; Louder</td><td class="td-up">&#8593;&#8593;</td><td class="td-nc">&#8596;</td><td class="td-nc">&#8596;</td><td class="td-nc">&#8596;</td><td class="td-nc">&#8596;</td><td class="td-nc">&#8596;</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box box-amber"><strong>Post-PVC beat (Brockenbrough-Braunwald-Morrow sign):</strong> The beat following a PVC has increased stroke volume (compensatory pause &rarr; &#8593;preload). AS murmur increases post-PVC; HOCM murmur also increases but the <em>pulse pressure decreases</em> (paradox &mdash; more obstruction). In fixed AS the pulse pressure increases post-PVC &mdash; this can differentiate the two at the bedside.</div>
+
+  <div class="stitle">Interactive Diagnostic Algorithm</div>
+  <div class="card">
+    <h3 style="color:var(--cyan)">&#128269; Stepwise Murmur Classification</h3>
+    <div id="algoArea">
+      <div class="algo-flow">
+        <div class="algo-q">Step 1: Is the murmur Systolic or Diastolic?</div>
+        <div class="algo-branch">
+          <div class="algo-yes"><strong>SYSTOLIC</strong> (during S1&rarr;S2)<br>&#8594; Go to Step 2</div>
+          <div class="algo-no"><strong>DIASTOLIC</strong> (during S2&rarr;S1)<br>Always pathological &rarr; Go to Step 5</div>
+        </div>
+      </div>
+      <div class="algo-flow">
+        <div class="algo-q">Step 2 (Systolic): Ejection or Regurgitant?</div>
+        <div class="algo-branch">
+          <div class="algo-yes"><strong>EJECTION (crescendo&ndash;decrescendo)</strong><br>Starts after S1, ends before S2<br>&#8594; Step 3</div>
+          <div class="algo-no"><strong>REGURGITANT (pansystolic)</strong><br>Starts with S1, continues through S2<br>&#8594; MR, TR, VSD &rarr; Step 4</div>
+        </div>
+      </div>
+      <div class="algo-flow">
+        <div class="algo-q">Step 3 (Ejection): Does it radiate to the carotids?</div>
+        <div class="algo-branch">
+          <div class="algo-yes"><strong>YES &rarr; Aortic origin</strong><br>Likely <strong>AS</strong> or HOCM (if dynamic). Check: Gallavardin (to apex), A2 intensity, carotid pulse character, manoeuvres.</div>
+          <div class="algo-no"><strong>NO &rarr; Pulmonic or innocent</strong><br>Left 2nd ICS: PS, ASD, physiological. Increases with inspiration: pulmonary origin.</div>
+        </div>
+      </div>
+      <div class="algo-flow">
+        <div class="algo-q">Step 4 (Regurgitant): Where is it loudest?</div>
+        <div class="algo-branch">
+          <div class="algo-yes"><strong>APEX &rarr; MR</strong><br>Radiates to axilla (posterior jet) or base (anterior jet MVP). Check left lateral decubitus, handgrip (louder = MR).</div>
+          <div class="algo-no"><strong>LEFT STERNAL BORDER &rarr; TR or VSD</strong><br>TR: increases with inspiration (Carvallo). VSD: harsh, thrill at left sternal border 4th ICS, fixed.</div>
+        </div>
+      </div>
+      <div class="algo-flow">
+        <div class="algo-q">Step 5 (Diastolic): Timing within diastole?</div>
+        <div class="algo-branch">
+          <div class="algo-yes"><strong>EARLY diastolic (immediately after S2)</strong><br>High-pitched, decrescendo &rarr; AR (sitting forward, expiration, Erb&rsquo;s point) or Graham-Steell (PHT)</div>
+          <div class="algo-no"><strong>MID-TO-LATE diastolic rumble</strong><br>Low-pitched, at apex &rarr; MS (opening snap precedes), Austin-Flint, TS (increases with inspiration)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">Clinical Pitfalls &amp; Interpretation Errors</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--red)">&#9888;&#65039; Critical Errors to Avoid</h3>
+      <ul>
+        <li><strong>Murmur loudness &#8800; severity:</strong> Soft AS may be critical (low-flow). Silent MR may be acute and life-threatening. Never grade severity from murmur intensity alone.</li>
+        <li><strong>Silent severe AR:</strong> Acute AR (aortic dissection, IE) &mdash; murmur may be brief and faint. The early diastolic murmur may be missed in a tachycardic patient.</li>
+        <li><strong>Treating the murmur, not the patient:</strong> Innocent murmurs require no treatment. Murmur grading (Levine 1&ndash;6/6) reflects loudness, not haemodynamic significance.</li>
+        <li><strong>Missing concurrent murmurs:</strong> AR + Austin-Flint can mimic MS. TR + MR can occur together (rheumatic). Always listen systematically at each area.</li>
+        <li><strong>Ignoring dynamic changes:</strong> A murmur heard at rest may change significantly with mild exercise or position. HOCM is easily missed in a supine resting patient.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--amber)">&#128161; Echo Correlation Principles</h3>
+      <div class="tw" style="margin:0"><table>
+        <tr><th>Auscultatory finding</th><th>Doppler/echo correlation</th></tr>
+        <tr><td>AS murmur grade 3/6, late-peaking, A2 absent</td><td>AVA &lt;1.0 cm&sup2; likely; mean gradient often &gt;40 mmHg if normal flow</td></tr>
+        <tr><td>Short A2&ndash;OS interval in MS</td><td>MVA &lt;1.0&ndash;1.2 cm&sup2; likely; high LA pressure</td></tr>
+        <tr><td>S3 gallop</td><td>E/e&rsquo; &gt;14; LVEDP elevated; EF may be reduced or preserved (HFpEF)</td></tr>
+        <tr><td>S4 gallop</td><td>Impaired LV relaxation; elevated LA pressure despite normal or high EF</td></tr>
+        <tr><td>Fixed S2 splitting</td><td>ASD; Qp:Qs &gt;1.5 usually</td></tr>
+        <tr><td>Pericardial knock</td><td>Abrupt cessation of early diastolic expansion on echo; septal bounce; constriction confirmed by respiratory variation in mitral/tricuspid inflow</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    Shaver JA &amp; Groves BM &mdash; Physical Examination of the Heart and Circulation &middot; ACC/AHA 2021 Valvular Guidelines &middot; ESC 2021 Valvular Heart Disease &middot; Braunwald&rsquo;s Heart Disease 12th ed. &middot; Nishimura RA et al., JACC 2014 &middot; Otto CM &mdash; Clinical Practice of Echocardiography &middot; Bojar RM &mdash; Perioperative Care in Adult Cardiac Surgery 6th ed.<br><br>
+    Cardiac Surgery Clinical Education &middot; StarleyBy &middot; 2025
+  </div>
+</section>
+
+</main>
+
+<script>
+const tabs=document.querySelectorAll('.tab');
+const tgs=document.querySelectorAll('.tg');
+function gt(i,b){
+  tabs.forEach(t=>t.classList.remove('active'));
+  tgs.forEach(t=>t.classList.remove('active'));
+  tabs[i].classList.add('active');
+  b.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
