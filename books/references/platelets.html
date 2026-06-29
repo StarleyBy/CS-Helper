@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Platelet Inhibitors | Perioperative Management · Cardiac Surgery</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080f1a;--bg2:#0d1826;--bg3:#111f30;--bg4:#162438;
+  --rim:rgba(255,255,255,.07);
+  --text:#d8e8f8;--muted:#6a88a8;--dim:#3a5068;
+  --cyan:#00c8e0;--cyan-d:rgba(0,200,224,.12);--cyan-b:rgba(0,200,224,.25);
+  --red:#f05060;--red-d:rgba(240,80,96,.13);
+  --blue:#4090f0;--blue-d:rgba(64,144,240,.13);
+  --green:#30c880;--green-d:rgba(48,200,128,.12);
+  --amber:#f0a030;--amber-d:rgba(240,160,48,.13);
+  --purple:#a060f0;--purple-d:rgba(160,96,240,.13);
+  --mono:'Space Mono',monospace;--sans:'Space Grotesk',sans-serif;
+  --r:12px;--r2:20px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;overflow-x:hidden;min-height:100vh}
+::selection{background:rgba(0,200,224,.3)}
+
+.hdr{background:linear-gradient(135deg,#060d18 0%,#0a1830 50%,#0d2040 100%);border-bottom:1px solid var(--rim);padding:20px 20px 16px;text-align:center;position:relative}
+.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% -20%,rgba(0,200,224,.15) 0%,transparent 70%);pointer-events:none}
+.hdr-title{font-family:var(--mono);font-size:19px;font-weight:700;letter-spacing:.05em;color:var(--cyan);text-shadow:0 0 28px rgba(0,200,224,.4)}
+.hdr-title span{color:var(--text);opacity:.7}
+.hdr-sub{font-size:12px;color:var(--muted);margin-top:5px;letter-spacing:.02em}
+.hdr-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:10px}
+.hdr-bdg{font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:.03em}
+.hdr-bdg-c{background:var(--cyan-d);color:var(--cyan);border:1px solid var(--cyan-b)}
+.hdr-bdg-r{background:var(--red-d);color:var(--red);border:1px solid rgba(240,80,96,.25)}
+.hdr-bdg-g{background:var(--green-d);color:var(--green);border:1px solid rgba(48,200,128,.25)}
+.hdr-bdg-a{background:var(--amber-d);color:var(--amber);border:1px solid rgba(240,160,48,.25)}
+
+.tab-grid-wrap{background:var(--bg2);border-bottom:1px solid var(--rim);padding:10px 14px;position:sticky;top:0;z-index:200}
+.tab-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-width:780px;margin:0 auto}
+.tg{display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:8px 4px 6px;cursor:pointer;transition:all .16s;font-family:inherit}
+.tg:hover{border-color:var(--cyan-b);background:var(--cyan-d)}
+.tg.active{background:var(--cyan-d);border-color:var(--cyan);box-shadow:0 0 0 1px var(--cyan)}
+.tg-icon{font-size:17px;line-height:1}
+.tg-lbl{font-size:9.5px;font-weight:600;color:var(--muted);text-align:center;line-height:1.25;letter-spacing:.02em}
+.tg.active .tg-lbl{color:var(--cyan)}.tg:hover .tg-lbl{color:var(--text)}
+
+.page{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+.tab{display:none}.tab.active{display:block}
+
+.sh{margin-bottom:16px}
+.sh h2{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--cyan);letter-spacing:.04em;display:flex;align-items:center;gap:9px}
+.sh p{color:var(--muted);font-size:12.5px;margin-top:4px}
+
+.card{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:18px;margin-bottom:14px}
+.card h3{font-size:13.5px;font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.card p,.card li{color:var(--muted);font-size:13px;line-height:1.65}
+.card ul,.card ol{padding-left:16px}.card li{margin-bottom:5px}.card li strong{color:var(--text)}
+
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+
+.box{border-radius:var(--r);padding:11px 14px;margin:10px 0;font-size:13px;line-height:1.6;color:var(--text)}
+.box-cyan  {background:var(--cyan-d);border-left:3px solid var(--cyan)}
+.box-red   {background:var(--red-d);border-left:3px solid var(--red)}
+.box-blue  {background:var(--blue-d);border-left:3px solid var(--blue)}
+.box-green {background:var(--green-d);border-left:3px solid var(--green)}
+.box-amber {background:var(--amber-d);border-left:3px solid var(--amber)}
+.box-purple{background:var(--purple-d);border-left:3px solid var(--purple)}
+.box strong{font-weight:700}
+.box-cyan strong{color:var(--cyan)}.box-red strong{color:var(--red)}
+.box-blue strong{color:var(--blue)}.box-green strong{color:var(--green)}
+.box-amber strong{color:var(--amber)}.box-purple strong{color:var(--purple)}
+
+/* MAIN DRUG TABLE */
+.drug-table-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--rim);margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:600px}
+th{background:var(--bg3);color:var(--cyan);font-weight:700;padding:9px 10px;text-align:left;border-bottom:1px solid var(--rim);letter-spacing:.03em;font-family:var(--mono);white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid var(--rim);color:var(--muted);vertical-align:top;line-height:1.55}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(0,200,224,.04)}
+td strong{color:var(--text)}
+
+/* Drug class row headers */
+.row-class td{background:var(--bg3);padding:5px 10px}
+.row-class td span{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+
+/* CABG timing cells */
+.td-continue{color:var(--green) !important;font-weight:700}
+.td-caution{color:var(--amber) !important;font-weight:700}
+.td-delay{color:var(--red) !important;font-weight:700}
+.td-urgent{color:var(--cyan) !important;font-weight:700}
+
+/* Traffic light badges */
+.tl{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;white-space:nowrap}
+.tl-green{background:var(--green-d);color:var(--green)}
+.tl-amber{background:var(--amber-d);color:var(--amber)}
+.tl-red{background:var(--red-d);color:var(--red)}
+.tl-cyan{background:var(--cyan-d);color:var(--cyan)}
+
+/* Assay cards */
+.assay-card{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r2);padding:14px 16px;margin-bottom:10px}
+.assay-card h4{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--cyan);letter-spacing:.04em;margin-bottom:6px;text-transform:uppercase}
+.assay-card p,.assay-card li{font-size:12.5px;color:var(--muted);line-height:1.6}
+.assay-card ul{padding-left:15px}
+.assay-card li{margin-bottom:3px}.assay-card li strong{color:var(--text)}
+
+/* Stitle */
+.stitle{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:20px 0 10px;padding-left:10px;border-left:2px solid var(--cyan)}
+
+.bdg{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin:1px;letter-spacing:.03em}
+.bdg-c{background:var(--cyan-d);color:var(--cyan)}
+.bdg-r{background:var(--red-d);color:var(--red)}
+.bdg-g{background:var(--green-d);color:var(--green)}
+.bdg-a{background:var(--amber-d);color:var(--amber)}
+.bdg-p{background:var(--purple-d);color:var(--purple)}
+
+.dv{height:1px;background:var(--rim);margin:18px 0}
+.footnote{text-align:center;font-size:11px;color:var(--dim);padding:20px 0 0;border-top:1px solid var(--rim);margin-top:28px}
+.crit-note{background:rgba(240,80,96,.18);border:1px solid rgba(240,80,96,.4);border-radius:var(--r2);padding:13px 16px;margin:14px 0;font-size:13px;color:var(--text)}
+.crit-note strong{color:var(--red)}
+
+@media(max-width:600px){
+  .hdr-title{font-size:15px}.tab-grid{grid-template-columns:repeat(2,1fr)}
+  .g2,.g3{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-title">PLATELET INHIBITORS <span>/</span> PERIOPERATIVE MANAGEMENT</div>
+  <div class="hdr-sub">Cardiac Surgery ICU &middot; Pharmacology, timing, CABG recommendations, reversal strategies &amp; platelet function testing</div>
+  <div class="hdr-badges">
+    <span class="hdr-bdg hdr-bdg-c">Drug Reference</span>
+    <span class="hdr-bdg hdr-bdg-g">CABG Guidelines</span>
+    <span class="hdr-bdg hdr-bdg-r">Emergency Reversal</span>
+    <span class="hdr-bdg hdr-bdg-a">Platelet Function Testing</span>
+  </div>
+</div>
+
+<div class="tab-grid-wrap">
+  <div class="tab-grid">
+    <button class="tg active" onclick="gt(0,this)"><span class="tg-icon">&#128138;</span><span class="tg-lbl">Drug Reference</span></button>
+    <button class="tg" onclick="gt(1,this)"><span class="tg-icon">&#127973;&#65039;</span><span class="tg-lbl">CABG Recommendations</span></button>
+    <button class="tg" onclick="gt(2,this)"><span class="tg-icon">&#128680;</span><span class="tg-lbl">Emergency &amp; Reversal</span></button>
+    <button class="tg" onclick="gt(3,this)"><span class="tg-icon">&#128300;</span><span class="tg-lbl">Platelet Function Testing</span></button>
+  </div>
+</div>
+
+<main class="page">
+
+<!-- ════ TAB 0: DRUG REFERENCE ════════════════════════════════════ -->
+<section class="tab active" id="t0">
+  <div class="sh"><h2>&#128138; Platelet Inhibitors &mdash; Drug Reference</h2><p>Mechanisms, duration, dosing, and perioperative discontinuation. Color-coded by urgency for cardiac surgery.</p></div>
+
+  <div class="crit-note">
+    &#9888;&#65039; <strong>Critical correction:</strong> Abciximab (ReoPro) bolus dose is <strong>0.25 mg/kg IV</strong> (milligrams), NOT 0.25 mcg/kg (micrograms) &mdash; a 1000-fold error that may appear in older references. Maintenance infusion is 0.125 <em>mcg</em>/kg/min (max 10 mcg/min). Verify all doses in current drug formulary before prescribing.
+  </div>
+
+  <!-- ASPIRIN / COX INHIBITORS -->
+  <div class="stitle">COX Inhibitors</div>
+  <div class="drug-table-wrap"><table>
+    <thead><tr>
+      <th>Drug (Brand)</th><th>Mechanism</th><th>Duration of effect</th><th>Discontinue before surgery</th><th>Dosing</th><th>CABG</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Aspirin</strong><br><span style="font-size:11px;color:var(--dim)">ASA</span></td>
+        <td>Irreversible COX-1 inhibition &rarr; &#8595; TXA&#8322; &rarr; &#8595; platelet aggregation. Each platelet affected for its lifetime (~7&ndash;10 days).</td>
+        <td>7&ndash;10 days (irreversible; new platelet production restores ~10% function/day)</td>
+        <td>
+          <span class="tl tl-green">&#10003; Continue</span> for CABG in most cases<br>
+          <span class="tl tl-amber">Stop 3&ndash;5 days</span> before non-cardiac / high bleeding-risk surgery<br>
+          <span style="font-size:11.5px;color:var(--muted)">AHA/ACC/EACTS: continue aspirin through CABG unless bleeding risk prohibitive.</span>
+        </td>
+        <td>81&ndash;100 mg once daily<br><span style="font-size:11px;color:var(--dim)">Cardiac: 81 mg preferred long-term</span></td>
+        <td class="td-continue">Usually continue</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <!-- P2Y12 INHIBITORS -->
+  <div class="stitle">P2Y12 / ADP Receptor Inhibitors</div>
+  <div class="drug-table-wrap"><table>
+    <thead><tr>
+      <th>Drug (Brand)</th><th>Mechanism</th><th>Duration of effect</th><th>Discontinue before surgery</th><th>Dosing</th><th>Elective CABG</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Clopidogrel</strong><br><span style="font-size:11px;color:var(--dim)">Plavix</span></td>
+        <td>Prodrug &rarr; active metabolite via CYP2C19. Irreversible P2Y12 blockade. Variable response (CYP2C19 polymorphisms).</td>
+        <td>7 days (irreversible; new platelets restore function)</td>
+        <td><span class="tl tl-amber">5 days</span> before elective surgery<br><span style="font-size:11px;color:var(--muted)">Urgent: assess by platelet function assay</span></td>
+        <td>75 mg once daily<br>Loading: 300&ndash;600 mg once</td>
+        <td class="td-delay">5 days</td>
+      </tr>
+      <tr>
+        <td><strong>Prasugrel</strong><br><span style="font-size:11px;color:var(--dim)">Effient</span></td>
+        <td>Prodrug &rarr; active metabolite via CYP3A4/CYP2B6. Irreversible P2Y12 blockade. More potent &amp; predictable than clopidogrel.</td>
+        <td>7&ndash;10 days (irreversible; more potent &rarr; greater platelet inhibition)</td>
+        <td><span class="tl tl-red">7 days</span> before elective surgery<br><span style="font-size:11px;color:var(--muted)">Higher bleeding risk than clopidogrel at equivalent time interval</span></td>
+        <td>5&ndash;10 mg once daily<br>Loading: 60 mg once</td>
+        <td class="td-delay">7 days</td>
+      </tr>
+      <tr>
+        <td><strong>Ticagrelor</strong><br><span style="font-size:11px;color:var(--dim)">Brilinta / Brilique</span></td>
+        <td>Direct-acting (no prodrug). Reversible P2Y12 blockade. Faster onset and offset than thienopyridines. Does not require CYP activation.</td>
+        <td>3&ndash;5 days (reversible &mdash; functional recovery faster than clopidogrel/prasugrel)</td>
+        <td>
+          <span class="tl tl-amber">3&ndash;5 days</span> elective surgery (traditionally 5 days)<br>
+          <span style="font-size:11.5px;color:var(--muted)">RAPID CABG trial: 2&ndash;3 days may be acceptable with platelet function guidance in selected patients. ESC 2023: 3 days acceptable in urgent cases.</span>
+        </td>
+        <td>90 mg twice daily<br>Loading: 180 mg once<br><span style="font-size:11px;color:var(--dim)">60 mg bid for &gt;1 yr ACS</span></td>
+        <td class="td-caution">3&ndash;5 days</td>
+      </tr>
+      <tr>
+        <td><strong>Cangrelor</strong><br><span style="font-size:11px;color:var(--dim)">IV only</span></td>
+        <td>IV direct-acting P2Y12 antagonist. Reversible, extremely short half-life. Used for peri-procedural bridging &mdash; replace oral P2Y12 in patients who must remain antiplatelet-protected until shortly before surgery.</td>
+        <td>1&ndash;2 hours (reversible; platelet function restored within 30&ndash;60 min of stopping)</td>
+        <td>
+          <span class="tl tl-cyan">Stop 1&ndash;2 h before surgery</span><br>
+          <span style="font-size:11.5px;color:var(--muted)">Key advantage: enables bridging strategy &mdash; continuous P2Y12 protection until perioperative window. Platelet function recovers rapidly after discontinuation.</span>
+        </td>
+        <td>Bolus 30 mcg/kg before PCI, then 4 mcg/kg/min infusion during PCI</td>
+        <td class="td-urgent">Stop 1&ndash;2 h</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <!-- GP IIb/IIIa INHIBITORS -->
+  <div class="stitle">GP IIb/IIIa Receptor Inhibitors</div>
+  <div class="drug-table-wrap"><table>
+    <thead><tr>
+      <th>Drug (Brand)</th><th>Mechanism</th><th>Duration of effect</th><th>Discontinue before surgery</th><th>Dosing</th><th>CABG timing</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Tirofiban</strong><br><span style="font-size:11px;color:var(--dim)">Aggrastat</span></td>
+        <td>Small molecule, reversible GP IIb/IIIa inhibitor. Blocks fibrinogen binding &rarr; prevents final common pathway of platelet aggregation.</td>
+        <td>4&ndash;8 hours (reversible; platelet function recovers after stopping)</td>
+        <td>
+          <span class="tl tl-amber">4&ndash;8 hours</span> standard renal function<br>
+          <span class="tl tl-red">8&ndash;12 hours</span> renal failure (CrCl &lt;30)<br>
+          <span style="font-size:11.5px;color:var(--muted)">80% renally cleared &mdash; half-life doubles in renal failure. Adjust timing accordingly for pre-operative cessation.</span>
+        </td>
+        <td>Bolus 25 mcg/kg IV over 5 min<br>Infusion: 0.15 mcg/kg/min for 18 h<br><span style="font-size:11px;color:var(--dim)">Reduce dose 50% if CrCl &lt;30</span></td>
+        <td class="td-caution">4&ndash;8 h (standard)<br>8&ndash;12 h (renal failure)</td>
+      </tr>
+      <tr>
+        <td><strong>Eptifibatide</strong><br><span style="font-size:11px;color:var(--dim)">Integrilin</span></td>
+        <td>Cyclic peptide, reversible GP IIb/IIIa inhibitor. Binds with high specificity. Shorter half-life than abciximab.</td>
+        <td>4&ndash;8 hours (reversible; function recovers 4&ndash;8 h after stopping)</td>
+        <td>
+          <span class="tl tl-amber">4&ndash;8 hours</span> standard renal function<br>
+          <span class="tl tl-red">Prolonged</span> in renal failure &mdash; 50% renally cleared; avoid in severe CKD<br>
+          <span style="font-size:11.5px;color:var(--muted)">Eptifibatide is contraindicated in severe renal failure (CrCl &lt;25). Platelet inhibition may persist longer than expected in CKD.</span>
+        </td>
+        <td>Bolus 180 mcg/kg IV over 2 min<br>Infusion: 2 mcg/kg/min for 72&ndash;96 h<br><span style="font-size:11px;color:var(--dim)">Second bolus after 10 min for NSTEMI</span></td>
+        <td class="td-caution">4&ndash;8 h (standard)<br>Longer in CKD</td>
+      </tr>
+      <tr>
+        <td><strong>Abciximab</strong><br><span style="font-size:11px;color:var(--dim)">ReoPro</span></td>
+        <td>Large chimeric monoclonal antibody fragment (Fab). Binds GP IIb/IIIa with very high affinity. Also binds &#945;&#119855;&#946;&#8323; and MAC-1. Longest platelet effect of the class &mdash; bound to platelets for their lifetime.</td>
+        <td>&gt;24 h (though plasma t&#189; is short, platelet-bound drug persists; new platelets dilute effect over 24&ndash;48 h)</td>
+        <td>
+          <span class="tl tl-red">24&ndash;48 hours</span> &mdash; platelet dysfunction may persist beyond plasma clearance<br>
+          <span style="font-size:11.5px;color:var(--muted)">Plasma t&#189; only 10&ndash;30 min but drug redistributes to platelets. 48 h preferred for elective cardiac surgery. Monitor with platelet function testing before urgent surgery.</span>
+        </td>
+        <td>
+          <span class="tl tl-red">&#9888; Bolus: 0.25 <strong>mg</strong>/kg IV over 1 min</span><br>
+          Infusion: 0.125 <em>mcg</em>/kg/min for 12 h (max 10 mcg/min)<br>
+          <span style="font-size:11px;color:var(--red)">Note: bolus in mg/kg; infusion in mcg/kg/min</span>
+        </td>
+        <td class="td-delay">24&ndash;48 h<br><span style="font-size:11px">Monitor PLT function</span></td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <div class="box box-cyan" style="margin-top:12px">
+    <strong>Mechanism overview:</strong> All platelet inhibitors prevent the final pathway of platelet-mediated thrombosis but at different steps. COX inhibitors &#8595; TXA&#8322; synthesis &rarr; reduced platelet activation signal. P2Y12 inhibitors block ADP-mediated amplification of platelet activation. GP IIb/IIIa inhibitors block the final common pathway of fibrinogen cross-linking between platelets &mdash; the most potent class but also highest bleeding risk.
+  </div>
+
+  <div class="footnote">
+    Aspirin CABG guidance: AHA/ACC 2021 Guideline for Coronary Artery Revascularization &middot; ESC/EACTS 2018/2022 Myocardial Revascularization &middot; Ticagrelor timing: RAPID CABG Trial (Held C et al., JACC 2016); ESC 2023 ACS guidelines &middot; Abciximab dosing: ReoPro prescribing information (Janssen) &middot; GP IIb/IIIa renal adjustment: product monographs and Toth PP, JACC 2010
+  </div>
+</section>
+
+<!-- ════ TAB 1: CABG RECOMMENDATIONS ════════════════════════════ -->
+<section class="tab" id="t1">
+  <div class="sh"><h2>&#127973;&#65039; CABG-Specific Recommendations</h2><p>Elective and urgent CABG timing, aspirin management, dual antiplatelet therapy, and risk stratification.</p></div>
+
+  <div class="box box-amber" style="margin-bottom:18px">
+    <strong>Core principle:</strong> The optimal time to stop antiplatelet therapy before CABG balances <em>thrombotic risk</em> (stent thrombosis, ACS recurrence) against <em>bleeding risk</em> (transfusion, reoperation, tamponade). Decisions require individualisation based on indication, time since stent, haemodynamic stability, and platelet function testing.
+  </div>
+
+  <!-- WAITING TIME TABLE -->
+  <div class="stitle">Recommended Waiting Time Before CABG</div>
+  <div class="drug-table-wrap"><table>
+    <thead><tr>
+      <th>Drug</th><th>Elective CABG</th><th>Urgent CABG</th><th>Class / evidence</th><th>Notes</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Aspirin</strong></td>
+        <td><span class="tl tl-green">&#10003; Continue</span></td>
+        <td><span class="tl tl-green">&#10003; Continue</span></td>
+        <td><span class="bdg bdg-g">Class I, Level A</span></td>
+        <td>AHA/ACC/EACTS recommend continuing aspirin through CABG. Evidence of reduced graft occlusion and mortality. Stop only if excessive bleeding risk (e.g., bleeding disorder, prior severe GI bleed).</td>
+      </tr>
+      <tr>
+        <td><strong>Clopidogrel</strong></td>
+        <td><span class="tl tl-amber">5 days</span></td>
+        <td><span class="tl tl-amber">Individualise (assess with PLT assay)</span></td>
+        <td><span class="bdg bdg-a">Class IIa, Level B</span></td>
+        <td>5-day washout standard. Platelet function testing (VerifyNow PRUtest, Multiplate ADP) may allow earlier surgery if residual inhibition &lt;20%. High CYP2C19 loss-of-function: faster recovery possible.</td>
+      </tr>
+      <tr>
+        <td><strong>Prasugrel</strong></td>
+        <td><span class="tl tl-red">7 days</span></td>
+        <td><span class="tl tl-red">&#8805;5 days preferred</span></td>
+        <td><span class="bdg bdg-r">Class I, Level C</span></td>
+        <td>More potent than clopidogrel &rarr; longer washout. 7 days standard. Platelet function assay may confirm recovery. If urgent: platelet transfusion may be partially effective after 5 days.</td>
+      </tr>
+      <tr>
+        <td><strong>Ticagrelor</strong></td>
+        <td><span class="tl tl-amber">3&ndash;5 days</span></td>
+        <td><span class="tl tl-cyan">&#8805;2&ndash;3 days with PLT assay guidance</span></td>
+        <td><span class="bdg bdg-a">Class IIa, Level B</span></td>
+        <td>Reversible mechanism &rarr; faster platelet recovery than thienopyridines. RAPID CABG trial: 2&ndash;3 days non-inferior to 5 days in selected patients. ESC 2023: 3 days acceptable. Platelet transfusion less effective due to redistribution of active drug to new platelets.</td>
+      </tr>
+      <tr>
+        <td><strong>Cangrelor</strong></td>
+        <td><span class="tl tl-cyan">Stop 1&ndash;2 h before</span></td>
+        <td><span class="tl tl-cyan">Stop 1&ndash;2 h before</span></td>
+        <td><span class="bdg bdg-c">Bridging agent</span></td>
+        <td>IV administration &rarr; rapid offset. Ideal bridging strategy: substitute for oral P2Y12 in patients who need to remain antiplatelet until surgery. Platelet function fully restored within 30&ndash;60 min of stopping.</td>
+      </tr>
+      <tr>
+        <td><strong>Tirofiban</strong></td>
+        <td><span class="tl tl-amber">4&ndash;8 h (standard renal)</span></td>
+        <td><span class="tl tl-amber">4&ndash;8 h; 8&ndash;12 h in CKD</span></td>
+        <td><span class="bdg bdg-a">Expert consensus</span></td>
+        <td>Reversible; platelet function recovers after cessation. Renal dose reduction required if CrCl &lt;30. Monitor with platelet aggregation test before urgent surgery.</td>
+      </tr>
+      <tr>
+        <td><strong>Eptifibatide</strong></td>
+        <td><span class="tl tl-amber">4&ndash;8 h (standard renal)</span></td>
+        <td><span class="tl tl-amber">4&ndash;8 h; prolonged in CKD</span></td>
+        <td><span class="bdg bdg-a">Expert consensus</span></td>
+        <td>Renally cleared; contraindicated in severe CKD (CrCl &lt;25). Platelet function recovers 4&ndash;8 h after stopping. Check platelet aggregation assay before urgent CABG if exposure recent.</td>
+      </tr>
+      <tr>
+        <td><strong>Abciximab</strong></td>
+        <td><span class="tl tl-red">24&ndash;48 h</span></td>
+        <td><span class="tl tl-red">24&ndash;48 h; monitor PLT function</span></td>
+        <td><span class="bdg bdg-a">Expert consensus</span></td>
+        <td>High-affinity platelet binding persists beyond plasma clearance. Platelet transfusion partially effective (new platelets dilute bound drug). Monitor with platelet function assay. 48 h preferred for elective; 24 h minimum for life-threatening urgent cases.</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <!-- ASPIRIN DETAIL -->
+  <div class="stitle">Aspirin and CABG &mdash; The Evidence</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--green)">&#10003; Arguments for continuing aspirin</h3>
+      <ul>
+        <li><strong>Graft patency:</strong> Aspirin significantly reduces early vein graft occlusion</li>
+        <li><strong>No increase in major bleeding</strong> in most CABG studies (Sethi 2010, Mangano 2002)</li>
+        <li><strong>Thrombotic risk:</strong> ACS patients have very high event risk if aspirin stopped</li>
+        <li><strong>ESC 2018 / AHA 2021:</strong> Class I recommendation to continue aspirin through CABG</li>
+        <li>Effect on bleeding: mainly increased transfusion, not reoperation or mortality</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--amber)">&#9888;&#65039; When to stop aspirin before surgery</h3>
+      <ul>
+        <li>High bleeding-risk procedures (retroperitoneal, neurosurgery, posterior eye)</li>
+        <li>Prior significant aspirin-related GI haemorrhage</li>
+        <li>Severe aspirin-induced platelet dysfunction on assay</li>
+        <li>Patient with primary prevention aspirin only (lower thrombotic risk)</li>
+        <li>Centre-specific protocol after shared decision-making</li>
+      </ul>
+      <div class="box box-amber" style="margin-top:10px">If aspirin stopped before CABG: restart within 6 hours post-operatively when haemostasis confirmed (AHA 2021 Class I).</div>
+    </div>
+  </div>
+
+  <!-- DAPT DETAIL -->
+  <div class="stitle">Dual Antiplatelet Therapy (DAPT) &mdash; Special Considerations</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--red)">&#128202; Recent stent &mdash; high-risk timing</h3>
+      <ul>
+        <li><strong>BMS within 4 weeks:</strong> catastrophic stent thrombosis risk if DAPT stopped</li>
+        <li><strong>DES within 3 months:</strong> very high stent thrombosis risk</li>
+        <li><strong>DES within 6 months:</strong> significant stent thrombosis risk</li>
+        <li>If CABG within these periods: continue aspirin, continue P2Y12 or switch to cangrelor bridging</li>
+        <li>Decision should involve interventional cardiologist + cardiac surgeon + anaesthesiologist</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--cyan)">&#128261; Bridging strategy with cangrelor</h3>
+      <div class="box box-cyan">
+        <strong>Cangrelor bridging:</strong> Switch oral P2Y12 to IV cangrelor 1&ndash;3 days before surgery. Provides continuous P2Y12 protection. Stop infusion 1&ndash;2 h before incision. Platelet function recovers within 30&ndash;60 min.<br><br>
+        Restart oral P2Y12 as soon as haemostasis confirmed post-operatively.
+      </div>
+      <p style="font-size:12.5px;color:var(--muted);margin-top:8px">Evidence: BRIDGE trial (Bhatt DL, NEJM 2013). Cangrelor bridging non-inferior for safety; maintained antiplatelet efficacy throughout hospital stay.</p>
+    </div>
+  </div>
+
+  <div class="footnote">
+    AHA/ACC 2021 Guideline for Coronary Artery Revascularization &middot; ESC 2022 Stable Coronary Artery Disease &middot; ESC 2023 ACS &middot; RAPID CABG: Held C et al., JACC 2016 &middot; BRIDGE trial: Bhatt DL et al., NEJM 2013 &middot; Bojar RM &mdash; Manual of Perioperative Care in Adult Cardiac Surgery, 6th ed.
+  </div>
+</section>
+
+<!-- ════ TAB 2: EMERGENCY & REVERSAL ════════════════════════════ -->
+<section class="tab" id="t2">
+  <div class="sh"><h2>&#128680; Emergency Surgery &amp; Reversal Strategies</h2><p>Urgent CABG on antiplatelet therapy, reversal options, and perioperative haemorrhage management.</p></div>
+
+  <!-- REVERSAL TABLE -->
+  <div class="stitle">Drug-Specific Reversal Strategies</div>
+  <div class="drug-table-wrap"><table>
+    <thead><tr>
+      <th>Drug</th><th>Reversibility</th><th>Primary reversal</th><th>Adjuncts</th><th>Efficacy of platelets</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Aspirin</strong></td>
+        <td>Irreversible per platelet; new platelets unaffected</td>
+        <td>Time (10%/day new platelets) + Platelet transfusion (HLA-matched preferred)</td>
+        <td>DDAVP 0.3 mcg/kg IV &mdash; mobilises vWF; may partially restore haemostasis</td>
+        <td class="td-continue">Good &mdash; new transfused platelets are unaffected by aspirin</td>
+      </tr>
+      <tr>
+        <td><strong>Clopidogrel</strong></td>
+        <td>Irreversible; new platelets unaffected</td>
+        <td>Platelet transfusion (large volume may be needed)</td>
+        <td>DDAVP; tranexamic acid; cell saver; FFP if coagulopathy</td>
+        <td class="td-caution">Good &mdash; new platelets unblocked; aim for 0.8 platelets/LBW increase</td>
+      </tr>
+      <tr>
+        <td><strong>Prasugrel</strong></td>
+        <td>Irreversible; more potent than clopidogrel</td>
+        <td>Platelet transfusion (larger volume than clopidogrel)</td>
+        <td>DDAVP; antifibrinolytics (TXA, EACA)</td>
+        <td class="td-caution">Good &mdash; new platelets unblocked; may need more units due to potency</td>
+      </tr>
+      <tr>
+        <td><strong>Ticagrelor</strong></td>
+        <td>Reversible, but free drug redistributes to new platelets</td>
+        <td>Time (3&ndash;5 days for 50% recovery) &mdash; platelet transfusion partially effective</td>
+        <td>DDAVP; Bentracimab (investigational reversal agent, not yet widely available)</td>
+        <td class="td-delay">Partial &mdash; ticagrelor re-binds transfused platelets. Larger volumes needed. PLATO translational data.</td>
+      </tr>
+      <tr>
+        <td><strong>Cangrelor</strong></td>
+        <td>Fully reversible; t&#189; 3&ndash;6 min</td>
+        <td>Stop infusion &mdash; platelet function recovers within 30&ndash;60 min (fastest reversal of all agents)</td>
+        <td>Usually none needed</td>
+        <td class="td-continue">Excellent &mdash; full recovery after cessation. No transfusion usually required.</td>
+      </tr>
+      <tr>
+        <td><strong>Tirofiban / Eptifibatide</strong></td>
+        <td>Reversible; t&#189; 2&ndash;4 h</td>
+        <td>Stop infusion; wait 4&ndash;8 h (longer in CKD)</td>
+        <td>Platelet transfusion if urgent surgery required before recovery; DDAVP</td>
+        <td class="td-caution">Good after waiting period. Dialysis may accelerate clearance for eptifibatide.</td>
+      </tr>
+      <tr>
+        <td><strong>Abciximab</strong></td>
+        <td>Plasma half-life short, but high-affinity platelet binding</td>
+        <td>Platelet transfusion &mdash; dilutes proportion of blocked platelets (drug redistributes)</td>
+        <td>DDAVP; repeat transfusion may be needed; allow 24&ndash;48 h when possible</td>
+        <td class="td-caution">Partial &mdash; abciximab redistributes from blocked to new transfused platelets. Multiple transfusions may be needed. Most effective after 24 h.</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <!-- DDAVP / ANTIFIBRINOLYTIC DETAIL -->
+  <div class="stitle">Adjunct Haemostatic Agents</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--blue)">&#128138; DDAVP (Desmopressin) 0.3 mcg/kg IV</h3>
+      <p>Releases vWF and factor VIII from endothelial stores &rarr; enhances platelet adhesion and aggregation. Partially reverses aspirin, clopidogrel, and uraemia-related platelet dysfunction.</p>
+      <div class="box box-blue" style="margin-top:8px">
+        <strong>Dose:</strong> 0.3 mcg/kg IV over 20&ndash;30 min (max 20 mcg). Onset 30&ndash;60 min, duration 4&ndash;8 h. Tachyphylaxis after 2 doses.<br>
+        <strong>Use:</strong> Aspirin &#177; clopidogrel bleeding; uraemia; von Willebrand disease type 1.<br>
+        <strong>Caution:</strong> Hyponatraemia, fluid retention, cardiovascular events at higher doses.
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--green)">&#128138; Antifibrinolytics</h3>
+      <ul>
+        <li><strong>Tranexamic acid (TXA):</strong> Lysine analogue &rarr; blocks plasminogen binding &rarr; inhibits fibrinolysis. Standard prophylaxis in CABG (reduces transfusion 30&ndash;40%). Dose: 1&ndash;2 g IV loading &rarr; 0.25&ndash;0.5 g/h infusion during surgery. Risk: seizures at high doses.</li>
+        <li><strong>Epsilon-aminocaproic acid (EACA):</strong> Less potent than TXA; similar mechanism. Loading 5&ndash;10 g IV then infusion.</li>
+        <li><strong>Aprotinin:</strong> Serine protease inhibitor (broad). Withdrawn in many countries; under reassessment. Higher antifibrinolytic efficacy but thrombotic risk.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- BENTRACIMAB NOTE -->
+  <div class="stitle">Emerging Reversal Agent</div>
+  <div class="card">
+    <h3 style="color:var(--purple)">&#128300; Bentracimab &mdash; Investigational Ticagrelor Reversal Agent</h3>
+    <p>Bentracimab (PB2452) is a fully human, antigen-binding fragment (Fab) antibody that binds and sequesters ticagrelor and its active metabolite with high affinity, reversing platelet inhibition within minutes. Not yet widely available (as of 2025).</p>
+    <div class="box box-purple" style="margin-top:8px">
+      <strong>Status:</strong> Phase 3 clinical trials completed; NDA submission in progress. Will represent the first specific antidote for ticagrelor. Until available, platelet transfusion + DDAVP remain the mainstays of reversal, despite their limitations (ticagrelor redistribution to new platelets).
+    </div>
+  </div>
+
+  <!-- URGENT SURGERY PROTOCOL -->
+  <div class="stitle">Urgent Cardiac Surgery on Antiplatelet Therapy &mdash; Practical Approach</div>
+  <div class="card">
+    <h3 style="color:var(--red)">&#128680; Decision framework for urgent CABG on P2Y12 inhibitor</h3>
+    <div class="g2">
+      <ol style="padding-left:18px;font-size:13px;color:var(--muted);line-height:2">
+        <li><strong style="color:var(--text)">Determine true urgency:</strong> STEMI / haemodynamic instability &rarr; operate; stable NSTEMI &rarr; consider 48&ndash;72 h wait</li>
+        <li><strong style="color:var(--text)">Perform platelet function assay</strong> (VerifyNow PRUtest, Multiplate ADP): &gt;50% inhibition &rarr; higher bleeding risk; &lt;20% &rarr; may be safe to proceed</li>
+        <li><strong style="color:var(--text)">Antifibrinolytic prophylaxis:</strong> Tranexamic acid 1&ndash;2 g IV loading dose before incision in ALL cases</li>
+        <li><strong style="color:var(--text)">Alert blood bank:</strong> Reserve platelets, FFP, cryoprecipitate, fibrinogen concentrate</li>
+        <li><strong style="color:var(--text)">Intraoperative cell saver:</strong> Use routinely if on P2Y12 inhibitor</li>
+        <li><strong style="color:var(--text)">Post-CPB:</strong> Assess haemostasis with TEG/ROTEM &rarr; targeted therapy based on viscoelastic results</li>
+        <li><strong style="color:var(--text)">Platelet transfusion:</strong> If on clopidogrel/prasugrel (effective) or ticagrelor (partially effective) &mdash; administer after CPB and protamine</li>
+        <li><strong style="color:var(--text)">DDAVP:</strong> 0.3 mcg/kg IV at wound closure if excess microvascular bleeding</li>
+      </ol>
+      <div>
+        <div class="box box-amber"><strong>Platelet function testing result interpretation:</strong><br>
+          &lt;20% residual P2Y12 inhibition &rarr; proceed without platelet transfusion<br>
+          20&ndash;50% inhibition &rarr; consider timing or 1 platelet pool<br>
+          &gt;50% inhibition &rarr; platelet transfusion + antifibrinolytic; consider delaying if haemodynamics permit
+        </div>
+        <div class="box box-red"><strong>Clopidogrel vs Ticagrelor urgent surgery:</strong><br>
+          Clopidogrel: platelet transfusion effective (irreversible but drug not redistributed)<br>
+          Ticagrelor: active drug redistributes to transfused platelets, reducing efficacy. Allow 3 days if at all possible; if not, multiple platelet transfusions and DDAVP.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    Reversal guidance: Sousa-Uva M et al., ESC/EACTS Myocardial Revascularization 2018 &middot; Bojar RM 6th ed. &middot; Shore-Lesserson L et al., STS/SCA Anticoagulation Guideline &middot; Bentracimab: Bhatt DL et al., NEJM 2022 (Phase 2 REVERSE-IT) &middot; DDAVP in cardiac surgery: Carless PA et al., Cochrane 2004 &middot; Tranexamic acid: Myles PS et al., NEJM 2017 (ATACAS trial)
+  </div>
+</section>
+
+<!-- ════ TAB 3: PLATELET FUNCTION TESTING ════════════════════════ -->
+<section class="tab" id="t3">
+  <div class="sh"><h2>&#128300; Platelet Function Testing</h2><p>Point-of-care and laboratory assays for monitoring antiplatelet therapy in the perioperative cardiac surgery setting.</p></div>
+
+  <div class="box box-cyan" style="margin-bottom:16px">
+    <strong>Why platelet function testing matters in cardiac surgery:</strong> Standardized waiting periods are conservative estimates. Individual pharmacokinetics vary widely (especially for clopidogrel: CYP2C19 polymorphisms; renal clearance for GP IIb/IIIa inhibitors). Assay-guided timing allows earlier surgery in patients with low residual inhibition, and identifies high-risk patients who need longer waiting periods or prophylactic platelet transfusion.
+  </div>
+
+  <div class="stitle">Point-of-Care Assays</div>
+  <div class="g2">
+    <div class="assay-card">
+      <h4>VerifyNow PRUtest (Accumetrics)</h4>
+      <p>Optical aggregometry using ADP as agonist. Reports <strong>P2Y12 Reaction Units (PRU)</strong> and % inhibition.</p>
+      <ul style="margin-top:6px">
+        <li><strong>PRU &lt;85:</strong> High platelet inhibition (&gt;50% inhibition)</li>
+        <li><strong>PRU 85&ndash;208:</strong> Moderate inhibition &mdash; intermediate risk</li>
+        <li><strong>PRU &gt;208:</strong> Low inhibition (&lt;20%) &mdash; may be safe to proceed</li>
+        <li><strong>Also:</strong> VerifyNow Aspirin (ARU) for aspirin monitoring</li>
+      </ul>
+      <div class="box box-cyan" style="margin-top:8px;font-size:12px">Validated for clopidogrel, prasugrel, and ticagrelor monitoring pre-CABG. Widely used in STS database studies. Rapid result (10 min).</div>
+    </div>
+
+    <div class="assay-card">
+      <h4>Multiplate Analyzer (Roche)</h4>
+      <p>Multiple electrode aggregometry (MEA). Uses whole blood. Several agonist channels: ADP, ASPI (aspirin), TRAP, RISTO.</p>
+      <ul style="margin-top:6px">
+        <li><strong>ADP test:</strong> P2Y12 inhibitor assessment</li>
+        <li><strong>ASPI test:</strong> COX-1 inhibition (aspirin)</li>
+        <li><strong>TRAP test:</strong> GP IIb/IIIa or thrombin receptor assessment</li>
+        <li><strong>Result:</strong> Aggregation units (AU) &mdash; &lt;19 ADP-AU = significant P2Y12 inhibition</li>
+      </ul>
+      <div class="box box-blue" style="margin-top:8px;font-size:12px">Advantages: whole blood, multiple agonists, widely available in European cardiac centres. Validated for perioperative transfusion guidance.</div>
+    </div>
+
+    <div class="assay-card">
+      <h4>TEG 6s Platelet Mapping (Haemonetics)</h4>
+      <p>Thromboelastography-based viscoelastic assay. Maps percentage platelet contribution via ADP and AA pathways.</p>
+      <ul style="margin-top:6px">
+        <li><strong>ADP % inhibition:</strong> P2Y12 pathway (clopidogrel/ticagrelor)</li>
+        <li><strong>AA % inhibition:</strong> COX-1 pathway (aspirin)</li>
+        <li><strong>&gt;70% ADP inhibition:</strong> Significant P2Y12 blockade</li>
+        <li><strong>Simultaneous:</strong> Fibrinolysis, coagulation factor assessment</li>
+      </ul>
+      <div class="box box-amber" style="margin-top:8px;font-size:12px">Advantage: simultaneous coagulation and platelet assessment. Allows targeted transfusion strategy. Common in cardiac surgery centres with TEG platforms.</div>
+    </div>
+
+    <div class="assay-card">
+      <h4>ROTEM Platelet Module (Instrumentation Laboratory)</h4>
+      <p>Rotational thromboelastometry with platelet mapping channels using ADP and ASPI agonists.</p>
+      <ul style="margin-top:6px">
+        <li><strong>ROTEM APTEM/EXTEM:</strong> Fibrinolysis, clot strength</li>
+        <li><strong>ROTEM Platelet ADP:</strong> P2Y12 inhibitor assessment</li>
+        <li><strong>ROTEM Platelet ASPI:</strong> Aspirin effect assessment</li>
+      </ul>
+      <div class="box box-green" style="margin-top:8px;font-size:12px">Integrates with ROTEM SIGMA for comprehensive point-of-care haemostasis. Used in ESC/EACTS perioperative bleeding guidelines for targeted therapy algorithms.</div>
+    </div>
+  </div>
+
+  <div class="stitle">Laboratory (Reference) Platelet Assays</div>
+  <div class="g2">
+    <div class="assay-card">
+      <h4>Light Transmission Aggregometry (LTA)</h4>
+      <p>Gold standard platelet aggregation assay. Uses platelet-rich plasma + various agonists (ADP, arachidonic acid, collagen, ristocetin, epinephrine). Quantifies % maximal aggregation.</p>
+      <p style="margin-top:6px;font-size:12.5px;color:var(--muted)">Limitations: labour-intensive, PRP preparation required, not available as point-of-care. Results affected by platelet count and storage conditions.</p>
+    </div>
+    <div class="assay-card">
+      <h4>Flow Cytometry (P-selectin / PAC-1)</h4>
+      <p>Measures surface expression of P-selectin (platelet activation marker) and PAC-1 binding (GP IIb/IIIa activation). Most sensitive method for detecting low-grade platelet activation and inhibition.</p>
+      <p style="margin-top:6px;font-size:12.5px;color:var(--muted)">Research and specialized centres; not practical for routine clinical decisions. Useful for pharmacodynamic studies of novel antiplatelet agents.</p>
+    </div>
+  </div>
+
+  <!-- WHEN TO TEST TABLE -->
+  <div class="stitle">When to Use Platelet Function Testing in Cardiac Surgery</div>
+  <div class="drug-table-wrap"><table>
+    <thead><tr>
+      <th>Clinical scenario</th><th>Recommended assay</th><th>Decision supported</th>
+    </tr></thead>
+    <tbody>
+      <tr><td><strong>Urgent CABG on clopidogrel/prasugrel/ticagrelor</strong></td><td>VerifyNow PRUtest or Multiplate ADP</td><td>Can surgery proceed? Platelet transfusion needed?</td></tr>
+      <tr><td><strong>Uncertainty about ticagrelor washout (2&ndash;3 days)</strong></td><td>VerifyNow PRUtest: PRU &gt;208 = proceed</td><td>Earlier CABG vs further waiting</td></tr>
+      <tr><td><strong>Post-CPB microvascular bleeding</strong></td><td>TEG Platelet Mapping or ROTEM Platelet</td><td>Platelet transfusion vs factor replacement vs antifibrinolytic</td></tr>
+      <tr><td><strong>High-risk patient (renal failure + GP IIb/IIIa inhibitor)</strong></td><td>Multiplate TRAP + ADP</td><td>Time surgery correctly; guide platelet transfusion</td></tr>
+      <tr><td><strong>Suspected aspirin non-compliance</strong></td><td>VerifyNow Aspirin (ARU &gt;550 = non-compliant)</td><td>Confirm aspirin effect before DAPT intensification</td></tr>
+      <tr><td><strong>Clopidogrel high on-treatment platelet reactivity (HPR)</strong></td><td>VerifyNow PRUtest: PRU &gt;208 = HPR</td><td>Switch to ticagrelor/prasugrel; MACE risk assessment</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="box box-amber">
+    <strong>&#128204; Practical note for CABG timing decisions:</strong> No single assay result should dictate the decision in isolation. Combine platelet function assay result with time since last dose, clinical urgency, surgical risk, and haemodynamic stability. A PRU &gt;208 (VerifyNow) after 3 days of ticagrelor withdrawal supports proceeding without additional delay &mdash; but the surgical team and anaesthesiologist must weigh individual patient context.
+  </div>
+
+  <div class="footnote">
+    Bojar RM 6th ed. &middot; Tantry US et al. (JACC 2013: Expert consensus on platelet function testing) &middot; ESC/EACTS 2022 Perioperative bleeding management &middot; Shore-Lesserson L et al. STS/SCA/AmSECT Anticoagulation 2018 &middot; RAPID CABG (Held C et al., JACC 2016) &middot; Multiplate validation: Paniccia R et al., Blood Transfus 2015<br><br>
+    Cardiac Surgery Clinical Education &middot; StarleyBy &middot; 2025
+  </div>
+</section>
+
+</main>
+
+<script>
+const tabs=document.querySelectorAll('.tab');
+const tgs=document.querySelectorAll('.tg');
+function gt(i,b){
+  tabs.forEach(t=>t.classList.remove('active'));
+  tgs.forEach(t=>t.classList.remove('active'));
+  tabs[i].classList.add('active');
+  b.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

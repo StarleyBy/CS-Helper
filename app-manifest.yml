@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-06-27 19:45
+  updated: 2026-06-29 04:05
 
 sections:
   - id: calculators
@@ -74,8 +74,8 @@ sections:
         visible: true
         tags: [echo, echocardiography, norms]
       - id: platelets
-        title: "Platelets"
-        file: books/references/platelets.md
+        title: "Platelet Inhibitors | Perioperative Management · Cardiac Surgery"
+        file: books/references/platelets.html
         type: reference
         visible: true
         tags: []
