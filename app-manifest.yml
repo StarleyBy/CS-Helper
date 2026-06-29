@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-06-29 04:05
+  updated: 2026-06-29 10:28
 
 sections:
   - id: calculators
@@ -145,6 +145,12 @@ sections:
       - id: alter_coagulation
         title: "Non‑Heparin Anticoagulation | Angiomax, Iloprost, DOACs, Argatroban, Fondaparinux & Defibrotide"
         file: books/cheatsheets/alter_coagulation.html
+        type: cheatsheet
+        visible: true
+        tags: []
+      - id: auscultation
+        title: "Cardiac Auscultation | Clinical Reference · Cardiac Surgery"
+        file: books/cheatsheets/auscultation.html
         type: cheatsheet
         visible: true
         tags: []
