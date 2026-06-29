@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-06-27 18:26
+  updated: 2026-06-27 19:45
 
 sections:
   - id: calculators
@@ -45,7 +45,7 @@ sections:
         visible: true
         tags: []
       - id: ppm
-        title: "PPM Calculator | Prosthesis-Patient Mismatch · Heart Valve Sizing (including Bicarbon)"
+        title: "PPM Calculator | Prosthesis-Patient Mismatch · Bicarbon · BMI-Adjusted"
         file: books/calculators/ppm.html
         type: calculator
         visible: true
