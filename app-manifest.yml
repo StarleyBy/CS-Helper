@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-06-29 10:28
+  updated: 2026-07-01 16:02
 
 sections:
   - id: calculators
@@ -244,6 +244,12 @@ sections:
         type: cheatsheet
         visible: true
         tags: [renal, AKI, acute kidney injury]
+      - id: steroids
+        title: "Systemic Corticosteroid Therapy | Clinical Decision Support"
+        file: books/cheatsheets/steroids.html
+        type: cheatsheet
+        visible: true
+        tags: []
       - id: ventilation
         title: "Hamilton C1 · Mechanical Ventilation Reference"
         file: books/cheatsheets/ventilation.html
