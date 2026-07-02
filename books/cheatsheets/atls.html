@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATLS – Cardiothoracic Trauma Manual</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f0a08;--bg2:#1a100a;--bg3:#221510;--bg4:#2c1c14;
+  --rim:rgba(255,255,255,0.07);
+  --text:#f0e8e0;--muted:#8a7060;--dim:#4a3020;
+  --red:#e84040;--red-l:#ff7070;--red-d:rgba(232,64,64,0.13);--red-b:rgba(232,64,64,0.30);
+  --ora:#e87830;--ora-l:#ffaa60;--ora-d:rgba(232,120,48,0.13);--ora-b:rgba(232,120,48,0.30);
+  --teal:#2ab89a;--teal-d:rgba(42,184,154,0.12);--teal-b:rgba(42,184,154,0.30);
+  --gold:#e8c050;--gold-d:rgba(232,192,80,0.12);
+  --blue:#4898e0;--blue-d:rgba(72,152,224,0.12);
+  --green:#3ec870;--green-d:rgba(62,200,112,0.12);
+  --violet:#9060d4;--violet-d:rgba(144,96,212,0.12);--violet-l:#b890f8;
+  --display:'Playfair Display',Georgia,serif;
+  --sans:'IBM Plex Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --r:12px;--r2:20px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.65;overflow-x:hidden}
+::selection{background:rgba(232,120,48,.3)}
+
+/* HEADER */
+.hdr{background:linear-gradient(160deg,#080402 0%,#120a06 55%,#1a0f08 100%);border-bottom:1px solid var(--rim);padding:28px 22px 24px;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 10% 50%,rgba(232,64,64,.12) 0%,transparent 60%),radial-gradient(ellipse 50% 70% at 90% 50%,rgba(232,120,48,.09) 0%,transparent 60%);pointer-events:none}
+.hdr-inner{max-width:1020px;margin:0 auto;position:relative;z-index:1}
+.hdr-eyebrow{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.hdr-title{font-family:var(--display);font-size:clamp(24px,5vw,40px);font-weight:800;line-height:1.1;letter-spacing:-.01em}
+.hdr-title .atls{color:var(--red-l)}.hdr-title .sub{color:var(--ora-l);font-size:.65em;font-style:italic;font-weight:600}
+.hdr-sub{font-size:13px;color:var(--muted);margin-top:10px;max-width:700px;line-height:1.55}
+.hdr-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.hdr-pill{font-size:11px;font-weight:600;padding:4px 12px;border-radius:30px;letter-spacing:.03em}
+.pill-r{background:var(--red-d);color:var(--red-l);border:1px solid var(--red-b)}
+.pill-o{background:var(--ora-d);color:var(--ora-l);border:1px solid var(--ora-b)}
+.pill-t{background:var(--teal-d);color:var(--teal);border:1px solid var(--teal-b)}
+
+/* NAV */
+.nav-wrap{background:var(--bg2);border-bottom:1px solid var(--rim);padding:10px 14px;position:sticky;top:0;z-index:200}
+.nav-grid{display:grid;grid-template-columns:repeat(13,1fr);gap:4px;max-width:1020px;margin:0 auto}
+.nb{display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:8px 3px 6px;cursor:pointer;transition:all .15s;font-family:var(--sans)}
+.nb:hover{border-color:rgba(232,120,48,.4);background:rgba(232,120,48,.06)}
+.nb.active{background:rgba(232,64,64,.13);border-color:var(--red)}
+.nb-icon{font-size:16px;line-height:1}
+.nb-lbl{font-size:8.5px;font-weight:600;color:var(--muted);text-align:center;line-height:1.2;letter-spacing:.02em}
+.nb.active .nb-lbl{color:var(--red-l)}.nb:hover .nb-lbl{color:var(--text)}
+
+/* PAGE */
+.page{max-width:1020px;margin:0 auto;padding:22px 18px 70px}
+.tab{display:none}.tab.active{display:block}
+
+/* TYPOGRAPHY */
+.sh{margin-bottom:20px}
+.sh h2{font-family:var(--display);font-size:22px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:10px}
+.sh p{color:var(--muted);font-size:13px;margin-top:5px}
+.stitle{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:24px 0 12px;padding-left:10px;border-left:2px solid var(--red)}
+.stitle-o{border-left-color:var(--ora)}
+.dv{height:1px;background:var(--rim);margin:20px 0}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:18px;margin-bottom:16px}
+.card h3{font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card p,.card li{color:var(--muted);font-size:13px;line-height:1.6}
+.card ul,.card ol{padding-left:16px}.card li{margin-bottom:5px}.card li strong{color:var(--text)}
+.card-r{border-top:3px solid var(--red)}.card-r h3{color:var(--red-l)}
+.card-o{border-top:3px solid var(--ora)}.card-o h3{color:var(--ora-l)}
+.card-t{border-top:3px solid var(--teal)}.card-t h3{color:var(--teal)}
+.card-g{border-top:3px solid var(--gold)}.card-g h3{color:var(--gold)}
+.card-b{border-top:3px solid var(--blue)}.card-b h3{color:var(--blue)}
+.card-v{border-top:3px solid var(--violet)}.card-v h3{color:var(--violet-l)}
+.card-gr{border-top:3px solid var(--green)}.card-gr h3{color:var(--green)}
+
+/* BOXES */
+.box{border-radius:var(--r);padding:11px 14px;margin:10px 0;font-size:13px;line-height:1.6;color:var(--text)}
+.box-r{background:var(--red-d);border-left:4px solid var(--red)}
+.box-o{background:var(--ora-d);border-left:4px solid var(--ora)}
+.box-t{background:var(--teal-d);border-left:4px solid var(--teal)}
+.box-g{background:var(--gold-d);border-left:4px solid var(--gold)}
+.box-b{background:var(--blue-d);border-left:4px solid var(--blue)}
+.box-gr{background:var(--green-d);border-left:4px solid var(--green)}
+.box-v{background:var(--violet-d);border-left:4px solid var(--violet)}
+.box strong{font-weight:700}
+.box-r strong{color:var(--red-l)}.box-o strong{color:var(--ora-l)}.box-t strong{color:var(--teal)}.box-g strong{color:var(--gold)}
+
+/* TABLES */
+.tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--rim);margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:var(--bg3);font-weight:700;padding:8px 11px;text-align:left;border-bottom:1px solid var(--rim);letter-spacing:.03em;white-space:nowrap;color:var(--muted)}
+th.r{color:var(--red-l)}th.o{color:var(--ora-l)}th.t{color:var(--teal)}th.g{color:var(--gold)}th.b{color:var(--blue)}
+td{padding:8px 11px;border-bottom:1px solid var(--rim);color:var(--muted);vertical-align:top}
+td.vr{color:var(--red-l);font-weight:600}td.vo{color:var(--ora-l);font-weight:600}
+td.vt{color:var(--teal);font-weight:600}td.vg{color:var(--gold);font-weight:600}
+td.vb{color:var(--blue);font-weight:600}td.vgr{color:var(--green);font-weight:600}
+tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)}td strong{color:var(--text)}
+
+/* BADGES */
+.bdg{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:30px;margin:1px;letter-spacing:.04em}
+.bdg-r{background:var(--red-d);color:var(--red-l)}.bdg-o{background:var(--ora-d);color:var(--ora-l)}
+.bdg-t{background:var(--teal-d);color:var(--teal)}.bdg-g{background:var(--gold-d);color:var(--gold)}
+.bdg-gr{background:var(--green-d);color:var(--green)}.bdg-v{background:var(--violet-d);color:var(--violet-l)}
+
+/* STEPS */
+.steps{counter-reset:step;padding:0;list-style:none}
+.steps li{counter-increment:step;display:flex;gap:12px;margin-bottom:10px;font-size:13px;color:var(--muted)}
+.steps li::before{content:counter(step);flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--red-d);border:1px solid var(--red-b);color:var(--red-l);font-family:var(--mono);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.steps li strong{color:var(--text)}
+
+/* MONO CODE */
+.fm{font-family:var(--mono);font-size:12px;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:10px 14px;margin:8px 0;color:var(--teal);display:block;white-space:pre;line-height:1.7;overflow-x:auto}
+
+/* ABCDE PANEL */
+.abcde-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+.abcde-card{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r2);padding:14px 10px;text-align:center;cursor:default;transition:all .15s}
+.abcde-card:hover{border-color:rgba(232,64,64,.4);background:rgba(232,64,64,.06)}
+.abcde-letter{font-family:var(--display);font-size:36px;font-weight:800;line-height:1}
+.abcde-word{font-size:11px;font-weight:600;color:var(--muted);margin-top:4px;letter-spacing:.03em}
+.a-c{color:var(--red-l)}.b-c{color:#e87040}.c-c{color:var(--ora-l)}.d-c{color:#d4a040}.e-c{color:var(--gold)}
+
+/* DUAL PANEL */
+.duel{display:grid;grid-template-columns:1fr auto 1fr;gap:0;border-radius:var(--r2);overflow:hidden;border:1px solid var(--rim);margin-bottom:18px}
+.duel-a{background:linear-gradient(160deg,var(--bg3) 0%,rgba(232,64,64,.05) 100%);padding:20px 18px;border-right:1px solid var(--rim)}
+.duel-b{background:linear-gradient(200deg,var(--bg3) 0%,rgba(232,120,48,.05) 100%);padding:20px 18px;border-left:1px solid var(--rim)}
+.duel-mid{background:var(--bg3);display:flex;flex-direction:column;align-items:center;justify-content:center;width:44px;gap:6px;padding:10px 0}
+.duel-mid-dot{width:7px;height:7px;border-radius:50%;background:var(--dim)}
+.duel-mid-lbl{font-family:var(--mono);font-size:8px;font-weight:700;color:var(--dim);letter-spacing:.06em;writing-mode:vertical-lr;transform:rotate(180deg)}
+.duel-la{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--red-l);margin-bottom:10px}
+.duel-lb{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ora-l);margin-bottom:10px}
+.duel-a h3{font-size:14px;font-weight:700;color:var(--red-l);margin-bottom:8px}
+.duel-b h3{font-size:14px;font-weight:700;color:var(--ora-l);margin-bottom:8px}
+.duel-a p,.duel-a li,.duel-b p,.duel-b li{font-size:13px;color:var(--muted);line-height:1.6}
+.duel ul{padding-left:15px}.duel li{margin-bottom:4px}.duel li strong{color:var(--text)}
+@media(max-width:640px){.duel{grid-template-columns:1fr}.duel-mid{flex-direction:row;width:100%;height:28px;padding:0 10px}.duel-mid-lbl{writing-mode:horizontal-tb;transform:none}.duel-a{border-right:none;border-bottom:1px solid var(--rim)}.duel-b{border-left:none}}
+
+/* INJURY CARD */
+.inj-card{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);overflow:hidden;margin-bottom:18px}
+.inj-head{background:linear-gradient(90deg,var(--red-d),var(--ora-d));border-bottom:1px solid var(--rim);padding:14px 18px;display:flex;align-items:center;gap:10px}
+.inj-head h3{font-family:var(--display);font-size:17px;font-weight:700;color:var(--red-l)}
+.inj-head .urgency{font-family:var(--mono);font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.06em}
+.urg-i{background:rgba(232,64,64,.3);color:var(--red-l);border:1px solid var(--red)}
+.urg-u{background:rgba(232,120,48,.3);color:var(--ora-l);border:1px solid var(--ora)}
+.inj-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:0}
+.inj-col{padding:14px 16px;border-right:1px solid var(--rim)}
+.inj-col:last-child{border-right:none}
+.inj-col-lbl{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.inj-col ul{padding-left:15px;list-style:disc}
+.inj-col li{font-size:12.5px;color:var(--muted);margin-bottom:4px;line-height:1.5}
+.inj-col li strong{color:var(--text)}
+.inj-col p{font-size:12.5px;color:var(--muted);line-height:1.5}
+
+/* SHOCK TABLE special */
+.shock-type{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:700;padding:2px 10px;border-radius:6px;margin-bottom:4px}
+
+/* CALCULATOR */
+.calc-wrap{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:20px;margin-bottom:18px}
+.calc-title{font-family:var(--display);font-size:16px;font-weight:700;color:var(--ora-l);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:14px}
+.calc-field label{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px}
+.calc-field input,.calc-field select{width:100%;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:8px 12px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none;transition:border .15s}
+.calc-field input:focus,.calc-field select:focus{border-color:var(--ora)}
+.calc-field select option{background:var(--bg3)}
+.calc-btn{background:linear-gradient(135deg,var(--red),var(--ora));border:none;border-radius:var(--r);padding:10px 24px;color:#fff;font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s}
+.calc-btn:hover{opacity:.85}
+.calc-result{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:14px;margin-top:12px;display:none}
+.calc-result.show{display:block}
+.calc-result-title{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.calc-result-val{font-family:var(--display);font-size:28px;font-weight:800;margin-bottom:4px}
+.calc-result-interp{font-size:13px;color:var(--muted);line-height:1.5}
+
+/* DECISION ASSISTANT */
+.da-wrap{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:20px;margin-bottom:18px}
+.da-title{font-family:var(--display);font-size:16px;font-weight:700;color:var(--red-l);margin-bottom:16px}
+.da-row{margin-bottom:12px}
+.da-row label{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px}
+.da-opts{display:flex;flex-wrap:wrap;gap:6px}
+.da-opt{background:var(--bg3);border:1px solid var(--rim);border-radius:30px;padding:5px 14px;font-size:12.5px;cursor:pointer;transition:all .13s;color:var(--muted)}
+.da-opt:hover,.da-opt.sel{background:var(--red-d);border-color:var(--red);color:var(--red-l);font-weight:600}
+.da-output{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:16px;margin-top:14px;display:none}
+.da-output.show{display:block}
+.da-out-section{margin-bottom:12px}
+.da-out-section:last-child{margin-bottom:0}
+.da-out-lbl{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.da-out-val{font-size:13px;color:var(--text);line-height:1.6}
+.da-out-val.urgent{color:var(--red-l);font-weight:700}
+.da-out-val.caution{color:var(--ora-l);font-weight:600}
+.da-out-val.safe{color:var(--teal);font-weight:600}
+
+/* ALGO SVG */
+.algo-wrap{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r2);padding:16px;margin:12px 0;overflow-x:auto}
+
+.footnote{text-align:center;font-size:11px;color:var(--dim);padding:24px 0 0;border-top:1px solid var(--rim);margin-top:36px}
+@media(max-width:900px){.nav-grid{grid-template-columns:repeat(7,1fr)}.nb-lbl{font-size:7.5px}}
+@media(max-width:600px){.nav-grid{grid-template-columns:repeat(5,1fr)}.abcde-grid{grid-template-columns:repeat(5,1fr)}.nb-lbl{font-size:7px}.inj-body{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-eyebrow">Advanced Trauma Life Support · Cardiac Surgery · Critical Care · Emergency Medicine</div>
+    <h1 class="hdr-title">
+      <span class="atls">ATLS</span> &nbsp;<span class="sub">Cardiothoracic Trauma Manual</span>
+    </h1>
+    <div class="hdr-sub">A comprehensive reference for trauma management with deep emphasis on thoracic and cardiovascular injuries — designed for cardiothoracic surgeons, cardiac intensivists, and emergency physicians managing complex thoracic trauma.</div>
+    <div class="hdr-pills">
+      <span class="hdr-pill pill-r">Primary Survey · ABCDE</span>
+      <span class="hdr-pill pill-o">Thoracic Injuries · Aortic Trauma</span>
+      <span class="hdr-pill pill-t">Resuscitative Thoracotomy · TEVAR</span>
+      <span class="hdr-pill pill-r">Decision Algorithms · Calculators</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <div class="nav-grid">
+    <button class="nb active" onclick="gt(0,this)"><span class="nb-icon">🚑</span><span class="nb-lbl">Overview &amp; ABCDE</span></button>
+    <button class="nb" onclick="gt(1,this)"><span class="nb-icon">💨</span><span class="nb-lbl">Airway (A)</span></button>
+    <button class="nb" onclick="gt(2,this)"><span class="nb-icon">🫁</span><span class="nb-lbl">Breathing (B)</span></button>
+    <button class="nb" onclick="gt(3,this)"><span class="nb-icon">🩸</span><span class="nb-lbl">Circulation (C)</span></button>
+    <button class="nb" onclick="gt(4,this)"><span class="nb-icon">🫀</span><span class="nb-lbl">Cardiac Trauma</span></button>
+    <button class="nb" onclick="gt(5,this)"><span class="nb-icon">🩻</span><span class="nb-lbl">Aortic &amp; Vessels</span></button>
+    <button class="nb" onclick="gt(6,this)"><span class="nb-icon">🔬</span><span class="nb-lbl">Imaging &amp; eFAST</span></button>
+    <button class="nb" onclick="gt(7,this)"><span class="nb-icon">🏥</span><span class="nb-lbl">Surgery &amp; RT</span></button>
+    <button class="nb" onclick="gt(8,this)"><span class="nb-icon">🧮</span><span class="nb-lbl">Calculators</span></button>
+    <button class="nb" onclick="gt(9,this)"><span class="nb-icon">🤖</span><span class="nb-lbl">Decision Tools</span></button>
+    <button class="nb" onclick="gt(10,this)"><span class="nb-icon">🧠</span><span class="nb-lbl">Disability &amp; Exposure</span></button>
+    <button class="nb" onclick="gt(11,this)"><span class="nb-icon">👥</span><span class="nb-lbl">Special Populations</span></button>
+    <button class="nb" onclick="gt(12,this)"><span class="nb-icon">🔪</span><span class="nb-lbl">Surgical Atlas</span></button>
+  </div>
+</div>
+
+<main class="page">
+
+<!-- ═══════════════════════════ TAB 0: OVERVIEW & ABCDE ═══════════════════════════ -->
+<section class="tab active" id="t0">
+  <div class="sh"><h2>🚑 Overview &amp; Primary Survey</h2><p>ATLS framework, epidemiology, and the ABCDE primary survey — cardiothoracic focus.</p></div>
+
+  <!-- ABCDE visual -->
+  <div class="stitle">Primary survey — ABCDE</div>
+  <div class="abcde-grid">
+    <div class="abcde-card"><div class="abcde-letter a-c">A</div><div class="abcde-word">Airway<br>+ C-spine</div></div>
+    <div class="abcde-card"><div class="abcde-letter b-c">B</div><div class="abcde-word">Breathing<br>+ Ventilation</div></div>
+    <div class="abcde-card"><div class="abcde-letter c-c">C</div><div class="abcde-word">Circulation<br>+ Haemorrhage</div></div>
+    <div class="abcde-card"><div class="abcde-letter d-c">D</div><div class="abcde-word">Disability<br>+ Neurology</div></div>
+    <div class="abcde-card"><div class="abcde-letter e-c">E</div><div class="abcde-word">Exposure<br>+ Environment</div></div>
+  </div>
+
+  <!-- Algorithm SVG -->
+  <div class="stitle">Trauma arrival algorithm</div>
+  <div class="algo-wrap">
+    <svg viewBox="0 0 820 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;margin:0 auto">
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#8a7060"/></marker>
+        <marker id="arr-r" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#e84040"/></marker>
+      </defs>
+      <!-- Boxes -->
+      <rect x="330" y="10" width="160" height="40" rx="10" fill="rgba(232,64,64,0.2)" stroke="#e84040" stroke-width="1.5"/>
+      <text x="410" y="34" text-anchor="middle" fill="#ff7070" font-size="13" font-weight="700" font-family="IBM Plex Sans,sans-serif">TRAUMA ARRIVAL</text>
+
+      <rect x="330" y="80" width="160" height="40" rx="10" fill="rgba(232,120,48,0.15)" stroke="#e87830" stroke-width="1.5"/>
+      <text x="410" y="104" text-anchor="middle" fill="#ffaa60" font-size="13" font-weight="700" font-family="IBM Plex Sans,sans-serif">PRIMARY SURVEY (ABCDE)</text>
+
+      <rect x="330" y="150" width="160" height="40" rx="10" fill="rgba(232,192,80,0.12)" stroke="#e8c050" stroke-width="1.5"/>
+      <text x="410" y="174" text-anchor="middle" fill="#e8c050" font-size="13" font-weight="700" font-family="IBM Plex Sans,sans-serif">RESUSCITATION</text>
+
+      <rect x="330" y="220" width="160" height="40" rx="10" fill="rgba(42,184,154,0.12)" stroke="#2ab89a" stroke-width="1.5"/>
+      <text x="410" y="244" text-anchor="middle" fill="#2ab89a" font-size="13" font-weight="700" font-family="IBM Plex Sans,sans-serif">SECONDARY SURVEY</text>
+
+      <rect x="330" y="290" width="160" height="26" rx="8" fill="rgba(72,152,224,0.12)" stroke="#4898e0" stroke-width="1.5"/>
+      <text x="410" y="307" text-anchor="middle" fill="#4898e0" font-size="12" font-weight="700" font-family="IBM Plex Sans,sans-serif">DEFINITIVE CARE</text>
+
+      <!-- Arrows center -->
+      <line x1="410" y1="50" x2="410" y2="78" stroke="#8a7060" stroke-width="1.5" marker-end="url(#arr)"/>
+      <line x1="410" y1="120" x2="410" y2="148" stroke="#8a7060" stroke-width="1.5" marker-end="url(#arr)"/>
+      <line x1="410" y1="190" x2="410" y2="218" stroke="#8a7060" stroke-width="1.5" marker-end="url(#arr)"/>
+      <line x1="410" y1="260" x2="410" y2="288" stroke="#8a7060" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- Left branch: Life-threatening -->
+      <line x1="330" y1="100" x2="240" y2="100" stroke="#e84040" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <rect x="80" y="76" width="158" height="48" rx="10" fill="rgba(232,64,64,0.13)" stroke="#e84040" stroke-width="1.2"/>
+      <text x="159" y="96" text-anchor="middle" fill="#ff7070" font-size="11.5" font-weight="700" font-family="IBM Plex Sans,sans-serif">IMMEDIATELY</text>
+      <text x="159" y="112" text-anchor="middle" fill="#ff7070" font-size="11.5" font-weight="700" font-family="IBM Plex Sans,sans-serif">LIFE-THREATENING</text>
+      <text x="159" y="126" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Tension PTX · Tamponade · Haemothorax</text>
+
+      <!-- Right branch: Adjuncts -->
+      <line x1="490" y1="100" x2="580" y2="100" stroke="#e87830" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <rect x="580" y="76" width="148" height="48" rx="10" fill="rgba(232,120,48,0.13)" stroke="#e87830" stroke-width="1.2"/>
+      <text x="654" y="96" text-anchor="middle" fill="#ffaa60" font-size="11.5" font-weight="700" font-family="IBM Plex Sans,sans-serif">ADJUNCTS</text>
+      <text x="654" y="112" text-anchor="middle" fill="#8a7060" font-size="10.5" font-family="IBM Plex Sans,sans-serif">ECG · eFAST · CXR</text>
+      <text x="654" y="126" text-anchor="middle" fill="#8a7060" font-size="10.5" font-family="IBM Plex Sans,sans-serif">IV access · Labs · CT</text>
+
+      <!-- Right branch: Surgery -->
+      <line x1="490" y1="170" x2="580" y2="170" stroke="#9060d4" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <rect x="580" y="152" width="148" height="36" rx="10" fill="rgba(144,96,212,0.13)" stroke="#9060d4" stroke-width="1.2"/>
+      <text x="654" y="168" text-anchor="middle" fill="#b890f8" font-size="11.5" font-weight="700" font-family="IBM Plex Sans,sans-serif">RESUSCITATIVE</text>
+      <text x="654" y="182" text-anchor="middle" fill="#b890f8" font-size="11.5" font-weight="700" font-family="IBM Plex Sans,sans-serif">THORACOTOMY?</text>
+    </svg>
+  </div>
+
+  <!-- Immediately life-threatening -->
+  <div class="stitle">Immediately life-threatening — the six killers</div>
+  <div class="g3">
+    <div class="card card-r"><h3>⚡ Tension pneumothorax</h3><p>Shift of mediastinum; obstructive shock. Needle decompression immediately — <strong>do not wait for CXR.</strong></p></div>
+    <div class="card card-r"><h3>⚡ Open pneumothorax</h3><p>Sucking chest wound; immediate occlusive dressing with flutter valve or 3-sided seal.</p></div>
+    <div class="card card-r"><h3>⚡ Massive haemothorax</h3><p>&gt;1500 mL blood; immediate chest tube; consider thoracotomy if &gt;200 mL/h continues.</p></div>
+    <div class="card card-r"><h3>⚡ Flail chest</h3><p>≥3 consecutive ribs fractured in ≥2 places; paradoxical motion; intubation if respiratory failure.</p></div>
+    <div class="card card-r"><h3>⚡ Cardiac tamponade</h3><p>Beck's triad; obstructive shock; eFAST confirms. Pericardiocentesis or ED thoracotomy.</p></div>
+    <div class="card card-r"><h3>⚡ Airway obstruction</h3><p>Assess immediately; jaw thrust / chin lift; suction; definitive airway if GCS ≤8 or obstruction.</p></div>
+  </div>
+
+  <!-- Epidemiology -->
+  <div class="stitle">Epidemiology &amp; mechanism</div>
+  <div class="g2">
+    <div class="card card-o">
+      <h3>🚗 Blunt trauma</h3>
+      <ul>
+        <li><strong>Most common in high-income countries</strong> — MVA, fall from height, crush</li>
+        <li>Aortic injury (isthmus, decelerating mechanism)</li>
+        <li>Blunt cardiac injury (sternal impact)</li>
+        <li>Rib fractures, flail chest, pulmonary contusion</li>
+        <li>Diaphragmatic rupture (left > right)</li>
+      </ul>
+    </div>
+    <div class="card card-r">
+      <h3>🔫 Penetrating trauma</h3>
+      <ul>
+        <li><strong>Gunshot wounds (GSW):</strong> High-velocity; tract injury unpredictable</li>
+        <li><strong>Stab wounds:</strong> Lower velocity; more predictable tract; cardiac injury common</li>
+        <li>80% of penetrating cardiac trauma: RV (anterior exposure)</li>
+        <li>Pericardial tamponade more likely with stab than GSW</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ TAB 1: AIRWAY ═══════════════════════════ -->
+<section class="tab" id="t1">
+  <div class="sh"><h2>💨 Airway Management (A)</h2><p>Airway assessment, difficult airway, surgical airway, and cardiothoracic-specific considerations.</p></div>
+
+  <div class="stitle">Airway assessment</div>
+  <div class="card card-r">
+    <h3>🔍 Initial airway evaluation</h3>
+    <div class="g2">
+      <div>
+        <p style="color:var(--red-l);font-weight:700;margin-bottom:6px">Signs of airway compromise</p>
+        <ul>
+          <li><strong>Agitation / altered consciousness</strong> — hypoxia until proven otherwise</li>
+          <li>Stridor, gurgling, hoarseness</li>
+          <li>Use of accessory muscles; paradoxical breathing</li>
+          <li>Facial / mandibular fractures; blood in oropharynx</li>
+          <li>Tracheal deviation (late sign — tension PTX / massive haematoma)</li>
+          <li>Subcutaneous emphysema (tracheobronchial injury)</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:var(--ora-l);font-weight:700;margin-bottom:6px">Indications for definitive airway</p>
+        <ul>
+          <li>GCS ≤8</li>
+          <li>Inability to maintain airway patency</li>
+          <li>Risk of aspiration (blood, secretions)</li>
+          <li>Impending airway compromise (expanding haematoma, angioedema)</li>
+          <li>Respiratory failure (RR &gt;30, SpO₂ &lt;90% on O₂)</li>
+          <li>Planned general anaesthesia / operative intervention</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">Failed airway algorithm</div>
+  <div class="algo-wrap">
+    <code class="fm" style="background:transparent;border:none;padding:0">
+Orotracheal intubation attempt
+         │
+    ──────────────
+    │             │
+ Success      FAIL (≤2 attempts)
+    │             │
+ Confirm      Maintain oxygenation (BVM / SGA)
+ (waveform      │
+ capnography)   │
+            Can ventilate?
+            ├── YES → Awake technique / video laryngoscopy / fibreoptic
+            └── NO  → CANNOT INTUBATE · CANNOT VENTILATE
+                            │
+                   SURGICAL AIRWAY
+                   ├── Cricothyrotomy (emergency)
+                   └── Surgical tracheostomy (if time)</code>
+  </div>
+
+  <div class="stitle">Surgical airway</div>
+  <div class="duel">
+    <div class="duel-a">
+      <div class="duel-la">Cricothyrotomy</div>
+      <ul>
+        <li><strong>Indication:</strong> Cannot intubate / cannot oxygenate</li>
+        <li>Landmark: cricothyroid membrane (between thyroid and cricoid cartilage)</li>
+        <li><strong>Technique:</strong> Horizontal stab incision → dilate → insert 6.0 cuffed ETT or dedicated cric tube</li>
+        <li>Confirm with waveform capnography</li>
+        <li><strong>Convert to surgical tracheostomy</strong> within 24–72 h (subglottic stenosis risk)</li>
+      </ul>
+      <div class="box box-r" style="margin-top:10px"><strong>Contraindications:</strong> Direct laryngeal / tracheal injury; age &lt;8 years (use needle cric as bridge).</div>
+    </div>
+    <div class="duel-mid"><div class="duel-mid-dot"></div><div class="duel-mid-lbl">airway</div><div class="duel-mid-dot"></div></div>
+    <div class="duel-b">
+      <div class="duel-lb">Cardiothoracic Considerations</div>
+      <ul>
+        <li><strong>Mediastinal haematoma:</strong> Expanding after great vessel injury may compress airway; intubation can precipitate rupture — plan ahead</li>
+        <li><strong>Tracheobronchial injury:</strong> Maintain spontaneous ventilation if possible; bronchoscopy-guided intubation; single-lung ventilation of unaffected side</li>
+        <li><strong>SVC syndrome:</strong> Head / neck venous distension; airway oedema; intubate early before deterioration</li>
+        <li><strong>Post-sternotomy:</strong> Re-entry via existing wound may be needed for resuscitative purposes</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stitle">Tracheobronchial injury</div>
+  <div class="inj-card">
+    <div class="inj-head">
+      <h3>Tracheobronchial Injury</h3>
+      <span class="urgency urg-i">IMMEDIATE</span>
+    </div>
+    <div class="inj-body">
+      <div class="inj-col"><div class="inj-col-lbl">Mechanism</div><ul><li>Blunt: sudden deceleration; trachea and mainstem bronchi most vulnerable within 2 cm of carina</li><li>Penetrating: GSW or stab to neck / chest</li></ul></div>
+      <div class="inj-col"><div class="inj-col-lbl">Clinical findings</div><ul><li>Haemoptysis</li><li>Subcutaneous emphysema (massive)</li><li>Tension pneumothorax not resolving with chest tube</li><li>Persistent large air leak</li></ul></div>
+      <div class="inj-col"><div class="inj-col-lbl">Imaging</div><ul><li>CXR: pneumomediastinum, persistent PTX, "fallen lung" sign</li><li>CT: tracheal defect, mediastinal air</li><li><strong>Bronchoscopy:</strong> definitive diagnosis and guides intubation</li></ul></div>
+      <div class="inj-col"><div class="inj-col-lbl">Management</div><ul><li>Single-lung ventilation past the injury</li><li>Thoracic surgery: primary repair; resection if large defect</li><li>Right posterolateral thoracotomy for right-sided injuries</li><li>Median sternotomy for tracheal/carinal injuries</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ TAB 2: BREATHING ═══════════════════════════ -->
+<section class="tab" id="t2">
+  <div class="sh"><h2>🫁 Breathing &amp; Ventilation (B)</h2><p>Life-threatening thoracic injuries — diagnosis, immediate management, surgical decision.</p></div>
+
+  <!-- Tension PTX -->
+  <div class="inj-card">
+    <div class="inj-head"><h3>Tension Pneumothorax</h3><span class="urgency urg-i">IMMEDIATE — DO NOT DELAY</span></div>
+    <div class="inj-body">
+      <div class="inj-col"><div class="inj-col-lbl">Pathophysiology</div><p>Air enters pleural space and cannot exit → progressive accumulation → mediastinal shift → compression of contralateral lung and great veins → ↓ VR → obstructive shock → cardiac arrest</p></div>
+      <div class="inj-col"><div class="inj-col-lbl">Clinical diagnosis</div><ul><li><strong>Respiratory distress</strong></li><li><strong>Absent breath sounds</strong> (ipsilateral)</li><li><strong>Hypotension / obstructive shock</strong></li><li>Tracheal deviation (late and unreliable)</li><li>JVD (may be absent with hypovolaemia)</li></ul></div>
+      <div class="inj-col"><div class="inj-col-lbl">Ultrasound (eFAST)</div><ul><li><strong>Absent lung sliding</strong></li><li><strong>Barcode sign</strong> on M-mode (absent seashore sign)</li><li>Lung point — diagnostic (interface of PTX and adherent lung)</li><li>No B-lines</li></ul></div>
+      <div class="inj-col"><div class="inj-col-lbl">Management</div><ul><li><strong>Needle decompression:</strong> 2nd ICS mid-clavicular line (or 4th/5th ICS anterior axillary line if obese)</li><li>Immediate chest tube (28–32 Fr) after needle</li><li>In cardiac arrest: bilateral finger thoracostomies first</li><li>Do not wait for CXR</li></ul></div>
+    </div>
+  </div>
+
+  <!-- Massive haemothorax -->
+  <div class="inj-card">
+    <div class="inj-head"><h3>Massive Haemothorax</h3><span class="urgency urg-i">IMMEDIATE</span></div>
+    <div class="inj-body">
+      <div class="inj-col"><div class="inj-col-lbl">Definition</div><p><strong>&gt;1500 mL</strong> blood in pleural cavity (or &gt;200 mL/h for 2–4 h after chest tube). Sources: intercostal/mammary vessels (most common), pulmonary laceration, major vessel injury.</p></div>
+      <div class="inj-col"><div class="inj-col-lbl">Diagnosis</div><ul><li>Dullness to percussion (ipsilateral)</li><li>Absent breath sounds</li><li>Haemorrhagic shock</li><li>CXR: opacification of hemithorax</li><li>eFAST: anechoic fluid in dependent costophrenic angle</li></ul></div>
+      <div class="inj-col"><div class="inj-col-lbl">Immediate management</div><ul><li>Large-bore IV × 2; activate MTP</li><li>Chest tube (36 Fr): 5th ICS anterior axillary line — autotransfusion if available</li><li>Record initial drainage and hourly output</li><li>Measure drainage before removing tube</li></ul></div>
+      <div class="inj-col"><div class="inj-col-lbl">Surgical indications</div><ul><li><strong>Initial drainage &gt;1500 mL</strong></li><li><strong>&gt;200 mL/h for 2–4 hours</strong></li><li>Haemodynamic instability despite resuscitation</li><li>Clotted haemothorax (VATS or thoracotomy)</li><li>Approach: posterolateral thoracotomy</li></ul></div>
+    </div>
+  </div>
+
+  <!-- Open PTX -->
+  <div class="inj-card">
+    <div class="inj-head"><h3>Open Pneumothorax (Sucking Chest Wound)</h3><span class="urgency urg-i">IMMEDIATE</span></div>
+    <div class="inj-body">
+      <div class="inj-col"><div class="inj-col-lbl">Pathophysiology</div><p>If wound &gt;⅔ tracheal diameter, air preferentially enters through wound (lower resistance). Impaired ventilation → hypoxia.</p></div>
+      <div class="inj-col"><div class="inj-col-lbl">Clinical findings</div><ul><li>Visible chest wound with audible air movement ("sucking")</li><li>Respiratory distress</li><li>May rapidly develop tension PTX</li></ul></div>
+      <div class="inj-col"><div class="inj-col-lbl">Management</div><ul><li>3-sided occlusive dressing (flutter valve effect) — or commercial chest seal</li><li>Chest tube at separate site</li><li><strong>Never fully seal</strong> without chest tube — risk of tension PTX</li><li>Definitive: OR closure of defect</li></ul></div>
+      <div class="inj-col"><div class="inj-col-lbl">Notes</div><p>Penetrating wounds ≥3 cm require formal surgical closure. Large defects may require myoplasty or mesh reconstruction.</p></div>
+    </div>
+  </div>
+
+  <!-- Flail chest -->
+  <div class="inj-card">
+    <div class="inj-head"><h3>Flail Chest</h3><span class="urgency urg-u">URGENT</span></div>
+    <div class="inj-body">
+      <div class="inj-col"><div class="inj-col-lbl">Definition</div><p>≥3 consecutive ribs fractured in ≥2 places → free-floating segment moving paradoxically with respiration. Underlying pulmonary contusion is the main driver of hypoxia.</p></div>
+      <div class="inj-col"><div class="inj-col-lbl">Clinical findings</div><ul><li>Paradoxical chest wall movement</li><li>Splinting, tachypnoea</li><li>Crepitus / bony instability on palpation</li><li>CT: most sensitive for rib fractures and contusion extent</li></ul></div>
+      <div class="inj-col"><div class="inj-col-lbl">Management</div><ul><li>O₂; multimodal analgesia (intercostal nerve block, epidural)</li><li>Intubation + PEEP if RR &gt;30, SpO₂ &lt;90%, fatigue</li><li>Aggressive physiotherapy; secretion clearance</li><li>Restrictive fluid strategy (avoid pulmonary oedema)</li></ul></div>
+      <div class="inj-col"><div class="inj-col-lbl">Surgical rib fixation (ORIF)</div><ul><li>Indications: ventilator dependence; severe pain; operative chest exploration for other reasons</li><li>Titanium rib plates / bars</li><li>↓ ventilator days, ↓ pneumonia, ↓ ICU stay</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ TAB 3: CIRCULATION ═══════════════════════════ -->
+<section class="tab" id="t3">
+  <div class="sh"><h2>🩸 Circulation &amp; Haemorrhagic Shock (C)</h2><p>Shock classification, haemorrhage control, transfusion, and shock differentiation.</p></div>
+
+  <div class="stitle">Haemorrhagic shock — ATLS classification</div>
+  <div class="card card-r">
+    <h3>📊 ATLS shock classes</h3>
+    <div class="tw"><table>
+      <thead><tr><th>Class</th><th class="r">Blood loss (mL)</th><th class="r">Blood loss (%)</th><th>HR</th><th>BP</th><th>RR</th><th>Mental status</th></tr></thead>
+      <tbody>
+        <tr><td><span class="bdg bdg-gr">I</span></td><td class="vgr">&lt;750</td><td class="vgr">&lt;15%</td><td>&lt;100</td><td>Normal</td><td>14–20</td><td>Normal / anxious</td></tr>
+        <tr><td><span class="bdg bdg-g">II</span></td><td class="vg">750–1500</td><td class="vg">15–30%</td><td>100–120</td><td>Normal</td><td>20–30</td><td>Anxious</td></tr>
+        <tr><td><span class="bdg bdg-o">III</span></td><td class="vo">1500–2000</td><td class="vo">30–40%</td><td>120–140</td><td>↓</td><td>30–40</td><td>Confused</td></tr>
+        <tr><td><span class="bdg bdg-r">IV</span></td><td class="vr">&gt;2000</td><td class="vr">&gt;40%</td><td>&gt;140</td><td>↓↓</td><td>&gt;35</td><td>Lethargic / unconscious</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box box-o">For trauma patients: <strong>Shock Index = HR / SBP.</strong> SI &gt;1.0 = significant haemorrhage likely. SI &gt;1.4 = severe haemorrhage — activate MTP immediately. Available as a calculator in the Calculators tab.</div>
+  </div>
+
+  <!-- Shock differentiation -->
+  <div class="stitle">Shock differentiation — critical for thoracic trauma</div>
+  <div class="card card-o">
+    <h3>🔎 Shock type differentiation table</h3>
+    <div class="tw"><table>
+      <thead><tr><th>Type</th><th class="r">JVP / CVP</th><th>Skin</th><th>eFAST / Echo</th><th>Response to fluid</th><th class="o">Key finding</th></tr></thead>
+      <tbody>
+        <tr><td><span class="bdg bdg-r">Haemorrhagic</span></td><td>↓ Flat veins</td><td>Pale, cold, clammy</td><td>Free fluid; empty ventricles</td><td class="vt">Temporary improvement</td><td class="vo">Source of bleeding</td></tr>
+        <tr><td><span class="bdg bdg-r">Obstructive (tension PTX)</span></td><td class="vr">↑ Distended</td><td>Pale, clammy</td><td>Absent lung sliding; empty RV</td><td class="vr">No improvement</td><td class="vr">Mediastinal shift on CXR</td></tr>
+        <tr><td><span class="bdg bdg-r">Obstructive (tamponade)</span></td><td class="vr">↑ Distended</td><td>Pale, diaphoretic</td><td>Pericardial effusion; RV collapse</td><td class="vr">No improvement</td><td class="vr">Beck's triad; electrical alternans</td></tr>
+        <tr><td><span class="bdg bdg-v">Neurogenic</span></td><td>↓ / Normal</td><td>Warm, flushed</td><td>Normal</td><td class="vt">Partial improvement</td><td>Bradycardia despite shock; spinal injury</td></tr>
+        <tr><td><span class="bdg bdg-b">Cardiogenic</span></td><td class="vr">↑ Distended</td><td>Pale, cold</td><td>Poor LV function; B-lines (PLAPS)</td><td class="vr">Worsens</td><td>Blunt cardiac injury; known cardiac disease</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- MTP -->
+  <div class="stitle">Massive transfusion &amp; haemostatic resuscitation</div>
+  <div class="duel">
+    <div class="duel-a">
+      <div class="duel-la">MTP Activation &amp; Blood Products</div>
+      <ul>
+        <li><strong>Activation criteria:</strong> Shock Index &gt;1.4; anticipated &gt;10 units pRBC in 24 h; ABC score ≥2</li>
+        <li><strong>Ratio:</strong> pRBC : FFP : Platelets = <strong>1 : 1 : 1</strong></li>
+        <li><strong>Tranexamic acid:</strong> 1 g IV over 10 min (within 3 h of injury; CRASH-2 / CRASH-3); repeat 1 g over 8 h</li>
+        <li><strong>Calcium:</strong> 1 g CaCl₂ per 4 units pRBC (citrate chelation)</li>
+        <li><strong>Fibrinogen:</strong> Target &gt;1.5 g/L; Cryoprecipitate or fibrinogen concentrate</li>
+        <li><strong>Permissive hypotension:</strong> Target SBP 80–90 mmHg until surgical haemostasis (avoid in TBI)</li>
+      </ul>
+    </div>
+    <div class="duel-mid"><div class="duel-mid-dot"></div><div class="duel-mid-lbl">MTP</div><div class="duel-mid-dot"></div></div>
+    <div class="duel-b">
+      <div class="duel-lb">Viscoelastic Testing (ROTEM / TEG)</div>
+      <ul>
+        <li><strong>EXTEM CT:</strong> Clotting time — ↑ = factor deficiency (FFP)</li>
+        <li><strong>FIBTEM A5/A10:</strong> Fibrin clot strength — ↓ = fibrinogen deficiency (cryoprecipitate)</li>
+        <li><strong>EXTEM A10/A15:</strong> Early amplitude — ↓ = platelet/fibrinogen deficiency</li>
+        <li><strong>EXTEM ML:</strong> Lysis — ↑ = hyperfibrinolysis → tranexamic acid</li>
+        <li>Goal-directed therapy: superior to empirical ratio-based transfusion for coagulopathy correction</li>
+      </ul>
+      <div class="box box-t" style="margin-top:10px"><strong>ROTEM-guided:</strong> Reduces FFP use, ↓ transfusion-associated complications, enables targeted factor replacement.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ TAB 4: CARDIAC TRAUMA ═══════════════════════════ -->
+<section class="tab" id="t4">
+  <div class="sh"><h2>🫀 Cardiac Trauma</h2><p>Blunt cardiac injury, penetrating cardiac trauma, tamponade, myocardial and pericardial rupture.</p></div>
+
+  <!-- Cardiac tamponade -->
+  <div class="inj-card">
+    <div class="inj-head"><h3>Cardiac Tamponade</h3><span class="urgency urg-i">IMMEDIATE</span></div>
+    <div class="inj-body">
+      <div class="inj-col"><div class="inj-col-lbl">Beck's triad</div><ul><li><strong>Hypotension</strong></li><li><strong>Muffled heart sounds</strong></li><li><strong>Distended neck veins (JVD)</strong></li><li>Complete triad present in only 10–40% of trauma cases</li></ul></div>
+      <div class="inj-col"><div class="inj-col-lbl">eFAST / Echo</div><ul><li>Pericardial effusion (anechoic rim)</li><li><strong>RV diastolic collapse</strong> (most sensitive sign)</li><li>RA systolic collapse</li><li>IVC plethora (&gt;2.1 cm, no respiratory collapse)</li><li>Mitral E variation &gt;25% with respiration</li></ul></div>
+      <div class="inj-col"><div class="inj-col-lbl">ECG</div><ul><li>Sinus tachycardia</li><li><strong>Electrical alternans</strong> (QRS amplitude varies beat-to-beat — pathognomonic)</li><li>Low-voltage QRS</li><li>PR depression; ST changes</li></ul></div>
+      <div class="inj-col"><div class="inj-col-lbl">Management</div><ul><li><strong>Pericardiocentesis:</strong> Subxiphoid approach; echo-guided if time allows; needle/sheath → remove 30–50 mL → significant haemodynamic improvement</li><li><strong>ED thoracotomy:</strong> Haemodynamic arrest or &lt;5 min CPR</li><li><strong>OR sternotomy:</strong> Stable enough for controlled repair</li></ul></div>
+    </div>
+  </div>
+
+  <!-- Blunt cardiac injury -->
+  <div class="stitle">Blunt cardiac injury (BCI)</div>
+  <div class="card card-o">
+    <h3>🏎️ Blunt cardiac injury — spectrum</h3>
+    <div class="tw"><table>
+      <thead><tr><th class="o">Type</th><th>ECG</th><th>Troponin</th><th>Echo</th><th class="t">Management</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Myocardial concussion</strong></td><td>Transient arrhythmia</td><td>Normal</td><td>Normal</td><td class="vt">Monitoring × 24 h; resolves</td></tr>
+        <tr><td><strong>Myocardial contusion</strong></td><td>ST changes, new RBBB, arrhythmias</td><td class="vo">↑ (>0.1 ng/mL)</td><td>Regional WMA; ↓ EF</td><td class="vt">ICU monitoring; anti-arrhythmics; avoid anticoagulation</td></tr>
+        <tr><td><strong>Myocardial rupture</strong></td><td>Pulseless electrical activity</td><td class="vr">↑↑↑</td><td>Pericardial effusion; tamponade</td><td class="vr">Immediate OR; thoracotomy; cardioplegia + repair</td></tr>
+        <tr><td><strong>Valvular injury</strong></td><td>Normal or non-specific</td><td>Variable</td><td>Acute regurgitation; flail leaflet</td><td class="vt">Haemodynamic support → elective repair vs urgent if refractory</td></tr>
+        <tr><td><strong>Coronary artery dissection</strong></td><td>STEMI pattern</td><td class="vr">↑↑↑</td><td>Regional WMA (LAD territory most common)</td><td class="vr">Emergency PCI or CABG</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box box-o"><strong>Screening protocol:</strong> ECG on arrival for all significant blunt chest trauma. If abnormal ECG <em>or</em> troponin &gt;0.1 ng/mL → admit for continuous cardiac monitoring × 24 h. Normal ECG + normal troponin at 6 h → discharge safe.</div>
+  </div>
+
+  <!-- Penetrating cardiac trauma -->
+  <div class="stitle">Penetrating cardiac trauma</div>
+  <div class="card card-r">
+    <h3>🔫 Penetrating cardiac trauma — anatomical priorities</h3>
+    <div class="g2">
+      <div>
+        <p style="color:var(--ora-l);font-weight:700;margin-bottom:6px">Chambers by frequency</p>
+        <ul>
+          <li><strong>Right ventricle (40–45%):</strong> Most anterior — stab wounds most common cause; often tamponade; best prognosis</li>
+          <li><strong>Left ventricle (35%):</strong> GSW more common; thicker wall may tamponade tract; worse prognosis</li>
+          <li><strong>Right atrium (10%):</strong> Low-pressure; may bleed massively</li>
+          <li><strong>Left atrium (5%):</strong> Posterior — difficult access; usually fatal</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:var(--red-l);font-weight:700;margin-bottom:6px">Surgical approach by haemodynamics</p>
+        <ul>
+          <li><strong>Haemodynamic arrest / &lt;5 min CPR:</strong> ED resuscitative thoracotomy (left anterolateral)</li>
+          <li><strong>Haemodynamically unstable:</strong> Immediate OR — median sternotomy</li>
+          <li><strong>Haemodynamically stable + positive eFAST:</strong> Expedited OR — sternotomy; pericardial window first if uncertain</li>
+          <li><strong>Coronary injury:</strong> Ligation acceptable for distal vessels; CABG for proximal LAD</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box box-r" style="margin-top:8px"><strong>Prehospital:</strong> Penetrating cardiac trauma + CPR for &lt;15 min → survivable with ED thoracotomy. Blunt cardiac arrest → &lt;5 min. Beyond these limits: resuscitation is futile.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ TAB 5: AORTIC & VESSELS ═══════════════════════════ -->
+<section class="tab" id="t5">
+  <div class="sh"><h2>🩻 Aortic &amp; Great Vessel Injuries</h2><p>Traumatic aortic injury grading, TEVAR, open repair, and great vessel management.</p></div>
+
+  <div class="stitle">Traumatic aortic injury (TAI) — AIS grading</div>
+  <div class="card card-r">
+    <h3>📊 Aortic Injury Scale (AIS / STS)</h3>
+    <div class="tw"><table>
+      <thead><tr><th class="r">Grade</th><th>Injury</th><th>CT findings</th><th class="t">Management</th></tr></thead>
+      <tbody>
+        <tr><td><span class="bdg bdg-gr">I</span></td><td><strong>Intimal tear</strong></td><td>Luminal irregularity; no external contour abnormality</td><td class="vt">Medical management (HR &lt;60, SBP &lt;120) · surveillance CTA</td></tr>
+        <tr><td><span class="bdg bdg-g">II</span></td><td><strong>Intramural haematoma</strong></td><td>Wall thickening without external contour change</td><td class="vt">Medical management; TEVAR if progression</td></tr>
+        <tr><td><span class="bdg bdg-o">III</span></td><td><strong>Pseudoaneurysm</strong></td><td>External contour abnormality; contained rupture</td><td class="vo">TEVAR (if suitable anatomy) · or open repair</td></tr>
+        <tr><td><span class="bdg bdg-r">IV</span></td><td><strong>Rupture / transection</strong></td><td>Active extravasation; mediastinal haematoma</td><td class="vr">Emergency TEVAR or open repair</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box box-o"><strong>Aortic isthmus:</strong> 90% of blunt aortic injuries occur at the aortic isthmus (ligamentum arteriosum) — at the junction of the mobile aortic arch and the fixed descending thoracic aorta.</div>
+  </div>
+
+  <!-- TEVAR vs open -->
+  <div class="stitle">TEVAR vs open repair</div>
+  <div class="duel">
+    <div class="duel-a">
+      <div class="duel-la">TEVAR (preferred for most Grade III–IV)</div>
+      <ul>
+        <li><strong>Advantages:</strong> Avoids thoracotomy; ↓ spinal cord ischaemia risk; ↓ blood loss; suitable for polytrauma</li>
+        <li><strong>Landing zone:</strong> ≥2 cm proximal and distal seal</li>
+        <li><strong>Zone 2 coverage:</strong> May require left subclavian revascularisation (carotid-subclavian bypass if dominant vertebral or LIMA graft)</li>
+        <li><strong>Contraindications:</strong> Unsuitable anatomy (small aorta, tortuous access); active infection; long-term durability concern in young patients</li>
+      </ul>
+      <div class="box box-r" style="margin-top:10px"><strong>Timing:</strong> Delayed repair (24–72 h) acceptable if medically manageable; allows resuscitation of other injuries. Emergency repair if haemodynamically unstable.</div>
+    </div>
+    <div class="duel-mid"><div class="duel-mid-dot"></div><div class="duel-mid-lbl">repair</div><div class="duel-mid-dot"></div></div>
+    <div class="duel-b">
+      <div class="duel-lb">Open Repair (selected cases)</div>
+      <ul>
+        <li>Unsuitable anatomy for TEVAR (hypoplastic aorta, young patient)</li>
+        <li>Concomitant cardiac injury requiring sternotomy/bypass</li>
+        <li>Left posterolateral thoracotomy (4th ICS)</li>
+        <li>Left heart bypass (LHB) or CPB to protect spinal cord and viscera</li>
+        <li>Clamp-and-sew: acceptable if &lt;30 min cross-clamp time</li>
+        <li>Spinal cord monitoring: MEP/SSEP; CSF drainage if paraplegia risk</li>
+      </ul>
+      <div class="box box-o" style="margin-top:10px"><strong>Spinal cord protection:</strong> CSF drain; MAP &gt;90 mmHg; hypothermia; minimise cross-clamp time; LHB preferred over clamp-and-sew for complex repairs.</div>
+    </div>
+  </div>
+
+  <!-- Great vessels -->
+  <div class="stitle">Great vessel injuries</div>
+  <div class="g2">
+    <div class="card card-r">
+      <h3>🫀 SVC &amp; Innominate vein</h3>
+      <ul>
+        <li>Penetrating &gt; blunt; often associated with mediastinal haematoma</li>
+        <li><strong>SVC:</strong> Tamponade-like presentation; JVD; facial oedema</li>
+        <li>Surgical access: median sternotomy ± right anterolateral thoracotomy</li>
+        <li>Repair: primary repair; patch venoplasty; SVC reconstruction (PTFE graft)</li>
+        <li>Temporary balloon control if major haemorrhage</li>
+      </ul>
+    </div>
+    <div class="card card-o">
+      <h3>🫁 Pulmonary artery &amp; veins</h3>
+      <ul>
+        <li>Usually penetrating; often immediately fatal</li>
+        <li>Pulmonary artery control: temporary hilar twist (rotate lung 180°) → controls PA and PV simultaneously</li>
+        <li>Pneumonectomy: if hilar destruction; carry high mortality (&gt;50%)</li>
+        <li>Pulmonary vein injury: massive haemothorax; arterial bleeding on chest tube</li>
+        <li>Lung-sparing repair preferred when anatomically feasible</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ TAB 6: IMAGING & eFAST ═══════════════════════════ -->
+<section class="tab" id="t6">
+  <div class="sh"><h2>🔬 Imaging &amp; eFAST</h2><p>Extended FAST exam, chest X-ray, CT, and TEE in thoracic trauma.</p></div>
+
+  <div class="stitle">eFAST examination — windows and findings</div>
+  <div class="card card-b">
+    <h3>🔊 eFAST protocol — 6 views</h3>
+    <div class="g3">
+      <div class="box box-b" style="margin:0">
+        <div style="color:var(--blue);font-family:var(--mono);font-size:10px;font-weight:700;margin-bottom:6px">VIEW 1 · RUQ (Morrison's pouch)</div>
+        <ul style="padding-left:14px;list-style:disc">
+          <li>Hepatorenal interface</li>
+          <li>Anechoic fluid = haemoperitoneum</li>
+          <li>Most sensitive abdominal window</li>
+        </ul>
+      </div>
+      <div class="box box-b" style="margin:0">
+        <div style="color:var(--blue);font-family:var(--mono);font-size:10px;font-weight:700;margin-bottom:6px">VIEW 2 · LUQ (Koller's pouch)</div>
+        <ul style="padding-left:14px;list-style:disc">
+          <li>Splenorenal interface</li>
+          <li>Left pleural space (above diaphragm)</li>
+          <li>Anechoic = haemothorax or haemoperitoneum</li>
+        </ul>
+      </div>
+      <div class="box box-b" style="margin:0">
+        <div style="color:var(--blue);font-family:var(--mono);font-size:10px;font-weight:700;margin-bottom:6px">VIEW 3 · Pelvic (Douglas's pouch)</div>
+        <ul style="padding-left:14px;list-style:disc">
+          <li>Most dependent abdominal space</li>
+          <li>Fluid posterior to bladder / uterus</li>
+        </ul>
+      </div>
+      <div class="box box-r" style="margin:0">
+        <div style="color:var(--red-l);font-family:var(--mono);font-size:10px;font-weight:700;margin-bottom:6px">VIEW 4 · Pericardial (subxiphoid)</div>
+        <ul style="padding-left:14px;list-style:disc">
+          <li>Anechoic rim around heart = effusion</li>
+          <li>RV diastolic collapse = tamponade</li>
+          <li>Parasternal long-axis as alternative</li>
+        </ul>
+      </div>
+      <div class="box box-o" style="margin:0">
+        <div style="color:var(--ora-l);font-family:var(--mono);font-size:10px;font-weight:700;margin-bottom:6px">VIEW 5 · Right pleura (2nd ICS)</div>
+        <ul style="padding-left:14px;list-style:disc">
+          <li><strong>Lung sliding:</strong> Normal = rules out PTX at that point</li>
+          <li><strong>Absent sliding:</strong> PTX or pleural adhesion</li>
+          <li><strong>Barcode sign</strong> (M-mode) = PTX</li>
+          <li><strong>Lung point</strong> = diagnostic for PTX</li>
+        </ul>
+      </div>
+      <div class="box box-o" style="margin:0">
+        <div style="color:var(--ora-l);font-family:var(--mono);font-size:10px;font-weight:700;margin-bottom:6px">VIEW 6 · Left pleura (2nd ICS)</div>
+        <ul style="padding-left:14px;list-style:disc">
+          <li>Mirror of right side</li>
+          <li>B-lines: indicate pulmonary oedema or contusion</li>
+          <li>PLAPS (posterolateral): haemothorax</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box box-t" style="margin-top:12px"><strong>Sensitivity / specificity:</strong> eFAST for haemoperitoneum: 78–96% / 95–100%. For haemothorax: 92% / 99.7%. For PTX: 86–98% / 97–100% (superior to supine CXR for PTX). For pericardial effusion: 96–100% / 97–100%.</div>
+  </div>
+
+  <!-- CXR -->
+  <div class="stitle">Chest X-ray — systematic interpretation in trauma</div>
+  <div class="card card-o">
+    <h3>📋 CXR findings in thoracic trauma</h3>
+    <div class="tw"><table>
+      <thead><tr><th class="o">Finding</th><th>Diagnosis</th><th>Next step</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Widened mediastinum (&gt;8 cm)</strong></td><td class="vr">Aortic injury; mediastinal haematoma</td><td class="vt">CT aortography (CTA chest)</td></tr>
+        <tr><td><strong>Opacification of hemithorax</strong></td><td class="vr">Massive haemothorax (if dull)</td><td class="vo">Large-bore chest tube; type &amp; screen</td></tr>
+        <tr><td><strong>Hyperlucency / absent lung markings</strong></td><td class="vo">Pneumothorax</td><td class="vo">Chest tube if large; eFAST to confirm tension</td></tr>
+        <tr><td><strong>Rib fractures (≥3 consecutive)</strong></td><td class="vo">Flail chest risk; pulmonary contusion</td><td class="vt">CT chest; pain management; watch respiratory status</td></tr>
+        <tr><td><strong>Left haemothorax + stomach in chest</strong></td><td class="vo">Diaphragmatic rupture (left)</td><td class="vt">CT; NGT (coils in chest = diagnostic)</td></tr>
+        <tr><td><strong>Subcutaneous emphysema</strong></td><td>Tracheobronchial injury; open PTX</td><td class="vt">Bronchoscopy if persistent large air leak</td></tr>
+        <tr><td><strong>Pneumomediastinum</strong></td><td>Oesophageal injury; tracheobronchial injury</td><td class="vt">Oesophagoscopy; bronchoscopy</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- CT & TEE -->
+  <div class="stitle">CT &amp; TEE in thoracic trauma</div>
+  <div class="duel">
+    <div class="duel-a">
+      <div class="duel-la">CT — Indications &amp; Protocol</div>
+      <ul>
+        <li><strong>Haemodynamically stable only</strong> — CT is not for unstable patients</li>
+        <li><strong>Pan-scan (head + C-spine + chest + abdomen/pelvis):</strong> Standard for significant blunt trauma in stable patients</li>
+        <li><strong>CT aortography:</strong> Widened mediastinum; deceleration mechanism; aortic injury suspected</li>
+        <li>Delayed venous phase: mesenteric / solid organ injury</li>
+        <li><strong>Pericardial window by CT:</strong> &gt;50 mL effusion = haemopericardium until proven otherwise</li>
+      </ul>
+    </div>
+    <div class="duel-mid"><div class="duel-mid-dot"></div><div class="duel-mid-lbl">imaging</div><div class="duel-mid-dot"></div></div>
+    <div class="duel-b">
+      <div class="duel-lb">TEE in Trauma — Cardiothoracic Perspective</div>
+      <ul>
+        <li><strong>Intraoperative:</strong> Gold standard for cardiac function during thoracic trauma repair</li>
+        <li><strong>Aortic injury characterisation:</strong> Intimal flap, pseudoaneurysm, aortic regurgitation — superior to TTE in intubated patients</li>
+        <li><strong>Valvular injuries:</strong> Acute MR (papillary rupture), AR (aortic dissection), TR after blunt trauma</li>
+        <li><strong>Ventricular function:</strong> Real-time monitoring during TEVAR; post-resuscitative thoracotomy assessment</li>
+        <li><strong>Haemodynamic instability in ICU:</strong> TEE &gt; TTE (better windows, no chest wall interference)</li>
+      </ul>
+      <div class="box box-t" style="margin-top:10px"><strong>TEE is underutilised in trauma.</strong> For cardiothoracic surgeons managing complex thoracic trauma, TEE provides irreplaceable real-time information that changes management in &gt;30% of cases.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ TAB 7: SURGERY & RT ═══════════════════════════ -->
+<section class="tab" id="t7">
+  <div class="sh"><h2>🏥 Surgery, Resuscitative Thoracotomy &amp; Damage Control</h2><p>RT indications and technique, chest tube, damage control thoracic surgery, ECMO, ICU.</p></div>
+
+  <!-- Resuscitative thoracotomy -->
+  <div class="stitle">Resuscitative thoracotomy (RT)</div>
+  <div class="card card-r">
+    <h3>🔴 Resuscitative thoracotomy — indications &amp; survival</h3>
+    <div class="g2">
+      <div>
+        <p style="color:var(--red-l);font-weight:700;margin-bottom:6px">Indications (EAST / WTA guidelines)</p>
+        <ul>
+          <li><strong>Penetrating chest / cardiac:</strong> CPR &lt;15 min; OR signs of life (pupil response, spontaneous movement, cardiac electrical activity)</li>
+          <li><strong>Penetrating non-thoracic:</strong> CPR &lt;5 min</li>
+          <li><strong>Blunt trauma:</strong> CPR &lt;5 min + treatable cause (tamponade, tension PTX)</li>
+          <li>Witnessed cardiac arrest in trauma bay</li>
+        </ul>
+        <div class="box box-r" style="margin-top:8px"><strong>Survival rates:</strong> Penetrating cardiac 19–35% · Penetrating non-cardiac 15% · Blunt trauma 1.4%. Perform only when survival is realistically achievable.</div>
+      </div>
+      <div>
+        <p style="color:var(--ora-l);font-weight:700;margin-bottom:6px">Technique — left anterolateral thoracotomy</p>
+        <ol class="steps" style="margin-top:0">
+          <li>Left 4th/5th ICS; quick incision through all layers</li>
+          <li>Rib spreader (Finochietto) — aggressive retraction</li>
+          <li>Open pericardium anterior to phrenic nerve (T-incision)</li>
+          <li>Evacuate haemopericardium; identify cardiac wound</li>
+          <li>Direct cardiac repair: finger occlusion → Foley balloon → suture (2-0 Prolene horizontal mattress)</li>
+          <li>Internal cardiac massage: two-handed compression at 100/min</li>
+          <li>Descending aortic cross-clamp: augments coronary and cerebral perfusion</li>
+          <li>Internal defibrillation: 20 J biphasic (paddles directly on myocardium)</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chest tube -->
+  <div class="stitle">Chest tube — insertion technique &amp; management</div>
+  <div class="duel">
+    <div class="duel-a">
+      <div class="duel-la">Insertion Technique</div>
+      <ol class="steps">
+        <li>Position: supine or 30° head-up; ipsilateral arm raised</li>
+        <li>Site: 5th ICS anterior axillary line (safe triangle)</li>
+        <li>Local anaesthesia: infiltrate generously including rib periosteum</li>
+        <li>2–3 cm incision; blunt dissect over superior rib margin (avoid NVB)</li>
+        <li>Finger sweep to confirm pleural entry and exclude adhesions</li>
+        <li>Insert tube (28–32 Fr for haemothorax; 24–28 Fr for PTX); direct posteriorly/superiorly</li>
+        <li>Connect to underwater seal; confirm with CXR + fogging</li>
+      </ol>
+    </div>
+    <div class="duel-mid"><div class="duel-mid-dot"></div><div class="duel-mid-lbl">chest tube</div><div class="duel-mid-dot"></div></div>
+    <div class="duel-b">
+      <div class="duel-lb">Troubleshooting &amp; Complications</div>
+      <ul>
+        <li><strong>Persistent air leak:</strong> Large → tracheobronchial injury; confirm with bronchoscopy; consider double-lumen intubation + VATS</li>
+        <li><strong>No drainage despite effusion on imaging:</strong> Tube malposition (intraparenchymal, intraabdominal); confirm position on CXR/CT</li>
+        <li><strong>Clotted haemothorax:</strong> t-PA instillation (if &gt;3 days) or VATS decortication</li>
+        <li><strong>Empyema:</strong> Remove early; antibiotics; VATS or open decortication</li>
+        <li><strong>Subcutaneous position:</strong> Tube outside pleura — immediate repositioning</li>
+      </ul>
+      <div class="box box-o" style="margin-top:10px"><strong>Remove when:</strong> Output &lt;150–200 mL/24 h AND no air leak AND lung fully expanded on CXR. Remove on expiration or Valsalva.</div>
+    </div>
+  </div>
+
+  <!-- Damage control -->
+  <div class="stitle">Damage control thoracic surgery &amp; ECMO</div>
+  <div class="g2">
+    <div class="card card-v">
+      <h3>🔧 Damage control principles</h3>
+      <ul>
+        <li><strong>Abbreviated surgery:</strong> Control haemorrhage + contamination only; pack and leave</li>
+        <li><strong>Cardiac packing:</strong> Pericardial packs + temporary chest closure for irreversible bleeding; return to OR at 24–48 h</li>
+        <li><strong>Pulmonary tractotomy:</strong> Through-and-through lung wounds; linear stapler along wound tract → haemostasis without lobectomy</li>
+        <li><strong>Pneumonectomy:</strong> Last resort for hilar destruction; mortality &gt;50%; avoid if possible</li>
+        <li><strong>Temporary intravascular shunt:</strong> For major vessel injury; allows delayed repair after resuscitation</li>
+        <li><strong>Open chest management:</strong> Bogota bag or Ioban dressing; return in 24–48 h</li>
+      </ul>
+    </div>
+    <div class="card card-t">
+      <h3>💉 ECMO in thoracic trauma</h3>
+      <ul>
+        <li><strong>VA-ECMO:</strong> Cardiac arrest / refractory cardiogenic shock (blunt cardiac injury); bridge to recovery or transplant</li>
+        <li><strong>VV-ECMO:</strong> Severe pulmonary contusion / ARDS refractory to conventional ventilation; bridge to recovery</li>
+        <li><strong>ECPR:</strong> ECMO-facilitated CPR for traumatic cardiac arrest — emerging evidence; requires no active uncontrollable haemorrhage</li>
+        <li><strong>Perioperative:</strong> TEVAR with complex spinal cord protection; rewarming in severe hypothermic arrest</li>
+      </ul>
+      <div class="box box-t"><strong>Contraindications:</strong> Uncontrolled haemorrhage; multi-organ failure; irreversible neurological injury; advanced malignancy.</div>
+    </div>
+  </div>
+
+  <!-- Post-op ICU -->
+  <div class="stitle">Post-operative ICU management</div>
+  <div class="g3">
+    <div class="card card-o"><h3>📊 Haemodynamic monitoring</h3><ul><li>Arterial line (radial or femoral); CVP; consider PAC or PiCCO for complex cases</li><li>Target MAP 65–75 mmHg; SVR; CO/CI monitoring</li><li>Daily echo for tamponade surveillance (haemopericardium risk post-repair)</li></ul></div>
+    <div class="card card-b"><h3>💨 Ventilation strategy</h3><ul><li>Lung-protective: TV 6 mL/kg IBW; PEEP 5–8 cmH₂O; plateau pressure &lt;30</li><li>Pulmonary contusion: higher PEEP; prone if P/F &lt;150</li><li>After pneumonectomy: contralateral lung — very restrictive strategy</li></ul></div>
+    <div class="card card-r"><h3>🩸 Bleeding &amp; coagulopathy</h3><ul><li>ROTEM-guided transfusion; maintain Hb &gt;80; fibrinogen &gt;1.5; platelets &gt;50</li><li>Surgical re-exploration if chest tube &gt;200 mL/h sustained</li><li>Heparin reversal after TEVAR — only if major bleeding</li></ul></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ TAB 8: CALCULATORS ═══════════════════════════ -->
+<section class="tab" id="t8">
+  <div class="sh"><h2>🧮 Clinical Calculators</h2><p>Shock Index, Revised Trauma Score, ABC score, and Massive Haemothorax output tracker.</p></div>
+
+  <!-- Shock Index -->
+  <div class="calc-wrap">
+    <div class="calc-title">⚡ Shock Index Calculator</div>
+    <div class="calc-grid">
+      <div class="calc-field"><label>Heart rate (bpm)</label><input type="number" id="si-hr" placeholder="e.g. 110" min="20" max="250"></div>
+      <div class="calc-field"><label>Systolic BP (mmHg)</label><input type="number" id="si-sbp" placeholder="e.g. 90" min="20" max="250"></div>
+    </div>
+    <button class="calc-btn" onclick="calcSI()">Calculate</button>
+    <div class="calc-result" id="si-result">
+      <div class="calc-result-title">Shock Index (SI = HR / SBP)</div>
+      <div class="calc-result-val" id="si-val"></div>
+      <div class="calc-result-interp" id="si-interp"></div>
+    </div>
+  </div>
+
+  <!-- Revised Trauma Score -->
+  <div class="calc-wrap">
+    <div class="calc-title">📊 Revised Trauma Score (RTS)</div>
+    <div class="calc-grid">
+      <div class="calc-field">
+        <label>GCS</label>
+        <select id="rts-gcs">
+          <option value="4">13–15</option>
+          <option value="3">9–12</option>
+          <option value="2">6–8</option>
+          <option value="1">4–5</option>
+          <option value="0">3</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label>Systolic BP</label>
+        <select id="rts-sbp">
+          <option value="4">&gt;89 mmHg</option>
+          <option value="3">76–89</option>
+          <option value="2">50–75</option>
+          <option value="1">1–49</option>
+          <option value="0">0</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label>Respiratory rate</label>
+        <select id="rts-rr">
+          <option value="4">10–29 /min</option>
+          <option value="3">&gt;29</option>
+          <option value="2">6–9</option>
+          <option value="1">1–5</option>
+          <option value="0">0</option>
+        </select>
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calcRTS()">Calculate RTS</button>
+    <div class="calc-result" id="rts-result">
+      <div class="calc-result-title">Revised Trauma Score</div>
+      <div class="calc-result-val" id="rts-val"></div>
+      <div class="calc-result-interp" id="rts-interp"></div>
+    </div>
+  </div>
+
+  <!-- ABC Score -->
+  <div class="calc-wrap">
+    <div class="calc-title">🩸 ABC Score — Massive Transfusion Prediction</div>
+    <div class="calc-grid">
+      <div class="calc-field">
+        <label>Penetrating mechanism</label>
+        <select id="abc-pen"><option value="1">Yes</option><option value="0">No</option></select>
+      </div>
+      <div class="calc-field">
+        <label>SBP ≤ 90 mmHg in ED</label>
+        <select id="abc-sbp"><option value="1">Yes</option><option value="0">No</option></select>
+      </div>
+      <div class="calc-field">
+        <label>HR ≥ 120 bpm in ED</label>
+        <select id="abc-hr"><option value="1">Yes</option><option value="0">No</option></select>
+      </div>
+      <div class="calc-field">
+        <label>FAST positive</label>
+        <select id="abc-fast"><option value="1">Yes</option><option value="0">No</option></select>
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calcABC()">Calculate ABC Score</button>
+    <div class="calc-result" id="abc-result">
+      <div class="calc-result-title">ABC Score (Massive Transfusion Protocol)</div>
+      <div class="calc-result-val" id="abc-val"></div>
+      <div class="calc-result-interp" id="abc-interp"></div>
+    </div>
+  </div>
+
+  <!-- Haemothorax tracker -->
+  <div class="calc-wrap">
+    <div class="calc-title">🫁 Massive Haemothorax — Surgical Decision Tracker</div>
+    <div class="calc-grid">
+      <div class="calc-field"><label>Initial chest tube drainage (mL)</label><input type="number" id="hx-init" placeholder="e.g. 800" min="0"></div>
+      <div class="calc-field"><label>Output last hour (mL/h)</label><input type="number" id="hx-rate" placeholder="e.g. 180" min="0"></div>
+      <div class="calc-field"><label>Hours since chest tube (h)</label><input type="number" id="hx-time" placeholder="e.g. 2" min="0" max="24"></div>
+    </div>
+    <button class="calc-btn" onclick="calcHX()">Assess</button>
+    <div class="calc-result" id="hx-result">
+      <div class="calc-result-title">Haemothorax Surgical Decision</div>
+      <div class="calc-result-val" id="hx-val"></div>
+      <div class="calc-result-interp" id="hx-interp"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ TAB 9: DECISION TOOLS ═══════════════════════════ -->
+<section class="tab" id="t9">
+  <div class="sh"><h2>🤖 Decision Assistants</h2><p>Interactive clinical decision tools for penetrating cardiac trauma and thoracic trauma triage.</p></div>
+
+  <!-- Penetrating cardiac trauma assistant -->
+  <div class="da-wrap">
+    <div class="da-title">🫀 Penetrating Cardiac Trauma — Decision Assistant</div>
+    <div class="da-row">
+      <label>Mechanism</label>
+      <div class="da-opts">
+        <div class="da-opt" onclick="sel(this,'pct-mech','stab')">Stab wound</div>
+        <div class="da-opt" onclick="sel(this,'pct-mech','gsw')">Gunshot wound (GSW)</div>
+        <div class="da-opt" onclick="sel(this,'pct-mech','blast')">Blast / fragment</div>
+      </div>
+    </div>
+    <div class="da-row">
+      <label>Haemodynamic status</label>
+      <div class="da-opts">
+        <div class="da-opt" onclick="sel(this,'pct-hd','stable')">Stable (SBP &gt;90)</div>
+        <div class="da-opt" onclick="sel(this,'pct-hd','unstable')">Unstable (SBP 60–90)</div>
+        <div class="da-opt" onclick="sel(this,'pct-hd','arrest')">Cardiac arrest / PEA</div>
+      </div>
+    </div>
+    <div class="da-row">
+      <label>eFAST — pericardial window</label>
+      <div class="da-opts">
+        <div class="da-opt" onclick="sel(this,'pct-fast','pos')">Positive (effusion / tamponade)</div>
+        <div class="da-opt" onclick="sel(this,'pct-fast','neg')">Negative</div>
+        <div class="da-opt" onclick="sel(this,'pct-fast','unk')">Not performed / inconclusive</div>
+      </div>
+    </div>
+    <div class="da-row">
+      <label>Duration of CPR (if arrest)</label>
+      <div class="da-opts">
+        <div class="da-opt" onclick="sel(this,'pct-cpr','na')">Not in arrest</div>
+        <div class="da-opt" onclick="sel(this,'pct-cpr','lt15')">CPR &lt;15 min</div>
+        <div class="da-opt" onclick="sel(this,'pct-cpr','gt15')">CPR &gt;15 min</div>
+      </div>
+    </div>
+    <button class="calc-btn" onclick="decidePCT()" style="margin-top:6px">Get Recommendation</button>
+    <div class="da-output" id="pct-output">
+      <div class="da-out-section"><div class="da-out-lbl">Recommended action</div><div class="da-out-val" id="pct-action"></div></div>
+      <div class="da-out-section"><div class="da-out-lbl">Surgical approach</div><div class="da-out-val" id="pct-approach"></div></div>
+      <div class="da-out-section"><div class="da-out-lbl">Key steps</div><div class="da-out-val" id="pct-steps"></div></div>
+    </div>
+  </div>
+
+  <!-- General thoracic trauma assistant -->
+  <div class="da-wrap">
+    <div class="da-title">🚑 Thoracic Trauma Triage — Decision Assistant</div>
+    <div class="da-row">
+      <label>Mechanism</label>
+      <div class="da-opts">
+        <div class="da-opt" onclick="sel(this,'tt-mech','blunt')">Blunt</div>
+        <div class="da-opt" onclick="sel(this,'tt-mech','pen')">Penetrating</div>
+        <div class="da-opt" onclick="sel(this,'tt-mech','blast')">Blast</div>
+      </div>
+    </div>
+    <div class="da-row">
+      <label>Haemodynamics</label>
+      <div class="da-opts">
+        <div class="da-opt" onclick="sel(this,'tt-hd','stable')">Stable</div>
+        <div class="da-opt" onclick="sel(this,'tt-hd','unstable')">Unstable</div>
+        <div class="da-opt" onclick="sel(this,'tt-hd','arrest')">Arrest</div>
+      </div>
+    </div>
+    <div class="da-row">
+      <label>eFAST findings</label>
+      <div class="da-opts">
+        <div class="da-opt" onclick="sel(this,'tt-fast','normal')">Normal</div>
+        <div class="da-opt" onclick="sel(this,'tt-fast','ptx')">Pneumothorax</div>
+        <div class="da-opt" onclick="sel(this,'tt-fast','hx')">Haemothorax</div>
+        <div class="da-opt" onclick="sel(this,'tt-fast','tampo')">Tamponade</div>
+      </div>
+    </div>
+    <div class="da-row">
+      <label>Chest tube output (if placed)</label>
+      <div class="da-opts">
+        <div class="da-opt" onclick="sel(this,'tt-ct','none')">Not placed</div>
+        <div class="da-opt" onclick="sel(this,'tt-ct','lt500')">Initial &lt;500 mL, &lt;100 mL/h</div>
+        <div class="da-opt" onclick="sel(this,'tt-ct','mod')">500–1500 mL initial / 100–200 mL/h</div>
+        <div class="da-opt" onclick="sel(this,'tt-ct','massive')">Initial &gt;1500 mL or &gt;200 mL/h</div>
+      </div>
+    </div>
+    <button class="calc-btn" onclick="decideTT()" style="margin-top:6px">Get Triage Recommendation</button>
+    <div class="da-output" id="tt-output">
+      <div class="da-out-section"><div class="da-out-lbl">Triage decision</div><div class="da-out-val" id="tt-action"></div></div>
+      <div class="da-out-section"><div class="da-out-lbl">Immediate interventions</div><div class="da-out-val" id="tt-interventions"></div></div>
+      <div class="da-out-section"><div class="da-out-lbl">Disposition</div><div class="da-out-val" id="tt-disposition"></div></div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    Based on: ACS ATLS 11th edition · EAST &amp; WTA guidelines · Mattox's Trauma (8th ed.) · ESC / STS Guidelines · Bojar Manual of Perioperative Care in Adult Cardiac Surgery · CRASH-2 / CRASH-3 trial data · Spodick criteria for tamponade · AIS vascular grading scale.<br><br>
+    <strong>This tool is for educational purposes only. Clinical judgment and local protocols always take precedence.</strong><br><br>
+    Cardiac Surgery Clinical Education · StarleyBy · 2025
+  </div>
+</section>
+
+<!-- ═══════════════════════════ TAB 10: DISABILITY & EXPOSURE ═══════════════════════════ -->
+<section class="tab" id="t10">
+  <div class="sh"><h2>🧠 Disability (D) &amp; Exposure (E)</h2><p>Neurological assessment, spinal immobilisation, secondary survey, and complete exposure in thoracic trauma.</p></div>
+
+  <!-- D: Disability -->
+  <div class="stitle">D — Disability: rapid neurological assessment</div>
+  <div class="duel">
+    <div class="duel-a">
+      <div class="duel-la">GCS &amp; Pupil Response</div>
+      <div class="tw"><table>
+        <thead><tr><th class="r">GCS</th><th>Eyes</th><th>Verbal</th><th>Motor</th></tr></thead>
+        <tbody>
+          <tr><td class="vgr">15</td><td>Spontaneous (4)</td><td>Oriented (5)</td><td>Obeys (6)</td></tr>
+          <tr><td class="vg">13–14</td><td>To voice (3)</td><td>Confused (4)</td><td>Localises (5)</td></tr>
+          <tr><td class="vo">9–12</td><td>To pain (2)</td><td>Words (3)</td><td>Withdraws (4)</td></tr>
+          <tr><td class="vr">≤8</td><td>None (1)</td><td>Sounds (2) / None (1)</td><td>Flexion (3) / Extension (2) / None (1)</td></tr>
+        </tbody>
+      </table></div>
+      <div class="box box-r"><strong>GCS ≤8 = definitive airway required.</strong> Intubate immediately; protect C-spine throughout.</div>
+      <ul style="margin-top:10px">
+        <li><strong>AVPU scale</strong> (rapid field assessment): Alert · Verbal · Pain · Unresponsive</li>
+        <li><strong>Pupils:</strong> Unequal / unreactive → transtentorial herniation or direct eye trauma</li>
+        <li><strong>Fixed dilated pupils:</strong> Do not exclude survivability in haemodynamic arrest — may recover after correction of hypotension/hypoxia</li>
+      </ul>
+    </div>
+    <div class="duel-mid"><div class="duel-mid-dot"></div><div class="duel-mid-lbl">D/E</div><div class="duel-mid-dot"></div></div>
+    <div class="duel-b">
+      <div class="duel-lb">AVPU &amp; Herniation Recognition</div>
+      <ul>
+        <li><strong>Cushing's triad</strong> (late sign of ICP ↑): Hypertension + Bradycardia + Irregular respirations → impending herniation</li>
+        <li><strong>Rapid neurological deterioration</strong> in trauma: exclude haemorrhagic shock first (hypoperfusion mimics TBI)</li>
+        <li><strong>Spinal cord injury:</strong> Assess motor and sensory level; document pre-intervention</li>
+        <li><strong>ASIA grading:</strong> A (complete) → E (normal) — document for medicolegal and prognostic purposes</li>
+      </ul>
+      <div class="box box-o" style="margin-top:10px"><strong>Cardiothoracic relevance:</strong> Spinal cord ischaemia after aortic repair presents as ASIA-A paraplegia — must be distinguished from pre-existing traumatic cord injury before TEVAR/open repair.</div>
+    </div>
+  </div>
+
+  <!-- C-spine -->
+  <div class="stitle">Cervical spine — immobilisation and clearance</div>
+  <div class="card card-o">
+    <h3>🦴 C-spine management in thoracic trauma</h3>
+    <div class="g2">
+      <div>
+        <p style="color:var(--ora-l);font-weight:700;margin-bottom:6px">Immobilisation</p>
+        <ul>
+          <li>Maintain inline stabilisation throughout primary survey</li>
+          <li>Hard collar — apply as soon as possible; ensure airway is maintained</li>
+          <li><strong>Do not delay airway management for C-spine immobilisation</strong> — airway takes priority</li>
+          <li>Log-roll with 4-person technique for any repositioning</li>
+          <li>Backboard: remove as soon as possible (pressure ulcer, pain, respiratory splinting)</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:var(--teal);font-weight:700;margin-bottom:6px">Clinical clearance criteria (NEXUS)</p>
+        <ul>
+          <li>No midline C-spine tenderness</li>
+          <li>No focal neurological deficit</li>
+          <li>Normal level of alertness (GCS 15)</li>
+          <li>No intoxication</li>
+          <li>No painful distracting injury</li>
+        </ul>
+        <div class="box box-t"><strong>If ANY NEXUS criterion fails:</strong> CT C-spine required. Plain X-ray alone insufficient for clearance in trauma.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E: Exposure -->
+  <div class="stitle">E — Exposure &amp; environment control</div>
+  <div class="card card-b">
+    <h3>🌡️ Complete exposure and temperature management</h3>
+    <div class="g2">
+      <div>
+        <p style="color:var(--blue);font-weight:700;margin-bottom:6px">Complete exposure protocol</p>
+        <ul>
+          <li><strong>Remove all clothing</strong> — scissors to cut; do not remove manually if injury suspected</li>
+          <li>Log-roll: inspect posterior thorax, flanks, buttocks (commonly missed wounds)</li>
+          <li><strong>Back of the thorax:</strong> Posterior thoracotomy wounds, exit wounds, spinal deformity</li>
+          <li>Perineal / rectal exam if pelvic fracture or penetrating trauma near pelvis</li>
+          <li>Document all wounds with photographs (medicolegal)</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:var(--red-l);font-weight:700;margin-bottom:6px">Hypothermia prevention — the lethal triad</p>
+        <ul>
+          <li><strong>Hypothermia + Acidosis + Coagulopathy</strong> = lethal triad of trauma → mortality &gt;90% if all three present</li>
+          <li>Cover patient immediately after exposure; warm blankets</li>
+          <li>Warm IV fluids and blood products (38°C)</li>
+          <li>Warm OR / trauma bay environment (&gt;26°C)</li>
+          <li>Active external rewarming (Bair Hugger)</li>
+          <li><strong>Severe hypothermia (&lt;30°C):</strong> Consider ECMO rewarming; cardiac arrest may be reversible</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box box-r"><strong>Hypothermia in cardiac surgery trauma patients:</strong> Therapeutic hypothermia (32–35°C) may be considered after ROSC from traumatic cardiac arrest, but requires exclusion of ongoing haemorrhage first. Unintentional hypothermia is uniformly harmful.</div>
+  </div>
+
+  <!-- Secondary survey -->
+  <div class="stitle">Secondary survey — head-to-toe examination</div>
+  <div class="card card-g">
+    <h3>📋 Systematic secondary survey</h3>
+    <div class="g3">
+      <div>
+        <p style="color:var(--gold);font-weight:700;margin-bottom:6px">Head &amp; face</p>
+        <ul>
+          <li>Scalp lacerations (haemorrhage control)</li>
+          <li>Skull palpation (deformity, crepitus)</li>
+          <li>Eyes: pupil, hyphema, globe rupture</li>
+          <li>Ear: haemotympanum (basilar skull #)</li>
+          <li>Battle's sign, raccoon eyes (delayed)</li>
+          <li>Oropharynx: blood, teeth, foreign bodies</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:var(--gold);font-weight:700;margin-bottom:6px">Neck &amp; chest</p>
+        <ul>
+          <li>Tracheal position; SQ emphysema</li>
+          <li>Carotid pulsations; vascular bruits</li>
+          <li>Penetrating wounds: do not remove impaled objects</li>
+          <li>Chest wall: crepitus, paradoxical motion</li>
+          <li>Auscultation anterior + lateral + posterior</li>
+          <li>Sternal palpation (fracture = BCI screen)</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:var(--gold);font-weight:700;margin-bottom:6px">Abdomen, pelvis, extremities</p>
+        <ul>
+          <li>Abdominal palpation (peritonism)</li>
+          <li>Pelvic compression / distraction (if stable — once only)</li>
+          <li>Femoral pulses bilaterally</li>
+          <li>Long bone injuries: deformity, shortening</li>
+          <li>Vascular injury: absent pulses, expanding haematoma</li>
+          <li>Compartment syndrome: tense compartments, pain on passive stretch</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SVG: Secondary survey algorithm -->
+  <div class="stitle">Secondary survey workflow — SVG algorithm</div>
+  <div class="algo-wrap">
+    <svg viewBox="0 0 860 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:860px;display:block;margin:0 auto">
+      <defs>
+        <marker id="a2" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#8a7060"/></marker>
+        <marker id="a2r" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#e84040"/></marker>
+        <marker id="a2t" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#2ab89a"/></marker>
+      </defs>
+      <!-- Primary survey complete -->
+      <rect x="310" y="10" width="240" height="38" rx="10" fill="rgba(42,184,154,0.15)" stroke="#2ab89a" stroke-width="1.5"/>
+      <text x="430" y="33" text-anchor="middle" fill="#2ab89a" font-size="12.5" font-weight="700" font-family="IBM Plex Sans,sans-serif">PRIMARY SURVEY COMPLETE · RESUSCITATION ONGOING</text>
+
+      <!-- AMPLE History -->
+      <line x1="430" y1="48" x2="430" y2="72" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a2)"/>
+      <rect x="290" y="72" width="280" height="36" rx="10" fill="rgba(232,192,80,0.12)" stroke="#e8c050" stroke-width="1.5"/>
+      <text x="430" y="88" text-anchor="middle" fill="#e8c050" font-size="12" font-weight="700" font-family="IBM Plex Sans,sans-serif">AMPLE HISTORY</text>
+      <text x="430" y="102" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Allergies · Medications · PMH · Last meal · Events of injury</text>
+
+      <!-- Head to toe -->
+      <line x1="430" y1="108" x2="430" y2="130" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a2)"/>
+      <rect x="290" y="130" width="280" height="36" rx="10" fill="rgba(232,120,48,0.12)" stroke="#e87830" stroke-width="1.5"/>
+      <text x="430" y="152" text-anchor="middle" fill="#ffaa60" font-size="12" font-weight="700" font-family="IBM Plex Sans,sans-serif">HEAD-TO-TOE EXAMINATION</text>
+
+      <!-- Four outcome boxes -->
+      <line x1="430" y1="166" x2="430" y2="192" stroke="#8a7060" stroke-width="1.5"/>
+      <line x1="120" y1="192" x2="740" y2="192" stroke="#8a7060" stroke-width="1.5"/>
+
+      <!-- Box 1: Head/Neck -->
+      <line x1="120" y1="192" x2="120" y2="214" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a2)"/>
+      <rect x="20" y="214" width="200" height="80" rx="10" fill="rgba(232,64,64,0.1)" stroke="rgba(232,64,64,0.4)" stroke-width="1.2"/>
+      <text x="120" y="232" text-anchor="middle" fill="#ff7070" font-size="11" font-weight="700" font-family="IBM Plex Sans,sans-serif">HEAD &amp; NECK</text>
+      <text x="120" y="248" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">GCS · Pupils · Skull</text>
+      <text x="120" y="262" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">C-spine · Trachea</text>
+      <text x="120" y="276" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Vascular bruits</text>
+
+      <!-- Box 2: Chest -->
+      <line x1="295" y1="192" x2="295" y2="214" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a2)"/>
+      <rect x="220" y="214" width="150" height="80" rx="10" fill="rgba(232,120,48,0.1)" stroke="rgba(232,120,48,0.4)" stroke-width="1.2"/>
+      <text x="295" y="232" text-anchor="middle" fill="#ffaa60" font-size="11" font-weight="700" font-family="IBM Plex Sans,sans-serif">CHEST</text>
+      <text x="295" y="248" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Rib # · Sternum</text>
+      <text x="295" y="262" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Breath sounds</text>
+      <text x="295" y="276" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Subcutaneous air</text>
+
+      <!-- Box 3: Abdomen/Pelvis -->
+      <line x1="565" y1="192" x2="565" y2="214" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a2)"/>
+      <rect x="390" y="214" width="200" height="80" rx="10" fill="rgba(232,192,80,0.1)" stroke="rgba(232,192,80,0.35)" stroke-width="1.2"/>
+      <text x="490" y="232" text-anchor="middle" fill="#e8c050" font-size="11" font-weight="700" font-family="IBM Plex Sans,sans-serif">ABDOMEN &amp; PELVIS</text>
+      <text x="490" y="248" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Peritonism · FAST</text>
+      <text x="490" y="262" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Pelvic stability</text>
+      <text x="490" y="276" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">DRE if indicated</text>
+
+      <!-- Box 4: Extremities -->
+      <line x1="740" y1="192" x2="740" y2="214" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a2)"/>
+      <rect x="630" y="214" width="220" height="80" rx="10" fill="rgba(42,184,154,0.1)" stroke="rgba(42,184,154,0.35)" stroke-width="1.2"/>
+      <text x="740" y="232" text-anchor="middle" fill="#2ab89a" font-size="11" font-weight="700" font-family="IBM Plex Sans,sans-serif">EXTREMITIES &amp; BACK</text>
+      <text x="740" y="248" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Pulses · Deformity</text>
+      <text x="740" y="262" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Compartments</text>
+      <text x="740" y="276" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Log-roll · Spine</text>
+
+      <!-- Converge to definitive -->
+      <line x1="120" y1="294" x2="120" y2="338" stroke="#8a7060" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="295" y1="294" x2="295" y2="338" stroke="#8a7060" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="490" y1="294" x2="490" y2="338" stroke="#8a7060" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="740" y1="294" x2="740" y2="338" stroke="#8a7060" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="120" y1="338" x2="740" y2="338" stroke="#8a7060" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="430" y1="338" x2="430" y2="358" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a2)"/>
+      <rect x="260" y="358" width="340" height="36" rx="10" fill="rgba(144,96,212,0.13)" stroke="#9060d4" stroke-width="1.5"/>
+      <text x="430" y="378" text-anchor="middle" fill="#b890f8" font-size="12.5" font-weight="700" font-family="IBM Plex Sans,sans-serif">DEFINITIVE CARE PLAN + DISPOSITION</text>
+      <text x="430" y="393" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">OR · Interventional Radiology · ICU · CT · Transfer</text>
+    </svg>
+  </div>
+
+  <!-- Traumatic cardiac arrest algorithm -->
+  <div class="stitle">Traumatic cardiac arrest — algorithm</div>
+  <div class="algo-wrap">
+    <svg viewBox="0 0 820 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;margin:0 auto">
+      <defs>
+        <marker id="a3" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#8a7060"/></marker>
+        <marker id="a3r" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#e84040"/></marker>
+      </defs>
+      <!-- TCA box -->
+      <rect x="290" y="10" width="240" height="38" rx="10" fill="rgba(232,64,64,0.25)" stroke="#e84040" stroke-width="2"/>
+      <text x="410" y="33" text-anchor="middle" fill="#ff7070" font-size="14" font-weight="700" font-family="IBM Plex Sans,sans-serif">TRAUMATIC CARDIAC ARREST</text>
+
+      <!-- CPR + bilateral thoracostomies -->
+      <line x1="410" y1="48" x2="410" y2="74" stroke="#e84040" stroke-width="1.5" marker-end="url(#a3r)"/>
+      <rect x="240" y="74" width="340" height="44" rx="10" fill="rgba(232,64,64,0.15)" stroke="#e84040" stroke-width="1.5"/>
+      <text x="410" y="92" text-anchor="middle" fill="#ff7070" font-size="12" font-weight="700" font-family="IBM Plex Sans,sans-serif">CPR + Bilateral finger thoracostomies</text>
+      <text x="410" y="110" text-anchor="middle" fill="#8a7060" font-size="10.5" font-family="IBM Plex Sans,sans-serif">Airway — oxygen — IV/IO access — eFAST</text>
+
+      <!-- Reversible causes -->
+      <line x1="410" y1="118" x2="410" y2="144" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a3)"/>
+      <rect x="245" y="144" width="330" height="38" rx="10" fill="rgba(232,192,80,0.12)" stroke="#e8c050" stroke-width="1.5"/>
+      <text x="410" y="162" text-anchor="middle" fill="#e8c050" font-size="12" font-weight="700" font-family="IBM Plex Sans,sans-serif">IDENTIFY &amp; TREAT REVERSIBLE CAUSES (4H4T)</text>
+      <text x="410" y="176" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Hypovolaemia · Hypoxia · Tension PTX · Tamponade</text>
+
+      <!-- Decision diamond: Penetrating? -->
+      <line x1="410" y1="182" x2="410" y2="212" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a3)"/>
+      <polygon points="410,212 500,250 410,288 320,250" fill="rgba(232,120,48,0.13)" stroke="#e87830" stroke-width="1.5"/>
+      <text x="410" y="247" text-anchor="middle" fill="#ffaa60" font-size="11.5" font-weight="700" font-family="IBM Plex Sans,sans-serif">Penetrating?</text>
+      <text x="410" y="262" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">CPR &lt;15 min?</text>
+
+      <!-- YES branch: RT -->
+      <line x1="500" y1="250" x2="620" y2="250" stroke="#e84040" stroke-width="1.5" marker-end="url(#a3r)"/>
+      <text x="555" y="244" text-anchor="middle" fill="#e84040" font-size="10" font-weight="700" font-family="IBM Plex Sans,sans-serif">YES</text>
+      <rect x="620" y="224" width="180" height="52" rx="10" fill="rgba(232,64,64,0.18)" stroke="#e84040" stroke-width="1.5"/>
+      <text x="710" y="247" text-anchor="middle" fill="#ff7070" font-size="12" font-weight="700" font-family="IBM Plex Sans,sans-serif">RESUSCITATIVE</text>
+      <text x="710" y="264" text-anchor="middle" fill="#ff7070" font-size="12" font-weight="700" font-family="IBM Plex Sans,sans-serif">THORACOTOMY</text>
+
+      <!-- NO branch: Blunt -->
+      <line x1="320" y1="250" x2="200" y2="250" stroke="#e87830" stroke-width="1.5" marker-end="url(#a3)"/>
+      <text x="258" y="244" text-anchor="middle" fill="#e87830" font-size="10" font-weight="700" font-family="IBM Plex Sans,sans-serif">NO / BLUNT</text>
+      <rect x="20" y="224" width="180" height="52" rx="10" fill="rgba(232,120,48,0.13)" stroke="#e87830" stroke-width="1.5"/>
+      <text x="110" y="247" text-anchor="middle" fill="#ffaa60" font-size="11.5" font-weight="700" font-family="IBM Plex Sans,sans-serif">Blunt: CPR &lt;5 min</text>
+      <text x="110" y="262" text-anchor="middle" fill="#8a7060" font-size="10.5" font-family="IBM Plex Sans,sans-serif">+ treatable cause?</text>
+
+      <!-- Blunt YES: RT -->
+      <line x1="110" y1="276" x2="110" y2="308" stroke="#e84040" stroke-width="1.3" marker-end="url(#a3r)"/>
+      <text x="130" y="296" fill="#e84040" font-size="10" font-weight="700" font-family="IBM Plex Sans,sans-serif">YES</text>
+      <rect x="30" y="308" width="160" height="36" rx="10" fill="rgba(232,64,64,0.15)" stroke="#e84040" stroke-width="1.5"/>
+      <text x="110" y="330" text-anchor="middle" fill="#ff7070" font-size="11" font-weight="700" font-family="IBM Plex Sans,sans-serif">RT (left anterolateral)</text>
+
+      <!-- Blunt NO: Stop -->
+      <line x1="200" y1="276" x2="200" y2="380" stroke="#4a3020" stroke-width="1.3" stroke-dasharray="4,3"/>
+      <rect x="125" y="380" width="160" height="36" rx="10" fill="rgba(100,80,60,0.2)" stroke="#4a3020" stroke-width="1.2"/>
+      <text x="205" y="398" text-anchor="middle" fill="#8a7060" font-size="11" font-weight="700" font-family="IBM Plex Sans,sans-serif">Consider stopping CPR</text>
+
+      <!-- RT outcomes -->
+      <line x1="710" y1="276" x2="710" y2="320" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a3)"/>
+      <line x1="110" y1="344" x2="110" y2="360" stroke="#8a7060" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="110" y1="360" x2="490" y2="360" stroke="#8a7060" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="490" y1="320" x2="490" y2="360" stroke="#8a7060" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="710" y1="320" x2="490" y2="320" stroke="#8a7060" stroke-width="1.5"/>
+      <rect x="355" y="320" width="270" height="38" rx="10" fill="rgba(42,184,154,0.12)" stroke="#2ab89a" stroke-width="1.5"/>
+      <text x="490" y="340" text-anchor="middle" fill="#2ab89a" font-size="12" font-weight="700" font-family="IBM Plex Sans,sans-serif">ROSC achieved → OR immediately</text>
+      <line x1="490" y1="360" x2="490" y2="390" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a3)"/>
+      <rect x="310" y="390" width="360" height="36" rx="10" fill="rgba(144,96,212,0.13)" stroke="#9060d4" stroke-width="1.5"/>
+      <text x="490" y="413" text-anchor="middle" fill="#b890f8" font-size="12" font-weight="700" font-family="IBM Plex Sans,sans-serif">Definitive haemorrhage control + ICU</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ TAB 11: SPECIAL POPULATIONS ═══════════════════════════ -->
+<section class="tab" id="t11">
+  <div class="sh"><h2>👥 Special Populations</h2><p>Pregnancy, paediatrics, elderly, anticoagulated patients, LVAD patients, and heart transplant recipients.</p></div>
+
+  <!-- Pregnancy -->
+  <div class="stitle">Pregnancy — trauma management</div>
+  <div class="inj-card">
+    <div class="inj-head"><h3>🤰 Pregnant Trauma Patient</h3><span class="urgency urg-u">HIGH COMPLEXITY</span></div>
+    <div class="inj-body">
+      <div class="inj-col">
+        <div class="inj-col-lbl">Physiological differences</div>
+        <ul>
+          <li>Blood volume ↑ 40–50% → haemorrhagic shock may appear late</li>
+          <li>HR ↑ 10–15 bpm (physiological tachycardia)</li>
+          <li>BP ↓ 10–15 mmHg (↓ SVR)</li>
+          <li>Left uterine displacement from 20 weeks (IVC compression)</li>
+          <li>Diaphragm elevated → lung bases compressed</li>
+          <li>Gastric emptying ↓ → aspiration risk ↑</li>
+        </ul>
+      </div>
+      <div class="inj-col">
+        <div class="inj-col-lbl">Primary survey modifications</div>
+        <ul>
+          <li><strong>Left lateral tilt 15°</strong> or manual uterine displacement from 20 weeks</li>
+          <li>RSI with cricoid pressure (aspiration risk)</li>
+          <li>Chest tube: insert 1–2 interspaces higher than usual (diaphragm elevated)</li>
+          <li>Radiation: necessary imaging should not be withheld; shield abdomen when feasible</li>
+          <li>Resuscitate mother first — fetal outcome depends on maternal stability</li>
+        </ul>
+      </div>
+      <div class="inj-col">
+        <div class="inj-col-lbl">Obstetric assessment</div>
+        <ul>
+          <li>Fetal heart rate monitoring (&gt;20 weeks): CTG for ≥4 h (minimum)</li>
+          <li>Placental abruption: most common cause of fetal loss; may be silent</li>
+          <li>Uterine rupture: abdominal tenderness, fetal parts palpable, fetal distress</li>
+          <li>Kleihauer-Betke test: quantify feto-maternal haemorrhage; guide Rh prophylaxis</li>
+          <li>Anti-D immunoglobulin: Rh-negative mothers after any significant trauma</li>
+        </ul>
+      </div>
+      <div class="inj-col">
+        <div class="inj-col-lbl">Perimortem caesarean section</div>
+        <ul>
+          <li><strong>Perform within 4 min of maternal cardiac arrest</strong> if ≥24 weeks gestation</li>
+          <li>Do not wait for fetal viability assessment — improves maternal cardiac output</li>
+          <li>Midline incision; classical uterine incision; deliver fetus and placenta</li>
+          <li>Continue maternal CPR / RT throughout</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paediatrics -->
+  <div class="stitle">Paediatric thoracic trauma</div>
+  <div class="card card-o">
+    <h3>👶 Paediatric considerations</h3>
+    <div class="g2">
+      <div>
+        <p style="color:var(--ora-l);font-weight:700;margin-bottom:6px">Physiological differences</p>
+        <ul>
+          <li><strong>Compliant chest wall:</strong> Rib fractures uncommon; significant intrathoracic injury may occur without rib fractures</li>
+          <li>Higher respiratory rate (normal: infant 40–60, child 20–30 bpm)</li>
+          <li>Higher HR (neonate 120–160; infant 100–140; child 70–120 bpm)</li>
+          <li>SBP lower: neonate ~60, child 80 + (2 × age in years)</li>
+          <li>Smaller airways → obstruction more rapidly critical</li>
+          <li>Larger occiput → cervical flexion in supine position → pad under shoulders for neutral alignment</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:var(--teal);font-weight:700;margin-bottom:6px">Management pearls</p>
+        <ul>
+          <li><strong>Broselow tape</strong> or weight-based formula (weight ≈ 2 × [age+4] kg) for drug doses</li>
+          <li><strong>Uncuffed ETT</strong> in &lt;8 years (or cuffed with careful pressure monitoring)</li>
+          <li>IO access if IV fails after 2 attempts</li>
+          <li><strong>Chest tube size:</strong> (age/4 + 4) Fr approximation</li>
+          <li>Non-accidental injury (NAI): posterior rib fractures, multiple stages of healing; mandatory reporting</li>
+          <li>ECMO: broader indications in paediatric trauma (better recovery potential)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box box-r"><strong>Rib fractures in children are uncommon and usually indicate significant force.</strong> Their presence should raise suspicion of pulmonary contusion, aortic injury, and non-accidental trauma. Do not dismiss as minor.</div>
+  </div>
+
+  <!-- Elderly -->
+  <div class="stitle">Elderly patients — geriatric trauma</div>
+  <div class="card card-b">
+    <h3>👴 Geriatric trauma considerations</h3>
+    <div class="g2">
+      <div>
+        <p style="color:var(--blue);font-weight:700;margin-bottom:6px">Physiological vulnerabilities</p>
+        <ul>
+          <li><strong>Chronotropic incompetence:</strong> Cannot mount adequate tachycardia response to hypovolaemia → shock appears normotensive</li>
+          <li>Beta-blocker use: masks tachycardia (Shock Index less reliable)</li>
+          <li>Baseline hypertension: SBP 120 may represent hypotension relative to their normal</li>
+          <li>Reduced pulmonary reserve: rib fractures → disproportionate respiratory compromise</li>
+          <li><strong>Rib Fracture Score (RFS):</strong> 1–4 ribs = low risk; 5+ ribs = high mortality; bilateral fractures = ICU</li>
+          <li>Reduced bone density → rib fractures with lower-energy mechanisms</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:var(--teal);font-weight:700;margin-bottom:6px">Anticoagulation considerations</p>
+        <ul>
+          <li><strong>Warfarin:</strong> INR target reversal with 4F-PCC (25–50 units/kg) + vitamin K 10 mg IV</li>
+          <li><strong>DOACs (apixaban/rivaroxaban):</strong> Andexanet alfa (if available) or 4F-PCC</li>
+          <li><strong>Dabigatran:</strong> Idarucizumab 5 g IV (specific reversal)</li>
+          <li><strong>Dual antiplatelet:</strong> Platelet transfusion + desmopressin 0.3 mcg/kg if life-threatening bleeding</li>
+          <li>Always check medication list on arrival; alert haematology for complex reversal</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- LVAD -->
+  <div class="stitle">LVAD patients — unique management challenges</div>
+  <div class="card card-v">
+    <h3>⚙️ Left ventricular assist device (LVAD) in trauma</h3>
+    <div class="g2">
+      <div>
+        <p style="color:var(--violet-l);font-weight:700;margin-bottom:6px">Assessment</p>
+        <ul>
+          <li>LVAD patients may have <strong>no palpable pulse</strong> (continuous flow device) — assess by Doppler; MAP by arterial line</li>
+          <li>Target MAP 70–90 mmHg for most LVAD patients</li>
+          <li>Device alarm: low flow = obstructed inflow cannula, hypovolaemia, or tamponade</li>
+          <li>Suction event (device suck-down): hypovolaemia → RV overload → septum shift → further ↓ LV filling</li>
+          <li>LVAD controller: do not disconnect; carry the controller</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:var(--teal);font-weight:700;margin-bottom:6px">Trauma management</p>
+        <ul>
+          <li><strong>Cardiac arrest with LVAD:</strong> Standard CPR — compressions safe with continuous-flow LVADs (HeartMate 3, HVAD)</li>
+          <li>Defibrillation: standard energy levels; LVAD is not damaged by external shock</li>
+          <li>Anticoagulation: LVAD patients on warfarin (INR target 2–3); reverse for haemorrhage with 4F-PCC</li>
+          <li>Contact LVAD coordinator immediately (institution-specific protocols)</li>
+          <li>Haemothorax: chest tube as standard; LVAD driveline location must be known before any chest incision</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box box-v"><strong>Pericardial tamponade in LVAD patients</strong> may present atypically — the device may partially maintain output. High suspicion required; eFAST and urgent echo are essential in any LVAD patient with haemodynamic deterioration after thoracic trauma.</div>
+  </div>
+
+  <!-- Heart transplant -->
+  <div class="stitle">Heart transplant recipients</div>
+  <div class="card card-t">
+    <h3>💉 Transplant heart in trauma</h3>
+    <ul>
+      <li><strong>Denervated heart:</strong> No vagal response to pain or haemorrhage → atropine is ineffective for bradycardia; use isoprenaline or direct chronotropes (adrenaline)</li>
+      <li><strong>Tachycardia is absent as early warning sign</strong> of haemorrhage — rely on SBP, lactate, and eFAST for haemorrhage assessment</li>
+      <li>Rejection medications: immunosuppression (tacrolimus, mycophenolate, prednisolone) — do not discontinue even in trauma; stress-dose steroids for major surgery (hydrocortisone 100 mg q8h)</li>
+      <li>Opportunistic infections more likely: pneumonia may complicate rib fractures rapidly</li>
+      <li>Cardiac allograft vasculopathy (CAV): ECG may not show classic STEMI pattern with coronary injury (denervated — painless ischaemia)</li>
+      <li>Contact transplant team immediately; coordinate immunosuppression management</li>
+    </ul>
+    <div class="box box-t"><strong>Sternotomy wound:</strong> Prior sternotomy scar is present. Re-entry carries risk of injury to adherent structures. If re-sternotomy required for trauma, oscillating saw with great care; femoral cannulation should be established before sternotomy if time allows.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ TAB 12: SURGICAL ATLAS ═══════════════════════════ -->
+<section class="tab" id="t12">
+  <div class="sh"><h2>🔪 Surgical Atlas</h2><p>Step-by-step operative procedures — indications, access, technique, and critical steps for thoracic trauma surgery.</p></div>
+
+  <!-- Median sternotomy -->
+  <div class="stitle">Median sternotomy — cardiac &amp; great vessel access</div>
+  <div class="inj-card">
+    <div class="inj-head"><h3>Median Sternotomy</h3><span class="urgency urg-u">PRIMARY APPROACH — CARDIAC TRAUMA</span></div>
+    <div class="inj-body">
+      <div class="inj-col">
+        <div class="inj-col-lbl">Indications</div>
+        <ul>
+          <li>Penetrating cardiac trauma (haemodynamically unstable)</li>
+          <li>Cardiac tamponade (controlled setting)</li>
+          <li>Great vessel injury (ascending aorta, SVC, innominate)</li>
+          <li>Combined cardiac + pulmonary injury requiring CPB</li>
+          <li>Conversion from resuscitative thoracotomy</li>
+        </ul>
+      </div>
+      <div class="inj-col">
+        <div class="inj-col-lbl">Technique</div>
+        <ol class="steps">
+          <li>Supine; arms tucked; pad between shoulders for sternal elevation</li>
+          <li>Midline incision: sternal notch → xiphoid</li>
+          <li>Diathermy to linea alba; clear suprasternal space bluntly</li>
+          <li>Sternal saw from xiphoid upward (or top-down in emergency)</li>
+          <li>Bone wax / electrocautery to marrow bleeding</li>
+          <li>Sternal retractor; pericardium opened T-shaped / longitudinal</li>
+        </ol>
+      </div>
+      <div class="inj-col">
+        <div class="inj-col-lbl">Critical steps</div>
+        <ul>
+          <li><strong>Cardiac control:</strong> Digital occlusion of wound → Foley balloon tamponade → horizontal mattress suture (2-0 Prolene) with pledgets</li>
+          <li><strong>Coronary proximity:</strong> Always inspect suture line does not incorporate coronary artery</li>
+          <li><strong>CPB cannulation:</strong> Ascending aorta + right atrium if needed; femoral as backup</li>
+          <li><strong>Haemostasis:</strong> Argon beam, bone wax, topical haemostats at closure</li>
+        </ul>
+      </div>
+      <div class="inj-col">
+        <div class="inj-col-lbl">Complications</div>
+        <ul>
+          <li>Sternal wound infection / dehiscence</li>
+          <li>Mediastinitis (rare, high mortality)</li>
+          <li>Air embolism during cardiac repair</li>
+          <li>Injury to RV / PA on re-entry</li>
+          <li>Phrenic nerve injury</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Left anterolateral thoracotomy / RT -->
+  <div class="stitle">Left anterolateral thoracotomy / resuscitative thoracotomy</div>
+  <div class="inj-card">
+    <div class="inj-head"><h3>Left Anterolateral Thoracotomy (RT)</h3><span class="urgency urg-i">EMERGENCY — TRAUMA BAY</span></div>
+    <div class="inj-body">
+      <div class="inj-col">
+        <div class="inj-col-lbl">Position &amp; landmarks</div>
+        <ul>
+          <li>Supine; left arm extended overhead</li>
+          <li>4th or 5th ICS (nipple level in males, inframammary fold in females)</li>
+          <li>Incision from sternum to posterior axillary line</li>
+          <li>Extend to clamshell (bilateral) if right-sided injury or poor exposure</li>
+        </ul>
+      </div>
+      <div class="inj-col">
+        <div class="inj-col-lbl">Step-by-step</div>
+        <ol class="steps">
+          <li>Skin incision with scalpel — bold, decisive; no time to waste</li>
+          <li>Cut intercostal muscles with Mayo scissors over superior rib margin</li>
+          <li>Rib spreader (Finochietto) — open aggressively</li>
+          <li>Pericardium: grasp, incise anterior to phrenic nerve (T-shape or longitudinal)</li>
+          <li>Evacuate haemopericardium; identify cardiac wound</li>
+          <li>Aortic cross-clamp: descending thoracic aorta anterior to spine</li>
+        </ol>
+      </div>
+      <div class="inj-col">
+        <div class="inj-col-lbl">Cardiac repair in the field</div>
+        <ul>
+          <li><strong>Finger occlusion:</strong> Immediate control</li>
+          <li><strong>Foley catheter balloon:</strong> Insert into wound, inflate 30 mL, gentle traction</li>
+          <li><strong>Suture repair:</strong> 2-0 Prolene horizontal mattress with pledgets; avoid coronaries</li>
+          <li><strong>Atrial wounds:</strong> Satinsky clamp; oversew with 3-0 Prolene running</li>
+          <li><strong>Internal defibrillation:</strong> 20 J biphasic; paddles directly on myocardium</li>
+        </ul>
+      </div>
+      <div class="inj-col">
+        <div class="inj-col-lbl">Internal cardiac massage</div>
+        <ul>
+          <li>Two-handed biventricular compression preferred</li>
+          <li>Rate 100/min; avoid laceration of epicardium</li>
+          <li>One-handed: left hand cups heart from below; right thumb compresses apex toward base</li>
+          <li>Assess for tension PTX (right side) before commencing massage</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Posterolateral thoracotomy -->
+  <div class="stitle">Posterolateral thoracotomy — lung &amp; descending aorta</div>
+  <div class="inj-card">
+    <div class="inj-head"><h3>Posterolateral Thoracotomy</h3><span class="urgency urg-u">DEFINITIVE — HAEMOTHORAX / AORTIC REPAIR</span></div>
+    <div class="inj-body">
+      <div class="inj-col">
+        <div class="inj-col-lbl">Indications</div>
+        <ul>
+          <li>Massive haemothorax not controlled by chest tube</li>
+          <li>Persistent pulmonary air leak (tracheobronchial injury)</li>
+          <li>Oesophageal injury</li>
+          <li>Descending thoracic aorta (open repair, if TEVAR not available)</li>
+          <li>Empyema or clotted haemothorax (if VATS not possible)</li>
+        </ul>
+      </div>
+      <div class="inj-col">
+        <div class="inj-col-lbl">Position &amp; technique</div>
+        <ul>
+          <li>Lateral decubitus: operative side up; bean bag or sandbags</li>
+          <li>Left: 4th ICS (aorta), 5th–6th ICS (lung)</li>
+          <li>Right: 4th–5th ICS (oesophagus, right lung, right PA)</li>
+          <li>Serratus and latissimus usually divided in emergency</li>
+          <li>Double-lumen ETT or bronchial blocker — single lung ventilation</li>
+        </ul>
+      </div>
+      <div class="inj-col">
+        <div class="inj-col-lbl">Pulmonary laceration repair</div>
+        <ul>
+          <li><strong>Tractotomy:</strong> Linear stapler along wound tract for through-and-through wounds</li>
+          <li><strong>Suture repair:</strong> 2-0 Vicryl mattress; absorbable</li>
+          <li><strong>Lobectomy:</strong> Anatomical resection for hilar injury or destroyed lobe</li>
+          <li><strong>Pneumonectomy:</strong> Last resort; mortality &gt;50%; stapled or hilar clamp-and-divide</li>
+          <li><strong>Hilar twist (Mattox manoeuvre):</strong> Rotate lung 180° to control hilar haemorrhage</li>
+        </ul>
+      </div>
+      <div class="inj-col">
+        <div class="inj-col-lbl">Aortic repair steps</div>
+        <ul>
+          <li>Identify aortic isthmus (posterior to left PA, distal to left subclavian)</li>
+          <li>Proximal control: aorta between left CCA and subclavian</li>
+          <li>Distal control: descending aorta distal to injury</li>
+          <li>Left heart bypass (LHB): left pulmonary vein → LHB pump → descending aorta or femoral</li>
+          <li>Repair: patch aortoplasty or interposition graft (Dacron)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pericardiocentesis -->
+  <div class="stitle">Pericardiocentesis &amp; pericardial window</div>
+  <div class="duel">
+    <div class="duel-a">
+      <div class="duel-la">Emergency Pericardiocentesis</div>
+      <ol class="steps">
+        <li>Position: supine, head up 30–45° (pools blood inferiorly)</li>
+        <li>Site: subxiphoid angle (between xiphoid and left costal margin)</li>
+        <li>18G spinal needle with 20 mL syringe; ECG lead attached to needle hub</li>
+        <li>Advance at 45° angle directed toward left shoulder; aspirate continuously</li>
+        <li>ST elevation or PVC on ECG → withdraw 0.5 cm (myocardial contact)</li>
+        <li>Aspirate blood (non-clotting = pericardial); if dark red clot = ventricular puncture</li>
+        <li>Insert guidewire (Seldinger) → dilate → pigtail catheter for continued drainage</li>
+      </ol>
+      <div class="box box-o" style="margin-top:10px"><strong>Even 30–50 mL</strong> aspirated from tense haemopericardium can restore haemodynamics sufficiently to reach OR. Do not delay for large-volume drainage.</div>
+    </div>
+    <div class="duel-mid"><div class="duel-mid-dot"></div><div class="duel-mid-lbl">peri</div><div class="duel-mid-dot"></div></div>
+    <div class="duel-b">
+      <div class="duel-lb">Surgical Pericardial Window</div>
+      <ul>
+        <li><strong>Indication:</strong> Equivocal eFAST; haemodynamically stable; penetrating mechanism near cardiac box; recurrent tamponade</li>
+        <li><strong>Subxiphoid window (Gold standard):</strong> 5 cm midline incision below xiphoid; retract xiphoid cranially; dissect onto pericardium; excise 2 cm window; if blood → proceed to sternotomy</li>
+        <li><strong>VATS pericardial window:</strong> Left-sided; camera in 5th ICS; grasper + scissors; 2 cm window; effective for recurrent effusions</li>
+        <li><strong>Interpretation:</strong> Clear serous fluid = benign; haemoserous = investigation; frank blood = operative repair</li>
+      </ul>
+      <div class="box box-r" style="margin-top:10px"><strong>If blood is found at pericardial window:</strong> Convert immediately to sternotomy. Do not close. Have OR team scrubbed and ready before window creation in penetrating trauma.</div>
+    </div>
+  </div>
+
+  <!-- SVG: Cardiac wound repair decision -->
+  <div class="stitle">Cardiac wound repair — decision algorithm</div>
+  <div class="algo-wrap">
+    <svg viewBox="0 0 820 440" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;margin:0 auto">
+      <defs>
+        <marker id="a4" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#8a7060"/></marker>
+        <marker id="a4r" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#e84040"/></marker>
+        <marker id="a4t" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#2ab89a"/></marker>
+      </defs>
+      <!-- Entry -->
+      <rect x="300" y="10" width="220" height="36" rx="10" fill="rgba(232,64,64,0.18)" stroke="#e84040" stroke-width="1.5"/>
+      <text x="410" y="32" text-anchor="middle" fill="#ff7070" font-size="12.5" font-weight="700" font-family="IBM Plex Sans,sans-serif">CARDIAC WOUND IDENTIFIED</text>
+      <!-- Haemorrhage control -->
+      <line x1="410" y1="46" x2="410" y2="72" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a4)"/>
+      <rect x="265" y="72" width="290" height="36" rx="10" fill="rgba(232,120,48,0.15)" stroke="#e87830" stroke-width="1.5"/>
+      <text x="410" y="88" text-anchor="middle" fill="#ffaa60" font-size="12" font-weight="700" font-family="IBM Plex Sans,sans-serif">IMMEDIATE HAEMORRHAGE CONTROL</text>
+      <text x="410" y="102" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Finger → Foley balloon → Skin staple (temporary)</text>
+      <!-- Diamond: CPB needed? -->
+      <line x1="410" y1="108" x2="410" y2="138" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a4)"/>
+      <polygon points="410,138 510,178 410,218 310,178" fill="rgba(232,192,80,0.12)" stroke="#e8c050" stroke-width="1.5"/>
+      <text x="410" y="175" text-anchor="middle" fill="#e8c050" font-size="11" font-weight="700" font-family="IBM Plex Sans,sans-serif">CPB needed?</text>
+      <text x="410" y="190" text-anchor="middle" fill="#8a7060" font-size="9.5" font-family="IBM Plex Sans,sans-serif">(septal, valvular, coronary)</text>
+      <!-- NO branch: direct repair -->
+      <line x1="310" y1="178" x2="190" y2="178" stroke="#2ab89a" stroke-width="1.5" marker-end="url(#a4t)"/>
+      <text x="248" y="172" fill="#2ab89a" font-size="10" font-weight="700" font-family="IBM Plex Sans,sans-serif">NO</text>
+      <rect x="20" y="158" width="168" height="40" rx="10" fill="rgba(42,184,154,0.12)" stroke="#2ab89a" stroke-width="1.5"/>
+      <text x="104" y="178" text-anchor="middle" fill="#2ab89a" font-size="12" font-weight="700" font-family="IBM Plex Sans,sans-serif">Direct repair</text>
+      <text x="104" y="193" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Off-pump; pledgeted suture</text>
+      <!-- YES branch: CPB -->
+      <line x1="510" y1="178" x2="635" y2="178" stroke="#e84040" stroke-width="1.5" marker-end="url(#a4r)"/>
+      <text x="568" y="172" fill="#e84040" font-size="10" font-weight="700" font-family="IBM Plex Sans,sans-serif">YES</text>
+      <rect x="635" y="154" width="168" height="48" rx="10" fill="rgba(232,64,64,0.12)" stroke="#e84040" stroke-width="1.5"/>
+      <text x="719" y="174" text-anchor="middle" fill="#ff7070" font-size="11.5" font-weight="700" font-family="IBM Plex Sans,sans-serif">Establish CPB</text>
+      <text x="719" y="190" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Aortic + RA cannulation</text>
+      <text x="719" y="203" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Cardioplegia + arrest</text>
+      <!-- Converge -->
+      <line x1="104" y1="198" x2="104" y2="280" stroke="#8a7060" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="719" y1="202" x2="719" y2="280" stroke="#8a7060" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="104" y1="280" x2="719" y2="280" stroke="#8a7060" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="410" y1="280" x2="410" y2="300" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a4)"/>
+      <rect x="265" y="300" width="290" height="40" rx="10" fill="rgba(232,192,80,0.12)" stroke="#e8c050" stroke-width="1.5"/>
+      <text x="410" y="320" text-anchor="middle" fill="#e8c050" font-size="12" font-weight="700" font-family="IBM Plex Sans,sans-serif">ASSESS FOR ASSOCIATED INJURIES</text>
+      <text x="410" y="334" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Coronary · Septal · Valvular · Posterior wall</text>
+      <line x1="410" y1="340" x2="410" y2="362" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a4)"/>
+      <rect x="260" y="362" width="300" height="60" rx="10" fill="rgba(144,96,212,0.12)" stroke="#9060d4" stroke-width="1.5"/>
+      <text x="410" y="382" text-anchor="middle" fill="#b890f8" font-size="12" font-weight="700" font-family="IBM Plex Sans,sans-serif">DEFINITIVE REPAIR + WEAN CPB</text>
+      <text x="410" y="397" text-anchor="middle" fill="#8a7060" font-size="10.5" font-family="IBM Plex Sans,sans-serif">Echo confirmation · Haemostasis · Sternal closure</text>
+      <text x="410" y="413" text-anchor="middle" fill="#8a7060" font-size="10.5" font-family="IBM Plex Sans,sans-serif">or Temporary chest closure (damage control)</text>
+    </svg>
+  </div>
+
+  <!-- Chest tube SVG algorithm -->
+  <div class="stitle">Chest tube decision algorithm</div>
+  <div class="algo-wrap">
+    <svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;margin:0 auto">
+      <defs>
+        <marker id="a5" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#8a7060"/></marker>
+        <marker id="a5r" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#e84040"/></marker>
+        <marker id="a5t" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#2ab89a"/></marker>
+        <marker id="a5o" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#e87830"/></marker>
+      </defs>
+      <!-- Entry -->
+      <rect x="300" y="10" width="220" height="38" rx="10" fill="rgba(232,120,48,0.15)" stroke="#e87830" stroke-width="1.5"/>
+      <text x="410" y="33" text-anchor="middle" fill="#ffaa60" font-size="13" font-weight="700" font-family="IBM Plex Sans,sans-serif">CHEST TUBE INSERTED</text>
+      <!-- Record initial output -->
+      <line x1="410" y1="48" x2="410" y2="74" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a5)"/>
+      <rect x="280" y="74" width="260" height="34" rx="10" fill="rgba(232,192,80,0.1)" stroke="#e8c050" stroke-width="1.5"/>
+      <text x="410" y="91" text-anchor="middle" fill="#e8c050" font-size="12" font-weight="700" font-family="IBM Plex Sans,sans-serif">Record initial drainage + hourly rate</text>
+      <text x="410" y="104" text-anchor="middle" fill="#8a7060" font-size="10" font-family="IBM Plex Sans,sans-serif">Note air leak: none / small / moderate / large</text>
+      <!-- Branch decision -->
+      <line x1="410" y1="108" x2="410" y2="136" stroke="#8a7060" stroke-width="1.5"/>
+      <line x1="130" y1="136" x2="690" y2="136" stroke="#8a7060" stroke-width="1.5"/>
+      <!-- Branch 1: >1500 -->
+      <line x1="130" y1="136" x2="130" y2="158" stroke="#e84040" stroke-width="1.5" marker-end="url(#a5r)"/>
+      <rect x="20" y="158" width="220" height="46" rx="10" fill="rgba(232,64,64,0.13)" stroke="#e84040" stroke-width="1.5"/>
+      <text x="130" y="178" text-anchor="middle" fill="#ff7070" font-size="11.5" font-weight="700" font-family="IBM Plex Sans,sans-serif">Initial &gt;1500 mL</text>
+      <text x="130" y="195" text-anchor="middle" fill="#8a7060" font-size="10.5" font-family="IBM Plex Sans,sans-serif">→ Immediate OR (thoracotomy)</text>
+      <!-- Branch 2: 200 mL/h -->
+      <line x1="320" y1="136" x2="320" y2="158" stroke="#e84040" stroke-width="1.5" marker-end="url(#a5r)"/>
+      <rect x="230" y="158" width="180" height="46" rx="10" fill="rgba(232,64,64,0.1)" stroke="#e84040" stroke-width="1.2"/>
+      <text x="320" y="178" text-anchor="middle" fill="#ff7070" font-size="11.5" font-weight="700" font-family="IBM Plex Sans,sans-serif">&gt;200 mL/h × 2–4 h</text>
+      <text x="320" y="195" text-anchor="middle" fill="#8a7060" font-size="10.5" font-family="IBM Plex Sans,sans-serif">→ Surgical bleeding</text>
+      <!-- Branch 3: persistent air leak -->
+      <line x1="500" y1="136" x2="500" y2="158" stroke="#e87830" stroke-width="1.5" marker-end="url(#a5o)"/>
+      <rect x="415" y="158" width="170" height="46" rx="10" fill="rgba(232,120,48,0.1)" stroke="#e87830" stroke-width="1.2"/>
+      <text x="500" y="178" text-anchor="middle" fill="#ffaa60" font-size="11.5" font-weight="700" font-family="IBM Plex Sans,sans-serif">Large air leak &gt;24 h</text>
+      <text x="500" y="195" text-anchor="middle" fill="#8a7060" font-size="10.5" font-family="IBM Plex Sans,sans-serif">→ Bronchoscopy · VATS</text>
+      <!-- Branch 4: clotted -->
+      <line x1="690" y1="136" x2="690" y2="158" stroke="#2ab89a" stroke-width="1.5" marker-end="url(#a5t)"/>
+      <rect x="600" y="158" width="200" height="46" rx="10" fill="rgba(42,184,154,0.1)" stroke="#2ab89a" stroke-width="1.2"/>
+      <text x="700" y="178" text-anchor="middle" fill="#2ab89a" font-size="11.5" font-weight="700" font-family="IBM Plex Sans,sans-serif">Clotted haemothorax</text>
+      <text x="700" y="195" text-anchor="middle" fill="#8a7060" font-size="10.5" font-family="IBM Plex Sans,sans-serif">→ tPA or VATS (early)</text>
+      <!-- Converge: no surgical criteria -->
+      <line x1="130" y1="204" x2="130" y2="290" stroke="#8a7060" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="320" y1="204" x2="320" y2="290" stroke="#8a7060" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="500" y1="204" x2="500" y2="290" stroke="#8a7060" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="700" y1="204" x2="700" y2="290" stroke="#8a7060" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="130" y1="290" x2="700" y2="290" stroke="#8a7060" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="410" y1="290" x2="410" y2="310" stroke="#8a7060" stroke-width="1.5" marker-end="url(#a5)"/>
+      <rect x="250" y="310" width="320" height="38" rx="10" fill="rgba(42,184,154,0.1)" stroke="#2ab89a" stroke-width="1.5"/>
+      <text x="410" y="330" text-anchor="middle" fill="#2ab89a" font-size="12" font-weight="700" font-family="IBM Plex Sans,sans-serif">No surgical criteria met</text>
+      <text x="410" y="345" text-anchor="middle" fill="#8a7060" font-size="10.5" font-family="IBM Plex Sans,sans-serif">Observe · Daily CXR · Remove when &lt;150 mL/24 h, no air leak, lung expanded</text>
+    </svg>
+  </div>
+
+  <div class="footnote">
+    Surgical techniques based on: Mattox's Trauma (8th ed.) · Cohn: Cardiac Surgery in the Adult (5th ed.) · Sabiston &amp; Spencer: Surgery of the Chest · EAST Practice Management Guidelines · ACS Committee on Trauma.<br><br>
+    <strong>For educational purposes only. All surgical procedures require appropriate training, credentialing, and clinical judgment.</strong><br><br>
+    Cardiac Surgery Clinical Education · StarleyBy · 2025
+  </div>
+</section>
+
+</main>
+
+<script>
+// ── TAB SWITCHING ──
+const tabs = document.querySelectorAll('.tab');
+const nbs  = document.querySelectorAll('.nb');
+function gt(i, b) {
+  tabs.forEach(t => t.classList.remove('active'));
+  nbs.forEach(n => n.classList.remove('active'));
+  tabs[i].classList.add('active');
+  b.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── SHOCK INDEX ──
+function calcSI() {
+  const hr  = parseFloat(document.getElementById('si-hr').value);
+  const sbp = parseFloat(document.getElementById('si-sbp').value);
+  if (!hr || !sbp || sbp === 0) return;
+  const si = (hr / sbp).toFixed(2);
+  const r = document.getElementById('si-result');
+  const v = document.getElementById('si-val');
+  const i = document.getElementById('si-interp');
+  r.classList.add('show');
+  v.textContent = si;
+  if (si < 0.6) { v.style.color='var(--green)'; i.innerHTML='<strong style="color:var(--green)">Normal.</strong> Haemodynamically stable. No immediate transfusion concern.'; }
+  else if (si < 1.0) { v.style.color='var(--gold)'; i.innerHTML='<strong style="color:var(--gold)">Borderline.</strong> Monitor closely. Reassess after analgesia and positioning.'; }
+  else if (si < 1.4) { v.style.color='var(--ora-l)'; i.innerHTML='<strong style="color:var(--ora-l)">Elevated (SI ≥1.0).</strong> Significant haemorrhage likely. Activate trauma team; consider MTP.'; }
+  else { v.style.color='var(--red-l)'; i.innerHTML='<strong style="color:var(--red-l)">Critical (SI ≥1.4).</strong> Severe haemorrhage. Immediate MTP activation. Prepare OR. Consider permissive hypotension.'; }
+}
+
+// ── RTS ──
+function calcRTS() {
+  const gcs = parseInt(document.getElementById('rts-gcs').value);
+  const sbp = parseInt(document.getElementById('rts-sbp').value);
+  const rr  = parseInt(document.getElementById('rts-rr').value);
+  const rts = (0.9368*gcs + 0.7326*sbp + 0.2908*rr).toFixed(2);
+  const r = document.getElementById('rts-result');
+  const v = document.getElementById('rts-val');
+  const i = document.getElementById('rts-interp');
+  r.classList.add('show');
+  v.textContent = rts;
+  if (rts >= 10) { v.style.color='var(--green)'; i.innerHTML='<strong style="color:var(--green)">Good prognosis.</strong> Survival probability &gt;90%. Standard monitoring.'; }
+  else if (rts >= 7) { v.style.color='var(--gold)'; i.innerHTML='<strong style="color:var(--gold)">Moderate injury.</strong> Survival probability 50–90%. Trauma team involvement; close monitoring.'; }
+  else if (rts >= 4) { v.style.color='var(--ora-l)'; i.innerHTML='<strong style="color:var(--ora-l)">Severe injury.</strong> Survival probability 20–50%. ICU; immediate surgical evaluation.'; }
+  else { v.style.color='var(--red-l)'; i.innerHTML='<strong style="color:var(--red-l)">Critical.</strong> Survival probability &lt;20%. Immediate life-saving intervention required.'; }
+}
+
+// ── ABC SCORE ──
+function calcABC() {
+  const pen  = parseInt(document.getElementById('abc-pen').value);
+  const sbp  = parseInt(document.getElementById('abc-sbp').value);
+  const hr   = parseInt(document.getElementById('abc-hr').value);
+  const fast = parseInt(document.getElementById('abc-fast').value);
+  const score = pen + sbp + hr + fast;
+  const r = document.getElementById('abc-result');
+  const v = document.getElementById('abc-val');
+  const i = document.getElementById('abc-interp');
+  r.classList.add('show');
+  v.textContent = score + ' / 4';
+  if (score <= 1) { v.style.color='var(--green)'; i.innerHTML='<strong style="color:var(--green)">Low risk (score 0–1).</strong> Massive transfusion unlikely (~1–10%). Standard resuscitation; monitor.'; }
+  else if (score === 2) { v.style.color='var(--gold)'; i.innerHTML='<strong style="color:var(--gold)">Intermediate risk (score 2).</strong> Massive transfusion possible (~41%). Prepare MTP; type &amp; crossmatch.'; }
+  else { v.style.color='var(--red-l)'; i.innerHTML='<strong style="color:var(--red-l)">High risk (score 3–4).</strong> Massive transfusion likely (~71–100%). Immediate MTP activation. Activate OR.'; }
+}
+
+// ── HAEMOTHORAX TRACKER ──
+function calcHX() {
+  const init = parseFloat(document.getElementById('hx-init').value) || 0;
+  const rate = parseFloat(document.getElementById('hx-rate').value) || 0;
+  const time = parseFloat(document.getElementById('hx-time').value) || 0;
+  const r = document.getElementById('hx-result');
+  const v = document.getElementById('hx-val');
+  const interp = document.getElementById('hx-interp');
+  r.classList.add('show');
+  let rec = '';
+  if (init >= 1500) {
+    v.textContent = 'SURGICAL'; v.style.color='var(--red-l)';
+    rec = '<strong style="color:var(--red-l)">Immediate surgical intervention.</strong> Initial drainage ≥1500 mL meets surgical threshold. Activate OR; median sternotomy or posterolateral thoracotomy based on suspected source.';
+  } else if (rate >= 200 && time >= 2) {
+    v.textContent = 'SURGICAL'; v.style.color='var(--red-l)';
+    rec = '<strong style="color:var(--red-l)">Surgical indication met.</strong> Ongoing output ≥200 mL/h for ≥2 hours. Persistent haemorrhage from intercostal vessel, lung, or major vessel injury. Proceed to OR.';
+  } else if (rate >= 150 || init >= 1000) {
+    v.textContent = 'MONITOR CLOSELY'; v.style.color='var(--ora-l)';
+    rec = '<strong style="color:var(--ora-l)">High-risk observation.</strong> Approaching surgical threshold. Reassess in 30 min. Ensure OR is ready. Alert thoracic surgery.';
+  } else {
+    v.textContent = 'OBSERVE'; v.style.color='var(--green)';
+    rec = '<strong style="color:var(--green)">Below surgical threshold.</strong> Continue chest tube drainage; measure hourly. Repeat CXR to ensure lung re-expansion. Monitor for signs of haemorrhagic shock.';
+  }
+  interp.innerHTML = rec;
+}
+
+// ── DECISION ASSISTANT STATE ──
+const da_state = {};
+function sel(el, group, val) {
+  document.querySelectorAll(`[onclick*="'${group}'"]`).forEach(x => x.classList.remove('sel'));
+  el.classList.add('sel');
+  da_state[group] = val;
+}
+
+// ── PENETRATING CARDIAC TRAUMA ──
+function decidePCT() {
+  const mech = da_state['pct-mech'] || '';
+  const hd   = da_state['pct-hd'] || '';
+  const fast = da_state['pct-fast'] || '';
+  const cpr  = da_state['pct-cpr'] || '';
+  const out  = document.getElementById('pct-output');
+  const action = document.getElementById('pct-action');
+  const approach = document.getElementById('pct-approach');
+  const steps = document.getElementById('pct-steps');
+  out.classList.add('show');
+
+  if (hd === 'arrest' && cpr === 'gt15') {
+    action.innerHTML = '⛔ Resuscitation likely futile'; action.className = 'da-out-val urgent';
+    approach.innerHTML = 'CPR &gt;15 min for penetrating trauma without signs of life — survival extremely unlikely (&lt;1%). Consider stopping resuscitation per local protocol.';
+    steps.innerHTML = 'Discuss with team. Document. Support family.';
+  } else if (hd === 'arrest' || (hd === 'unstable' && fast === 'pos')) {
+    const limit = cpr === 'lt15' ? 'CPR &lt;15 min — within survivable window' : 'assess signs of life';
+    action.innerHTML = '🔴 Immediate resuscitative thoracotomy (RT) in ED / trauma bay'; action.className = 'da-out-val urgent';
+    approach.innerHTML = 'Left anterolateral thoracotomy (4th/5th ICS). ' + limit + '. Signs of life required (pupil response, movement, cardiac electrical activity).';
+    steps.innerHTML = '1. Open pericardium anterior to phrenic nerve<br>2. Evacuate haemopericardium<br>3. Finger then Foley control → suture repair (2-0 Prolene)<br>4. Internal massage at 100/min<br>5. Descending aortic cross-clamp<br>6. Internal defibrillation 20 J if in VF';
+  } else if (hd === 'unstable') {
+    action.innerHTML = '🟠 Immediate OR — Median sternotomy'; action.className = 'da-out-val caution';
+    approach.innerHTML = 'Haemodynamically unstable but not in arrest. Expedite to OR immediately. Sternotomy gives best bilateral cardiac exposure.';
+    steps.innerHTML = '1. Pericardial window first if diagnosis uncertain<br>2. Median sternotomy<br>3. On-pump capability on standby<br>4. Cardiac repair under direct vision';
+  } else if (fast === 'pos' || fast === 'unk') {
+    action.innerHTML = '🟡 Expedited OR — Controlled sternotomy'; action.className = 'da-out-val caution';
+    approach.innerHTML = fast === 'pos' ? 'Positive eFAST with stable haemodynamics — haemopericardium confirmed. Proceed to OR for sternotomy and definitive repair.' : 'Inconclusive eFAST with penetrating mechanism near cardiac box — high suspicion. Pericardial window in OR to confirm then sternotomy.';
+    steps.innerHTML = '1. Expedite to OR; no delays for CT<br>2. Pericardial window (if uncertain)<br>3. Sternotomy and repair<br>4. ICU post-op; echo surveillance';
+  } else {
+    action.innerHTML = '🟢 Observe + serial eFAST'; action.className = 'da-out-val safe';
+    approach.innerHTML = 'Negative eFAST + stable haemodynamics. Low probability of cardiac injury. Monitor closely.';
+    steps.innerHTML = 'Serial eFAST every 15–30 min × 2 h. If any deterioration → immediate surgical evaluation. CT chest if stable and concern for aortic/mediastinal injury.';
+  }
+}
+
+// ── THORACIC TRAUMA TRIAGE ──
+function decideTT() {
+  const mech = da_state['tt-mech'] || '';
+  const hd   = da_state['tt-hd'] || '';
+  const fast = da_state['tt-fast'] || '';
+  const ct   = da_state['tt-ct'] || '';
+  const out  = document.getElementById('tt-output');
+  const action = document.getElementById('tt-action');
+  const interventions = document.getElementById('tt-interventions');
+  const disposition = document.getElementById('tt-disposition');
+  out.classList.add('show');
+
+  if (hd === 'arrest') {
+    action.innerHTML = '🔴 RESUSCITATIVE THORACOTOMY'; action.className = 'da-out-val urgent';
+    interventions.innerHTML = 'Bilateral finger thoracostomies immediately. Left anterolateral thoracotomy if penetrating + &lt;15 min CPR, or blunt + &lt;5 min CPR with treatable cause.';
+    disposition.innerHTML = 'OR if ROSC achieved. RT team at bedside. Blood products primed.';
+  } else if (fast === 'tampo' || (fast === 'tampo' && hd === 'unstable')) {
+    action.innerHTML = '🔴 CARDIAC TAMPONADE — Immediate intervention'; action.className = 'da-out-val urgent';
+    interventions.innerHTML = 'Pericardiocentesis subxiphoid (echo-guided if time). If penetrating → OR immediately (do not delay for pericardiocentesis). Avoid positive-pressure ventilation if possible.';
+    disposition.innerHTML = 'OR sternotomy (penetrating) or echo-guided pericardiocentesis + CT + OR planning (blunt).';
+  } else if (fast === 'ptx' && hd === 'unstable') {
+    action.innerHTML = '🔴 TENSION PNEUMOTHORAX — Immediate decompression'; action.className = 'da-out-val urgent';
+    interventions.innerHTML = '2nd ICS MCL needle decompression NOW. Then large-bore chest tube (5th ICS AAL). Do not wait for CXR.';
+    disposition.innerHTML = 'ICU after tube insertion. CXR to confirm. If re-accumulates → surgical air leak.';
+  } else if (ct === 'massive' || (fast === 'hx' && hd === 'unstable')) {
+    action.innerHTML = '🟠 MASSIVE HAEMOTHORAX — Surgical threshold'; action.className = 'da-out-val caution';
+    interventions.innerHTML = 'Large-bore chest tube (36 Fr). Activate MTP. Type &amp; crossmatch. Alert OR.';
+    disposition.innerHTML = ct === 'massive' ? 'Immediate OR — posterolateral thoracotomy.' : 'Chest tube → reassess drainage → OR if criteria met.';
+  } else if (hd === 'stable' && (fast === 'normal' || fast === 'ptx') && (ct === 'none' || ct === 'lt500')) {
+    if (mech === 'blunt') {
+      action.innerHTML = '🟡 Stable — imaging + monitoring'; action.className = 'da-out-val caution';
+      interventions.innerHTML = 'ECG, troponin, CXR. CT chest if significant mechanism (deceleration, sternal fracture, rib fractures). Chest tube if PTX &gt;2 cm or symptomatic.';
+      disposition.innerHTML = 'Monitored bed or ICU depending on injury burden. Serial examination.';
+    } else {
+      action.innerHTML = '🟡 Penetrating — eFAST-guided decision'; action.className = 'da-out-val caution';
+      interventions.innerHTML = 'Repeat eFAST in 15 min. CT chest if haemodynamically stable. Pericardial window if near cardiac box.';
+      disposition.innerHTML = 'OR if any positive finding. ICU monitoring if conservative management selected.';
+    }
+  } else {
+    action.innerHTML = '🟢 Stable — standard monitoring'; action.className = 'da-out-val safe';
+    interventions.innerHTML = 'CXR, ECG, eFAST. IV access. Analgesia. Serial monitoring.';
+    disposition.innerHTML = 'Ward or monitored bed. Repeat assessment in 2 hours.';
+  }
+}
+</script>
+</body>
+</html>
