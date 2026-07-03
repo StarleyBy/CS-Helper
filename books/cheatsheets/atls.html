@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>ATLS – Cardiothoracic Trauma Manual</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -119,7 +119,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)
 .fm{font-family:var(--mono);font-size:12px;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:10px 14px;margin:8px 0;color:var(--teal);display:block;white-space:pre;line-height:1.7;overflow-x:auto}
 
 /* ABCDE PANEL */
-.abcde-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+.abcde-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px;margin-bottom:16px}
 .abcde-card{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r2);padding:14px 10px;text-align:center;cursor:default;transition:all .15s}
 .abcde-card:hover{border-color:rgba(232,64,64,.4);background:rgba(232,64,64,.06)}
 .abcde-letter{font-family:var(--display);font-size:36px;font-weight:800;line-height:1}
@@ -165,7 +165,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)
 .calc-title{font-family:var(--display);font-size:16px;font-weight:700;color:var(--ora-l);margin-bottom:16px;display:flex;align-items:center;gap:10px}
 .calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:14px}
 .calc-field label{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px}
-.calc-field input,.calc-field select{width:100%;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:8px 12px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none;transition:border .15s}
+.calc-field input,.calc-field select{width:100%;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:8px 12px;color:var(--text);font-family:var(--sans);font-size:max(13px,16px);outline:none;transition:border .15s}
 .calc-field input:focus,.calc-field select:focus{border-color:var(--ora)}
 .calc-field select option{background:var(--bg3)}
 .calc-btn{background:linear-gradient(135deg,var(--red),var(--ora));border:none;border-radius:var(--r);padding:10px 24px;color:#fff;font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s}
@@ -196,10 +196,105 @@ tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)
 
 /* ALGO SVG */
 .algo-wrap{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r2);padding:16px;margin:12px 0;overflow-x:auto}
+.algo-wrap svg{min-width:480px}
 
 .footnote{text-align:center;font-size:11px;color:var(--dim);padding:24px 0 0;border-top:1px solid var(--rim);margin-top:36px}
-@media(max-width:900px){.nav-grid{grid-template-columns:repeat(7,1fr)}.nb-lbl{font-size:7.5px}}
-@media(max-width:600px){.nav-grid{grid-template-columns:repeat(5,1fr)}.abcde-grid{grid-template-columns:repeat(5,1fr)}.nb-lbl{font-size:7px}.inj-body{grid-template-columns:1fr}}
+
+/* ── 900 px – tablet landscape ── */
+@media(max-width:900px){
+  .nav-grid{grid-template-columns:repeat(7,1fr);gap:4px}
+  .nb-lbl{font-size:7.5px}
+}
+
+/* ── 700 px – tablet portrait / large phone ── */
+@media(max-width:700px){
+  .nav-grid{grid-template-columns:repeat(5,1fr);gap:4px}
+  .nb{padding:7px 2px 5px}
+  .nb-icon{font-size:15px}
+  .nb-lbl{font-size:7px}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .two-col{grid-template-columns:1fr}
+  .page{padding:16px 12px 60px}
+}
+
+/* ── 480 px – phone portrait (primary target) ── */
+@media(max-width:480px){
+  /* Nav: horizontal scroll strip, never wraps */
+  .nav-wrap{padding:8px 0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .nav-grid{
+    display:flex;flex-wrap:nowrap;
+    gap:5px;padding:0 10px;
+    width:max-content;max-width:none;margin:0
+  }
+  .nb{min-width:62px;width:62px;flex-shrink:0;padding:8px 4px 6px;border-radius:10px}
+  .nb-icon{font-size:16px}
+  .nb-lbl{font-size:8px;white-space:normal;line-height:1.15}
+
+  /* ABCDE: auto-fit handles it — just reduce card padding/font */
+  .abcde-card{padding:10px 4px}
+  .abcde-letter{font-size:26px}
+  .abcde-word{font-size:9.5px}
+
+  /* Header */
+  .hdr{padding:16px 14px 18px}
+  .hdr-title{font-size:22px}
+  .hdr-sub{font-size:12px}
+  .hdr-pills{gap:5px}
+  .hdr-pill{font-size:10px;padding:3px 9px}
+
+  /* Page content */
+  .page{padding:14px 10px 56px}
+  .sh h2{font-size:18px}
+  .stitle{font-size:9.5px}
+
+  /* Cards & grids → single column */
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .card{padding:14px}
+  .card h3{font-size:13px}
+
+  /* Injury cards: stack columns vertically */
+  .inj-body{grid-template-columns:1fr}
+  .inj-col{border-right:none;border-bottom:1px solid var(--rim)}
+  .inj-col:last-child{border-bottom:none}
+  .inj-head h3{font-size:14px}
+  .inj-head{padding:12px 14px;flex-wrap:wrap;gap:6px}
+
+  /* Duel panels: always vertical */
+  .duel{grid-template-columns:1fr}
+  .duel-mid{flex-direction:row;width:100%;height:26px;padding:0 10px}
+  .duel-mid-lbl{writing-mode:horizontal-tb;transform:none}
+  .duel-a{border-right:none;border-bottom:1px solid var(--rim)}
+  .duel-b{border-left:none}
+  .duel-a,.duel-b{padding:14px}
+
+  /* Tables: always scrollable */
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tw table{min-width:480px;font-size:11.5px}
+  th,td{padding:7px 8px}
+
+  /* Steps */
+  .steps li{font-size:12px;gap:10px}
+
+  /* Calculators */
+  .calc-wrap{padding:14px}
+  .calc-grid{grid-template-columns:1fr}
+  .calc-field input,.calc-field select{font-size:14px;padding:9px 12px} /* prevent iOS zoom */
+
+  /* Decision assistant */
+  .da-wrap{padding:14px}
+  .da-opts{gap:5px}
+  .da-opt{font-size:12px;padding:6px 12px}
+
+  /* Boxes */
+  .box{font-size:12.5px;padding:10px 12px}
+
+  /* SVG algos: always scrollable, min-width so content readable */
+  .algo-wrap{padding:10px;border-radius:var(--r)}
+  .algo-wrap svg{min-width:600px}
+
+  /* Font size baseline */
+  body{font-size:13px}
+}
 </style>
 </head>
 <body>
