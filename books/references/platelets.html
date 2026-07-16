@@ -243,7 +243,7 @@ td strong{color:var(--text)}
         <td><strong>Cangrelor</strong><br><span style="font-size:11px;color:var(--dim)">IV only · Bridging agent</span></td>
         <td>IV direct-acting P2Y₁₂ antagonist. Reversible, ultra-short half-life (~3–6 min). Used for perioperative bridging to maintain P2Y₁₂ coverage until hours before surgery.</td>
         <td>1–2 hours (platelet function restored 30–60 min after stopping)</td>
-        <td><span class="tl tl-cyan">Stop 1–2 h before surgery</span><br><span style="font-size:11px;color:var(--muted)">Key advantage: enables DAPT bridging — continuous IV coverage until just before CABG</span></td>
+        <td><span class="tl tl-cyan">Stop 1–2 h before surgery</span><br><span style="font-size:11px;color:var(--muted)">Key advantage: enables DAPT bridging — continuous IV coverage until just before CABG. BRIDGE Trial (JAMA 2012): cangrelor bridging significantly reduced platelet reactivity with manageable bleeding vs placebo in CABG patients on clopidogrel.</span></td>
         <td>IV: 0.75 mcg/kg/min infusion (bridging)<br><span style="font-size:11px;color:var(--dim)">PCI: 30 mcg/kg bolus + 4 mcg/kg/min</span></td>
         <td class="td-urgent">Stop 1–2 h</td>
       </tr>
@@ -272,7 +272,7 @@ td strong{color:var(--text)}
       </tr>
       <tr>
         <td><strong>Abciximab</strong><br><span style="font-size:11px;color:var(--dim)">ReoPro</span></td>
-        <td>Large chimeric monoclonal antibody fragment (Fab). Binds GP IIb/IIIa with very high affinity (irreversible functionally). Also binds αvβ3 and MAC-1. Plasma t½ short but drug redistributes to other platelets.</td>
+        <td>Large chimeric monoclonal antibody fragment (Fab). Binds GP IIb/IIIa with very high affinity (functionally irreversible). Also binds αvβ3 and MAC-1. <strong>Key pharmacokinetic distinction:</strong> plasma t½ is very short (~10–30 min), but drug is platelet-bound and receptor occupancy persists for 24–48 h. This explains why the surgical delay matches the platelet lifespan redistribution, not the plasma clearance. Platelet transfusion dilutes the proportion of blocked platelets, but drug redistributes to fresh units.</td>
         <td>&gt;24 h (platelet-bound drug persists despite short plasma t½; new platelets dilute effect over 24–48 h)</td>
         <td><span class="tl tl-red">24–48 h</span> — platelet dysfunction persists beyond plasma clearance<br><span style="font-size:11px;color:var(--muted)">Platelet transfusion effective (drug redistributes to fresh platelets)</span></td>
         <td>
@@ -474,10 +474,13 @@ td strong{color:var(--text)}
       </tr>
       <tr>
         <td><strong>Ticagrelor</strong></td>
-        <td>Reversible; t½ ~7–9 h (active metabolite ~9 h)</td>
-        <td>Allow 3–5 days if possible. If urgent: platelet transfusion <em>partially</em> effective.</td>
-        <td>DDAVP; TXA; <strong>Bentracimab</strong> (investigational, Phase 3)</td>
-        <td class="td-delay">Active ticagrelor redistributes to transfused platelets reducing transfusion efficacy. Allow ≥3 days if haemodynamically stable. TEG/ROTEM guides need.</td>
+        <td>Reversible; t½ ~7–9 h (active metabolite ~9 h). Active drug circulates freely in plasma and redistributes to newly transfused platelets — each transfused platelet acquires the same level of P2Y₁₂ inhibition as the patient's own platelets.</td>
+        <td>
+          <strong>Without bentracimab:</strong> Platelet transfusion has limited efficacy — free plasma drug continuously inhibits each transfused unit. Multiple transfusions with repeat platelet function testing required. Many surgeons expect full effect from one unit: this expectation is incorrect for ticagrelor.<br><br>
+          <strong>With bentracimab (if available):</strong> Loading dose sequesters plasma ticagrelor within minutes → subsequent platelet transfusions are fully functional. Bentracimab + platelet transfusion is the most effective urgent reversal strategy (REVERSE-IT trial).
+        </td>
+        <td>DDAVP 0.3 mcg/kg; TXA loading dose; ROTEM/TEG platelet mapping; washout ≥3–5 days when feasible. Bentracimab where accessible (Phase 3 complete).</td>
+        <td class="td-caution">Partial reversal without bentracimab — expect repeat transfusions; titrate to viscoelastic testing, not to a fixed number of units. Full recovery only after drug washout (≥3 days for functional recovery, 5 days for elective CABG).</td>
       </tr>
       <tr>
         <td><strong>Prasugrel</strong></td>
@@ -571,6 +574,58 @@ td strong{color:var(--text)}
       </div>
     </div>
   </div>
+
+  <!-- Urgent CABG Assistant -->
+  <div class="stitle">🆕 Interactive: Urgent CABG Haemostatic Strategy Assistant</div>
+  <div class="calc-wrap">
+    <h3>⚡ Urgent CABG — Personalised Haemostatic Strategy</h3>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:16px">Enter patient-specific data to generate a tailored haemostatic management recommendation for urgent CABG on antiplatelet therapy.</p>
+    <div class="calc-grid" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr))">
+      <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r);padding:12px">
+        <label style="font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:6px;letter-spacing:.04em">ANTIPLATELET DRUG</label>
+        <select class="select-input" id="uca-drug" style="width:100%" onchange="calcUCA()">
+          <option value="">— Select drug —</option>
+          <option value="aspirin">Aspirin only</option>
+          <option value="clopidogrel">Clopidogrel</option>
+          <option value="prasugrel">Prasugrel</option>
+          <option value="ticagrelor">Ticagrelor</option>
+          <option value="cangrelor">Cangrelor (active infusion)</option>
+          <option value="tirofiban">Tirofiban/Eptifibatide</option>
+          <option value="abciximab">Abciximab</option>
+        </select>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r);padding:12px">
+        <label style="font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:6px;letter-spacing:.04em">LAST DOSE (hours ago)</label>
+        <input type="number" class="num-input" id="uca-hours" placeholder="24" min="0" max="240" style="width:100%" onchange="calcUCA()">
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r);padding:12px">
+        <label style="font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:6px;letter-spacing:.04em">VerifyNow PRU (if available)</label>
+        <input type="number" class="num-input" id="uca-pru" placeholder="e.g. 150" min="0" max="400" style="width:100%" onchange="calcUCA()">
+        <span style="font-size:10px;color:var(--dim)">Leave blank if not tested</span>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r);padding:12px">
+        <label style="font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:6px;letter-spacing:.04em">HAEMOGLOBIN (g/dL)</label>
+        <input type="number" class="num-input" id="uca-hgb" placeholder="12.0" step="0.1" min="5" max="20" style="width:100%" onchange="calcUCA()">
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r);padding:12px">
+        <label style="font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:6px;letter-spacing:.04em">PLATELET COUNT (×10⁹/L)</label>
+        <input type="number" class="num-input" id="uca-plt" placeholder="180" min="10" max="800" style="width:100%" onchange="calcUCA()">
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r);padding:12px">
+        <label style="font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:6px;letter-spacing:.04em">SURGICAL URGENCY</label>
+        <select class="select-input" id="uca-urgency" style="width:100%" onchange="calcUCA()">
+          <option value="emergent">Emergent — within 1–2 hours (STEMI, instability)</option>
+          <option value="urgent">Urgent — within 6–24 hours (NSTEMI, haemodynamic concern)</option>
+          <option value="semiurgent">Semi-urgent — 24–72 hours (can wait for washout)</option>
+          <option value="elective">Elective — can wait ≥5 days</option>
+        </select>
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calcUCA()">▶ GENERATE HAEMOSTATIC STRATEGY</button>
+    <div id="uca-result" style="display:none;margin-top:14px"></div>
+    <div class="calc-sub">For clinical decision support only — always apply clinical judgment and institutional protocols. Not a substitute for haematology/anaesthesia consultation in complex cases.</div>
+  </div>
+
   <div class="footnote">Sousa-Uva M et al. ESC/EACTS Myocardial Revascularization 2018 · Bojar RM 6th ed. · PLATO Trial (ticagrelor) · CHAMPION trials (cangrelor) · REVERSE-IT (bentracimab)</div>
 </section>
 <!-- ════ TAB 3: RISK CALCULATORS ════ -->
@@ -1260,13 +1315,13 @@ function calcHBLED() {
       <div class="box box-blue" style="margin-top:8px">
         <strong>Dose:</strong> 0.3 mcg/kg IV over 20–30 min (max 20 mcg). Onset 30–60 min, duration 4–8 h.<br>
         <strong>Use:</strong> Aspirin ± clopidogrel bleeding; uremia; vWD type 1; diffuse microvascular bleeding post-CPB.<br>
-        <strong>Caution:</strong> Hyponatraemia, fluid retention, tachyphylaxis after repeat doses, risk of cardiovascular events at higher doses.
+        <strong>⚠️ Critical caution — tachyphylaxis:</strong> Repeat doses within 24–48 h produce markedly diminished response (endothelial vWF stores depleted after first dose). Plan for only ONE effective dose; second dose rarely beneficial. Also: hyponatraemia (monitor sodium), fluid retention, and risk of cardiovascular events at higher doses in CAD patients.
       </div>
     </div>
     <div class="card">
       <h3 style="color:var(--green)">💊 Antifibrinolytics</h3>
       <ul>
-        <li><strong>Tranexamic acid (TXA):</strong> Lysine analogue → blocks plasminogen binding → inhibits fibrinolysis. Standard prophylaxis in cardiac surgery. Loading 1–2 g IV, then infusion 1 g/8 h or by protocol. Reduces blood product transfusion by 30–40%.</li>
+        <li><strong>Tranexamic acid (TXA):</strong> Lysine analogue → blocks plasminogen binding → inhibits fibrinolysis. Standard prophylaxis in cardiac surgery. Weight-based dosing: 10–30 mg/kg loading (commonly 1–2 g in practice); many cardiac centres use 10–15 mg/kg + CPB pump prime addition (1 g). Infusion 1 g/8 h or by institutional protocol. <strong>Always follow your centre's protocol</strong> — dosing strategies vary widely. Reduces blood product transfusion by 30–40%.</li>
         <li><strong>Epsilon-aminocaproic acid (EACA):</strong> Less potent than TXA; similar mechanism. Loading 5–10 g IV over 1 h, then 1–2 g/h.</li>
         <li><strong>Aprotinin:</strong> Serine protease inhibitor (broad spectrum). Withdrawn in many countries; under reassessment — some centres use in re-do CABG on antiplatelets. Risk of anaphylaxis on re-exposure.</li>
       </ul>
@@ -1310,6 +1365,58 @@ function calcHBLED() {
         </div>
       </div>
     </div>
+  </div>
+
+
+  <!-- Urgent CABG Assistant -->
+  <div class="stitle">🆕 Interactive: Urgent CABG Haemostatic Strategy Assistant</div>
+  <div class="calc-wrap">
+    <h3>⚡ Urgent CABG — Personalised Haemostatic Strategy</h3>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:16px">Enter patient-specific data to generate a tailored haemostatic management recommendation for urgent CABG on antiplatelet therapy.</p>
+    <div class="calc-grid" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr))">
+      <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r);padding:12px">
+        <label style="font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:6px;letter-spacing:.04em">ANTIPLATELET DRUG</label>
+        <select class="select-input" id="uca-drug" style="width:100%" onchange="calcUCA()">
+          <option value="">— Select drug —</option>
+          <option value="aspirin">Aspirin only</option>
+          <option value="clopidogrel">Clopidogrel</option>
+          <option value="prasugrel">Prasugrel</option>
+          <option value="ticagrelor">Ticagrelor</option>
+          <option value="cangrelor">Cangrelor (active infusion)</option>
+          <option value="tirofiban">Tirofiban/Eptifibatide</option>
+          <option value="abciximab">Abciximab</option>
+        </select>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r);padding:12px">
+        <label style="font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:6px;letter-spacing:.04em">LAST DOSE (hours ago)</label>
+        <input type="number" class="num-input" id="uca-hours" placeholder="24" min="0" max="240" style="width:100%" onchange="calcUCA()">
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r);padding:12px">
+        <label style="font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:6px;letter-spacing:.04em">VerifyNow PRU (if available)</label>
+        <input type="number" class="num-input" id="uca-pru" placeholder="e.g. 150" min="0" max="400" style="width:100%" onchange="calcUCA()">
+        <span style="font-size:10px;color:var(--dim)">Leave blank if not tested</span>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r);padding:12px">
+        <label style="font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:6px;letter-spacing:.04em">HAEMOGLOBIN (g/dL)</label>
+        <input type="number" class="num-input" id="uca-hgb" placeholder="12.0" step="0.1" min="5" max="20" style="width:100%" onchange="calcUCA()">
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r);padding:12px">
+        <label style="font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:6px;letter-spacing:.04em">PLATELET COUNT (×10⁹/L)</label>
+        <input type="number" class="num-input" id="uca-plt" placeholder="180" min="10" max="800" style="width:100%" onchange="calcUCA()">
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r);padding:12px">
+        <label style="font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:6px;letter-spacing:.04em">SURGICAL URGENCY</label>
+        <select class="select-input" id="uca-urgency" style="width:100%" onchange="calcUCA()">
+          <option value="emergent">Emergent — within 1–2 hours (STEMI, instability)</option>
+          <option value="urgent">Urgent — within 6–24 hours (NSTEMI, haemodynamic concern)</option>
+          <option value="semiurgent">Semi-urgent — 24–72 hours (can wait for washout)</option>
+          <option value="elective">Elective — can wait ≥5 days</option>
+        </select>
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calcUCA()">▶ GENERATE HAEMOSTATIC STRATEGY</button>
+    <div id="uca-result" style="display:none;margin-top:14px"></div>
+    <div class="calc-sub">For clinical decision support only — always apply clinical judgment and institutional protocols. Not a substitute for haematology/anaesthesia consultation in complex cases.</div>
   </div>
 
   <div class="footnote">Sousa-Uva M et al., ESC/EACTS Myocardial Revascularization 2018 · Bojar RM 6th ed. · ACC Expert Consensus on Periprocedural Management · REVERSE-IT Trial (Bentracimab)</div>
@@ -1483,12 +1590,22 @@ function calcHBLED() {
         <li><strong>Principle:</strong> ADP-induced platelet aggregation in whole blood → optical turbidimetry. Result as PRU (P2Y₁₂ Reaction Units).</li>
         <li><strong>Normal (no inhibition):</strong> PRU 188–285</li>
         <li><strong>Therapeutic range (on DAPT):</strong> PRU &lt;208 associated with ↓ ischaemic events; PRU &lt;85 → ↑ bleeding risk</li>
-        <li><strong>Pre-CABG guidance:</strong>
-          <ul>
-            <li>PRU &lt;100 → delay CABG if possible (high residual inhibition)</li>
-            <li>PRU 100–185 → consider 1–2 platelet pools peri-CABG</li>
-            <li>PRU &gt;185 → proceed with CABG; bleeding risk acceptable</li>
-          </ul>
+        <li><strong>Pre-CABG P2Y₁₂ inhibition thresholds:</strong>
+          <div style="background:var(--bg);border:1px solid var(--rim);border-radius:10px;padding:10px 12px;margin:6px 0;font-size:12px">
+            <div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--rim)">
+              <span style="background:var(--green-d);color:var(--green);font-family:var(--mono);font-weight:700;padding:2px 8px;border-radius:6px;font-size:10px">PRU &gt;185</span>
+              <span style="color:var(--muted)">Low residual inhibition — proceed with CABG; bleeding risk acceptable</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--rim)">
+              <span style="background:var(--amber-d);color:var(--amber);font-family:var(--mono);font-weight:700;padding:2px 8px;border-radius:6px;font-size:10px">PRU 100–185</span>
+              <span style="color:var(--muted)">Moderate inhibition — one adult therapeutic dose + TXA peri-CABG; individualise</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;padding:4px 0">
+              <span style="background:var(--red-d);color:var(--red);font-family:var(--mono);font-weight:700;padding:2px 8px;border-radius:6px;font-size:10px">PRU &lt;100</span>
+              <span style="color:var(--muted)">High residual inhibition — delay CABG if haemodynamically stable; 2+ therapeutic doses; DDAVP</span>
+            </div>
+          </div>
+          <span style="font-size:11px;color:var(--dim)">PRU &lt;85 associated with ↑ bleeding risk even on P2Y₁₂ therapy. PRU &gt;208 = inadequate antiplatelet response ("non-responder").</span>
         </li>
         <li><strong>Use case:</strong> Monitoring clopidogrel/prasugrel/ticagrelor; guiding CABG timing; identifying non-responders</li>
         <li><strong>Limitation:</strong> Not validated for GP IIb/IIIa agents; influenced by heparinisation</li>
@@ -1534,6 +1651,18 @@ function calcHBLED() {
         <li><strong>Platelet function:</strong> EXTEM − FIBTEM clot firmness = platelet contribution. Not P2Y₁₂-specific but detects global platelet dysfunction.</li>
         <li><strong>Best use:</strong> Post-CPB coagulopathy diagnosis; guiding platelet, FFP, and fibrinogen concentrate transfusion in real time</li>
         <li><strong>Limitation:</strong> Cannot specifically quantify P2Y₁₂ or COX-1 inhibition</li>
+        <li><strong>ROTEM decision algorithm — cardiac surgery:</strong>
+          <div style="background:var(--bg);border:1px solid var(--rim);border-radius:10px;padding:10px 12px;margin:6px 0;font-size:12px">
+            <div style="color:var(--muted);line-height:1.9">
+              <span style="color:var(--text);font-weight:700">EXTEM clot firmness (MCF) low</span><br>
+              ├── <span style="color:var(--amber)">FIBTEM MCF normal</span> → <strong style="color:var(--green)">Platelets</strong> (platelet contribution reduced)<br>
+              └── <span style="color:var(--red)">FIBTEM MCF low</span> → <strong style="color:var(--cyan)">Fibrinogen concentrate / Cryoprecipitate</strong> first<br><br>
+              <span style="color:var(--text);font-weight:700">EXTEM CT prolonged</span> → <strong style="color:var(--blue)">FFP / Factor concentrate</strong> (coagulation factor deficiency)<br><br>
+              <span style="color:var(--text);font-weight:700">EXTEM LY30 elevated (&gt;15%)</span> → <strong style="color:var(--purple)">TXA</strong> (hyperfibrinolysis — give immediately)<br><br>
+              <span style="color:var(--text);font-weight:700">INTEM CT prolonged + EXTEM CT normal</span> → <strong style="color:var(--amber)">Heparin effect</strong> (protamine supplementation)
+            </div>
+          </div>
+        </li>
       </ul>
     </div>
   </div>
@@ -1708,6 +1837,98 @@ function calcHASBLED() {
       ⚠️ HAS-BLED ≥3 identifies modifiable risk factors (hypertension, labile INR, drugs, alcohol) — it should prompt optimisation, NOT withholding of anticoagulation in AF patients where stroke risk dominates. Compare with CHA₂DS₂-VASc.
     </div>`;
 }
+
+// ── URGENT CABG ASSISTANT ───────────────────────────────────────────────────
+function calcUCA() {
+  const drug     = document.getElementById('uca-drug').value;
+  const hours    = parseFloat(document.getElementById('uca-hours').value) || null;
+  const pru      = parseFloat(document.getElementById('uca-pru').value) || null;
+  const hgb      = parseFloat(document.getElementById('uca-hgb').value) || null;
+  const plt      = parseFloat(document.getElementById('uca-plt').value) || null;
+  const urgency  = document.getElementById('uca-urgency').value;
+
+  if (!drug || !urgency) return;
+  const r = document.getElementById('uca-result');
+  r.style.display = 'block';
+
+  // Build recommendations
+  const recs = [];
+  let riskLevel = 'mod';
+  let riskLabel = '⚡ Moderate Bleeding Risk';
+
+  const pruHigh  = pru !== null && pru < 100;
+  const pruMid   = pru !== null && pru >= 100 && pru <= 185;
+  const pruLow   = pru !== null && pru > 185;
+  const anaemia  = hgb !== null && hgb < 10;
+  const lowPlt   = plt !== null && plt < 100;
+  const earlyWashout = hours !== null && hours < 24;
+
+  // Drug-specific logic
+  const drugData = {
+    aspirin:     { washout: 'N/A (continue through CABG)', transfusion: 'Rarely needed — aspirin alone does not require platelet transfusion for CABG', special: '', risk: 'low' },
+    clopidogrel: { washout: '5 days ideal; 3 days minimum', transfusion: 'One adult therapeutic dose (apheresis unit or pooled equivalent); effective — drug does not redistribute to fresh platelets', special: 'Platelet function testing guides timing. PRU >185 → proceed without transfusion.', risk: earlyWashout ? 'high' : 'mod' },
+    prasugrel:   { washout: '7 days ideal; ≥5 days minimum', transfusion: 'One to two adult therapeutic doses; prasugrel more potent — may require more than clopidogrel', special: 'Higher potency than clopidogrel — anticipate greater platelet support need if <7 days washout.', risk: earlyWashout ? 'high' : 'mod' },
+    ticagrelor:  { washout: '5 days ideal; 3 days minimum (RAPID CABG: 2–3 d acceptable with PRU testing)', transfusion: 'CRITICAL: Active drug in plasma redistributes to transfused platelets — platelet transfusion partially effective without bentracimab. Multiple therapeutic doses may be required. With bentracimab: full reversal within minutes.', special: 'Do NOT expect one platelet transfusion to be sufficient. Repeat TEG/ROTEM platelet mapping after each transfusion. Consider bentracimab if available.', risk: earlyWashout ? 'high' : 'mod' },
+    cangrelor:   { washout: 'STOP INFUSION — platelet function recovers in 30–60 min', transfusion: 'Usually not needed — stop infusion and wait 1 hour before proceeding', special: 'Ideal bridging scenario: no platelet support required after cessation. Verify recovery with VerifyNow if available.', risk: 'low' },
+    tirofiban:   { washout: '4–8 h standard renal function; 8–12 h if CrCl <30', transfusion: 'Platelet transfusion effective after drug clearance — reversible agent. Wait for washout when possible.', special: 'Verify renal function — t½ doubles in CKD. ROTEM/TEG to assess residual effect.', risk: earlyWashout ? 'high' : 'mod' },
+    abciximab:   { washout: '24–48 h (platelet-bound receptor occupancy persists despite short plasma t½)', transfusion: 'Platelet transfusion dilutes the proportion of blocked platelets but drug redistributes to fresh units. Multiple therapeutic doses may be required. Repeat platelet function testing after each transfusion.', special: 'Platelet-bound drug persists for 24–48 h regardless of plasma clearance — this is the key reason for the extended surgical delay.', risk: earlyWashout ? 'high' : 'high' }
+  };
+
+  const d = drugData[drug] || {};
+
+  // Build bleeding risk assessment
+  if (d.risk === 'high' || pruHigh || lowPlt || (anaemia && d.risk !== 'low')) riskLevel = 'high', riskLabel = '🔴 HIGH Bleeding Risk';
+  else if (d.risk === 'low' && !anaemia && !lowPlt && (!pru || pruLow)) riskLevel = 'low', riskLabel = '✅ LOW Bleeding Risk';
+
+  const urgencyRecs = {
+    emergent:   '⚠️ Operate immediately regardless of antiplatelet status. Maximise haemostatic support intraoperatively.',
+    urgent:     'Allow partial washout if haemodynamically stable. Target minimum safe interval based on PRU.',
+    semiurgent: 'Allow full washout window. Repeat PRU at washout to confirm adequacy before proceeding.',
+    elective:   'Schedule after full washout: ' + (d.washout || 'per drug protocol')
+  };
+
+  // Generate output
+  r.innerHTML = `
+  <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:16px 18px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+      <div class="score-risk ${riskLevel === 'high' ? 'risk-high' : riskLevel === 'low' ? 'risk-low' : 'risk-mod'}" style="display:inline-block">${riskLabel}</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--muted)">${drug.toUpperCase()} · ${urgency.toUpperCase()}</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px">
+
+      <div style="background:var(--bg3);border-radius:var(--r);padding:12px">
+        <div style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--cyan);letter-spacing:.1em;margin-bottom:8px">TIMING & WASHOUT</div>
+        <div style="font-size:13px;color:var(--muted)">${d.washout || 'See drug reference'}</div>
+        <div style="font-size:12.5px;color:var(--amber);margin-top:6px">${urgencyRecs[urgency] || ''}</div>
+        ${pru !== null ? `<div style="margin-top:8px;font-size:12px">PRU ${pru} → <strong style="color:${pruLow ? 'var(--green)' : pruMid ? 'var(--amber)' : 'var(--red)'}">${pruLow ? 'Low inhibition — proceed' : pruMid ? 'Moderate — 1 therapeutic dose' : 'High — delay + 2+ doses'}</strong></div>` : ''}
+      </div>
+
+      <div style="background:var(--bg3);border-radius:var(--r);padding:12px">
+        <div style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--amber);letter-spacing:.1em;margin-bottom:8px">PLATELET TRANSFUSION STRATEGY</div>
+        <div style="font-size:13px;color:var(--muted)">${d.transfusion || ''}</div>
+        ${d.special ? `<div style="margin-top:8px;background:var(--bg);border-radius:8px;padding:8px;font-size:12px;color:var(--amber)">⚡ ${d.special}</div>` : ''}
+      </div>
+
+      <div style="background:var(--bg3);border-radius:var(--r);padding:12px">
+        <div style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--green);letter-spacing:.1em;margin-bottom:8px">INTRAOPERATIVE CHECKLIST</div>
+        <ul style="font-size:12.5px;color:var(--muted);padding-left:16px;line-height:2">
+          <li>TXA loading dose <strong style="color:var(--text)">before CPB</strong> (institutional protocol)</li>
+          <li>Cell saver <strong style="color:var(--text)">routinely deployed</strong></li>
+          <li>Blood bank alert: platelets, FFP, fibrinogen concentrate, cryoprecipitate</li>
+          <li>TEG/ROTEM <strong style="color:var(--text)">immediately post-CPB</strong> → targeted therapy</li>
+          ${anaemia ? '<li style="color:var(--red)">⚠️ Anaemia present — pRBC crossmatch and prepare in advance</li>' : ''}
+          ${lowPlt ? '<li style="color:var(--red)">⚠️ Thrombocytopaenia — consider haematology consultation pre-op</li>' : ''}
+          <li>DDAVP 0.3 mcg/kg IV at wound closure if microvascular bleeding persists (<strong>one dose only — tachyphylaxis</strong>)</li>
+        </ul>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--dim);margin-top:12px;padding-top:10px;border-top:1px solid var(--rim)">
+      This is a clinical decision support tool — individualise based on patient factors, surgical risk, and institutional capabilities. Complex cases should involve haematology and cardiac anaesthesia consultation.
+    </div>
+  </div>`;
+}
+
 </script>
 </main>
 </body>
