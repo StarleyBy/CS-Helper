@@ -213,7 +213,7 @@ td.w-val{color:var(--warn-l);font-weight:600}td.d-val{color:var(--dang-l);font-w
       <h3>⏱️ DuoLevel / APRV</h3>
       <p>Two pressure levels (P_high / P_low) with <strong>unrestricted spontaneous breathing</strong> at both levels. Sustained recruitment via prolonged P_high; CO&sub2; clearance via brief T_low release.</p>
       <div class="box box-vent"><strong>Typical settings:</strong> P_high 20&ndash;30 cmH&sub2;O &middot; T_high 4&ndash;6 sec &middot; P_low 0&ndash;5 &middot; T_low 0.2&ndash;0.8 sec (set so expiratory flow at end &asymp;75% of peak)</div>
-      <div class="box box-dang"><strong>Contraindicated:</strong> Severe obstructive disease (auto-PEEP risk) &middot; Large air leak<br><strong>Elevated ICP: use with caution</strong> &mdash; high mean airway pressure may impair cerebral venous drainage; not an absolute contraindication.</div>
+      <div class="box box-warn"><strong>Generally avoid (not absolute contraindications):</strong> Severe obstructive disease / asthma &mdash; risk of dynamic hyperinflation; use only in carefully selected cases with expert monitoring &middot; Large air leak (relative) &middot; <strong>Elevated ICP: use with caution</strong> &mdash; high mean airway pressure may impair cerebral venous drainage; not an absolute contraindication.</div>
     </div>
     <div class="card card-blu">
       <h3>🌬️ NIV &amp; VS</h3>
@@ -271,7 +271,7 @@ td.w-val{color:var(--warn-l);font-weight:600}td.d-val{color:var(--dang-l);font-w
         <td><strong>I:E Ratio</strong></td>
         <td>Inspiratory:Expiratory time ratio</td>
         <td>Affects mean airway pressure and gas trapping</td>
-        <td>Normal 1:2 &middot; ARDS: 1:1 for recruitment &middot; Obstructive: 1:3&ndash;1:4 to limit auto-PEEP</td>
+        <td>Normal 1:2 &middot; ARDS: consider prolonged inspiratory time (up to 1:1) only when oxygenation remains inadequate despite optimised protective ventilation &mdash; not a universal recommendation &middot; Obstructive: 1:3&ndash;1:4 to limit auto-PEEP</td>
       </tr>
       <tr>
         <td><strong>Inspiratory Flow</strong></td>
@@ -300,7 +300,10 @@ td.w-val{color:var(--warn-l);font-weight:600}td.d-val{color:var(--dang-l);font-w
         <tr><td>&gt;4&ndash;6</td><td class="d-val">High respiratory drive; risk of P-SILI and fatigue</td></tr>
       </table></div>
     </div>
-    <div class="card card-blu">
+    <div class="box box-warn" style="margin-bottom:14px">
+    <strong>Multi-index approach to respiratory drive monitoring:</strong> No single index should be used in isolation. Interpret P0.1 together with: <strong>RSBI</strong> (f/Vt — for weaning readiness; &lt;105 predicts success), <strong>ΔPocc</strong> (occlusion pressure, reflects Pmus — target &minus;15 to &minus;3 cmH₂O), <strong>ROX index</strong> (SpO₂/FiO₂ ÷ RR — for HFNO/NIV; &gt;4.88 predicts success at 2 h), and clinical assessment. Combine indices rather than relying on one alone.
+  </div>
+  <div class="card card-blu">
       <h3>📐 RCexp, Pmax &amp; INTELLiVENT Targets</h3>
       <ul>
         <li><strong>RCexp (expiratory time constant):</strong> Qualitative guide to expiratory time. No universal threshold &mdash; prolonged RCexp in COPD/asthma signals need for longer Te. Monitor trends, not absolute values.</li>
@@ -526,7 +529,7 @@ td.w-val{color:var(--warn-l);font-weight:600}td.d-val{color:var(--dang-l);font-w
         <td><strong>Reverse triggering</strong></td>
         <td>Diaphragmatic effort entrained by the ventilator delivery; may cause double-triggering-like pattern</td>
         <td>Deep sedation or neurological injury &mdash; ventilator breath reflexively entrain diaphragm; Vt amplified by patient effort after delivery begins</td>
-        <td class="v-val">Reassess sedation; short-term NMB (48 h); may resolve with lighter sedation</td>
+        <td class="v-val">Reassess and optimise sedation strategy; neuromuscular blockade may be considered in selected severe cases after optimisation of sedation and ventilator settings — not first-line; may resolve with lighter sedation</td>
       </tr>
     </tbody>
   </table></div>
@@ -547,7 +550,7 @@ td.w-val{color:var(--warn-l);font-weight:600}td.d-val{color:var(--dang-l);font-w
     </div>
     <div class="card card-vent">
       <h3>📏 Measurement &amp; Management</h3>
-      <p style="margin-bottom:10px"><strong>Measurement:</strong> Apply <em>expiratory hold</em> (0.5&ndash;2 sec) &rarr; read total PEEP from display.<br>
+      <p style="margin-bottom:10px"><strong>Measurement:</strong> Apply <em>expiratory hold</em> manoeuvre (0.5&ndash;2 sec; requires patient-ventilator synchrony or adequate sedation) &rarr; read total PEEP from display. <strong>Confirm with expiratory hold whenever feasible</strong> &mdash; waveform inspection alone is insufficient for accurate measurement.<br>
       <span class="fm">auto-PEEP = total PEEP &minus; set PEEP</span></p>
       <p style="font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Management ladder</p>
       <ul>
@@ -597,6 +600,7 @@ td.w-val{color:var(--warn-l);font-weight:600}td.d-val{color:var(--dang-l);font-w
   <div class="stitle">Mechanical Power &mdash; The Energy Dimension of VILI</div>
   <div class="card card-vent">
     <h3>⚙️ Unified VILI metric: energy delivered per minute</h3>
+    <div class="box box-vent" style="margin-bottom:12px"><strong>Why mechanical power matters:</strong> Mechanical power integrates tidal volume, respiratory rate, driving pressure, and flow into a single energy metric (J/min). Critically — <strong>reducing only tidal volume does not necessarily reduce total ventilator-induced energy</strong> if RR or driving pressure increase compensatorily. MP &gt;17 J/min is associated with VILI risk regardless of individual parameter optimisation.</div>
     <div class="g2">
       <div>
         <p style="color:var(--muted);font-size:13px;margin-bottom:12px"><strong style="color:var(--text)">Mechanical Power (MP)</strong> integrates volume, pressure, flow, and rate &mdash; capturing the cumulative injurious energy delivered to the respiratory system. It overcomes the limitation of single-parameter assessment.</p>
@@ -629,7 +633,7 @@ td.w-val{color:var(--warn-l);font-weight:600}td.d-val{color:var(--dang-l);font-w
     <div class="card card-vent">
       <h3>🏥 Post-operative goals &amp; fast-track extubation</h3>
       <ul>
-        <li><strong>Early extubation (fast-track):</strong> Target 4&ndash;8 h post-CABG / valve repair in uncomplicated cases. Reduces VAP, ICU stay, and cost.</li>
+        <li><strong>Early extubation (fast-track):</strong> Target 4&ndash;8 h post-CABG / valve repair in uncomplicated cases. Reduces VAP, ICU stay, and cost. <strong style="color:var(--warn-l)">Time targets should never override physiologic readiness</strong> &mdash; extubate when the patient is ready, not by the clock.</li>
         <li>Protective ventilation even for short post-op periods: <strong>Vt 6&ndash;8 mL/kg PBW</strong></li>
         <li>SpO&sub2; 94&ndash;98% (liberal target acceptable with adequate cardiac output)</li>
         <li>EtCO&sub2; 35&ndash;42 mmHg; avoid hypercapnia if elevated PVR suspected</li>
@@ -643,7 +647,7 @@ td.w-val{color:var(--warn-l);font-weight:600}td.d-val{color:var(--dang-l);font-w
       <ul>
         <li><strong>High PEEP &rarr; &#8595; RV preload:</strong> In RV failure (post-tricuspid, PH, RV MI) &mdash; use lowest effective PEEP; avoid driving preload-dependence into haemodynamic crisis.</li>
         <li><strong>Hypercapnia &amp; hypoxia &rarr; &#8593; PVR &rarr; &#8593; RV afterload:</strong> Maintain normocapnia and normoxia in RV failure. Avoid permissive hypercapnia in this setting.</li>
-        <li><strong>Pulse pressure variation (PPV) for fluid responsiveness:</strong> Valid only in fully controlled, arrhythmia-free ventilation with Vt &ge;8 mL/kg &mdash; a direct conflict with lung-protective ventilation in ARDS patients.</li>
+        <li><strong>Pulse pressure variation (PPV) for fluid responsiveness:</strong> Valid only in fully controlled, arrhythmia-free ventilation with Vt &ge;8 mL/kg &mdash; a direct conflict with lung-protective ventilation in ARDS patients. When Vt &lt;8 mL/kg: use <strong>Tidal Volume Challenge</strong> (transiently &uarr; Vt to 8 mL/kg PBW &times; 1 min &rarr; &Delta;PP change &ge;3.5% = fluid responsive) or <strong>Passive Leg Raising</strong> (reversible preload challenge independent of Vt and rhythm &rarr; &uarr;CO &gt;10% = responsive) &mdash; preferred dynamic tests in protective ventilation.</li>
         <li><strong>Post-pneumonectomy:</strong> PEEP 3&ndash;5 cmH&sub2;O on remaining lung; minimise FiO&sub2;; avoid high mean airway pressures.</li>
       </ul>
     </div>
@@ -785,7 +789,7 @@ td.w-val{color:var(--warn-l);font-weight:600}td.d-val{color:var(--dang-l);font-w
   <div class="g2">
     <div class="card card-adv">
       <h3>🤖 INTELLiVENT-ASV &mdash; Closed-loop ventilation</h3>
-      <p>INTELLiVENT-ASV uses <strong>ideal body weight</strong>, <strong>%MinVol target</strong>, and real-time <strong>SpO&sub2; / EtCO&sub2;</strong> to continuously auto-adjust RR, PS, PEEP, and FiO&sub2;. No manual breath-to-breath adjustments needed during stable phases.</p>
+      <p>INTELLiVENT-ASV uses <strong>ideal body weight</strong>, <strong>%MinVol target</strong>, and real-time <strong>SpO&sub2; / EtCO&sub2;</strong> to continuously auto-adjust RR, PS, PEEP, and FiO&sub2;. Reduces the need for frequent manual adjustments during stable phases — clinician oversight and periodic reassessment remain essential.</p>
       <div class="box box-adv"><strong>Best for:</strong> Stable ARDS weaning &middot; post-op cardiac surgery &middot; neurological patients &middot; overnight monitoring</div>
       <div class="box box-warn"><strong>Avoid in:</strong> Severe metabolic acidosis with compensatory tachypnea (algorithm interprets high RR as met demand, may under-ventilate) &middot; Acute haemodynamic instability with rapid lung mechanics changes</div>
     </div>
@@ -802,7 +806,128 @@ td.w-val{color:var(--warn-l);font-weight:600}td.d-val{color:var(--dang-l);font-w
     </div>
   </div>
 
-  <div class="footnote">
+  
+  <!-- STITLE -->
+  <div style="font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:28px 0 14px;padding-left:10px;border-left:2px solid var(--vent)">
+    🆕 Interactive Clinical Tools
+  </div>
+
+  <!-- TOOL 1: ARDS / PBW Calculator -->
+  <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:18px;margin-bottom:16px">
+    <h3 style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--prot-l);margin-bottom:12px">🫁 ARDS Lung-Protective Ventilation Calculator</h3>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px">Enter patient data to calculate PBW, recommended Vt, driving pressure assessment, mechanical power estimate, and Berlin ARDS classification.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:14px">
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:11px">
+        <label style="font-size:10.5px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase">Sex</label>
+        <select id="ards-sex" onchange="calcARDS()" style="width:100%;background:var(--bg2);border:1px solid var(--rim);border-radius:8px;padding:7px 9px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none">
+          <option value="m">Male</option>
+          <option value="f">Female</option>
+        </select>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:11px">
+        <label style="font-size:10.5px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase">Height (cm)</label>
+        <input type="number" id="ards-ht" min="140" max="220" placeholder="175" onchange="calcARDS()" style="width:100%;background:var(--bg2);border:1px solid var(--rim);border-radius:8px;padding:7px 9px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:11px">
+        <label style="font-size:10.5px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase">PaO₂ (mmHg)</label>
+        <input type="number" id="ards-pao2" min="30" max="600" placeholder="80" onchange="calcARDS()" style="width:100%;background:var(--bg2);border:1px solid var(--rim);border-radius:8px;padding:7px 9px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:11px">
+        <label style="font-size:10.5px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase">FiO₂ (0.21–1.0)</label>
+        <input type="number" id="ards-fio2" min="0.21" max="1" step="0.01" placeholder="0.50" onchange="calcARDS()" style="width:100%;background:var(--bg2);border:1px solid var(--rim);border-radius:8px;padding:7px 9px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:11px">
+        <label style="font-size:10.5px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase">Set PEEP (cmH₂O)</label>
+        <input type="number" id="ards-peep" min="0" max="30" placeholder="8" onchange="calcARDS()" style="width:100%;background:var(--bg2);border:1px solid var(--rim);border-radius:8px;padding:7px 9px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:11px">
+        <label style="font-size:10.5px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase">Plateau Pressure (cmH₂O)</label>
+        <input type="number" id="ards-pplat" min="10" max="60" placeholder="25" onchange="calcARDS()" style="width:100%;background:var(--bg2);border:1px solid var(--rim);border-radius:8px;padding:7px 9px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:11px">
+        <label style="font-size:10.5px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase">Respiratory Rate</label>
+        <input type="number" id="ards-rr" min="6" max="40" placeholder="16" onchange="calcARDS()" style="width:100%;background:var(--bg2);border:1px solid var(--rim);border-radius:8px;padding:7px 9px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+      </div>
+    </div>
+    <button onclick="calcARDS()" style="width:100%;background:var(--vent-d);border:1px solid var(--vent);border-radius:var(--r);padding:11px;color:var(--vent-l);font-family:var(--mono);font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.06em">▶ CALCULATE</button>
+    <div id="ards-result" style="display:none;margin-top:14px"></div>
+  </div>
+
+  <!-- TOOL 2: Weaning Advisor -->
+  <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:18px;margin-bottom:16px">
+    <h3 style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--warn-l);margin-bottom:12px">🏁 Weaning Readiness Advisor</h3>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px">Assess extubation readiness based on standard weaning criteria. Enter current ventilator parameters and clinical data.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:14px">
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:11px">
+        <label style="font-size:10.5px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase">RSBI (f/Vt)</label>
+        <input type="number" id="w-rsbi" min="0" max="300" placeholder="70" onchange="calcWean()" style="width:100%;background:var(--bg2);border:1px solid var(--rim);border-radius:8px;padding:7px 9px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+        <span style="font-size:10px;color:var(--dim)">breaths/min/L · &lt;105 = favourable</span>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:11px">
+        <label style="font-size:10.5px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase">P0.1 (cmH₂O)</label>
+        <input type="number" id="w-p01" min="0" max="15" step="0.1" placeholder="2.5" onchange="calcWean()" style="width:100%;background:var(--bg2);border:1px solid var(--rim);border-radius:8px;padding:7px 9px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+        <span style="font-size:10px;color:var(--dim)">1.5–3.5 = adequate</span>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:11px">
+        <label style="font-size:10.5px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase">FiO₂ (0.21–1.0)</label>
+        <input type="number" id="w-fio2" min="0.21" max="1" step="0.01" placeholder="0.35" onchange="calcWean()" style="width:100%;background:var(--bg2);border:1px solid var(--rim);border-radius:8px;padding:7px 9px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+        <span style="font-size:10px;color:var(--dim)">≤0.40 preferred</span>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:11px">
+        <label style="font-size:10.5px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase">Set PEEP (cmH₂O)</label>
+        <input type="number" id="w-peep" min="0" max="20" placeholder="5" onchange="calcWean()" style="width:100%;background:var(--bg2);border:1px solid var(--rim);border-radius:8px;padding:7px 9px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+        <span style="font-size:10px;color:var(--dim)">≤5–8 preferred</span>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:11px">
+        <label style="font-size:10.5px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase">SpO₂ on current FiO₂ (%)</label>
+        <input type="number" id="w-spo2" min="60" max="100" placeholder="96" onchange="calcWean()" style="width:100%;background:var(--bg2);border:1px solid var(--rim);border-radius:8px;padding:7px 9px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none">
+        <span style="font-size:10px;color:var(--dim)">≥90% required</span>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:11px">
+        <label style="font-size:10.5px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase">Haemodynamic stability</label>
+        <select id="w-hemo" onchange="calcWean()" style="width:100%;background:var(--bg2);border:1px solid var(--rim);border-radius:8px;padding:7px 9px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none">
+          <option value="stable">Stable (MAP ≥65 without vasopressors or low-dose)</option>
+          <option value="mod">Moderate support (vasopressors ≤0.1 µg/kg/min NE)</option>
+          <option value="unstable">Unstable (high vasopressor need or active shock)</option>
+        </select>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:11px">
+        <label style="font-size:10.5px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase">Cough strength</label>
+        <select id="w-cough" onchange="calcWean()" style="width:100%;background:var(--bg2);border:1px solid var(--rim);border-radius:8px;padding:7px 9px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none">
+          <option value="strong">Adequate / strong</option>
+          <option value="weak">Weak — concern for aspiration</option>
+          <option value="absent">Absent / severely impaired</option>
+        </select>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:11px">
+        <label style="font-size:10.5px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase">Neurological</label>
+        <select id="w-neuro" onchange="calcWean()" style="width:100%;background:var(--bg2);border:1px solid var(--rim);border-radius:8px;padding:7px 9px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none">
+          <option value="ok">Alert, follows commands, GCS ≥8</option>
+          <option value="border">Borderline — intermittent arousal</option>
+          <option value="fail">Unresponsive / GCS &lt;8</option>
+        </select>
+      </div>
+    </div>
+    <button onclick="calcWean()" style="width:100%;background:var(--warn-d);border:1px solid var(--warn);border-radius:var(--r);padding:11px;color:var(--warn-l);font-family:var(--mono);font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.06em">▶ ASSESS WEANING READINESS</button>
+    <div id="wean-result" style="display:none;margin-top:14px"></div>
+  </div>
+
+  <!-- TOOL 3: Waveform Atlas -->
+  <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:18px;margin-bottom:16px">
+    <h3 style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--adv-l);margin-bottom:12px">📡 Ventilator Waveform Atlas — Asynchrony & Artefact Recognition</h3>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px">Select a waveform pattern to see an SVG illustration and clinical explanation.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px">
+      <button onclick="showWave('normal')"   class="wave-btn" id="wb-normal">Normal PCV</button>
+      <button onclick="showWave('autoPEEP')" class="wave-btn" id="wb-autoPEEP">Auto-PEEP</button>
+      <button onclick="showWave('double')"   class="wave-btn" id="wb-double">Double Triggering</button>
+      <button onclick="showWave('ineff')"    class="wave-btn" id="wb-ineff">Ineffective Effort</button>
+      <button onclick="showWave('flowStarv')"class="wave-btn" id="wb-flowStarv">Flow Starvation</button>
+      <button onclick="showWave('reverse')"  class="wave-btn" id="wb-reverse">Reverse Triggering</button>
+    </div>
+    <div id="wave-display" style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r2);padding:16px;min-height:200px"></div>
+  </div>
+
+<div class="footnote">
     Based on: ARDSnet Protocol (NHLBI 2000) &middot; Amato MB et al. &mdash; Driving Pressure and Survival in ARDS, NEJM 2015 &middot; Gattinoni L et al. &mdash; Mechanical Power, Intensive Care Med 2016 &middot; Girard TD et al. &mdash; Awakening and Breathing Trial, Lancet 2008 &middot; ACCCM/ERS Weaning Guidelines 2017 &middot; ATS/ERS/ESICM/SCCM Mechanical Ventilation Guidelines &middot; Hamilton Medical C1 Operator&rsquo;s Manual v6.0 &middot; INTELLiVENT-ASV Clinical Guide &middot; Bojar RM &mdash; Manual of Perioperative Care in Adult Cardiac Surgery &middot; Marino PL &mdash; The ICU Book. For educational purposes only &mdash; always integrate with clinical judgement.
     <br><br>Cardiac Surgery Clinical Education &middot; StarleyBy &middot; 2025
   </div>
@@ -820,6 +945,356 @@ function gt(i, b) {
   b.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+// ── WAVE BTN STYLE ────────────────────────────────────────────────
+document.querySelectorAll('.wave-btn').forEach(b => {
+  b.style.cssText = 'background:var(--bg3);border:1px solid var(--rim);border-radius:8px;padding:7px 14px;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all .15s';
+});
+
+// ── ARDS CALCULATOR ───────────────────────────────────────────────
+function calcARDS() {
+  const sex   = document.getElementById('ards-sex').value;
+  const ht    = parseFloat(document.getElementById('ards-ht').value)   || null;
+  const pao2  = parseFloat(document.getElementById('ards-pao2').value) || null;
+  const fio2  = parseFloat(document.getElementById('ards-fio2').value) || null;
+  const peep  = parseFloat(document.getElementById('ards-peep').value) || null;
+  const pplat = parseFloat(document.getElementById('ards-pplat').value)|| null;
+  const rr    = parseFloat(document.getElementById('ards-rr').value)   || null;
+  if (!ht) { alert('Enter height to calculate PBW.'); return; }
+
+  // PBW
+  const pbw = sex === 'm' ? 50 + 0.91*(ht - 152.4) : 45.5 + 0.91*(ht - 152.4);
+  const pbwR = Math.round(pbw * 10) / 10;
+
+  // Vt targets
+  const vt6  = Math.round(pbwR * 6);
+  const vt8  = Math.round(pbwR * 8);
+  const vt4  = Math.round(pbwR * 4);
+
+  // P/F ratio and Berlin classification
+  let pf = null, berlin = '', berlinColor = '', berlinRecs = '';
+  if (pao2 && fio2) {
+    pf = Math.round(pao2 / fio2);
+    if (pf > 300) { berlin = 'No ARDS (P/F >300)'; berlinColor = 'var(--prot-l)'; }
+    else if (pf > 200) {
+      berlin = 'Mild ARDS (P/F 200–300)';
+      berlinColor = 'var(--warn-l)';
+      berlinRecs = 'PEEP ≥5 cmH₂O · Consider NIV/HFNO · Prone if persistent';
+    } else if (pf > 100) {
+      berlin = 'Moderate ARDS (P/F 100–200)';
+      berlinColor = 'var(--dang-l)';
+      berlinRecs = 'PEEP ≥8 cmH₂O · Prone positioning (if P/F <150) · Neuromuscular blockade if dyssynchrony';
+    } else {
+      berlin = 'Severe ARDS (P/F <100)';
+      berlinColor = 'var(--dang-l)';
+      berlinRecs = 'PEEP ≥10 cmH₂O · Mandatory prone positioning (16 h/day) · Consider ECMO evaluation if refractory';
+    }
+  }
+
+  // Driving pressure
+  let dp = null, dpColor = '', dpNote = '';
+  if (pplat !== null && peep !== null) {
+    dp = Math.round((pplat - peep) * 10) / 10;
+    dpColor = dp <= 14 ? 'var(--prot-l)' : dp <= 17 ? 'var(--warn-l)' : 'var(--dang-l)';
+    dpNote  = dp <= 14 ? 'Optimal (≤14 cmH₂O)' : dp <= 17 ? 'Borderline — reduce if possible' : 'Elevated — associated with ↑ VILI mortality. Reduce Vt or PEEP.';
+  }
+
+  // Pplat assessment
+  let pplatNote = '', pplatColor = '';
+  if (pplat) {
+    pplatColor = pplat <= 28 ? 'var(--prot-l)' : pplat <= 30 ? 'var(--warn-l)' : 'var(--dang-l)';
+    pplatNote  = pplat <= 28 ? 'Safe' : pplat <= 30 ? 'At limit — reduce Vt' : 'Exceeds limit (>30) — reduce Vt immediately';
+  }
+
+  // Mechanical power estimate (simplified Gattinoni formula)
+  // MP (J/min) ≈ 0.098 × RR × Vt × (Ppeak - ΔP/2) — simplified as:
+  // MP ≈ 0.098 × RR × Vt(L) × (Pplat + PEEP)/2  [rough estimate]
+  let mp = null, mpNote = '', mpColor = '';
+  if (rr && vt6 && pplat && peep) {
+    const vtL = vt6 / 1000;
+    mp = Math.round(0.098 * rr * vtL * (pplat + PEEP_value(peep)) * 10) / 10;
+    mpColor = mp < 12 ? 'var(--prot-l)' : mp < 17 ? 'var(--warn-l)' : 'var(--dang-l)';
+    mpNote  = mp < 12 ? 'Low — favourable' : mp < 17 ? 'Moderate — monitor' : 'High (>17 J/min) — associated with VILI; reduce RR, Vt, or Pplat';
+  }
+
+  const r = document.getElementById('ards-result');
+  r.style.display = 'block';
+  r.innerHTML = `
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">
+    <div style="background:var(--bg3);border-radius:var(--r);padding:14px">
+      <div style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--vent-l);letter-spacing:.1em;margin-bottom:10px">PBW & TIDAL VOLUMES</div>
+      <div style="font-family:var(--mono);font-size:26px;font-weight:700;color:var(--vent-l)">${pbwR} kg</div>
+      <div style="font-size:12px;color:var(--muted)">Predicted Body Weight</div>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:5px">
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;background:var(--bg2);padding:5px 9px;border-radius:7px">
+          <span style="color:var(--muted)">ARDSnet (6 mL/kg):</span>
+          <strong style="color:var(--prot-l)">${vt6} mL</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;background:var(--bg2);padding:5px 9px;border-radius:7px">
+          <span style="color:var(--muted)">Max (8 mL/kg):</span>
+          <strong style="color:var(--warn-l)">${vt8} mL</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;background:var(--bg2);padding:5px 9px;border-radius:7px">
+          <span style="color:var(--muted)">Severe ARDS (4 mL/kg):</span>
+          <strong style="color:var(--dang-l)">${vt4} mL</strong>
+        </div>
+      </div>
+    </div>
+    ${pf !== null ? `
+    <div style="background:var(--bg3);border-radius:var(--r);padding:14px">
+      <div style="font-family:var(--mono);font-size:9px;font-weight:700;color:${berlinColor};letter-spacing:.1em;margin-bottom:10px">BERLIN CLASSIFICATION</div>
+      <div style="font-family:var(--mono);font-size:26px;font-weight:700;color:${berlinColor}">${pf}</div>
+      <div style="font-size:12px;color:var(--muted)">P/F ratio (PaO₂/FiO₂)</div>
+      <div style="font-size:12.5px;color:${berlinColor};font-weight:700;margin-top:6px">${berlin}</div>
+      ${berlinRecs ? `<div style="font-size:11.5px;color:var(--muted);margin-top:8px">${berlinRecs}</div>` : ''}
+    </div>` : ''}
+    ${dp !== null ? `
+    <div style="background:var(--bg3);border-radius:var(--r);padding:14px">
+      <div style="font-family:var(--mono);font-size:9px;font-weight:700;color:${dpColor};letter-spacing:.1em;margin-bottom:10px">DRIVING PRESSURE</div>
+      <div style="font-family:var(--mono);font-size:26px;font-weight:700;color:${dpColor}">${dp} cmH₂O</div>
+      <div style="font-size:12px;color:var(--muted)">ΔP = Pplat − PEEP</div>
+      <div style="font-size:12.5px;color:${dpColor};font-weight:700;margin-top:6px">${dpNote}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">Pplat ${pplat} cmH₂O: <span style="color:${pplatColor}">${pplatNote}</span></div>
+    </div>` : ''}
+  </div>
+  <div style="margin-top:12px;background:var(--bg3);border-radius:var(--r);padding:12px;font-size:12.5px;color:var(--muted)">
+    ⚠️ This calculator provides estimates to guide clinical decision-making. Always integrate with bedside clinical assessment, chest radiography, and arterial blood gas analysis. Driving pressure and Pplat measurements require passive ventilation without patient effort.
+  </div>`;
+}
+
+function PEEP_value(p) { return p || 0; }
+
+// ── WEANING ADVISOR ───────────────────────────────────────────────
+function calcWean() {
+  const rsbi  = parseFloat(document.getElementById('w-rsbi').value)  || null;
+  const p01   = parseFloat(document.getElementById('w-p01').value)   || null;
+  const fio2  = parseFloat(document.getElementById('w-fio2').value)  || null;
+  const peep  = parseFloat(document.getElementById('w-peep').value)  || null;
+  const spo2  = parseFloat(document.getElementById('w-spo2').value)  || null;
+  const hemo  = document.getElementById('w-hemo').value;
+  const cough = document.getElementById('w-cough').value;
+  const neuro = document.getElementById('w-neuro').value;
+
+  const criteria = [];
+  let failCount = 0;
+
+  function check(label, val, ok, borderText, failText) {
+    if (val === null) { criteria.push({ label, status:'unknown', text:'Not entered' }); return; }
+    if (ok(val)) { criteria.push({ label, status:'pass', text: typeof ok === 'function' ? '✓ Pass' : ok }); }
+    else if (borderText && val !== null) { criteria.push({ label, status:'border', text: borderText }); failCount += 0.5; }
+    else { criteria.push({ label, status:'fail', text: failText }); failCount++; }
+  }
+
+  if (rsbi !== null) {
+    const s = rsbi < 80 ? 'pass' : rsbi < 105 ? 'border' : 'fail';
+    criteria.push({ label:'RSBI (f/Vt)', status:s, text: rsbi < 80 ? `${rsbi} — excellent (< 80)` : rsbi < 105 ? `${rsbi} — borderline (80–105)` : `${rsbi} — high risk (≥ 105)` });
+    if (s === 'fail') failCount++;
+    if (s === 'border') failCount += 0.5;
+  }
+  if (p01 !== null) {
+    const s = p01 < 1 ? 'border' : p01 <= 3.5 ? 'pass' : 'fail';
+    criteria.push({ label:'P0.1 (cmH₂O)', status:s, text: p01 < 1 ? `${p01} — underassisted / low drive (<1)` : p01 <= 3.5 ? `${p01} — adequate (1–3.5)` : `${p01} — high respiratory drive (>3.5)` });
+    if (s === 'fail') failCount++;
+    if (s === 'border') failCount += 0.5;
+  }
+  if (fio2 !== null) {
+    const s = fio2 <= 0.4 ? 'pass' : fio2 <= 0.5 ? 'border' : 'fail';
+    criteria.push({ label:'FiO₂', status:s, text: fio2 <= 0.4 ? `${fio2} — acceptable (≤0.40)` : fio2 <= 0.5 ? `${fio2} — borderline (0.41–0.50)` : `${fio2} — too high (>0.50)` });
+    if (s === 'fail') failCount++;
+    if (s === 'border') failCount += 0.5;
+  }
+  if (peep !== null) {
+    const s = peep <= 5 ? 'pass' : peep <= 8 ? 'border' : 'fail';
+    criteria.push({ label:'PEEP (cmH₂O)', status:s, text: peep <= 5 ? `${peep} — acceptable (≤5)` : peep <= 8 ? `${peep} — borderline (6–8)` : `${peep} — high PEEP (>8)` });
+    if (s === 'fail') failCount++;
+    if (s === 'border') failCount += 0.5;
+  }
+  if (spo2 !== null) {
+    const s = spo2 >= 94 ? 'pass' : spo2 >= 90 ? 'border' : 'fail';
+    criteria.push({ label:'SpO₂', status:s, text: `${spo2}% — ${s === 'pass' ? 'adequate' : s === 'border' ? 'borderline (90–93%)' : 'critical (<90%)'}` });
+    if (s === 'fail') failCount++;
+    if (s === 'border') failCount += 0.5;
+  }
+
+  const hemoMap = { stable: {s:'pass', t:'Haemodynamically stable'}, mod:{s:'border',t:'Moderate vasopressor support'}, unstable:{s:'fail',t:'Haemodynamic instability — delay weaning'} };
+  const hemoR = hemoMap[hemo] || {s:'pass',t:''};
+  criteria.push({ label:'Haemodynamics', status:hemoR.s, text:hemoR.t });
+  if (hemoR.s === 'fail') failCount++;
+  if (hemoR.s === 'border') failCount += 0.5;
+
+  const coughMap = { strong:{s:'pass',t:'Adequate cough reflex'}, weak:{s:'border',t:'Weak cough — aspiration risk; consider speech therapy'}, absent:{s:'fail',t:'Absent cough — high aspiration risk; delay extubation'} };
+  const coughR = coughMap[cough];
+  criteria.push({ label:'Cough strength', status:coughR.s, text:coughR.t });
+  if (coughR.s === 'fail') failCount++;
+  if (coughR.s === 'border') failCount += 0.5;
+
+  const neuroMap = { ok:{s:'pass',t:'Alert, follows commands — ready'}, border:{s:'border',t:'Borderline arousal — reassess after SAT'}, fail:{s:'fail',t:'Inadequate neurological state — delay'} };
+  const neuroR = neuroMap[neuro];
+  criteria.push({ label:'Neurological', status:neuroR.s, text:neuroR.t });
+  if (neuroR.s === 'fail') failCount++;
+  if (neuroR.s === 'border') failCount += 0.5;
+
+  const verdict = failCount === 0 ? 'pass' : failCount <= 1 ? 'border' : 'fail';
+  const verdictText = verdict === 'pass' ? '✅ LIKELY READY FOR SBT — Proceed with 30–120 min spontaneous breathing trial' :
+                      verdict === 'border' ? '⚡ BORDERLINE — Optimise failing criteria, then re-evaluate within 24 h' :
+                      '🔴 NOT READY — Address failing criteria; do not proceed to extubation at this time';
+  const verdictColor = verdict === 'pass' ? 'var(--prot-l)' : verdict === 'border' ? 'var(--warn-l)' : 'var(--dang-l)';
+  const verdictBg = verdict === 'pass' ? 'var(--prot-d)' : verdict === 'border' ? 'var(--warn-d)' : 'var(--dang-d)';
+
+  const icons = { pass:'✓', border:'⚡', fail:'✗', unknown:'?' };
+  const colors = { pass:'var(--prot-l)', border:'var(--warn-l)', fail:'var(--dang-l)', unknown:'var(--muted)' };
+
+  const r = document.getElementById('wean-result');
+  r.style.display = 'block';
+  r.innerHTML = `
+    <div style="background:${verdictBg};border:1px solid ${verdictColor};border-radius:var(--r2);padding:14px 16px;margin-bottom:12px;text-align:center">
+      <div style="font-size:15px;font-weight:700;color:${verdictColor}">${verdictText}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px">
+      ${criteria.map(cr => `
+        <div style="background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:9px 12px;display:flex;gap:8px;align-items:flex-start">
+          <span style="font-size:14px;color:${colors[cr.status]};flex-shrink:0;margin-top:1px">${icons[cr.status]}</span>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.04em;margin-bottom:2px">${cr.label}</div>
+            <div style="font-size:12.5px;color:${colors[cr.status]}">${cr.text}</div>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div style="margin-top:10px;font-size:11.5px;color:var(--dim)">
+      Time targets should never override physiologic readiness. SBT = 30–120 min on CPAP 5 cmH₂O or T-piece. Reassess if SAT not yet performed.
+    </div>`;
+}
+
+// ── WAVEFORM ATLAS ────────────────────────────────────────────────
+const waveData = {
+  normal: {
+    title: 'Normal Pressure-Controlled Ventilation',
+    desc: 'Regular, consistent pressure waveform. Flow returns to zero before next breath. No patient effort artefacts.',
+    color: 'var(--prot-l)',
+    svg: `<svg viewBox="0 0 400 120" style="width:100%;max-height:140px">
+      <rect width="400" height="120" fill="#020806"/>
+      <text x="6" y="13" fill="#3ec870" font-size="9" font-family="IBM Plex Mono" font-weight="700">PRESSURE (cmH₂O)</text>
+      <line x1="0" y1="90" x2="400" y2="90" stroke="#1a3020" stroke-width="0.5"/>
+      <line x1="0" y1="50" x2="400" y2="50" stroke="#1a3020" stroke-width="0.5"/>
+      <path d="M20,90 L20,35 L70,35 L70,90 L120,90 L120,35 L170,35 L170,90 L220,90 L220,35 L270,35 L270,90 L320,90 L320,35 L370,35 L370,90" fill="none" stroke="#3ec870" stroke-width="2"/>
+      <text x="6" y="116" fill="#6e8c80" font-size="8" font-family="IBM Plex Mono">Insp</text>
+      <text x="70" y="116" fill="#6e8c80" font-size="8" font-family="IBM Plex Mono">Exp</text>
+    </svg>`
+  },
+  autoPEEP: {
+    title: 'Auto-PEEP (Intrinsic PEEP) — Flow Waveform',
+    desc: 'Expiratory flow does not return to zero before next breath begins → gas trapping → dynamic hyperinflation. Confirm with expiratory hold manoeuvre.',
+    color: 'var(--dang-l)',
+    svg: `<svg viewBox="0 0 400 130" style="width:100%;max-height:150px">
+      <rect width="400" height="130" fill="#020806"/>
+      <text x="6" y="13" fill="#f87878" font-size="9" font-family="IBM Plex Mono" font-weight="700">FLOW (L/min)</text>
+      <line x1="0" y1="65" x2="400" y2="65" stroke="#2a1010" stroke-width="1"/>
+      <text x="3" y="63" fill="#3a5048" font-size="7" font-family="IBM Plex Mono">0</text>
+      <path d="M20,65 L20,20 Q35,20 40,65 Q50,110 80,85 L95,65 L95,20 Q110,20 115,65 Q125,110 155,88 L170,65 L170,20 Q185,20 190,65 Q200,110 230,90 L245,65 L245,20 Q260,20 265,65 Q275,110 305,91 L320,65 L320,20 Q335,20 340,65 Q350,110 380,92" fill="none" stroke="#f87878" stroke-width="2"/>
+      <text x="80" y="80" fill="#f87878" font-size="8" font-family="IBM Plex Mono">↑ flow not → 0</text>
+      <text x="6" y="125" fill="#6e8c80" font-size="8" font-family="IBM Plex Mono">Auto-PEEP: expiratory flow interrupted before reaching baseline → gas trapping</text>
+    </svg>`
+  },
+  double: {
+    title: 'Double Triggering',
+    desc: 'Patient effort triggers a second machine breath during exhalation of the first. Results in breath stacking and ↑ Vt. Causes: short inspiratory time relative to neural Ti, high respiratory drive.',
+    color: 'var(--warn-l)',
+    svg: `<svg viewBox="0 0 400 130" style="width:100%;max-height:150px">
+      <rect width="400" height="130" fill="#020806"/>
+      <text x="6" y="13" fill="#f5c85a" font-size="9" font-family="IBM Plex Mono" font-weight="700">PRESSURE (cmH₂O)</text>
+      <line x1="0" y1="90" x2="400" y2="90" stroke="#2a2010" stroke-width="0.5"/>
+      <path d="M20,90 L20,35 L55,35 L55,90 L60,90 L60,35 L95,35 L95,90 L160,90 L160,35 L195,35 L195,90 L200,90 L200,35 L235,35 L235,90 L300,90 L300,35 L335,35 L335,90 L340,90 L340,35 L375,35 L375,90" fill="none" stroke="#f5c85a" stroke-width="2"/>
+      <text x="45" y="25" fill="#f5c85a" font-size="8" font-family="IBM Plex Mono">Double</text>
+      <text x="190" y="25" fill="#f5c85a" font-size="8" font-family="IBM Plex Mono">Double</text>
+      <text x="6" y="125" fill="#6e8c80" font-size="8" font-family="IBM Plex Mono">Fix: ↑ inspiratory time · ↓ RR · adjust trigger sensitivity · optimise sedation</text>
+    </svg>`
+  },
+  ineff: {
+    title: 'Ineffective Triggering (Ineffective Effort)',
+    desc: 'Patient inspiratory effort visible in flow or pressure waveform but fails to trigger a machine breath. Common with high auto-PEEP or when patient effort is below trigger threshold.',
+    color: 'var(--adv-l)',
+    svg: `<svg viewBox="0 0 400 130" style="width:100%;max-height:150px">
+      <rect width="400" height="130" fill="#020806"/>
+      <text x="6" y="13" fill="#b890f8" font-size="9" font-family="IBM Plex Mono" font-weight="700">FLOW (L/min)</text>
+      <line x1="0" y1="65" x2="400" y2="65" stroke="#1a1030" stroke-width="0.5"/>
+      <path d="M20,65 L20,20 Q35,20 50,65 L65,65 L65,20 Q80,20 95,65 L110,65 L110,20 Q125,20 140,65 L155,65 L155,20 Q170,20 185,65 L200,65 L200,20 Q215,20 230,65 L245,65" fill="none" stroke="#b890f8" stroke-width="2"/>
+      <path d="M50,65 Q55,75 60,65" fill="none" stroke="#e85050" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <path d="M110,65 Q115,75 120,65" fill="none" stroke="#e85050" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <path d="M170,65 Q175,75 180,65" fill="none" stroke="#e85050" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="45" y="85" fill="#e85050" font-size="7" font-family="IBM Plex Mono">effort</text>
+      <text x="6" y="125" fill="#6e8c80" font-size="8" font-family="IBM Plex Mono">Fix: ↓ auto-PEEP (↑ Te, ↓ RR) · ↓ trigger threshold · optimise PS level</text>
+    </svg>`
+  },
+  flowStarv: {
+    title: 'Flow Starvation (Volume-Controlled)',
+    desc: 'In VCV mode: patient demand exceeds set flow → concave pressure-time waveform ("scooped"). Patient actively pulling more flow than ventilator delivers. Indicates high respiratory drive or insufficient flow setting.',
+    color: 'var(--blu-l)',
+    svg: `<svg viewBox="0 0 400 130" style="width:100%;max-height:150px">
+      <rect width="400" height="130" fill="#020806"/>
+      <text x="6" y="13" fill="#82baf5" font-size="9" font-family="IBM Plex Mono" font-weight="700">PRESSURE (cmH₂O) — VCV mode</text>
+      <line x1="0" y1="90" x2="400" y2="90" stroke="#0a1525" stroke-width="0.5"/>
+      <text x="250" y="30" fill="#82baf5" font-size="8" font-family="IBM Plex Mono">Expected ----</text>
+      <text x="250" y="42" fill="#e85050" font-size="8" font-family="IBM Plex Mono">Actual ——</text>
+      <path d="M20,90 L20,35 L70,35 L70,90 L120,90 L120,35 L170,35 L170,90" fill="none" stroke="#82baf5" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <path d="M20,90 L20,40 Q45,55 70,90 L120,90 L120,40 Q145,55 170,90" fill="none" stroke="#e85050" stroke-width="2"/>
+      <text x="6" y="125" fill="#6e8c80" font-size="8" font-family="IBM Plex Mono">Fix: ↑ inspiratory flow · switch to PCV · optimise sedation · consider PS augmentation</text>
+    </svg>`
+  },
+  reverse: {
+    title: 'Reverse Triggering',
+    desc: 'Ventilator delivery triggers neural inspiratory effort (entrainment). Seen in deeply sedated patients. Can cause breath stacking and VILI. May be mistaken for patient-triggered breaths.',
+    color: 'var(--dang-l)',
+    svg: `<svg viewBox="0 0 400 130" style="width:100%;max-height:150px">
+      <rect width="400" height="130" fill="#020806"/>
+      <text x="6" y="13" fill="#f87878" font-size="9" font-family="IBM Plex Mono" font-weight="700">FLOW (L/min) — Reverse triggering</text>
+      <line x1="0" y1="65" x2="400" y2="65" stroke="#2a1010" stroke-width="0.5"/>
+      <path d="M20,65 L20,20 Q35,20 50,65 L80,65 L80,20 Q95,20 110,65 L140,65 L140,20 Q155,20 170,65 L200,65 L200,20 Q215,20 230,65" fill="none" stroke="#b890f8" stroke-width="1.5" stroke-dasharray="4,2"/>
+      <path d="M50,65 Q55,100 75,90 L80,65" fill="none" stroke="#f87878" stroke-width="2"/>
+      <path d="M110,65 Q115,100 135,90 L140,65" fill="none" stroke="#f87878" stroke-width="2"/>
+      <path d="M170,65 Q175,100 195,90 L200,65" fill="none" stroke="#f87878" stroke-width="2"/>
+      <text x="42" y="110" fill="#f87878" font-size="7" font-family="IBM Plex Mono">neural</text>
+      <text x="6" y="125" fill="#6e8c80" font-size="8" font-family="IBM Plex Mono">Fix: optimise sedation depth · NMB in selected refractory severe ARDS · airway occlusion test to confirm</text>
+    </svg>`
+  }
+};
+
+function showWave(id) {
+  document.querySelectorAll('.wave-btn').forEach(b => {
+    b.style.background = 'var(--bg3)';
+    b.style.borderColor = 'var(--rim)';
+    b.style.color = 'var(--muted)';
+  });
+  const btn = document.getElementById('wb-' + id);
+  if (btn) {
+    btn.style.background = 'var(--adv-d)';
+    btn.style.borderColor = 'var(--adv)';
+    btn.style.color = 'var(--adv-l)';
+  }
+  const w = waveData[id];
+  if (!w) return;
+  const d = document.getElementById('wave-display');
+  d.innerHTML = `
+    <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:${w.color};margin-bottom:8px;letter-spacing:.04em">${w.title}</div>
+    ${w.svg}
+    <div style="margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.6">${w.desc}</div>`;
+}
+
+// Auto-style wave buttons and show first waveform on load
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.wave-btn').forEach(b => {
+    b.style.background = 'var(--bg3)';
+    b.style.border = '1px solid var(--rim)';
+    b.style.borderRadius = '8px';
+    b.style.padding = '7px 14px';
+    b.style.color = 'var(--muted)';
+    b.style.fontSize = '12px';
+    b.style.fontWeight = '600';
+    b.style.cursor = 'pointer';
+    b.style.fontFamily = 'var(--sans)';
+    b.style.transition = 'all .15s';
+  });
+  showWave('normal');
+});
 </script>
 </body>
 </html>
