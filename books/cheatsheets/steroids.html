@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Systemic Corticosteroid Therapy | Clinical Decision Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080f1a;--bg2:#0d1826;--bg3:#111f30;--bg4:#162438;
+  --rim:rgba(255,255,255,.07);
+  --text:#d8e8f8;--muted:#6a88a8;--dim:#3a5068;
+  --cyan:#00c8e0;--cyan-d:rgba(0,200,224,.12);--cyan-b:rgba(0,200,224,.25);
+  --red:#f05060;--red-d:rgba(240,80,96,.13);
+  --blue:#4090f0;--blue-d:rgba(64,144,240,.13);
+  --green:#30c880;--green-d:rgba(48,200,128,.12);
+  --amber:#f0a030;--amber-d:rgba(240,160,48,.13);
+  --purple:#a060f0;--purple-d:rgba(160,96,240,.13);
+  --mono:'Space Mono',monospace;--sans:'Space Grotesk',sans-serif;
+  --r:12px;--r2:20px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.65;overflow-x:hidden;min-height:100vh}
+::selection{background:rgba(0,200,224,.3)}
+
+.hdr{background:linear-gradient(135deg,#060d18 0%,#0a1830 55%,#0d2040 100%);border-bottom:1px solid var(--rim);padding:20px 20px 16px;text-align:center;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(0,200,224,.18) 0%,transparent 65%);pointer-events:none}
+.hdr-title{font-family:var(--mono);font-size:19px;font-weight:700;letter-spacing:.05em;color:var(--cyan);text-shadow:0 0 28px rgba(0,200,224,.4);position:relative}
+.hdr-title span{color:var(--text);opacity:.7}
+.hdr-sub{font-size:12.5px;color:var(--muted);margin-top:5px;position:relative}
+.hdr-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:10px;position:relative}
+.hdr-bdg{font-size:10.5px;font-weight:600;padding:3px 11px;border-radius:20px;letter-spacing:.03em}
+.hdr-bdg-c{background:var(--cyan-d);color:var(--cyan);border:1px solid var(--cyan-b)}
+.hdr-bdg-r{background:var(--red-d);color:var(--red);border:1px solid rgba(240,80,96,.25)}
+.hdr-bdg-g{background:var(--green-d);color:var(--green);border:1px solid rgba(48,200,128,.25)}
+.hdr-bdg-a{background:var(--amber-d);color:var(--amber);border:1px solid rgba(240,160,48,.25)}
+.hdr-bdg-p{background:var(--purple-d);color:var(--purple);border:1px solid rgba(160,96,240,.25)}
+
+.tab-grid-wrap{background:var(--bg2);border-bottom:1px solid var(--rim);padding:10px 14px;position:sticky;top:0;z-index:200}
+.tab-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:900px;margin:0 auto}
+.tg{display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:8px 4px 6px;cursor:pointer;transition:all .16s;font-family:inherit}
+.tg:hover{border-color:var(--cyan-b);background:var(--cyan-d)}
+.tg.active{background:var(--cyan-d);border-color:var(--cyan);box-shadow:0 0 0 1px var(--cyan)}
+.tg-icon{font-size:17px;line-height:1}
+.tg-lbl{font-size:9.5px;font-weight:600;color:var(--muted);text-align:center;line-height:1.25;letter-spacing:.02em}
+.tg.active .tg-lbl{color:var(--cyan)}.tg:hover .tg-lbl{color:var(--text)}
+
+.page{max-width:1100px;margin:0 auto;padding:20px 18px 60px}
+.tab{display:none}.tab.active{display:block}
+
+.sh{margin-bottom:16px}
+.sh h2{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--cyan);letter-spacing:.04em;display:flex;align-items:center;gap:9px}
+.sh p{color:var(--muted);font-size:12.5px;margin-top:4px}
+.stitle{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:22px 0 10px;padding-left:10px;border-left:2px solid var(--cyan)}
+
+.card{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:18px;margin-bottom:14px}
+.card h3{font-size:13.5px;font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.card h4{font-size:13px;font-weight:700;color:var(--text);margin:12px 0 5px}
+.card p,.card li{color:var(--muted);font-size:13px;line-height:1.65}
+.card ul,.card ol{padding-left:17px}.card li{margin-bottom:5px}.card li strong{color:var(--text)}
+
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+
+.box{border-radius:var(--r);padding:11px 14px;margin:10px 0;font-size:13px;line-height:1.6;color:var(--text)}
+.box-cyan  {background:var(--cyan-d);border-left:3px solid var(--cyan)}
+.box-red   {background:var(--red-d);border-left:3px solid var(--red)}
+.box-blue  {background:var(--blue-d);border-left:3px solid var(--blue)}
+.box-green {background:var(--green-d);border-left:3px solid var(--green)}
+.box-amber {background:var(--amber-d);border-left:3px solid var(--amber)}
+.box-purple{background:var(--purple-d);border-left:3px solid var(--purple)}
+.box strong{font-weight:700}
+.box-cyan strong{color:var(--cyan)}.box-red strong{color:var(--red)}.box-blue strong{color:var(--blue)}
+.box-green strong{color:var(--green)}.box-amber strong{color:var(--amber)}.box-purple strong{color:var(--purple)}
+
+.tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--rim);margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:400px}
+th{background:var(--bg3);color:var(--cyan);font-weight:700;padding:8px 10px;text-align:left;border-bottom:1px solid var(--rim);letter-spacing:.03em;font-family:var(--mono);white-space:nowrap}
+td{padding:7px 10px;border-bottom:1px solid var(--rim);color:var(--muted);vertical-align:top;line-height:1.5}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(0,200,224,.03)}
+td strong{color:var(--text)}
+
+/* CALCULATOR */
+.calc-panel{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:20px;margin-bottom:16px}
+.calc-panel h3{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--cyan);letter-spacing:.04em;margin-bottom:14px;text-transform:uppercase}
+.calc-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;align-items:flex-end}
+.calc-field{flex:1;min-width:160px}
+.calc-field label{display:block;font-size:11.5px;font-weight:600;color:var(--muted);margin-bottom:5px;letter-spacing:.02em}
+.calc-field input,.calc-field select{width:100%;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:9px 12px;color:var(--text);font-family:var(--sans);font-size:13.5px;transition:.15s;outline:none}
+.calc-field input:focus,.calc-field select:focus{border-color:var(--cyan);box-shadow:0 0 0 2px var(--cyan-d)}
+.calc-field select option{background:var(--bg3)}
+.btn-calc{background:var(--cyan);color:#000;border:none;border-radius:var(--r);padding:10px 20px;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--sans);transition:.15s;white-space:nowrap}
+.btn-calc:hover{background:var(--cyan-l, #5de8f8)}
+.calc-result{background:var(--bg3);border:1px solid var(--cyan-b);border-radius:var(--r);padding:14px 16px;margin-top:14px;display:none}
+.calc-result .result-main{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--cyan);margin-bottom:6px}
+.calc-result p{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.6}
+.calc-result .result-sub{font-size:13px;color:var(--muted);margin-top:8px}
+.risk-low{color:var(--green)}.risk-mid{color:var(--amber)}.risk-high{color:var(--red)}
+
+/* TAPER TABLE */
+.taper-table{font-family:var(--mono);font-size:12px}
+.taper-table td:first-child{color:var(--muted);white-space:nowrap}
+.taper-table td:nth-child(2){color:var(--cyan);font-weight:700}
+.taper-table td:nth-child(3){color:var(--muted)}
+
+/* DRUG CARD */
+.drug-pill{display:inline-flex;align-items:center;gap:5px;background:var(--bg3);border:1px solid var(--rim);border-radius:20px;padding:3px 11px;font-size:11.5px;font-weight:600;color:var(--muted);margin:2px}
+.drug-pill.gc-high{color:var(--red);border-color:rgba(240,80,96,.25)}
+.drug-pill.gc-med{color:var(--amber);border-color:rgba(240,160,48,.25)}
+.drug-pill.gc-low{color:var(--green);border-color:rgba(48,200,128,.25)}
+
+/* PROTOCOL CARD */
+.protocol-card{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r2);padding:14px 16px;margin-bottom:10px}
+.protocol-card h4{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--cyan);letter-spacing:.04em;margin-bottom:8px;text-transform:uppercase}
+.protocol-card .regimen{font-family:var(--mono);font-size:13px;color:var(--text);margin:5px 0;padding:5px 10px;background:var(--bg);border-radius:8px;border-left:2px solid var(--cyan)}
+.protocol-card .evidence{font-size:11px;color:var(--dim);margin-top:4px}
+.ev-a{color:var(--green)}.ev-b{color:var(--amber)}.ev-c{color:var(--muted)}
+
+/* MONITORING TABLE */
+.mon-check{color:var(--green);font-weight:700}
+.mon-opt{color:var(--amber)}
+
+.bdg{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin:1px;letter-spacing:.03em}
+.bdg-c{background:var(--cyan-d);color:var(--cyan)}.bdg-r{background:var(--red-d);color:var(--red)}
+.bdg-g{background:var(--green-d);color:var(--green)}.bdg-a{background:var(--amber-d);color:var(--amber)}
+.bdg-p{background:var(--purple-d);color:var(--purple)}.bdg-b{background:var(--blue-d);color:var(--blue)}
+
+.dv{height:1px;background:var(--rim);margin:18px 0}
+.footnote{text-align:center;font-size:11px;color:var(--dim);padding:20px 0 0;border-top:1px solid var(--rim);margin-top:28px}
+
+@media(max-width:640px){
+  .hdr-title{font-size:15px}.tab-grid{grid-template-columns:repeat(5,1fr)}
+  .g2,.g3,.g4{grid-template-columns:1fr}.calc-row{flex-direction:column}
+}
+
+/* WIZARD */
+.wiz-steps{display:flex;gap:0;margin-bottom:20px;border-radius:var(--r);overflow:hidden;border:1px solid var(--rim)}
+.wiz-step{flex:1;text-align:center;padding:9px 4px;font-size:11px;font-weight:700;font-family:var(--mono);letter-spacing:.03em;color:var(--dim);background:var(--bg3);border-right:1px solid var(--rim);transition:.2s;cursor:pointer}
+.wiz-step:last-child{border-right:none}
+.wiz-step.active{background:var(--cyan-d);color:var(--cyan)}
+.wiz-step.done{background:rgba(48,200,128,.1);color:var(--green)}
+.wiz-panel{display:none}.wiz-panel.active{display:block}
+.wiz-title{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--cyan);letter-spacing:.04em;margin-bottom:14px;text-transform:uppercase}
+.wiz-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:14px}
+.wiz-opt{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:10px 12px;cursor:pointer;transition:.15s;font-size:12.5px;color:var(--muted)}
+.wiz-opt:hover{border-color:var(--cyan-b);background:var(--cyan-d);color:var(--text)}
+.wiz-opt.sel{border-color:var(--cyan);background:var(--cyan-d);color:var(--cyan);font-weight:700}
+.wiz-opt .opt-icon{font-size:18px;display:block;margin-bottom:4px}
+.wiz-opt .opt-label{font-size:12px;font-weight:700;color:inherit;display:block}
+.wiz-opt .opt-sub{font-size:10.5px;color:var(--muted);display:block;margin-top:2px}
+.wiz-nav{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;align-items:center}
+.btn-wiz-next{background:var(--cyan);color:#000;border:none;border-radius:var(--r);padding:9px 20px;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--sans)}
+.btn-wiz-back{background:var(--bg3);color:var(--muted);border:1px solid var(--rim);border-radius:var(--r);padding:9px 20px;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--sans)}
+.btn-wiz-next:hover{background:#5de8f8}.btn-wiz-back:hover{color:var(--text)}
+.sev-btn{flex:1;min-width:120px;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:11px 8px;text-align:center;cursor:pointer;transition:.15s}
+.sev-btn:hover{border-color:var(--cyan-b)}.sev-btn.sel{border-color:var(--cyan);background:var(--cyan-d)}
+.sev-btn .sev-label{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.04em}
+.sev-mild .sev-label{color:var(--green)}.sev-mod .sev-label{color:var(--amber)}
+.sev-sev .sev-label{color:var(--red)}.sev-life .sev-label{color:#ff3030}
+/* Protocol output */
+.proto-result{background:var(--bg3);border:1px solid var(--cyan-b);border-radius:var(--r2);padding:18px;margin-top:10px;display:none}
+.proto-result h3{font-family:var(--mono);font-size:13px;color:var(--cyan);letter-spacing:.04em;margin-bottom:12px}
+.regimen-block{background:var(--bg);border-left:3px solid var(--cyan);border-radius:0 var(--r) var(--r) 0;padding:10px 14px;margin:8px 0;font-family:var(--mono);font-size:13px;color:var(--text)}
+.regimen-block .reg-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.ev-pill{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin:2px}
+.ev-A{background:var(--green-d);color:var(--green)}.ev-B{background:var(--amber-d);color:var(--amber)}.ev-C{background:var(--bg3);color:var(--muted)}
+
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-title">SYSTEMIC CORTICOSTEROID THERAPY <span>/</span> CDSS</div>
+  <div class="hdr-sub">Clinical Decision Support &middot; Dose Conversion &middot; Tapering Calculator &middot; HPA Suppression Risk &middot; Stress Dosing &middot; Protocols by Indication</div>
+  <div class="hdr-badges">
+    <span class="hdr-bdg hdr-bdg-c">Pharmacology</span>
+    <span class="hdr-bdg hdr-bdg-a">Calculators</span>
+    <span class="hdr-bdg hdr-bdg-g">Clinical Protocols</span>
+    <span class="hdr-bdg hdr-bdg-r">Tapering Assistant</span>
+    <span class="hdr-bdg hdr-bdg-p">Safety &amp; Monitoring</span>
+  </div>
+</div>
+
+<div class="tab-grid-wrap">
+  <div class="tab-grid">
+    <button class="tg active" onclick="gt(0,this)"><span class="tg-icon">&#128138;</span><span class="tg-lbl">Pharmacology &amp; Reference</span></button>
+    <button class="tg" onclick="gt(1,this)"><span class="tg-icon">&#128290;</span><span class="tg-lbl">Calculators</span></button>
+    <button class="tg" onclick="gt(2,this)"><span class="tg-icon">&#128203;</span><span class="tg-lbl">Clinical Protocols</span></button>
+    <button class="tg" onclick="gt(3,this)"><span class="tg-icon">&#128200;</span><span class="tg-lbl">Tapering Assistant</span></button>
+    <button class="tg" onclick="gt(4,this)"><span class="tg-icon">&#9888;&#65039;</span><span class="tg-lbl">Safety &amp; Monitoring</span></button>
+  </div>
+</div>
+
+<main class="page">
+
+<!-- ════ TAB 0: PHARMACOLOGY ════════════════════════════════════ -->
+<section class="tab active" id="t0">
+  <div class="sh"><h2>&#128138; Pharmacology &amp; Reference</h2><p>Glucocorticoid receptor pharmacology, equivalence table, individual drug profiles, and classification.</p></div>
+
+  <div class="stitle">Mechanism of Action</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--cyan)">&#129516; Glucocorticoid Receptor Signalling</h3>
+      <ul>
+        <li><strong>Genomic (slow, hours&ndash;days):</strong> GC binds cytoplasmic GR &rarr; nuclear translocation &rarr; GRE binding &rarr; transactivation (anti-inflammatory proteins: lipocortin-1, IL-10) or transrepression (AP-1, NF-&kappa;B &rarr; &#8595; IL-1, IL-6, TNF, COX-2, iNOS)</li>
+        <li><strong>Non-genomic (fast, minutes):</strong> Membrane-associated GR &rarr; rapid suppression of arachidonic acid release; explains immediate haemodynamic effects of high-dose/pulse therapy</li>
+        <li><strong>HPA-axis feedback:</strong> Cortisol (endogenous) / exogenous GCs suppress CRH and ACTH &rarr; adrenal cortex atrophy with prolonged use</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--amber)">&#9888;&#65039; HPA Axis &mdash; What Suppresses and What Doesn&rsquo;t</h3>
+      <div class="tw" style="margin:0"><table>
+        <tr><th>Risk of suppression</th><th>Criteria</th></tr>
+        <tr><td><span style="color:var(--green);font-weight:700">Low</span></td><td>&lt;10 mg prednisone-equivalent/day for any duration, OR any dose for &lt;3 weeks, OR single morning dose &lt;5 mg</td></tr>
+        <tr><td><span style="color:var(--amber);font-weight:700">Intermediate</span></td><td>10&ndash;20 mg prednisone-equivalent/day for &gt;3 weeks; or any dose with evening or multiple daily dosing for &gt;3 weeks</td></tr>
+        <tr><td><span style="color:var(--red);font-weight:700">High</span></td><td>&gt;20 mg/day for &gt;3 weeks; Cushing phenotype present; early morning cortisol &lt;100 nmol/L (&lt;3.6 &mu;g/dL)</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="stitle">Corticosteroid Equivalence Table</div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="tw" style="margin:0;border:none">
+      <table>
+        <thead><tr>
+          <th>Drug</th><th>Equiv. dose (mg)</th><th>GC potency</th><th>MC potency</th><th>Plasma t&frac12;</th><th>Biologic duration</th><th>MC effect</th>
+        </tr></thead>
+        <tbody>
+          <tr><td><strong>Cortisone</strong></td><td>25</td><td>0.8</td><td>0.8</td><td>0.5 h</td><td>8&ndash;12 h</td><td><span class="bdg bdg-a">Moderate</span></td></tr>
+          <tr><td><strong>Hydrocortisone</strong> (cortisol)</td><td>20</td><td>1 (reference)</td><td>1 (reference)</td><td>1.5&ndash;2 h</td><td>8&ndash;12 h</td><td><span class="bdg bdg-a">Moderate</span></td></tr>
+          <tr><td><strong>Prednisone</strong></td><td>5</td><td>4</td><td>0.8</td><td>3.4&ndash;3.8 h (prodrug)</td><td>12&ndash;36 h</td><td><span class="bdg bdg-g">Low</span></td></tr>
+          <tr><td><strong>Prednisolone</strong></td><td>5</td><td>4</td><td>0.8</td><td>2&ndash;4 h</td><td>12&ndash;36 h</td><td><span class="bdg bdg-g">Low</span></td></tr>
+          <tr><td><strong>Methylprednisolone</strong></td><td>4</td><td>5</td><td>0.5</td><td>2.5&ndash;3.5 h</td><td>12&ndash;36 h</td><td><span class="bdg bdg-g">Minimal</span></td></tr>
+          <tr><td><strong>Triamcinolone</strong></td><td>4</td><td>5</td><td>0</td><td>2&ndash;5 h</td><td>24&ndash;36 h</td><td><span class="bdg bdg-g">None</span></td></tr>
+          <tr><td><strong>Dexamethasone</strong></td><td>0.75</td><td>25</td><td>0</td><td>3&ndash;4.5 h</td><td>36&ndash;72 h</td><td><span class="bdg bdg-g">None</span></td></tr>
+          <tr><td><strong>Betamethasone</strong></td><td>0.6</td><td>25&ndash;30</td><td>0</td><td>5&ndash;6 h</td><td>36&ndash;72 h</td><td><span class="bdg bdg-g">None</span></td></tr>
+          <tr><td><strong>Fludrocortisone</strong></td><td>&mdash; (MC only)</td><td>15</td><td>150</td><td>3.5 h</td><td>18&ndash;36 h</td><td><span class="bdg bdg-r">Very high</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="padding:8px 14px;font-size:11px;color:var(--dim)">GC = glucocorticoid potency (relative to hydrocortisone 1). MC = mineralocorticoid potency. Prednisone is a prodrug converted to prednisolone in the liver &mdash; avoid in severe hepatic failure.</div>
+  </div>
+
+  <div class="stitle">Individual Drug Profiles</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--cyan)">Hydrocortisone (Cortisol)</h3>
+      <ul>
+        <li><strong>Routes:</strong> PO, IV, IM, topical</li>
+        <li><strong>Key uses:</strong> Adrenal insufficiency replacement, adrenal crisis, stress dosing, septic shock, anaphylaxis</li>
+        <li><strong>Advantage:</strong> Has mineralocorticoid activity &rarr; preferred for adrenal replacement. Short biologic half-life allows physiological pulsatile dosing.</li>
+        <li><strong>Renal failure:</strong> No adjustment; prefer over dexamethasone in AI replacement</li>
+        <li><strong>Liver failure:</strong> Safe (unlike prednisone which requires hepatic activation)</li>
+        <li><strong>Pregnancy:</strong> Drug of choice for adrenal insufficiency (converted to inactive cortisone by placental 11&beta;-HSD2)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--blue)">Prednisolone / Prednisone</h3>
+      <ul>
+        <li><strong>Routes:</strong> PO (prednisone prodrug), IV/PO (prednisolone)</li>
+        <li><strong>Key uses:</strong> Most chronic inflammatory diseases (RA, SLE, PMR, GCA, IBD, asthma, MS relapse), organ transplant maintenance</li>
+        <li><strong>Advantage:</strong> Long clinical experience, flexible dosing, once-daily AM dosing for HPA preservation</li>
+        <li><strong>Liver failure:</strong> Use prednisolone (not prednisone) &mdash; prednisone requires hepatic conversion</li>
+        <li><strong>Pregnancy:</strong> Acceptable; low placental transfer (11&beta;-HSD2 inactivates ~88%)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--purple)">Methylprednisolone (MP)</h3>
+      <ul>
+        <li><strong>Routes:</strong> PO, IV, IM; pulse IV (500&ndash;1000 mg)</li>
+        <li><strong>Key uses:</strong> MS relapse, SLE pulse, transplant rejection, severe autoimmune disease, post-cardiac surgery</li>
+        <li><strong>Advantage:</strong> Minimal mineralocorticoid effect (preferred in fluid-restricted/cardiac patients). Good CNS penetration.</li>
+        <li><strong>Pulse therapy:</strong> 500&ndash;1000 mg IV over 30&ndash;60 min daily &times; 3 days. Monitor: BP, glucose, ECG (QT).</li>
+        <li><strong>Cardiac surgery:</strong> Used perioperatively for CPB-related SIRS, vasoplegic syndrome (see Protocols)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--amber)">Dexamethasone</h3>
+      <ul>
+        <li><strong>Routes:</strong> PO, IV, IM</li>
+        <li><strong>Key uses:</strong> Cerebral oedema, croup, PONV, COVID-19 (RECOVERY trial), chemotherapy anti-emesis, foetal lung maturity, dexamethasone suppression test, HPA assessment, spinal cord compression</li>
+        <li><strong>Advantage:</strong> Highest GC potency. Zero mineralocorticoid activity. Long biologic half-life (36&ndash;72 h) &rarr; once daily dosing.</li>
+        <li><strong>Disadvantage:</strong> Most HPA-suppressive per mg. Poorest choice for long-term replacement (no MC activity).</li>
+        <li><strong>Crosses placenta fully</strong> (NOT inactivated by 11&beta;-HSD2) &rarr; use intentionally for foetal lung maturation or foetal heart block treatment</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--green)">Fludrocortisone</h3>
+      <ul>
+        <li><strong>Route:</strong> PO only</li>
+        <li><strong>Key uses:</strong> Mineralocorticoid replacement in primary adrenal insufficiency (Addison&rsquo;s disease), congenital adrenal hyperplasia, orthostatic hypotension</li>
+        <li><strong>Dose:</strong> 0.05&ndash;0.2 mg/day. Adjust to supine/standing BP, sodium, potassium, renin level.</li>
+        <li><strong>Important:</strong> Do NOT increase during illness (MC replacement dose remains constant). Only hydrocortisone (GC) dose is doubled in illness.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--red)">Pulse Therapy</h3>
+      <ul>
+        <li><strong>Definition:</strong> Very high-dose IV GC over short period (typically 3 consecutive days)</li>
+        <li><strong>Standard doses:</strong> MP 250 mg / 500 mg / 1000 mg IV over 30&ndash;60 min daily &times; 3 days</li>
+        <li><strong>Indications:</strong> MS relapse, SLE nephritis, severe vasculitis, transplant rejection, ADEM, optic neuritis, rapidly progressive GN</li>
+        <li><strong>Monitoring:</strong> BP, glucose hourly, ECG (arrhythmia with rapid IV), electrolytes, infection screen</li>
+      </ul>
+      <div class="box box-red"><strong>Absolute contraindications to pulse therapy:</strong> Active untreated infection (including TB, fungal) &middot; Active GI bleeding &middot; Severe uncontrolled DM &middot; Psychosis (active) &middot; Heart failure decompensation (relative)</div>
+    </div>
+  </div>
+
+  <div class="footnote">Schimmer BP, Funder JW. ACTH, Adrenal Steroids, and Pharmacology of the Adrenal Cortex. In: Goodman &amp; Gilman&rsquo;s 13th ed. &middot; Dinsen S et al. Why glucocorticoid withdrawal may sometimes need to be gradual. BMJ 2013. &middot; Furst DE &amp; Saag KG. Glucocorticoid Withdrawal. UpToDate 2024.</div>
+</section>
+
+
+<!-- ════ TAB 1: CALCULATORS ════════════════════════════════════ -->
+<section class="tab" id="t1">
+  <div class="sh"><h2>&#128290; Clinical Calculators</h2><p>Steroid conversion, HPA suppression risk, and perioperative stress dose calculators.</p></div>
+
+
+  <!-- THERAPY WIZARD -->
+  <div class="calc-panel" id="wizardPanel">
+    <h3>&#127358; Therapy Selection Wizard &mdash; Start Steroid Therapy</h3>
+    <p style="color:var(--muted);font-size:12.5px;margin-bottom:16px">Select patient parameters, indication, and severity to receive evidence-based dosing recommendations with guideline references.</p>
+
+    <div class="wiz-steps">
+      <div class="wiz-step active" id="ws0">1 &mdash; PATIENT</div>
+      <div class="wiz-step" id="ws1">2 &mdash; INDICATION</div>
+      <div class="wiz-step" id="ws2">3 &mdash; SEVERITY</div>
+      <div class="wiz-step" id="ws3">4 &mdash; REGIMEN</div>
+    </div>
+
+    <!-- Step 0: Patient -->
+    <div class="wiz-panel active" id="wp0">
+      <div class="wiz-title">Step 1 &mdash; Patient Parameters</div>
+      <div class="calc-row">
+        <div class="calc-field"><label>Weight (kg)</label><input type="number" id="wWt" value="70" min="30" max="200"></div>
+        <div class="calc-field"><label>Age (years)</label><input type="number" id="wAge" value="55" min="1" max="100"></div>
+        <div class="calc-field">
+          <label>Biological sex</label>
+          <select id="wSex"><option value="M">Male</option><option value="F">Female</option></select>
+        </div>
+        <div class="calc-field">
+          <label>Pregnant?</label>
+          <select id="wPreg"><option value="no">No / N/A</option><option value="yes">Yes</option></select>
+        </div>
+      </div>
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>Hepatic function</label>
+          <select id="wLiver"><option value="normal">Normal</option><option value="impaired">Impaired / Cirrhosis</option><option value="severe">Severe (Child-Pugh C)</option></select>
+        </div>
+        <div class="calc-field">
+          <label>Renal function</label>
+          <select id="wRenal"><option value="normal">Normal</option><option value="ckd">CKD (eGFR &lt;60)</option><option value="esrd">ESRD / Dialysis</option></select>
+        </div>
+        <div class="calc-field">
+          <label>Diabetes mellitus?</label>
+          <select id="wDM"><option value="no">No</option><option value="yes">Yes</option></select>
+        </div>
+        <div class="calc-field">
+          <label>Active infection?</label>
+          <select id="wInfx"><option value="no">No / Treated</option><option value="yes">Yes (untreated)</option></select>
+        </div>
+      </div>
+      <div class="wiz-nav"><button class="btn-wiz-next" onclick="wizNext(0)">Next &rarr;</button></div>
+    </div>
+
+    <!-- Step 1: Indication -->
+    <div class="wiz-panel" id="wp1">
+      <div class="wiz-title">Step 2 &mdash; Select Indication</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.06em;margin-bottom:8px">PULMONARY</div>
+      <div class="wiz-grid">
+        <div class="wiz-opt" onclick="selInd('asthma',this)"><span class="opt-icon">&#128165;</span><span class="opt-label">Asthma exacerbation</span><span class="opt-sub">GINA 2024</span></div>
+        <div class="wiz-opt" onclick="selInd('copd',this)"><span class="opt-icon">&#129752;</span><span class="opt-label">COPD exacerbation</span><span class="opt-sub">GOLD 2024</span></div>
+        <div class="wiz-opt" onclick="selInd('covid',this)"><span class="opt-icon">&#128138;</span><span class="opt-label">COVID-19</span><span class="opt-sub">RECOVERY 2021</span></div>
+        <div class="wiz-opt" onclick="selInd('op',this)"><span class="opt-icon">&#129752;</span><span class="opt-label">Organizing Pneumonia</span><span class="opt-sub">ATS/ERS</span></div>
+        <div class="wiz-opt" onclick="selInd('ici_lung',this)"><span class="opt-icon">&#128138;</span><span class="opt-label">ICI Pneumonitis</span><span class="opt-sub">ESMO/SITC 2023</span></div>
+      </div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.06em;margin-bottom:8px">RHEUMATOLOGY</div>
+      <div class="wiz-grid">
+        <div class="wiz-opt" onclick="selInd('gca',this)"><span class="opt-icon">&#129302;</span><span class="opt-label">Giant Cell Arteritis</span><span class="opt-sub">ACR/EULAR 2021</span></div>
+        <div class="wiz-opt" onclick="selInd('pmr',this)"><span class="opt-icon">&#129302;</span><span class="opt-label">Polymyalgia Rheumatica</span><span class="opt-sub">EULAR 2015</span></div>
+        <div class="wiz-opt" onclick="selInd('sle',this)"><span class="opt-icon">&#127462;&#127466;</span><span class="opt-label">SLE / Lupus</span><span class="opt-sub">EULAR 2023</span></div>
+        <div class="wiz-opt" onclick="selInd('anca',this)"><span class="opt-icon">&#129530;</span><span class="opt-label">ANCA Vasculitis</span><span class="opt-sub">ACR/EULAR 2022</span></div>
+        <div class="wiz-opt" onclick="selInd('myositis',this)"><span class="opt-icon">&#128137;</span><span class="opt-label">Inflammatory Myositis</span><span class="opt-sub">EULAR 2019</span></div>
+        <div class="wiz-opt" onclick="selInd('ra',this)"><span class="opt-icon">&#128137;</span><span class="opt-label">RA bridge</span><span class="opt-sub">EULAR RA 2022</span></div>
+      </div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.06em;margin-bottom:8px">NEUROLOGY</div>
+      <div class="wiz-grid">
+        <div class="wiz-opt" onclick="selInd('ms',this)"><span class="opt-icon">&#129504;</span><span class="opt-label">MS Relapse</span><span class="opt-sub">AAN / ECTRIMS</span></div>
+        <div class="wiz-opt" onclick="selInd('adem',this)"><span class="opt-icon">&#129504;</span><span class="opt-label">Autoimmune Encephalitis / ADEM</span><span class="opt-sub">Expert consensus</span></div>
+      </div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.06em;margin-bottom:8px">GASTROENTEROLOGY</div>
+      <div class="wiz-grid">
+        <div class="wiz-opt" onclick="selInd('uc',this)"><span class="opt-icon">&#129760;</span><span class="opt-label">Ulcerative Colitis (ASUC)</span><span class="opt-sub">ECCO 2023</span></div>
+        <div class="wiz-opt" onclick="selInd('crohn',this)"><span class="opt-icon">&#129760;</span><span class="opt-label">Crohn&rsquo;s Disease flare</span><span class="opt-sub">ECCO 2023</span></div>
+      </div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.06em;margin-bottom:8px">ICU / CARDIAC SURGERY</div>
+      <div class="wiz-grid">
+        <div class="wiz-opt" onclick="selInd('shock',this)"><span class="opt-icon">&#128680;</span><span class="opt-label">Septic Shock</span><span class="opt-sub">Surviving Sepsis 2021</span></div>
+        <div class="wiz-opt" onclick="selInd('vasoplegia',this)"><span class="opt-icon">&#10084;&#65039;</span><span class="opt-label">Vasoplegic Syndrome</span><span class="opt-sub">Post-CPB</span></div>
+        <div class="wiz-opt" onclick="selInd('adrenal_crisis',this)"><span class="opt-icon">&#9889;</span><span class="opt-label">Adrenal Crisis</span><span class="opt-sub">Endocrine Society</span></div>
+        <div class="wiz-opt" onclick="selInd('transplant_reject',this)"><span class="opt-icon">&#10084;&#65039;</span><span class="opt-label">Cardiac Transplant Rejection</span><span class="opt-sub">ISHLT 2010</span></div>
+        <div class="wiz-opt" onclick="selInd('anaphylaxis',this)"><span class="opt-icon">&#9888;&#65039;</span><span class="opt-label">Anaphylaxis (adjunct)</span><span class="opt-sub">WAO 2020</span></div>
+      </div>
+      <div class="wiz-nav">
+        <button class="btn-wiz-back" onclick="wizBack(1)">&#8592; Back</button>
+        <button class="btn-wiz-next" id="wizNextInd" onclick="wizNext(1)" style="opacity:.4;pointer-events:none">Next &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Severity -->
+    <div class="wiz-panel" id="wp2">
+      <div class="wiz-title">Step 3 &mdash; Clinical Severity</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+        <div class="sev-btn sev-mild" onclick="selSev('mild',this)"><div class="sev-label">MILD</div><div style="font-size:11px;color:var(--muted);margin-top:4px">Minimal functional<br>impairment</div></div>
+        <div class="sev-btn sev-mod" onclick="selSev('moderate',this)"><div class="sev-label">MODERATE</div><div style="font-size:11px;color:var(--muted);margin-top:4px">Significant symptoms;<br>outpatient possible</div></div>
+        <div class="sev-btn sev-sev" onclick="selSev('severe',this)"><div class="sev-label">SEVERE</div><div style="font-size:11px;color:var(--muted);margin-top:4px">Hospitalisation<br>required</div></div>
+        <div class="sev-btn sev-life" onclick="selSev('lifethreatening',this)"><div class="sev-label">LIFE-THREATENING</div><div style="font-size:11px;color:var(--muted);margin-top:4px">ICU / organ<br>failure</div></div>
+      </div>
+      <div class="wiz-nav">
+        <button class="btn-wiz-back" onclick="wizBack(2)">&#8592; Back</button>
+        <button class="btn-wiz-next" id="wizNextSev" onclick="wizNext(2)" style="opacity:.4;pointer-events:none">Get recommendation &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Result -->
+    <div class="wiz-panel" id="wp3">
+      <div class="wiz-title">Step 4 &mdash; Recommended Regimen</div>
+      <div class="proto-result" id="wizResult" style="display:block">
+        <div id="wizResultContent"></div>
+      </div>
+      <div class="wiz-nav" style="margin-top:14px">
+        <button class="btn-wiz-back" onclick="wizBack(3)">&#8592; Change severity</button>
+        <button class="btn-wiz-next" onclick="wizReset()">&#8635; New assessment</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- CONVERTER -->
+  <div class="calc-panel">
+    <h3>&#128260; Steroid Conversion Calculator</h3>
+    <div class="calc-row">
+      <div class="calc-field">
+        <label>From drug</label>
+        <select id="convFrom">
+          <option value="Hydrocortisone">Hydrocortisone (20 mg equiv)</option>
+          <option value="Prednisone">Prednisone / Prednisolone (5 mg equiv)</option>
+          <option value="Methylprednisolone" selected>Methylprednisolone (4 mg equiv)</option>
+          <option value="Triamcinolone">Triamcinolone (4 mg equiv)</option>
+          <option value="Dexamethasone">Dexamethasone (0.75 mg equiv)</option>
+          <option value="Betamethasone">Betamethasone (0.6 mg equiv)</option>
+          <option value="Cortisone">Cortisone (25 mg equiv)</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label>Dose (mg)</label>
+        <input type="number" id="convDose" value="32" step="0.1" min="0">
+      </div>
+      <div class="calc-field">
+        <label>To drug</label>
+        <select id="convTo">
+          <option value="Hydrocortisone">Hydrocortisone</option>
+          <option value="Prednisone">Prednisone / Prednisolone</option>
+          <option value="Methylprednisolone">Methylprednisolone</option>
+          <option value="Triamcinolone">Triamcinolone</option>
+          <option value="Dexamethasone" selected>Dexamethasone</option>
+          <option value="Betamethasone">Betamethasone</option>
+          <option value="Cortisone">Cortisone</option>
+        </select>
+      </div>
+      <button class="btn-calc" onclick="convertSteroid()">Convert</button>
+    </div>
+    <div class="calc-result" id="convResult">
+      <div class="result-main" id="convMainResult"></div>
+      <div class="result-sub" id="convDetails"></div>
+    </div>
+    <div class="box box-amber" style="margin-top:8px"><strong>Note:</strong> These are pharmacological equivalences based on anti-inflammatory potency. Clinical doses may differ from equivalence conversions based on route, formulation, and clinical context. IV-to-PO bioavailability is approximately 70&ndash;90% for most agents (PO dose &asymp; 1.1&ndash;1.2&times; IV dose).</div>
+  </div>
+
+  <!-- HPA RISK -->
+  <div class="calc-panel">
+    <h3>&#129504; HPA Axis Suppression Risk Calculator</h3>
+    <div class="calc-row">
+      <div class="calc-field">
+        <label>Drug</label>
+        <select id="hpaDrug">
+          <option value="Hydrocortisone">Hydrocortisone</option>
+          <option value="Prednisone" selected>Prednisone / Prednisolone</option>
+          <option value="Methylprednisolone">Methylprednisolone</option>
+          <option value="Dexamethasone">Dexamethasone</option>
+          <option value="Betamethasone">Betamethasone</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label>Daily dose (mg)</label>
+        <input type="number" id="hpaDose" value="20" step="1" min="0">
+      </div>
+      <div class="calc-field">
+        <label>Duration (weeks)</label>
+        <input type="number" id="hpaDuration" value="8" step="1" min="0">
+      </div>
+      <div class="calc-field">
+        <label>Dosing schedule</label>
+        <select id="hpaTiming">
+          <option value="morning">Morning single dose</option>
+          <option value="divided" selected>Divided doses</option>
+          <option value="evening">Evening / bedtime dose</option>
+          <option value="altday">Alternate-day</option>
+        </select>
+      </div>
+      <button class="btn-calc" onclick="calcHPA()">Assess risk</button>
+    </div>
+    <div class="calc-result" id="hpaResult">
+      <div class="result-main" id="hpaMainResult"></div>
+      <div class="result-sub" id="hpaDetails"></div>
+    </div>
+  </div>
+
+  <!-- STRESS DOSE -->
+  <div class="calc-panel">
+    <h3>&#9889; Perioperative Stress Dose Calculator</h3>
+    <p style="color:var(--muted);font-size:12.5px;margin-bottom:14px">For patients on chronic corticosteroid therapy who require surgery. Based on Endocrine Society Clinical Practice Guideline 2024.</p>
+    <div class="calc-row">
+      <div class="calc-field">
+        <label>Chronic daily dose (mg prednisone-equiv)</label>
+        <input type="number" id="sdDose" value="10" step="1" min="0">
+      </div>
+      <div class="calc-field">
+        <label>HPA suppression risk</label>
+        <select id="sdRisk">
+          <option value="low">Low risk</option>
+          <option value="intermediate" selected>Intermediate risk</option>
+          <option value="high">High risk</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label>Surgery type</label>
+        <select id="sdSurgery">
+          <option value="minor">Minor (dental, skin, endoscopy)</option>
+          <option value="moderate">Moderate (hernia, knee, laparoscopic cholecystectomy)</option>
+          <option value="major" selected>Major (cardiac, thoracic, major abdominal)</option>
+          <option value="cardiac">Cardiac surgery (CPB)</option>
+        </select>
+      </div>
+      <button class="btn-calc" onclick="calcStressDose()">Calculate</button>
+    </div>
+    <div class="calc-result" id="sdResult">
+      <div class="result-main" id="sdMainResult"></div>
+      <div class="result-sub" id="sdDetails"></div>
+    </div>
+  </div>
+
+  <!-- INITIAL DOSE ESTIMATOR -->
+  <div class="calc-panel">
+    <h3>&#128209; Weight-Based Initial Dose Estimator</h3>
+    <div class="calc-row">
+      <div class="calc-field">
+        <label>Patient weight (kg)</label>
+        <input type="number" id="wbWeight" value="70" step="1" min="20">
+      </div>
+      <div class="calc-field">
+        <label>Drug</label>
+        <select id="wbDrug">
+          <option value="Prednisone">Prednisone / Prednisolone</option>
+          <option value="Methylprednisolone" selected>Methylprednisolone</option>
+          <option value="Hydrocortisone">Hydrocortisone</option>
+          <option value="Dexamethasone">Dexamethasone</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label>Dosing protocol</label>
+        <select id="wbProtocol">
+          <option value="0.5">0.5 mg/kg/day (low-moderate)</option>
+          <option value="1" selected>1 mg/kg/day (standard high)</option>
+          <option value="1.5">1.5 mg/kg/day (high)</option>
+          <option value="2">2 mg/kg/day (very high)</option>
+        </select>
+      </div>
+      <button class="btn-calc" onclick="calcWtBased()">Calculate</button>
+    </div>
+    <div class="calc-result" id="wbResult">
+      <div class="result-main" id="wbMainResult"></div>
+      <div class="result-sub" id="wbDetails"></div>
+    </div>
+  </div>
+
+  <div class="footnote">Bornstein SR et al. Diagnosis and Treatment of Primary Adrenal Insufficiency. Endocrine Society 2016 &middot; Liu D et al. A practical guide to the monitoring and management of the complications of systemic corticosteroid therapy. Allergy Asthma Clin Immunol 2013 &middot; Perioperative management of adrenal insufficiency. Endocrine Society CPG 2024.</div>
+</section>
+
+
+<!-- ════ TAB 2: CLINICAL PROTOCOLS ════════════════════════════ -->
+<section class="tab" id="t2">
+  <div class="sh"><h2>&#128203; Clinical Protocols by Indication</h2><p>Evidence-based dosing regimens for specific conditions with guideline source and monitoring recommendations.</p></div>
+
+  <div class="stitle">Pulmonary</div>
+  <div class="g2">
+    <div>
+      <div class="protocol-card">
+        <h4>Asthma Exacerbation</h4>
+        <div class="regimen">Prednisone 40&ndash;60 mg PO daily &times; 5&ndash;7 days</div>
+        <div class="regimen">Methylprednisolone 40&ndash;80 mg IV q12&ndash;24h (if unable to take PO)</div>
+        <div class="evidence"><span class="ev-a">&#11035; Level A</span> GINA 2024 &middot; No taper needed for courses &lt;3 weeks</div>
+      </div>
+      <div class="protocol-card">
+        <h4>COPD Exacerbation</h4>
+        <div class="regimen">Prednisone 40 mg PO daily &times; 5 days</div>
+        <div class="evidence"><span class="ev-a">&#11035; Level A</span> GOLD 2024 &middot; Longer courses not superior (REDUCE trial) &middot; No taper required</div>
+      </div>
+      <div class="protocol-card">
+        <h4>COVID-19 &mdash; Severe (requiring O&#8322; / ICU)</h4>
+        <div class="regimen">Dexamethasone 6 mg IV or PO daily &times; 10 days (or until discharge)</div>
+        <div class="evidence"><span class="ev-a">&#11035; Level A</span> RECOVERY Trial &middot; NNT ~8 for mortality in O&#8322;-requiring patients &middot; Avoid in mild disease (no O&#8322; requirement)</div>
+      </div>
+    </div>
+    <div>
+      <div class="protocol-card">
+        <h4>Organizing Pneumonia (OP / COP)</h4>
+        <div class="regimen">Prednisone 0.75&ndash;1 mg/kg/day (max 60 mg) &times; 4&ndash;8 weeks</div>
+        <div class="regimen">Then taper: 40 mg &times; 4 wk &rarr; 20 mg &times; 4 wk &rarr; 10 mg &times; 4 wk &rarr; 5 mg &times; 4 wk &rarr; stop</div>
+        <div class="evidence"><span class="ev-b">&#11036; Level B</span> ATS/ERS ILD Guidelines &middot; Total duration: 6&ndash;12 months &middot; Monitor for relapse</div>
+      </div>
+      <div class="protocol-card">
+        <h4>Severe Pneumonitis (drug-induced / ICI toxicity)</h4>
+        <div class="regimen">Grade 2: Prednisone 1&ndash;2 mg/kg/day</div>
+        <div class="regimen">Grade 3&ndash;4: Methylprednisolone 1&ndash;2 mg/kg IV daily; if no improvement in 48h: add IVIG or infliximab</div>
+        <div class="evidence"><span class="ev-b">&#11036; Level B</span> SITC &amp; ESMO ICI Toxicity Guidelines 2023</div>
+      </div>
+      <div class="protocol-card">
+        <h4>ARDS (refractory, &gt;7 days)</h4>
+        <div class="regimen">Methylprednisolone 1 mg/kg/day IV &times; 14 days, then taper over 4 weeks</div>
+        <div class="evidence"><span class="ev-b">&#11036; Level B</span> ARDS Network &middot; Avoid if &gt;14 days (ACCP CPG). Dexamethasone 6 mg (RECOVERY dosing) for COVID-ARDS.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">Rheumatology</div>
+  <div class="g2">
+    <div>
+      <div class="protocol-card">
+        <h4>Giant Cell Arteritis (GCA) / Temporal Arteritis</h4>
+        <div class="regimen">Prednisone 1 mg/kg/day (max 60 mg) &times; 4 weeks, then slow taper over 12&ndash;18 months</div>
+        <div class="regimen">If visual symptoms / imminent blindness: MP 500&ndash;1000 mg IV &times; 3 days FIRST</div>
+        <div class="evidence"><span class="ev-a">&#11035; Level A</span> ACR/EULAR 2021 &middot; Tocilizumab allows faster taper &middot; PJP prophylaxis if &gt;20 mg prednisone</div>
+      </div>
+      <div class="protocol-card">
+        <h4>Polymyalgia Rheumatica (PMR)</h4>
+        <div class="regimen">Prednisone 15&ndash;25 mg/day initially &rarr; taper by 2.5 mg every 2&ndash;4 weeks to 10 mg</div>
+        <div class="regimen">Then taper by 1 mg every 4&ndash;8 weeks (total duration 12&ndash;18 months)</div>
+        <div class="evidence"><span class="ev-a">&#11035; Level A</span> EULAR 2015 / ACR 2021 &middot; Monitor CRP/ESR monthly &middot; Relapse common with rapid taper</div>
+      </div>
+      <div class="protocol-card">
+        <h4>Severe SLE Flare</h4>
+        <div class="regimen">Moderate: Prednisone 0.5 mg/kg/day</div>
+        <div class="regimen">Severe: MP pulse 500&ndash;1000 mg IV &times; 3 days &rarr; Prednisone 1 mg/kg/day</div>
+        <div class="evidence"><span class="ev-b">&#11036; Level B</span> EULAR SLE 2023 &middot; Add hydroxychloroquine &middot; HBV screen before pulse</div>
+      </div>
+    </div>
+    <div>
+      <div class="protocol-card">
+        <h4>Vasculitis (ANCA-associated &mdash; induction)</h4>
+        <div class="regimen">MP 500&ndash;1000 mg IV &times; 3 days (if severe / organ-threatening) &rarr; Prednisone 1 mg/kg/day</div>
+        <div class="regimen">Taper to &lt;5 mg at 3 months (PEXIVAS protocol)</div>
+        <div class="evidence"><span class="ev-a">&#11035; Level A</span> PEXIVAS trial &middot; ACR/EULAR ANCA Guidelines 2022</div>
+      </div>
+      <div class="protocol-card">
+        <h4>Inflammatory Myositis (DM/PM)</h4>
+        <div class="regimen">Prednisone 1 mg/kg/day (max 80 mg) &times; 4&ndash;6 weeks</div>
+        <div class="regimen">Then taper slowly over 2 years; add steroid-sparing agent early (azathioprine, MTX)</div>
+        <div class="evidence"><span class="ev-b">&#11036; Level B</span> EULAR/ACR Myositis 2019</div>
+      </div>
+      <div class="protocol-card">
+        <h4>RA (bridge therapy)</h4>
+        <div class="regimen">Prednisone 5&ndash;10 mg/day as bridge to DMARD therapy</div>
+        <div class="regimen">Target: &lt;5 mg/day or discontinue as DMARD takes effect</div>
+        <div class="evidence"><span class="ev-a">&#11035; Level A</span> EULAR RA 2022 &middot; Use lowest effective dose; not monotherapy</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">Neurology</div>
+  <div class="g2">
+    <div class="protocol-card">
+      <h4>Multiple Sclerosis Relapse</h4>
+      <div class="regimen">Methylprednisolone 1000 mg IV daily &times; 3&ndash;5 days (no taper required)</div>
+      <div class="evidence"><span class="ev-a">&#11035; Level A</span> Milanese C et al. &middot; Speeds relapse recovery; does not alter long-term disability. PO MP 625 mg/day non-inferior to IV in COPOUSEP trial.</div>
+    </div>
+    <div class="protocol-card">
+      <h4>Autoimmune Encephalitis / ADEM</h4>
+      <div class="regimen">MP 1000 mg IV daily &times; 5 days &rarr; Prednisone 1 mg/kg/day &times; 4&ndash;6 weeks &rarr; taper over 3&ndash;6 months</div>
+      <div class="evidence"><span class="ev-b">&#11036; Level B</span> &middot; Add IVIG and/or plasma exchange if incomplete response after 5 days</div>
+    </div>
+  </div>
+
+  <div class="stitle">Gastroenterology</div>
+  <div class="g2">
+    <div class="protocol-card">
+      <h4>Acute Severe Ulcerative Colitis (ASUC)</h4>
+      <div class="regimen">Hydrocortisone 100 mg IV q6h &times; 3&ndash;5 days (Truelove &amp; Witts criteria)</div>
+      <div class="regimen">If non-response at day 3: add ciclosporin 2&ndash;4 mg/kg or infliximab 5 mg/kg</div>
+      <div class="evidence"><span class="ev-a">&#11035; Level A</span> ECCO IBD 2023 &middot; Surgical colectomy if failure at day 7</div>
+    </div>
+    <div class="protocol-card">
+      <h4>Crohn&rsquo;s Disease (active flare)</h4>
+      <div class="regimen">Prednisone 40&ndash;60 mg/day &times; 4&ndash;8 weeks, then taper by 5 mg/week</div>
+      <div class="regimen">Budesonide 9 mg/day (ileal/right colon disease) &mdash; lower systemic AE</div>
+      <div class="evidence"><span class="ev-a">&#11035; Level A</span> ECCO 2023 &middot; Steroids are not maintenance therapy in Crohn&rsquo;s</div>
+    </div>
+  </div>
+
+  <div class="stitle">ICU &amp; Cardiac Surgery</div>
+  <div class="g2">
+    <div>
+      <div class="protocol-card">
+        <h4>Septic Shock (refractory to vasopressors)</h4>
+        <div class="regimen">Hydrocortisone 200 mg/day IV (50 mg q6h or 200 mg continuous infusion)</div>
+        <div class="regimen">&plusmn; Fludrocortisone 50 mcg PO daily (APROCCHSS trial &mdash; survival benefit)</div>
+        <div class="evidence"><span class="ev-a">&#11035; Level A</span> Surviving Sepsis 2021 (Class 2B &mdash; if NE &gt;0.25 mcg/kg/min) &middot; ADRENAL &amp; APROCCHSS trials &middot; Taper when vasopressors weaned</div>
+      </div>
+      <div class="protocol-card">
+        <h4>Vasoplegic Syndrome Post-CPB</h4>
+        <div class="regimen">Hydrocortisone 200&ndash;300 mg/day IV (as for septic shock) &mdash; first-line after methylene blue</div>
+        <div class="regimen">Methylprednisolone 1 mg/kg IV as alternative (less mineralocorticoid effect)</div>
+        <div class="evidence"><span class="ev-b">&#11036; Expert consensus</span> &middot; Bojar 6th ed. &middot; Intraoperative MP (10&ndash;15 mg/kg at CPB prime) may reduce post-CPB SIRS</div>
+      </div>
+      <div class="protocol-card">
+        <h4>Adrenal Crisis</h4>
+        <div class="regimen">Hydrocortisone 100 mg IV bolus IMMEDIATELY &rarr; 50&ndash;100 mg IV q6&ndash;8h OR 200 mg/24h continuous</div>
+        <div class="regimen">IV fluid resuscitation: 0.9% NaCl 1 L over 30&ndash;60 min (correct hyponatraemia and hypotension)</div>
+        <div class="evidence"><span class="ev-a">&#11035; Level A</span> Endocrine Society AI CPG 2016 &middot; Do NOT delay treatment for investigation &middot; Transition to oral HC when stable</div>
+      </div>
+    </div>
+    <div>
+      <div class="protocol-card">
+        <h4>Cardiac Transplant Rejection (acute cellular)</h4>
+        <div class="regimen">Grade 2R/3R rejection: Methylprednisolone 500&ndash;1000 mg IV daily &times; 3 days</div>
+        <div class="regimen">Then oral prednisone 1 mg/kg &rarr; taper to maintenance over 4&ndash;6 weeks</div>
+        <div class="evidence"><span class="ev-b">&#11036; Level B</span> ISHLT Guidelines 2010 &middot; Reassess with biopsy at 2 weeks &middot; Consider OKT3 / ATG for haemodynamic compromise</div>
+      </div>
+      <div class="protocol-card">
+        <h4>Anaphylaxis (adjunct)</h4>
+        <div class="regimen">Hydrocortisone 200 mg IV or MP 125 mg IV or Prednisone 50 mg PO</div>
+        <div class="regimen">Epinephrine remains FIRST-LINE. GC may prevent biphasic reactions (evidence limited).</div>
+        <div class="evidence"><span class="ev-b">&#11036; Level B / 2C</span> WAO Anaphylaxis Guidelines 2020</div>
+      </div>
+      <div class="protocol-card">
+        <h4>Perioperative CPB &mdash; Anti-inflammatory</h4>
+        <div class="regimen">Methylprednisolone 10&ndash;15 mg/kg IV at CPB prime (prophylactic SIRS suppression)</div>
+        <div class="regimen">OR Dexamethasone 0.6 mg/kg single dose (DECS trial &mdash; reduced postoperative AF)</div>
+        <div class="evidence"><span class="ev-b">&#11036; Level B</span> DECS Trial &middot; Benefit on AF; no mortality benefit. Increases glucose. Centre-specific protocols vary.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">GINA 2024 &middot; GOLD 2024 &middot; RECOVERY Trial NEJM 2021 &middot; ACR/EULAR GCA 2021 &middot; EULAR SLE 2023 &middot; PEXIVAS NEJM 2020 &middot; Surviving Sepsis 2021 &middot; APROCCHSS NEJM 2018 &middot; Bojar RM Perioperative Care 6th ed.</div>
+</section>
+
+
+<!-- ════ TAB 3: TAPERING ════════════════════════════════════════ -->
+<section class="tab" id="t3">
+  <div class="sh"><h2>&#128200; Steroid Tapering Assistant</h2><p>Generate a personalised tapering schedule based on drug, starting dose, duration, and clinical indication.</p></div>
+
+  <div class="calc-panel">
+    <h3>&#128203; Tapering Schedule Generator</h3>
+    <div class="calc-row">
+      <div class="calc-field">
+        <label>Drug</label>
+        <select id="tapDrug">
+          <option value="Prednisone" selected>Prednisone / Prednisolone</option>
+          <option value="Methylprednisolone">Methylprednisolone</option>
+          <option value="Hydrocortisone">Hydrocortisone</option>
+          <option value="Dexamethasone">Dexamethasone</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label>Starting dose (mg/day)</label>
+        <input type="number" id="tapStart" value="60" step="1" min="1">
+      </div>
+      <div class="calc-field">
+        <label>Duration on this dose (weeks)</label>
+        <input type="number" id="tapDuration" value="4" step="1" min="1">
+      </div>
+      <div class="calc-field">
+        <label>Condition / taper speed</label>
+        <select id="tapCondition">
+          <option value="standard">Standard (most inflammatory conditions)</option>
+          <option value="gca">Giant Cell Arteritis (GCA)</option>
+          <option value="pmr">Polymyalgia Rheumatica (PMR)</option>
+          <option value="sle">SLE / Lupus</option>
+          <option value="anca">ANCA Vasculitis</option>
+          <option value="op">Organizing Pneumonia (OP/COP)</option>
+          <option value="fast">Short burst &#8212; COPD / Asthma (&lt;3 weeks)</option>
+          <option value="transplant">Organ Transplant maintenance</option>
+        </select>
+      </div>
+      <button class="btn-calc" onclick="genTaper()">Generate schedule</button>
+    </div>
+    <div class="calc-result" id="tapResult" style="overflow-x:auto">
+      <div id="tapContent"></div>
+    </div>
+  </div>
+
+  <div class="stitle">General Tapering Principles</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--cyan)">&#128204; When to taper &mdash; and when NOT to</h3>
+      <div class="tw" style="margin:0"><table>
+        <tr><th>Duration / dose</th><th>Taper needed?</th><th>Rationale</th></tr>
+        <tr><td>Any dose &lt;3 weeks</td><td class="tdv" style="color:var(--green);font-weight:700">No</td><td>Insufficient time for HPA suppression; can stop abruptly</td></tr>
+        <tr><td>Any dose, alternating-day &lt;6 weeks</td><td style="color:var(--green);font-weight:700">Usually no</td><td>Alternating-day preserves HPA axis better</td></tr>
+        <tr><td>&lt;10 mg prednisone-equiv/day, any duration</td><td style="color:var(--green);font-weight:700">Usually no</td><td>Below HPA suppression threshold</td></tr>
+        <tr><td>&gt;3 weeks at physiological range (5&ndash;10 mg)</td><td style="color:var(--amber);font-weight:700">Yes &mdash; slow</td><td>Risk of adrenal insufficiency; allow adrenal recovery</td></tr>
+        <tr><td>&gt;3 weeks at &gt;20 mg/day</td><td style="color:var(--red);font-weight:700">Yes &mdash; mandatory</td><td>Significant HPA suppression likely; abrupt withdrawal = adrenal crisis</td></tr>
+      </table></div>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--amber)">&#9888;&#65039; Adrenal Insufficiency Symptoms on Tapering</h3>
+      <p style="margin-bottom:10px">Suspect HPA insufficiency during taper if:</p>
+      <ul>
+        <li>Fatigue, weakness, myalgia disproportionate to disease</li>
+        <li>Nausea, anorexia, weight loss</li>
+        <li>Orthostatic hypotension, tachycardia</li>
+        <li>Hyponatraemia, hyperkalaemia, hypoglycaemia</li>
+        <li>Eosinophilia</li>
+      </ul>
+      <div class="box box-amber"><strong>Diagnosis:</strong> 08:00 serum cortisol &lt;100 nmol/L (&lt;3.6 &mu;g/dL) = adrenal insufficiency likely. Cortisol &gt;500 nmol/L = normal. 100&ndash;500 nmol/L = borderline &rarr; perform ACTH stimulation test (Synacthen 250 mcg IV; peak cortisol &gt;500 nmol/L at 30&ndash;60 min = adequate response).</div>
+    </div>
+  </div>
+
+  <div class="stitle">Condition-Specific Tapering Guidance</div>
+  <div class="g2">
+    <div class="protocol-card" style="background:var(--bg2);border:1px solid var(--rim)">
+      <h4>GCA &mdash; Very slow taper (12&ndash;18 months)</h4>
+      <div style="font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.9">
+        60 mg &times; 4 wk &rarr; 50 mg &times; 2 wk &rarr; 40 mg &times; 2 wk &rarr; 30 mg &times; 2 wk &rarr; 25 mg &times; 2 wk &rarr; 20 mg &times; 2 wk &rarr; 17.5 mg &times; 4 wk &rarr; 15 mg &times; 4 wk &rarr; 12.5 mg &times; 4 wk &rarr; 10 mg &times; 8 wk &rarr; taper by 1 mg every 4&ndash;8 weeks &rarr; stop
+      </div>
+      <div class="evidence">Monitor CRP monthly &middot; Any rise = disease activity, not AI &middot; Tocilizumab allows faster taper</div>
+    </div>
+    <div class="protocol-card" style="background:var(--bg2);border:1px solid var(--rim)">
+      <h4>PMR &mdash; Slow taper (18&ndash;24 months)</h4>
+      <div style="font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.9">
+        20 mg &times; 4 wk &rarr; 17.5 mg &times; 4 wk &rarr; 15 mg &times; 4 wk &rarr; 12.5 mg &times; 4 wk &rarr; 10 mg &times; 6 wk &rarr; 9 mg &times; 4 wk &rarr; 8 mg &rarr; 7 mg &rarr; 6 mg &rarr; 5 mg (each 4 wk) &rarr; 4 mg &rarr; 3 mg &rarr; 2 mg &rarr; 1 mg (each 8 wk) &rarr; stop
+      </div>
+      <div class="evidence">Monitor ESR/CRP monthly &middot; Relapse in ~50% &mdash; increase to last effective dose</div>
+    </div>
+    <div class="protocol-card" style="background:var(--bg2);border:1px solid var(--rim)">
+      <h4>Standard (rheumatology / general)</h4>
+      <div style="font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.9">
+        Above 40 mg: &darr; 10 mg every 1&ndash;2 weeks<br>
+        20&ndash;40 mg: &darr; 5 mg every 1&ndash;2 weeks<br>
+        10&ndash;20 mg: &darr; 2.5 mg every 2&ndash;4 weeks<br>
+        5&ndash;10 mg: &darr; 1 mg every 4 weeks<br>
+        &lt;5 mg: &darr; 0.5&ndash;1 mg every 4&ndash;8 weeks &rarr; stop
+      </div>
+    </div>
+    <div class="protocol-card" style="background:var(--bg2);border:1px solid var(--rim)">
+      <h4>COPD / Asthma burst &mdash; No taper</h4>
+      <div style="font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.9">
+        Course &lt;2 weeks: stop abruptly<br>
+        No HPA suppression risk at standard burst doses<br>
+        Resume inhaled GC as prescribed
+      </div>
+      <div class="evidence">GOLD 2024 &middot; GINA 2024</div>
+    </div>
+  </div>
+
+  <div class="footnote">Dinsen S et al. Why glucocorticoid withdrawal may sometimes need to be gradual. BMJ 2013 &middot; Furst DE, Saag KG. Glucocorticoid withdrawal. UpToDate 2024 &middot; EULAR PMR 2015 &middot; ACR/EULAR GCA 2021</div>
+</section>
+
+
+<!-- ════ TAB 4: SAFETY & MONITORING ════════════════════════════ -->
+<section class="tab" id="t4">
+  <div class="sh"><h2>&#9888;&#65039; Safety, Adverse Effects &amp; Monitoring</h2><p>Systematic review of corticosteroid adverse effects, prevention strategies, monitoring schedule, and special populations.</p></div>
+
+  <div class="stitle">Adverse Effects by System</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--amber)">&#9877;&#65039; Metabolic &amp; Endocrine</h3>
+      <ul>
+        <li><strong>Hyperglycaemia:</strong> Universal at high doses. Screen all patients. Postprandial peaks. Manage with sliding scale insulin; may need long-acting insulin if chronic.</li>
+        <li><strong>Weight gain / central obesity:</strong> Cushingoid redistribution (buffalo hump, moon face, truncal obesity). Dose- and duration-dependent.</li>
+        <li><strong>Dyslipidaemia:</strong> &#8593;LDL, &#8593;triglycerides, &#8595;HDL. Statin therapy if indicated.</li>
+        <li><strong>HPA axis suppression:</strong> See HPA calculator. Risk of adrenal crisis under physiological stress.</li>
+        <li><strong>Hypogonadism:</strong> Chronic use &rarr; &#8595;testosterone, &#8595;oestrogen, amenorrhoea, impotence.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--red)">&#129460; Cardiovascular</h3>
+      <ul>
+        <li><strong>Hypertension:</strong> Both GC (Na/H&#8322;O retention) and MC (fludrocortisone). Monitor BP at each visit. ACE inhibitor / ARB preferred if anti-hypertensive needed.</li>
+        <li><strong>Fluid retention / oedema:</strong> Especially with agents with significant MC activity (hydrocortisone, prednisone).</li>
+        <li><strong>Arrhythmia (pulse therapy):</strong> Rapid IV MP can cause bradycardia and VT. Administer over 30&ndash;60 min; ECG monitoring during pulse.</li>
+        <li><strong>Accelerated atherosclerosis:</strong> Via dyslipidaemia, hypertension, hyperglycaemia. Long-term use associated with &#8593;CV risk.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--red)">&#129461; Osteoporosis &amp; Musculoskeletal</h3>
+      <ul>
+        <li><strong>GIOP (GC-induced osteoporosis):</strong> Most common iatrogenic cause of osteoporosis. Greatest bone loss in first 3&ndash;6 months. Affects trabecular &gt; cortical bone.</li>
+        <li><strong>Prevention:</strong> Calcium 1000&ndash;1200 mg/day + Vitamin D 800&ndash;1000 IU/day for ALL patients on &gt;5 mg prednisone-equiv for &gt;3 months</li>
+        <li><strong>Bisphosphonates:</strong> Alendronate or zoledronic acid &mdash; if &ge;5 mg/day for &ge;3 months (ACR GIOP 2022 guideline)</li>
+        <li><strong>Steroid myopathy:</strong> Proximal weakness (hip flexors, shoulder abductors). Dose-dependent. Fluorinated GCs (dexamethasone, triamcinolone) cause more myopathy. Non-fluorinated preferred for long-term use.</li>
+        <li><strong>Avascular necrosis (AVN):</strong> Especially femoral head. Risk with high-dose pulse therapy. Present with hip/groin pain.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--purple)">&#129504; Psychiatric &amp; Neurological</h3>
+      <ul>
+        <li><strong>Mood and cognition:</strong> Insomnia, euphoria, irritability (early high dose); depression (chronic). Rarely: frank psychosis or mania.</li>
+        <li><strong>Pseudotumour cerebri:</strong> Rare; on tapering. Presents with headache, papilloedema.</li>
+        <li><strong>Posterior subcapsular cataracts:</strong> After months to years of use. Annual ophthalmology review.</li>
+        <li><strong>Glaucoma:</strong> &#8593; intraocular pressure. Screen at baseline and annually.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--blue)">&#129434; Infectious Risk</h3>
+      <ul>
+        <li><strong>Bacterial infections:</strong> Risk proportional to dose and duration. Opportunistic infections with &gt;20 mg/day.</li>
+        <li><strong>PJP (Pneumocystis jirovecii pneumonia):</strong> Prophylaxis with cotrimoxazole 480 mg/day if &gt;20 mg prednisone-equiv for &gt;4 weeks. Alternatively dapsone or atovaquone.</li>
+        <li><strong>HBV reactivation:</strong> Screen HBsAg and HBcAb before starting. HBsAg-positive: antiviral prophylaxis (tenofovir/entecavir). Inactive carrier: prophylaxis if &gt;10 mg for &gt;4 weeks.</li>
+        <li><strong>TB:</strong> Screen with IGRA or TST before starting long-term GC. Treat latent TB before high-dose therapy.</li>
+        <li><strong>Live vaccines contraindicated</strong> on &gt;20 mg prednisone-equiv (immunosuppressed).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--green)">&#129704; GI &amp; Dermatological</h3>
+      <ul>
+        <li><strong>Peptic ulcer disease:</strong> Risk &#8593; with concurrent NSAIDs. PPI prophylaxis if: high-dose GC + NSAID, or history of PUD, or anticoagulant co-use.</li>
+        <li><strong>Skin:</strong> Skin atrophy, striae, easy bruising, impaired wound healing, acne, hirsutism, hyperpigmentation.</li>
+        <li><strong>Growth retardation:</strong> In children on supraphysiological doses; use alternate-day dosing when possible.</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="stitle">Adrenal Crisis &mdash; Recognition &amp; Emergency Management</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--red)">&#128680; Clinical Presentation</h3>
+      <p style="margin-bottom:10px">Adrenal crisis is a life-threatening emergency. Consider in any patient on chronic steroids who develops haemodynamic instability under physiological stress (illness, surgery, vomiting preventing oral doses).</p>
+      <div class="g2" style="gap:10px;margin-bottom:0">
+        <div>
+          <h4>Symptoms</h4>
+          <ul>
+            <li><strong>Profound hypotension</strong> (hallmark) &mdash; vasoplegic, catecholamine-resistant</li>
+            <li>Nausea, vomiting, abdominal pain (acute abdomen mimicry)</li>
+            <li>Fever or hypothermia</li>
+            <li>Severe fatigue, confusion, altered consciousness</li>
+            <li>Hypoglycaemia (especially children)</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Biochemistry</h4>
+          <ul>
+            <li><strong>Hyponatraemia</strong> (Na &lt;130 mEq/L)</li>
+            <li><strong>Hyperkalaemia</strong> (K &gt;5.5 mEq/L)</li>
+            <li>Hypoglycaemia (&lt;3.5 mmol/L)</li>
+            <li>Eosinophilia (clue to adrenal insufficiency)</li>
+            <li>Pre-renal azotaemia</li>
+            <li>Random cortisol &lt;100 nmol/L = adrenal insufficiency until proven otherwise</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--red)">&#9889; Emergency Treatment Protocol</h3>
+      <div class="box box-red"><strong>DO NOT delay treatment to await cortisol result.</strong> Draw blood for cortisol + ACTH simultaneously, then treat immediately without waiting for results.</div>
+      <ol style="padding-left:17px;font-size:13px;color:var(--muted);line-height:2">
+        <li><strong style="color:var(--text)">Hydrocortisone 100 mg IV bolus immediately</strong></li>
+        <li><strong style="color:var(--text)">0.9% NaCl 1 L IV over 30&ndash;60 min</strong> (correct hypovolaemia + hyponatraemia)</li>
+        <li>50% glucose 50 mL IV if hypoglycaemic (BGL &lt;3.5 mmol/L)</li>
+        <li>Hydrocortisone <strong>50 mg IV q6h</strong> OR <strong>200 mg/24h continuous infusion</strong></li>
+        <li>Identify and treat precipitating cause (infection, surgery, missed doses)</li>
+        <li>Monitor BGL hourly; electrolytes q4&ndash;6h; continuous BP</li>
+        <li>Transition to oral HC (20 mg AM / 10 mg PM) when stable, then taper to maintenance</li>
+        <li>Fludrocortisone not needed during crisis &mdash; HC at &gt;50 mg/day provides sufficient MC activity</li>
+      </ol>
+      <div class="box box-amber"><strong>Prevention:</strong> All patients on chronic steroids (&ge;5 mg/day for &ge;1 month) must carry a <strong>Steroid Emergency Card</strong> and medical alert ID. Instruct to: double their dose during febrile illness, injury, or vomiting; seek emergency care if unable to take oral medication; never miss a dose without medical advice.</div>
+    </div>
+  </div>
+
+  <div class="stitle">Glucocorticoid-Induced Hyperglycaemia</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--amber)">&#128208; Pattern &amp; Monitoring</h3>
+      <p style="margin-bottom:10px">GC cause predominant <strong>postprandial hyperglycaemia</strong> by inducing hepatic gluconeogenesis and peripheral insulin resistance. Fasting glucose may be near-normal while postprandial peaks are severely elevated. HbA1c misses acute GC-induced hyperglycaemia.</p>
+      <div class="tw" style="margin-bottom:0"><table>
+        <tr><th>Scenario</th><th>Monitoring</th><th>Target</th></tr>
+        <tr><td>Low dose (&lt;10 mg/day), no DM</td><td>Fasting BGL at baseline</td><td>Fasting &lt;7.0 mmol/L</td></tr>
+        <tr><td>Moderate (10&ndash;40 mg/day)</td><td>Pre-meal BGL; daily on initiation</td><td>Pre-meal &lt;10 mmol/L</td></tr>
+        <tr><td>High dose (&gt;40 mg/day) or pulse</td><td>BGL every 4&ndash;6 h</td><td>8&ndash;12 mmol/L acute phase</td></tr>
+        <tr><td>ICU / post-cardiac surgery</td><td>Continuous or hourly BGL</td><td>6&ndash;10 mmol/L (ADA/SCCM)</td></tr>
+      </table></div>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--amber)">&#128138; Insulin Management</h3>
+      <h4>Morning prednisolone / prednisone (once daily)</h4>
+      <ul>
+        <li>Hyperglycaemia peaks 6&ndash;12 h after morning dose</li>
+        <li><strong>Isophane (NPH) insulin at lunchtime</strong> matches the pharmacokinetic peak effectively</li>
+        <li>Alternative: short-acting insulin with main meal + sliding scale</li>
+      </ul>
+      <h4>Divided doses or continuous IV GC</h4>
+      <ul>
+        <li>Sustained hyperglycaemia throughout 24 h</li>
+        <li>Basal-bolus insulin regimen preferred; insulin infusion for IV doses &gt;200 mg HC/day</li>
+      </ul>
+      <h4>Tapering GC</h4>
+      <ul>
+        <li>Reduce insulin proportionally as GC tapered &mdash; hypoglycaemia risk if insulin not adjusted</li>
+        <li>After short burst: glucose normalises rapidly &mdash; discontinue insulin simultaneously with GC</li>
+        <li>Pre-existing DM: may need permanent insulin regimen intensification if GC &gt;3 months</li>
+      </ul>
+      <div class="box box-red"><strong>Pulse MP 500&ndash;1000 mg:</strong> Severe hyperglycaemia (BGL &gt;20 mmol/L) common. Monitor 4-hourly. Insulin infusion or aggressive subcutaneous regimen required. Risk of HHS in elderly Type 2 DM.</div>
+    </div>
+  </div>
+
+  <div class="stitle">Prevention &amp; Prophylaxis Summary</div>
+  <div class="tw"><table>
+    <thead><tr><th>Prophylaxis</th><th>Indication</th><th>Regimen</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Calcium + Vitamin D</strong></td><td>Any GC use &gt;3 months at &ge;5 mg/day</td><td>Calcium 1000&ndash;1200 mg/day + Vitamin D 800&ndash;1000 IU/day</td></tr>
+      <tr><td><strong>Bisphosphonate (oral)</strong></td><td>&ge;5 mg/day for &ge;3 months; high fracture risk (FRAX)</td><td>Alendronate 70 mg weekly or Risedronate 35 mg weekly</td></tr>
+      <tr><td><strong>Bisphosphonate (IV)</strong></td><td>Unable to tolerate oral; oesophageal disease</td><td>Zoledronic acid 5 mg IV annually or Ibandronate 3 mg IV q3mo</td></tr>
+      <tr><td><strong>PPI</strong></td><td>GC + NSAID, or history of PUD, or anticoagulant</td><td>Omeprazole 20 mg or equivalent once daily</td></tr>
+      <tr><td><strong>PJP prophylaxis</strong></td><td>&gt;20 mg prednisone-equiv/day for &gt;4 weeks</td><td>Cotrimoxazole 480 mg daily (960 mg 3&times;/week alternately)</td></tr>
+      <tr><td><strong>HBV prophylaxis</strong></td><td>HBsAg+, or HBcAb+ with &gt;10 mg/day</td><td>Tenofovir 300 mg/day or Entecavir 0.5 mg/day until 6 months post-GC</td></tr>
+      <tr><td><strong>TB treatment (LTBI)</strong></td><td>IGRA+ or TST+ before high-dose GC</td><td>Isoniazid 300 mg/day &times; 9 months (start before GC when possible)</td></tr>
+      <tr><td><strong>Vaccinations</strong></td><td>Before initiating immunosuppressive therapy</td><td>Pneumococcal (PCV15/PPSV23), influenza, COVID-19, hepatitis A/B, zoster (recombinant &mdash; safe)</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="stitle">Monitoring Schedule</div>
+  <div class="tw"><table>
+    <thead><tr><th>Parameter</th><th>Baseline</th><th>Monthly (high dose)</th><th>3&ndash;6 monthly (long-term)</th><th>Annually</th></tr></thead>
+    <tbody>
+      <tr><td>Blood pressure</td><td class="mon-check">&#10003;</td><td class="mon-check">&#10003;</td><td class="mon-check">&#10003;</td><td class="mon-check">&#10003;</td></tr>
+      <tr><td>Weight / BMI</td><td class="mon-check">&#10003;</td><td class="mon-check">&#10003;</td><td class="mon-check">&#10003;</td><td class="mon-check">&#10003;</td></tr>
+      <tr><td>Fasting glucose / HbA1c</td><td class="mon-check">&#10003;</td><td class="mon-check">&#10003;</td><td class="mon-check">&#10003;</td><td class="mon-check">&#10003;</td></tr>
+      <tr><td>Lipid panel</td><td class="mon-check">&#10003;</td><td></td><td class="mon-check">&#10003;</td><td class="mon-check">&#10003;</td></tr>
+      <tr><td>Electrolytes / eGFR</td><td class="mon-check">&#10003;</td><td class="mon-check">&#10003;</td><td class="mon-check">&#10003;</td><td></td></tr>
+      <tr><td>DEXA scan (bone density)</td><td class="mon-check">&#10003;</td><td></td><td></td><td class="mon-check">&#10003;</td></tr>
+      <tr><td>Ophthalmology (IOP / cataracts)</td><td class="mon-check">&#10003;</td><td></td><td></td><td class="mon-check">&#10003;</td></tr>
+      <tr><td>25-OH Vitamin D</td><td class="mon-check">&#10003;</td><td></td><td class="mon-check">&#10003;</td><td></td></tr>
+      <tr><td>Morning cortisol (tapering)</td><td></td><td class="mon-opt">If tapering</td><td class="mon-opt">If tapering</td><td></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="stitle">Special Populations</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--cyan)">Special Considerations</h3>
+      <div class="tw" style="margin:0"><table>
+        <tr><th>Population</th><th>Key considerations</th></tr>
+        <tr><td><strong>Pregnancy</strong></td><td>Hydrocortisone / prednisolone preferred (high placental 11&beta;-HSD2 inactivation). Avoid dexamethasone/betamethasone (full placental transfer) unless intentional (foetal lung maturity &mdash; 12 mg IM &times; 2 doses). Monitor for gestational DM. Adrenal insufficiency in mother: stress dose during labour (HC 100 mg IV at delivery).</td></tr>
+        <tr><td><strong>Elderly (&gt;70)</strong></td><td>Highest risk for GIOP (osteoporosis already present), cognitive effects, hyperglycaemia, and infection. Use lowest effective dose. Bisphosphonate prophylaxis from day 1 if &ge;5 mg for &ge;3 months. Falls risk assessment.</td></tr>
+        <tr><td><strong>Children</strong></td><td>Growth retardation with supraphysiological chronic doses. Use weight-based dosing. Alternate-day regimens when possible. Bone density monitoring. Adhere to physiological replacement doses (hydrocortisone 8&ndash;10 mg/m&sup2;/day in 3 divided doses for AI).</td></tr>
+        <tr><td><strong>Hepatic failure</strong></td><td>Avoid prednisone (requires hepatic conversion). Use prednisolone directly. Dexamethasone, hydrocortisone, and methylprednisolone are safe alternatives.</td></tr>
+        <tr><td><strong>Renal failure</strong></td><td>Hydrocortisone and methylprednisolone preferred. Accumulation of some metabolites in severe CKD. Fluid retention risk higher with MC-active agents. Dialysis not efficiently removes GCs.</td></tr>
+        <tr><td><strong>Diabetes mellitus</strong></td><td>GC dramatically worsens postprandial glycaemia. Intermediate-acting insulin (NPH) timed with GC peaks may be needed. Monitoring QID or continuous. Risk of HHS with high-dose IV GC.</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    Liu D et al. A practical guide to monitoring and management of complications of systemic corticosteroid therapy. Allergy Asthma Clin Immunol 2013 &middot; ACR GIOP Guideline 2022 &middot; Endocrine Society Primary AI CPG 2016 &middot; ECCO 2023 &middot; Surviving Sepsis 2021 &middot; Kaplan&rsquo;s Cardiac Anesthesia 8th ed. &middot; Goodman &amp; Gilman&rsquo;s 13th ed.<br><br>
+    Cardiac Surgery Clinical Education &middot; StarleyBy &middot; 2025
+  </div>
+</section>
+
+</main>
+
+<script>
+
+// ══ WIZARD ════════════════════════════════════════════════════
+let wizInd = null, wizSev = null;
+
+const PROTOCOLS = {
+asthma:{
+  label:'Asthma Exacerbation',
+  mild:    [{d:'Salbutamol inhaler + monitor. Short burst prednisone if not responding.',r:'Prednisone 40 mg PO daily × 5 days if no improvement with bronchodilator',ev:'A',ref:'GINA 2024'}],
+  moderate:[{d:'Prednisone 40–60 mg PO daily × 5–7 days',r:'Prednisone 40–60 mg PO daily × 5–7 days',ev:'A',ref:'GINA 2024'},{d:'IV if unable to swallow',r:'Methylprednisolone 40–80 mg IV q12–24h',ev:'A',ref:'GINA 2024'}],
+  severe:  [{d:'IV methylprednisolone + immediate escalation',r:'Methylprednisolone 80 mg IV q24h or 40 mg IV q12h',ev:'A',ref:'GINA 2024 / BTS'},{d:'No taper for courses <3 weeks',r:'No taper required if <3 weeks',ev:'A',ref:'GINA'}],
+  lifethreatening:[{d:'ICU + IV steroids + consider Mg2+ and intubation readiness',r:'Methylprednisolone 125 mg IV q6h; consider IV hydrocortisone 100 mg q6h alternative',ev:'A',ref:'BTS Critical Asthma 2023'}]
+},
+copd:{
+  label:'COPD Exacerbation',
+  mild:    [{r:'Prednisone 40 mg PO daily × 5 days',ev:'A',ref:'GOLD 2024 — REDUCE trial: 5 days non-inferior to 14 days'}],
+  moderate:[{r:'Prednisone 40 mg PO daily × 5 days',ev:'A',ref:'GOLD 2024'},{d:'No taper required',r:'Abrupt cessation after 5 days is appropriate',ev:'A',ref:'REDUCE trial, NEJM 2013'}],
+  severe:  [{r:'Prednisone 40 mg PO or methylprednisolone 40 mg IV daily × 5 days',ev:'A',ref:'GOLD 2024'},{d:'Extend to 7–14 days only if not improving',r:'If not improving: extend to max 14 days (no additional benefit beyond this)',ev:'B',ref:'GOLD 2024'}],
+  lifethreatening:[{d:'IV steroids + NIV/intubation per ARDS pathway',r:'Methylprednisolone 40–80 mg IV daily; combine with NIV or invasive ventilation as clinically indicated',ev:'B',ref:'GOLD 2024 / ATS'}]
+},
+covid:{
+  label:'COVID-19',
+  mild:    [{d:'No oxygen requirement — steroids NOT indicated (harm in mild disease)',r:'No corticosteroid therapy indicated in mild COVID-19 without oxygen requirement',ev:'A',ref:'RECOVERY Trial — increased mortality in non-O₂-requiring patients'}],
+  moderate:[{r:'Dexamethasone 6 mg PO or IV daily × 10 days (if requiring supplemental O₂)',ev:'A',ref:'RECOVERY Trial, NEJM 2021 — NNT ~25 for supplemental O₂ group'}],
+  severe:  [{r:'Dexamethasone 6 mg IV daily × 10 days (or until discharge if sooner)',ev:'A',ref:'RECOVERY Trial — NNT ~8 for mechanically ventilated patients'},{d:'Alternative if dexamethasone unavailable',r:'Hydrocortisone 50 mg IV q8h or methylprednisolone 32 mg/day',ev:'A',ref:'WHO REACT meta-analysis 2020'}],
+  lifethreatening:[{r:'Dexamethasone 6 mg IV daily × 10 days + consider baricitinib or tocilizumab in cytokine storm',ev:'A',ref:'RECOVERY 2021; ACTT-2 / WHO Solidarity trials'}]
+},
+op:{
+  label:'Organizing Pneumonia (OP/COP)',
+  mild:    [{r:'Prednisone 0.5 mg/kg/day × 4–6 weeks, then taper over 6 months',ev:'B',ref:'ATS/ERS ILD Guidelines'}],
+  moderate:[{r:'Prednisone 0.75–1 mg/kg/day (max 60 mg) × 4–8 weeks, then slow taper over 6–12 months',ev:'B',ref:'ATS/ERS; Travis WD et al.'}],
+  severe:  [{d:'IV induction then oral',r:'Methylprednisolone 1 mg/kg IV daily × 3–5 days → Prednisone 1 mg/kg/day × 4–8 weeks → slow taper 6–12 months',ev:'B',ref:'ATS/ERS ILD Guidelines 2022'}],
+  lifethreatening:[{r:'Methylprednisolone 1000 mg IV × 3 days → Prednisone 1 mg/kg/day; consider IVIG if no improvement',ev:'C',ref:'Expert consensus'}]
+},
+ici_lung:{
+  label:'ICI Pneumonitis',
+  mild:    [{r:'Withhold ICI. Prednisone 1 mg/kg/day if Grade 2 persists after 1–2 weeks monitoring',ev:'B',ref:'ESMO/SITC ICI Toxicity 2023'}],
+  moderate:[{r:'Hold ICI. Prednisone 1–2 mg/kg/day; taper over 4–6 weeks',ev:'B',ref:'ESMO 2023; SITC 2021'}],
+  severe:  [{r:'Permanently discontinue ICI. Methylprednisolone 2 mg/kg IV daily; if no improvement at 48 h: add infliximab 5 mg/kg or IVIG',ev:'B',ref:'ESMO 2023 Grade 3–4'}],
+  lifethreatening:[{r:'ICU. MP 2 mg/kg IV + infliximab 5 mg/kg IV stat + IVIG 2 g/kg over 5 days',ev:'C',ref:'Expert consensus; ESMO 2023 Grade 4'}]
+},
+gca:{
+  label:'Giant Cell Arteritis (GCA)',
+  mild:    [{d:'No truly mild GCA — high risk of irreversible blindness',r:'Prednisone 1 mg/kg/day (minimum 40–60 mg/day) × 4 weeks, then slow taper',ev:'A',ref:'ACR/EULAR GCA 2021'}],
+  moderate:[{r:'Prednisone 1 mg/kg/day (max 60 mg) × 4 weeks, then taper over 12–18 months',ev:'A',ref:'ACR/EULAR GCA 2021'},{d:'Tocilizumab allows faster taper',r:'Consider tocilizumab 162 mg SC weekly or 8 mg/kg IV q4 weeks to enable faster GC taper',ev:'A',ref:'GiACTA Trial, NEJM 2017'}],
+  severe:  [{d:'Visual symptoms / imminent blindness',r:'Methylprednisolone 500–1000 mg IV × 3 days FIRST, THEN prednisone 1 mg/kg/day; ophthalmology emergency',ev:'B',ref:'ACR/EULAR GCA 2021; BSR 2020'}],
+  lifethreatening:[{r:'IV MP 1000 mg × 3 days immediately; ophthalmology and vascular surgery on standby',ev:'B',ref:'ACR/EULAR 2021 — irreversible vision loss may occur within hours'}]
+},
+pmr:{
+  label:'Polymyalgia Rheumatica (PMR)',
+  mild:    [{r:'Prednisone 12.5–15 mg/day; taper by 2.5 mg every 4 weeks to 10 mg, then 1 mg every 4–8 weeks',ev:'A',ref:'EULAR PMR 2015 / ACR 2021'}],
+  moderate:[{r:'Prednisone 15–25 mg/day × 4 weeks, then reduce by 2.5 mg/4 weeks to 10 mg, then 1 mg/4–8 weeks. Total duration 12–24 months',ev:'A',ref:'EULAR PMR 2015'}],
+  severe:  [{d:'Severely elevated inflammatory markers, functional dependency',r:'Prednisone 25 mg/day initially; check CRP/ESR monthly; consider IL-6 inhibitor if refractory',ev:'B',ref:'EULAR 2015; ACR PMR 2021'}],
+  lifethreatening:[{d:'If concurrent GCA suspected',r:'Treat as GCA (1 mg/kg/day ± IV pulse). Vascular imaging urgently.',ev:'B',ref:'ACR/EULAR 2021'}]
+},
+sle:{
+  label:'SLE / Systemic Lupus Erythematosus',
+  mild:    [{r:'Prednisone 0.25–0.5 mg/kg/day (max 30 mg/day); taper once stable',ev:'B',ref:'EULAR SLE 2023'}],
+  moderate:[{r:'Prednisone 0.5 mg/kg/day (max 40 mg) × 4–6 weeks, then taper to maintenance ≤5 mg/day',ev:'B',ref:'EULAR SLE 2023; ACR 2019'}],
+  severe:  [{d:'Nephritis, CNS, haematological crisis',r:'Methylprednisolone 500 mg IV × 3 days → Prednisone 1 mg/kg/day (max 60 mg); add HCQ baseline',ev:'B',ref:'EULAR SLE 2023; KDIGO 2024 (nephritis)'}],
+  lifethreatening:[{d:'Severe CNS, thrombocytopenia (<20k), DAH',r:'Methylprednisolone 1000 mg IV × 3 days; consider IVIG 2 g/kg, plasma exchange, or belimumab/rituximab',ev:'B',ref:'EULAR 2023; SLICC 2021'}]
+},
+anca:{
+  label:'ANCA-Associated Vasculitis',
+  mild:    [{r:'Prednisone 0.5–1 mg/kg/day + rituximab or cyclophosphamide induction',ev:'A',ref:'ACR/EULAR ANCA 2022 — steroids always combined with steroid-sparing agent'}],
+  moderate:[{r:'Prednisone 1 mg/kg/day (max 60 mg) + rituximab 375 mg/m² × 4 or CYC; PEXIVAS taper: <5 mg by 3 months',ev:'A',ref:'PEXIVAS Trial NEJM 2020; ACR/EULAR 2022'}],
+  severe:  [{d:'GN, pulmonary haemorrhage, mononeuritis multiplex',r:'Methylprednisolone 500–1000 mg IV × 3 days → Prednisone 1 mg/kg/day. Add plasma exchange if DAH or rapidly progressive GN',ev:'A',ref:'PEXIVAS NEJM 2020; ACR/EULAR 2022'}],
+  lifethreatening:[{d:'Alveolar haemorrhage, dialysis-dependent',r:'MP 1000 mg IV × 3 days + rituximab + consider plasma exchange (7 sessions over 14 days)',ev:'B',ref:'ACR/EULAR 2022; MEPEX trial'}]
+},
+myositis:{
+  label:'Inflammatory Myositis (DM/PM)',
+  mild:    [{r:'Prednisone 0.5 mg/kg/day; add MTX or AZA early as steroid-sparing',ev:'B',ref:'EULAR/ACR Myositis 2019'}],
+  moderate:[{r:'Prednisone 1 mg/kg/day (max 80 mg) × 4–6 weeks; add MTX 15–25 mg/week or AZA 2–3 mg/kg/day',ev:'B',ref:'EULAR 2019'}],
+  severe:  [{d:'Rapidly progressive ILD, dysphagia, rhabdomyolysis',r:'Methylprednisolone 500–1000 mg IV × 3 days → Prednisone 1 mg/kg/day; add IVIG 2 g/kg if refractory',ev:'B',ref:'EULAR 2019; ACR 2022 update'}],
+  lifethreatening:[{r:'MP 1000 mg IV × 3 days + IVIG 2 g/kg; consider rituximab or tacrolimus for ILD; monitor CK, CRP, pulmonary function',ev:'C',ref:'Expert consensus; EULAR 2019'}]
+},
+ra:{
+  label:'Rheumatoid Arthritis (Bridge Therapy)',
+  mild:    [{r:'Prednisone 5–10 mg/day as bridge to DMARD; target ≤5 mg/day within 3 months',ev:'A',ref:'EULAR RA 2022; ACR RA 2021'}],
+  moderate:[{r:'Prednisone 10–15 mg/day × 4–6 weeks, then reduce as DMARD takes effect. Avoid long-term >5 mg/day.',ev:'A',ref:'EULAR RA 2022 — GC not recommended as monotherapy'}],
+  severe:  [{d:'Active synovitis, erosive disease, bridging to biologic',r:'Prednisone 15–20 mg/day; consider IM triamcinolone 80 mg if unable to take PO; aim to taper within 3–6 months',ev:'A',ref:'EULAR 2022'}],
+  lifethreatening:[{d:'Systemic vasculitis / pericarditis complicating RA',r:'Methylprednisolone 500–1000 mg IV × 3 days; treat as systemic vasculitis',ev:'B',ref:'EULAR 2022'}]
+},
+ms:{
+  label:'Multiple Sclerosis Relapse',
+  mild:    [{d:'Minor relapse may not require treatment — discuss with neurologist',r:'Consider methylprednisolone 1000 mg IV × 3 days or 500 mg IV × 5 days if functionally significant',ev:'A',ref:'AAN/ECTRIMS — speeds recovery, does not alter long-term disability'}],
+  moderate:[{r:'Methylprednisolone 1000 mg IV daily × 3–5 days (no taper required)',ev:'A',ref:'AAN 2018; ECTRIMS 2014. PO MP 625 mg/day non-inferior (COPOUSEP trial)'}],
+  severe:  [{r:'Methylprednisolone 1000 mg IV × 5 days; if incomplete response at 3 weeks consider plasma exchange (5–7 sessions)',ev:'A',ref:'AAN; Keegan BM et al. (plasma exchange)'}],
+  lifethreatening:[{d:'Tumefactive MS, Marburg variant',r:'MP 1000 mg IV × 5 days + plasma exchange 5–7 sessions + neurological ICU support',ev:'C',ref:'Expert consensus'}]
+},
+adem:{
+  label:'Autoimmune Encephalitis / ADEM',
+  mild:    [{r:'Methylprednisolone 1000 mg IV × 3–5 days → Prednisone 1 mg/kg/day × 4 weeks → taper over 3–6 months',ev:'B',ref:'Expert consensus; AAN guideline (autoimmune encephalitis) 2021'}],
+  moderate:[{r:'MP 1000 mg IV × 5 days → Prednisone 1 mg/kg/day × 4–6 weeks → 6-month taper',ev:'B',ref:'AAN 2021; ECTRIMS'},{d:'Add IVIG if incomplete response',r:'If no response at day 5: IVIG 2 g/kg over 5 days or plasma exchange',ev:'B',ref:'AAN 2021'}],
+  severe:  [{r:'MP 1000 mg IV × 5 days + IVIG 2 g/kg simultaneously; ICU monitoring',ev:'B',ref:'AAN 2021'}],
+  lifethreatening:[{r:'Triple therapy: MP 1000 mg IV × 5 days + IVIG 2 g/kg + plasma exchange. Rituximab or mycophenolate for refractory cases.',ev:'C',ref:'Expert consensus; AAN 2021'}]
+},
+uc:{
+  label:'Ulcerative Colitis (ASUC)',
+  mild:    [{r:'Prednisone 40 mg PO daily; consider budesonide 9 mg/day for mild-moderate',ev:'A',ref:'ECCO IBD 2023'}],
+  moderate:[{r:'Prednisone 40 mg PO daily; if not responding in 3–5 days: hospitalise for IV therapy',ev:'A',ref:'ECCO 2023'}],
+  severe:  [{d:'Truelove & Witts severe criteria: >6 bloody stools/day + systemic features',r:'Hydrocortisone 100 mg IV q6h × 3–5 days (Truelove & Witts protocol)',ev:'A',ref:'ECCO 2023; Truelove & Witts 1955 (landmark)'},{d:'Day 3 rescue if not responding',r:'If no response by day 3: add ciclosporin 2 mg/kg/day or infliximab 5 mg/kg; colectomy if day 7 failure',ev:'A',ref:'ECCO 2023; Ho et al.'}],
+  lifethreatening:[{d:'Toxic megacolon, perforation risk',r:'Hydrocortisone 100 mg IV q6h + emergent colorectal surgery consult; colectomy if megacolon or perforation',ev:'A',ref:'ECCO 2023; BSG guidelines'}]
+},
+crohn:{
+  label:"Crohn's Disease Active Flare",
+  mild:    [{r:'Prednisone 40 mg PO daily × 4 weeks; taper 5 mg/week. Or budesonide 9 mg/day for ileocaecal disease (fewer systemic AE)',ev:'A',ref:'ECCO 2023'}],
+  moderate:[{r:'Prednisone 40–60 mg/day × 4–8 weeks; taper by 5 mg/week. Add azathioprine or methotrexate as steroid-sparing',ev:'A',ref:'ECCO 2023 — GC not for maintenance in Crohn'}],
+  severe:  [{r:'Prednisone 60 mg/day or methylprednisolone 40 mg IV/day; biological therapy (infliximab, adalimumab) strongly recommended to avoid steroid dependency',ev:'A',ref:'ECCO 2023'}],
+  lifethreatening:[{d:'Septic complications, obstruction, fistula',r:'IV methylprednisolone 40–60 mg/day; surgical consult urgently; NPO + nutrition support',ev:'B',ref:'ECCO 2023; ESPEN'}]
+},
+shock:{
+  label:'Septic Shock',
+  mild:    [{d:'Septic shock by definition requires vasopressors — no mild category',r:'Not applicable: septic shock always requires vasopressors. Steroids indicated if NE >0.25 mcg/kg/min.',ev:'A',ref:'Surviving Sepsis Campaign 2021'}],
+  moderate:[{d:'Vasopressor-dependent (NE 0.1–0.25 mcg/kg/min)',r:'Hydrocortisone 200 mg/day IV continuous infusion or 50 mg IV q6h',ev:'B',ref:'Surviving Sepsis 2021 (Class 2B); ADRENAL trial NEJM 2018'}],
+  severe:  [{r:'Hydrocortisone 200 mg/day IV + Fludrocortisone 50 mcg PO/NG daily',ev:'A',ref:'APROCCHSS Trial NEJM 2018 — mortality benefit with HC+Fludro in refractory septic shock'},{d:'Duration: until vasopressors weaned',r:'Continue until vasopressor-free × 24h, then taper over 48h',ev:'A',ref:'Surviving Sepsis 2021'}],
+  lifethreatening:[{r:'HC 200 mg/day IV + fludrocortisone 50 mcg/day. If not responding: consider adrenal crisis (check cortisol/ACTH stim). Methylene blue for catecholamine-refractory vasoplegia.',ev:'A',ref:'APROCCHSS; Surviving Sepsis 2021'}]
+},
+vasoplegia:{
+  label:'Vasoplegic Syndrome (Post-CPB)',
+  mild:    [{r:'NE first-line. If NE >0.1 mcg/kg/min: add vasopressin 0.03 U/min. Hydrocortisone 200 mg/day IV if refractory.',ev:'B',ref:'Bojar RM 6th ed; Post-cardiac surgery vasoplegia consensus'}],
+  moderate:[{r:'Hydrocortisone 200 mg/day IV (50 mg q6h or continuous). Add vasopressin 0.03 U/min. Consider methylene blue 1.5 mg/kg IV if persistent.',ev:'B',ref:'Bojar RM; Consensus statement on vasoplegia 2019'}],
+  severe:  [{r:'Hydrocortisone 300 mg/day IV + vasopressin 0.04 U/min + methylene blue 1.5–2 mg/kg IV. Exclude adrenal crisis (random cortisol). Wean as vasopressors reduce.',ev:'B',ref:'Post-cardiac surgery SIRS/vasoplegia management; Bojar 6th ed'}],
+  lifethreatening:[{r:'Triple vasopressor + HC 300 mg/day + methylene blue. If post-protamine: epinephrine + diphenhydramine for anaphylaxis component. Venoarterial ECMO if unresponsive.',ev:'C',ref:'Expert consensus; Bojar RM'}]
+},
+adrenal_crisis:{
+  label:'Adrenal Crisis',
+  mild:    [{d:'Pre-crisis / sick-day rules',r:'Double oral hydrocortisone for duration of illness. If vomiting (unable to take oral): IM hydrocortisone 100 mg immediately then seek emergency care.',ev:'A',ref:'Endocrine Society AI CPG 2016'}],
+  moderate:[{r:'Hydrocortisone 100 mg IV bolus → 50 mg IV q6–8h + 0.9% NaCl 500 mL–1 L IV',ev:'A',ref:'Endocrine Society 2016; ESE 2020'}],
+  severe:  [{r:'Hydrocortisone 100 mg IV bolus IMMEDIATELY (do not wait for cortisol result) → 200 mg/24h IV continuous or 50 mg IV q6h. 0.9% NaCl 1 L over 30–60 min. Treat precipitant.',ev:'A',ref:'Endocrine Society AI CPG 2016'},{d:'Monitoring',r:'BGL hourly; Na/K q4–6h; BP continuous. Transition to oral HC when clinically stable (typically 24–48h).',ev:'A',ref:'Endocrine Society 2016'}],
+  lifethreatening:[{r:'Hydrocortisone 100 mg IV bolus stat + 200 mg/24h continuous + 2 L 0.9% NaCl. 50% glucose if BGL <3.5. ICU level care. Identify and treat precipitant (sepsis, MI, surgery).',ev:'A',ref:'Endocrine Society 2016; ESE 2020'}]
+},
+transplant_reject:{
+  label:'Cardiac Transplant Rejection (Acute Cellular)',
+  mild:    [{d:'Grade 1R — if haemodynamically stable',r:'Intensify oral immunosuppression; prednisone increase to 1 mg/kg/day × 3–5 days then taper to maintenance',ev:'B',ref:'ISHLT 2010; IHLST 2016 update'}],
+  moderate:[{d:'Grade 2R',r:'Methylprednisolone 500 mg IV × 3 days → Prednisone 1 mg/kg/day × 2 weeks → taper to maintenance over 4–6 weeks',ev:'B',ref:'ISHLT 2010'}],
+  severe:  [{d:'Grade 2R/3R with haemodynamic compromise',r:'Methylprednisolone 1000 mg IV × 3 days; consider ATG or OKT3 for steroid-refractory rejection; mechanical support if required',ev:'B',ref:'ISHLT 2010; Kobashigawa JA'}],
+  lifethreatening:[{d:'Haemodynamic compromise / AMR',r:'MP 1000 mg IV × 3 days + IVIG 2 g/kg + plasma exchange (5–7 sessions) for AMR. IABP/VA-ECMO bridge to recovery or retransplant.',ev:'C',ref:'ISHLT 2010; AMR consensus 2017'}]
+},
+anaphylaxis:{
+  label:'Anaphylaxis',
+  mild:    [{d:'Epinephrine is ALWAYS first-line. Steroids are adjunct only.',r:'Hydrocortisone 200 mg IV (adjunct to epinephrine); may prevent biphasic reaction',ev:'B',ref:'WAO Anaphylaxis Guidelines 2020 — steroids not first-line, evidence for biphasic prevention uncertain'}],
+  moderate:[{r:'Epinephrine IM 0.5 mg FIRST, then hydrocortisone 200 mg IV or methylprednisolone 125 mg IV',ev:'B',ref:'WAO 2020; EAACI 2021'}],
+  severe:  [{r:'Epinephrine infusion + hydrocortisone 200 mg IV q6h. Observe minimum 24h for biphasic reactions.',ev:'B',ref:'WAO 2020; EAACI 2021 — biphasic reactions occur in 1–20%'}],
+  lifethreatening:[{d:'Refractory anaphylaxis / cardiovascular collapse',r:'Epinephrine infusion + hydrocortisone 200 mg q4h + consider IVIG 2 g/kg for refractory cases. VA-ECMO if cardiac arrest.',ev:'C',ref:'Expert consensus; WAO 2020'}]
+}
+};
+
+function selInd(ind, el) {
+  wizInd = ind;
+  document.querySelectorAll('#wp1 .wiz-opt').forEach(e => e.classList.remove('sel'));
+  el.classList.add('sel');
+  const nb = document.getElementById('wizNextInd');
+  nb.style.opacity = '1'; nb.style.pointerEvents = 'auto';
+}
+
+function selSev(sev, el) {
+  wizSev = sev;
+  document.querySelectorAll('#wp2 .sev-btn').forEach(e => e.classList.remove('sel'));
+  el.classList.add('sel');
+  const nb = document.getElementById('wizNextSev');
+  nb.style.opacity = '1'; nb.style.pointerEvents = 'auto';
+}
+
+function wizNext(step) {
+  if (step === 0) {
+    const infx = document.getElementById('wInfx').value;
+    if (infx === 'yes') {
+      if (!confirm('\u26a0\ufe0f Active untreated infection detected. High-dose systemic steroids are relatively contraindicated without concomitant antimicrobial treatment. Proceed only after confirming antimicrobial therapy is initiated or the clinical benefit clearly outweighs risk. Continue?')) return;
+    }
+  }
+  if (step === 1 && !wizInd) return;
+  if (step === 2) { showProtoResult(); }
+  document.querySelectorAll('.wiz-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.wiz-step').forEach((s, i) => {
+    s.classList.remove('active');
+    if (i <= step) s.classList.add('done');
+  });
+  const nextPanel = document.getElementById('wp' + (step + 1));
+  const nextStep  = document.getElementById('ws' + (step + 1));
+  if (nextPanel) nextPanel.classList.add('active');
+  if (nextStep) { nextStep.classList.remove('done'); nextStep.classList.add('active'); }
+}
+
+function wizBack(step) {
+  document.querySelectorAll('.wiz-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.wiz-step').forEach((s, i) => {
+    s.classList.remove('active', 'done');
+    if (i < step - 1) s.classList.add('done');
+  });
+  const prevPanel = document.getElementById('wp' + (step - 1));
+  const prevStep  = document.getElementById('ws' + (step - 1));
+  if (prevPanel) prevPanel.classList.add('active');
+  if (prevStep) prevStep.classList.add('active');
+}
+
+function wizReset() {
+  wizInd = null; wizSev = null;
+  document.querySelectorAll('.wiz-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.wiz-step').forEach(s => s.classList.remove('active','done'));
+  document.getElementById('wp0').classList.add('active');
+  document.getElementById('ws0').classList.add('active');
+  document.querySelectorAll('#wp1 .wiz-opt').forEach(e => e.classList.remove('sel'));
+  document.querySelectorAll('#wp2 .sev-btn').forEach(e => e.classList.remove('sel'));
+  const nb1 = document.getElementById('wizNextInd'), nb2 = document.getElementById('wizNextSev');
+  nb1.style.opacity = '0.4'; nb1.style.pointerEvents = 'none';
+  nb2.style.opacity = '0.4'; nb2.style.pointerEvents = 'none';
+}
+
+function showProtoResult() {
+  const proto = PROTOCOLS[wizInd];
+  if (!proto) return;
+  const regimens = proto[wizSev] || proto.moderate || [];
+  const wt = parseFloat(document.getElementById('wWt').value) || 70;
+  const preg = document.getElementById('wPreg').value;
+  const liver = document.getElementById('wLiver').value;
+  const dm = document.getElementById('wDM').value;
+
+  let html = '<h3>' + proto.label + ' &mdash; ' + wizSev.charAt(0).toUpperCase() + wizSev.slice(1) + ' severity</h3>';
+
+  // Pregnancy warning
+  if (preg === 'yes') {
+    html += '<div class="box box-purple"><strong>\ud83e\udd30 Pregnancy:</strong> Hydrocortisone and prednisolone are preferred (high placental 11\u03b2-HSD2 inactivation). Avoid dexamethasone/betamethasone unless intentional foetal therapy. Monitor for gestational DM and pre-eclampsia.</div>';
+  }
+  if (liver === 'severe') {
+    html += '<div class="box box-amber"><strong>\u26a0\ufe0f Severe hepatic impairment:</strong> Use prednisolone directly (not prednisone). Hydrocortisone and methylprednisolone are also safe alternatives. Avoid prednisone.</div>';
+  }
+  if (dm === 'yes') {
+    html += '<div class="box box-red"><strong>\ud83d\udcca Diabetes mellitus:</strong> Anticipate significant postprandial hyperglycaemia. Monitor BGL 4\u20136-hourly. Consider NPH insulin at lunchtime with morning GC dosing, or basal-bolus regimen for IV/divided doses.</div>';
+  }
+
+  regimens.forEach((reg, i) => {
+    html += '<div class="regimen-block">';
+    if (reg.d) html += '<div class="reg-label">Option ' + (i+1) + (reg.d ? ' \u2014 ' + reg.d : '') + '</div>';
+    html += '<div style="font-size:14px;margin:4px 0">' + reg.r + '</div>';
+    html += '<div style="margin-top:6px"><span class="ev-pill ev-' + (reg.ev||'C') + '">Level ' + (reg.ev||'C') + '</span> <span style="font-size:11px;color:var(--muted)">' + (reg.ref||'') + '</span></div>';
+    // Weight-based annotation
+    if (reg.r.includes('mg/kg') && wt) {
+      const match = reg.r.match(/([\d.]+)\s*mg\/kg/);
+      if (match) {
+        const calc = (parseFloat(match[1]) * wt).toFixed(0);
+        html += '<div style="font-size:11.5px;color:var(--cyan);margin-top:4px">\ud83e\udeb6 For ' + wt + ' kg: ' + calc + ' mg/day</div>';
+      }
+    }
+    html += '</div>';
+  });
+
+  html += '<div class="box box-cyan" style="margin-top:12px"><strong>\u26a0\ufe0f Clinical disclaimer:</strong> These regimens are illustrative summaries based on published guidelines. They do not replace clinical judgement or specialist input. Always verify with current guidelines and local protocols before prescribing.</div>';
+
+  document.getElementById('wizResultContent').innerHTML = html;
+}
+
+// ══ STEROID DATA ═══════════════════════════════════════════════
+const GC = {
+  Hydrocortisone:     { equiv: 20, gc: 1, mc: 1 },
+  Cortisone:          { equiv: 25, gc: 0.8, mc: 0.8 },
+  Prednisone:         { equiv: 5, gc: 4, mc: 0.8 },
+  Methylprednisolone: { equiv: 4, gc: 5, mc: 0.5 },
+  Triamcinolone:      { equiv: 4, gc: 5, mc: 0 },
+  Dexamethasone:      { equiv: 0.75, gc: 25, mc: 0 },
+  Betamethasone:      { equiv: 0.6, gc: 27.5, mc: 0 }
+};
+
+// ══ TAB SWITCH ════════════════════════════════════════════════
+const tabs=document.querySelectorAll('.tab');
+const tgs=document.querySelectorAll('.tg');
+function gt(i,b){
+  tabs.forEach(t=>t.classList.remove('active'));
+  tgs.forEach(t=>t.classList.remove('active'));
+  tabs[i].classList.add('active');
+  b.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══ CONVERTER ════════════════════════════════════════════════
+function convertSteroid() {
+  const from = document.getElementById('convFrom').value;
+  const dose = parseFloat(document.getElementById('convDose').value);
+  const to   = document.getElementById('convTo').value;
+  if (!dose || dose <= 0) return;
+
+  const fromData = GC[from] || GC.Prednisone;
+  const toData   = GC[to]   || GC.Dexamethasone;
+  const predEquiv = dose / fromData.equiv * 5;
+  const result   = dose / fromData.equiv * toData.equiv;
+
+  const div = document.getElementById('convResult');
+  div.style.display = 'block';
+  document.getElementById('convMainResult').textContent =
+    to + ': ' + result.toFixed(2) + ' mg/day';
+  document.getElementById('convDetails').innerHTML =
+    'Prednisone-equivalent: ' + predEquiv.toFixed(1) + ' mg/day<br>' +
+    from + ' ' + dose + ' mg &rarr; Prednisone-equiv ' + predEquiv.toFixed(1) +
+    ' mg &rarr; ' + to + ' ' + result.toFixed(2) + ' mg<br>' +
+    '<small>GC potency: ' + from + ' ' + fromData.gc + 'x | ' + to + ' ' + toData.gc +
+    'x (relative to hydrocortisone)</small>';
+}
+
+// ══ HPA CALCULATOR ════════════════════════════════════════════
+function calcHPA() {
+  const drug    = document.getElementById('hpaDrug').value;
+  const dose    = parseFloat(document.getElementById('hpaDose').value);
+  const weeks   = parseFloat(document.getElementById('hpaDuration').value);
+  const timing  = document.getElementById('hpaTiming').value;
+
+  if (!dose || !weeks) return;
+
+  const drugData  = GC[drug] || GC.Prednisone;
+  const predEquiv = dose / drugData.equiv * 5;
+
+  let risk = 'low', explanation = [];
+
+  if (weeks < 3) {
+    risk = 'low';
+    explanation.push('Duration <3 weeks — HPA suppression unlikely in most patients. Exceptions: repeated courses, evening dosing, megadoses, Cushingoid phenotype — use clinical judgement.');
+  } else if (predEquiv < 10) {
+    risk = 'low';
+    explanation.push('Dose below 10 mg prednisone-equiv/day — low suppression risk.');
+  } else if (predEquiv >= 20 || (predEquiv >= 10 && timing !== 'morning' && timing !== 'altday')) {
+    risk = 'high';
+    explanation.push('Dose ≥20 mg prednisone-equiv OR divided/evening dosing ≥10 mg for >3 weeks — significant HPA suppression expected.');
+  } else {
+    risk = 'intermediate';
+    explanation.push('10–20 mg prednisone-equiv for >3 weeks — intermediate HPA suppression risk.');
+  }
+
+  if (timing === 'altday') {
+    risk = risk === 'high' ? 'intermediate' : 'low';
+    explanation.push('Alternate-day dosing reduces HPA suppression risk by one category.');
+  }
+  if (timing === 'evening') {
+    explanation.push('Evening dosing maximally suppresses the nocturnal CRH surge — highest HPA suppression risk for a given dose.');
+  }
+
+  let pjpNote = '';
+  if (predEquiv >= 20 && weeks >= 4) {
+    pjpNote = '<br><span style="color:var(--amber);font-weight:700">⚠️ PJP Prophylaxis indicated:</span> ≥20 mg prednisone-equiv/day for ≥4 weeks → Cotrimoxazole 480 mg/day. Also screen HBV (HBsAg, HBcAb) and TB (IGRA) before continuing long-term therapy.';
+  } else if (predEquiv >= 10 && weeks >= 4) {
+    pjpNote = '<br><span style="color:var(--muted)">Consider PJP prophylaxis if additional immunosuppressant co-administered (rituximab, mycophenolate, alkylating agents).</span>';
+  }
+  const labels = { low: '🟢 Low Risk', intermediate: '🟡 Intermediate Risk', high: '🔴 High Risk' };
+  const colours = { low: 'risk-low', intermediate: 'risk-mid', high: 'risk-high' };
+  const advice = {
+    low: 'Taper generally not required for HPA reasons. Can discontinue or reduce rapidly.',
+    intermediate: 'Taper recommended. Test with morning cortisol before stopping. Consider Synacthen test.',
+    high: 'Structured taper mandatory. Morning cortisol on reaching <5 mg/day. Synacthen test before complete cessation. Patient should carry steroid card.'
+  };
+
+  const div = document.getElementById('hpaResult');
+  div.style.display = 'block';
+  document.getElementById('hpaMainResult').innerHTML =
+    '<span class="' + colours[risk] + '">' + labels[risk] + '</span>';
+  document.getElementById('hpaDetails').innerHTML =
+    'Prednisone-equivalent: <strong>' + predEquiv.toFixed(1) + ' mg/day</strong> × ' + weeks + ' weeks<br>' +
+    explanation.join(' ') + '<br><br><strong>Recommendation:</strong> ' + advice[risk] + pjpNote;
+}
+
+// ══ STRESS DOSE ═══════════════════════════════════════════════
+function calcStressDose() {
+  const risk    = document.getElementById('sdRisk').value;
+  const surgery = document.getElementById('sdSurgery').value;
+  const dose    = parseFloat(document.getElementById('sdDose').value);
+  const div     = document.getElementById('sdResult');
+  div.style.display = 'block';
+
+  let regimen = '', note = '';
+
+  if (risk === 'low') {
+    regimen = 'Continue usual corticosteroid dose. No additional stress dosing required.';
+    note = 'Low HPA suppression risk — adrenal reserve expected to be adequate.';
+  } else {
+    const protocols = {
+      minor:    'Continue usual dose. No additional supplementation required. Monitor for hypotension.',
+      moderate: 'Hydrocortisone 50 mg IV at induction + 25 mg IV q8h × 24 h, then resume usual dose.',
+      major:    'Hydrocortisone 100 mg IV at induction + 50 mg IV q8h × 48–72 h, then taper to usual dose over 1–3 days.',
+      cardiac:  'Hydrocortisone 100 mg IV at induction + 50 mg IV q6–8h × 48–72 h. Many contemporary centres use a more conservative protocol: 100 mg induction + 50 mg q8h × 24 h only. Resume usual dose when stable. ⚠️ Protocols vary significantly between institutions — verify with local cardiac surgery / anaesthesia guidelines.'
+    };
+    regimen = protocols[surgery];
+    note = 'Source: Endocrine Society Perioperative Management of Adrenal Insufficiency CPG 2024. Hydrocortisone preferred (has mineralocorticoid activity). Taper to usual dose as quickly as clinical condition allows.';
+  }
+
+  document.getElementById('sdMainResult').textContent = surgery.charAt(0).toUpperCase() + surgery.slice(1) + ' surgery:';
+  document.getElementById('sdDetails').innerHTML =
+    '<strong style="color:var(--cyan)">' + regimen + '</strong><br><br>' + note;
+}
+
+// ══ WEIGHT-BASED DOSE ════════════════════════════════════════
+function calcWtBased() {
+  const weight   = parseFloat(document.getElementById('wbWeight').value);
+  const drug     = document.getElementById('wbDrug').value;
+  const protocol = parseFloat(document.getElementById('wbProtocol').value);
+  if (!weight) return;
+
+  const drugData = GC[drug] || GC.Prednisone;
+  // protocol is mg/kg/day in prednisone-equivalent
+  const predEquivMg = weight * protocol;
+  const actualMg = predEquivMg / 5 * drugData.equiv;
+  const tablets5 = Math.round(actualMg / 5);
+
+  const div = document.getElementById('wbResult');
+  div.style.display = 'block';
+  document.getElementById('wbMainResult').textContent =
+    actualMg.toFixed(1) + ' mg/day of ' + drug;
+  document.getElementById('wbDetails').innerHTML =
+    'Prednisone-equivalent: <strong>' + predEquivMg.toFixed(1) + ' mg/day</strong> (' + protocol + ' mg/kg/day)<br>' +
+    drug + ': ' + actualMg.toFixed(1) + ' mg/day' +
+    (drug === 'Prednisone' ? ' ≈ ' + tablets5 + ' × 5 mg tablets daily' : '') + '<br>' +
+    '<small>Based on actual (not ideal) body weight. For obese patients, consider using ideal body weight to avoid excessive dosing.</small>';
+}
+
+// ══ TAPER GENERATOR ══════════════════════════════════════════
+const condCfg = {
+  fast:      { noTaper:true, note:'Short burst: abrupt discontinuation appropriate in most patients. Resume inhaled GC as prescribed. If repeated courses or Cushingoid features present, assess clinically.' },
+  gca:       { stepFn:d=>d>30?5:d>15?2.5:d>5?1:0.5, daysFn:d=>d>20?14:28, minDose:0,
+               note:'GCA: very slow taper over 12–24 months (ACR/EULAR 2021). Monitor CRP/ESR monthly. Tocilizumab permits faster taper. Minimum treatment duration 12 months.' },
+  pmr:       { stepFn:d=>d>15?2.5:d>10?2.5:d>5?1:0.5, daysFn:d=>d>10?28:56, minDose:0,
+               note:'PMR: taper 2.5 mg/4 weeks to 10 mg, then 1 mg/4–8 weeks (EULAR 2015). ~50% relapse during taper. Monitor ESR/CRP monthly. Total duration 12–24 months.' },
+  sle:       { stepFn:d=>d>30?5:d>15?2.5:d>5?1:0.5, daysFn:d=>28, minDose:5,
+               note:'SLE often requires long-term low-dose maintenance (5 mg/day). Complete discontinuation may not be achievable. Hydroxychloroquine as steroid-sparing baseline.' },
+  anca:      { stepFn:d=>d>20?5:d>10?2.5:d>5?1:0.5, daysFn:d=>14, minDose:0,
+               note:'ANCA vasculitis (PEXIVAS): target <5 mg/day by 3 months (ACR/EULAR 2022). Rituximab or azathioprine as steroid-sparing agent.' },
+  op:        { stepFn:d=>d>40?10:d>20?10:d>10?5:2.5, daysFn:d=>28, minDose:0,
+               note:'Organizing pneumonia: taper slowly over 6–12 months. High relapse rate with rapid taper. CT at 3 and 6 months.' },
+  transplant:{ stepFn:d=>d>20?5:2.5, daysFn:d=>14, minDose:5,
+               note:'Transplant protocols vary by centre and organ. Do not modify without transplant team approval. Rejection risk with rapid taper.' },
+  standard:  { stepFn:d=>d>40?10:d>20?5:d>10?2.5:d>5?1:0.5, daysFn:d=>d>20?7:d>10?14:28, minDose:0,
+               note:'General-purpose taper. Adjust speed based on disease activity, symptoms, and HPA recovery.' }
+};
+
+function genTaper() {
+  const drug      = document.getElementById('tapDrug').value;
+  const startDose = parseFloat(document.getElementById('tapStart').value);
+  const duration  = parseInt(document.getElementById('tapDuration').value);
+  const condition = document.getElementById('tapCondition').value;
+  if (!startDose || !duration) return;
+  const drugData = GC[drug] || GC.Prednisone;
+  const cfg = condCfg[condition] || condCfg.standard;
+  const predEquivStart = startDose / drugData.equiv * 5;
+
+  if (cfg.noTaper) {
+    document.getElementById('tapResult').style.display = 'block';
+    document.getElementById('tapContent').innerHTML =
+      '<div class="result-main" style="color:var(--green)">No taper required in most cases</div>' +
+      '<div class="box box-green" style="margin-top:10px">' + cfg.note + '</div>' +
+      '<div class="box box-amber"><strong>Exceptions requiring individual assessment:</strong> Repeated courses within 3 months · Cushingoid phenotype · Evening or divided dosing · High-dose megabursts (&gt;80 mg/day). If in doubt: measure morning cortisol.</div>';
+    return;
+  }
+
+  if (duration < 3 && condition === 'fast') {
+    document.getElementById('tapResult').style.display = 'block';
+    document.getElementById('tapContent').innerHTML =
+      '<div class="result-main" style="color:var(--green)">No taper required</div>' +
+      '<p>Course duration <3 weeks: can discontinue abruptly. HPA suppression unlikely.</p>';
+    return;
+  }
+
+  // Generate schedule steps
+  let schedule = [];
+  let current = predEquivStart;
+  let week = 0;
+  week += duration;
+
+  const getStep = (dose, cond) => cfg.stepFn(dose);
+  const getDays = (dose, cond) => cfg.daysFn(dose);
+
+  schedule.push({ week: week, dose: current, note: 'Starting dose (on this dose for ' + duration + ' weeks)' });
+
+  let safetyLimit = 0;
+  while (current > 0 && safetyLimit < 60) {
+    safetyLimit++;
+    const step = getStep(current, condition);
+    const days = getDays(current, condition);
+    const weeks = Math.round(days / 7);
+    const next = Math.max(0, Math.round((current - step) * 10) / 10);
+    week += weeks;
+    if (next <= 0) {
+      schedule.push({ week: week, dose: 0, note: 'STOP' });
+      break;
+    }
+    schedule.push({ week: week, dose: next, note: weeks + (weeks === 1 ? ' week at this dose' : ' weeks at this dose') });
+    current = next;
+  }
+
+  // Convert back to actual drug doses
+  let html = '<div class="result-main">' + drug + ' tapering schedule — ' + schedule.length + ' steps</div>';
+  html += '<div class="result-sub" style="margin-bottom:12px">Starting: ' + startDose + ' mg/day ' + drug +
+    ' (' + predEquivStart.toFixed(1) + ' mg prednisone-equiv). Estimated total duration: ~' + (week - duration) + ' weeks to complete taper.</div>';
+  html += '<div class="tw" style="margin:0"><table class="taper-table">';
+  html += '<thead><tr><th>Week</th><th>' + drug + ' dose</th><th>Prednisone-equiv</th><th>Notes</th></tr></thead><tbody>';
+
+  schedule.forEach(s => {
+    const actualDose = s.dose === 0 ? 0 : (s.dose / 5 * drugData.equiv);
+    const cls = s.dose === 0 ? 'color:var(--red)' : s.dose <= 10 ? 'color:var(--amber)' : '';
+    html += '<tr><td>Week ' + s.week + '</td><td style="' + cls + ';font-weight:700">' +
+      (s.dose === 0 ? 'STOP' : actualDose.toFixed(1) + ' mg/day') + '</td><td>' +
+      (s.dose === 0 ? '' : s.dose.toFixed(1) + ' mg/day') + '</td><td>' + s.note + '</td></tr>';
+  });
+
+  html += '</tbody></table></div>';
+  html += '<div class="box box-amber" style="margin-top:10px"><strong>Note:</strong> This is an algorithmic estimate. Taper speed should be adjusted based on disease activity, HPA recovery, and patient symptoms. Consider measuring morning cortisol when reaching doses below 5 mg prednisone-equivalent/day.</div>';
+
+  if (cfg.note) html += '<div class="box box-blue" style="margin-top:8px"><strong>Protocol note:</strong> ' + cfg.note + '</div>';
+  html += '<div class="box box-amber" style="margin-top:6px"><strong>⚠️ Illustrative taper estimate only — not a prescription.</strong> Adjust based on disease activity, HPA recovery, and specialist input. Check morning cortisol when reaching &lt;5 mg prednisone-equivalent/day.</div>';
+  document.getElementById('tapResult').style.display = 'block';
+  document.getElementById('tapContent').innerHTML = html;
+}
+</script>
+</body>
+</html>

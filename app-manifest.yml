@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-06-29 10:28
+  updated: 2026-07-16 11:33
 
 sections:
   - id: calculators
@@ -74,7 +74,7 @@ sections:
         visible: true
         tags: [echo, echocardiography, norms]
       - id: platelets
-        title: "Platelet Inhibitors | Perioperative Management · Cardiac Surgery"
+        title: "Platelet Inhibitors & Post-CABG Antithrombotic Therapy | Cardiac Surgery"
         file: books/references/platelets.html
         type: reference
         visible: true
@@ -148,6 +148,12 @@ sections:
         type: cheatsheet
         visible: true
         tags: []
+      - id: atls
+        title: "ATLS – Cardiothoracic Trauma Manual"
+        file: books/cheatsheets/atls.html
+        type: cheatsheet
+        visible: true
+        tags: []
       - id: auscultation
         title: "Cardiac Auscultation | Clinical Reference · Cardiac Surgery"
         file: books/cheatsheets/auscultation.html
@@ -197,7 +203,7 @@ sections:
         visible: true
         tags: []
       - id: electrolytes
-        title: "Electrolyte Disorders in Cardiac Surgery | K⁺, Ca²⁺, Mg²⁺ Guide"
+        title: "Electrolyte Disorders | Cardiac Surgery ICU"
         file: books/cheatsheets/electrolytes.html
         type: cheatsheet
         visible: true
@@ -244,6 +250,12 @@ sections:
         type: cheatsheet
         visible: true
         tags: [renal, AKI, acute kidney injury]
+      - id: steroids
+        title: "Systemic Corticosteroid Therapy | Clinical Decision Support"
+        file: books/cheatsheets/steroids.html
+        type: cheatsheet
+        visible: true
+        tags: []
       - id: ventilation
         title: "Hamilton C1 · Mechanical Ventilation Reference"
         file: books/cheatsheets/ventilation.html
