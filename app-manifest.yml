@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-07-18 13:39
+  updated: 2026-07-19 16:44
 
 sections:
   - id: calculators
@@ -263,7 +263,7 @@ sections:
         visible: true
         tags: []
       - id: warfarin
-        title: "Warfarin Anticoagulation Protocol – Bojar Appendix 8 & 9 | Cardiac Surgery"
+        title: "Warfarin Anticoagulation in Cardiac Surgery | Initiation · Monitoring · Reversal · Perioperative"
         file: books/cheatsheets/warfarin.html
         type: cheatsheet
         visible: true
