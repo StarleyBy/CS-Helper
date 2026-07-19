@@ -1,471 +1,1142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Warfarin Anticoagulation Protocol – Bojar Appendix 8 & 9 | Cardiac Surgery</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warfarin Anticoagulation in Cardiac Surgery | Initiation · Monitoring · Reversal · Perioperative</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080f1a;--bg2:#0d1826;--bg3:#111f30;--bg4:#162438;
+  --rim:rgba(255,255,255,.07);--text:#d8e8f8;--muted:#6a88a8;--dim:#3a5068;
+  --teal:#00c8b0;--teal-d:rgba(0,200,176,.12);--teal-b:rgba(0,200,176,.28);
+  --amber:#f0a030;--amber-d:rgba(240,160,48,.13);
+  --red:#f05060;--red-d:rgba(240,80,96,.13);
+  --green:#30c878;--green-d:rgba(48,200,120,.12);
+  --blue:#4898e0;--blue-d:rgba(72,152,224,.12);
+  --purple:#a060f0;--purple-d:rgba(160,96,240,.13);
+  --gold:#e8c050;--gold-d:rgba(232,192,80,.12);
+  --mono:'Space Mono',monospace;--sans:'Space Grotesk',sans-serif;
+  --r:12px;--r2:20px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.65;overflow-x:hidden;min-height:100vh}
+::selection{background:rgba(0,200,176,.3)}
 
-    body {
-      background: #eef2f8;
-      font-family: 'Inter', system-ui, 'Segoe UI', 'Roboto', sans-serif;
-      line-height: 1.45;
-      padding: 28px 20px;
-      color: #1a2c3e;
-    }
+.hdr{background:linear-gradient(135deg,#06100e 0%,#0a1a18 50%,#0d2020 100%);border-bottom:1px solid var(--rim);padding:22px 18px 18px;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% -20%,rgba(0,200,176,.15) 0%,transparent 70%);pointer-events:none}
+.hdr-title{font-family:var(--mono);font-size:18px;font-weight:700;letter-spacing:.04em;color:var(--teal);text-shadow:0 0 30px rgba(0,200,176,.4);position:relative}
+.hdr-sub{font-size:12px;color:var(--muted);margin-top:5px;position:relative}
+.hdr-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;position:relative}
+.bdg{font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:.03em}
+.bdg-t{background:var(--teal-d);color:var(--teal);border:1px solid var(--teal-b)}
+.bdg-r{background:var(--red-d);color:var(--red);border:1px solid rgba(240,80,96,.25)}
+.bdg-a{background:var(--amber-d);color:var(--amber);border:1px solid rgba(240,160,48,.25)}
+.bdg-g{background:var(--green-d);color:var(--green);border:1px solid rgba(48,200,120,.25)}
+.bdg-p{background:var(--purple-d);color:var(--purple);border:1px solid rgba(160,96,240,.25)}
+.bdg-b{background:var(--blue-d);color:var(--blue);border:1px solid rgba(72,152,224,.25)}
 
-    .warf-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 32px;
-      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.08);
-      overflow: hidden;
-    }
+.nav-wrap{background:var(--bg2);border-bottom:1px solid var(--rim);padding:10px 14px;position:sticky;top:0;z-index:200}
+.nav-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;max-width:900px;margin:0 auto}
+.nb{display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:8px 3px 6px;cursor:pointer;transition:all .16s}
+.nb:hover{border-color:var(--teal-b);background:var(--teal-d)}
+.nb.active{background:var(--teal-d);border-color:var(--teal);box-shadow:0 0 0 1px var(--teal)}
+.nb-icon{font-size:16px;line-height:1}
+.nb-lbl{font-size:9px;font-weight:600;color:var(--muted);text-align:center;line-height:1.25;letter-spacing:.02em}
+.nb.active .nb-lbl{color:var(--teal)}.nb:hover .nb-lbl{color:var(--text)}
 
-    .header {
-      background: linear-gradient(135deg, #1e3c3c 0%, #2c5e6e 100%);
-      padding: 28px 34px;
-      color: white;
-    }
+.page{max-width:1000px;margin:0 auto;padding:20px 16px 60px}
+.tab{display:none}.tab.active{display:block}
 
-    .header h1 {
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
+.sh{margin-bottom:16px}
+.sh h2{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--teal);letter-spacing:.04em;display:flex;align-items:center;gap:8px}
+.sh p{color:var(--muted);font-size:12.5px;margin-top:4px}
 
-    .badge-warf {
-      background: #f5a65b;
-      color: #1e3c3c;
-      padding: 5px 14px;
-      border-radius: 40px;
-      font-size: 14px;
-      font-weight: 800;
-    }
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
 
-    .subhead {
-      font-size: 15px;
-      opacity: 0.9;
-      margin-top: 8px;
-      border-left: 3px solid #f5a65b;
-      padding-left: 16px;
-    }
+.card{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:18px;margin-bottom:14px}
+.card h3{font-size:13.5px;font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.card p,.card li{color:var(--muted);font-size:13px;line-height:1.65}
+.card ul,.card ol{padding-left:16px}.card li{margin-bottom:5px}.card li strong{color:var(--text)}
 
-    .content {
-      padding: 32px 34px;
-    }
+.box{border-radius:var(--r);padding:11px 14px;margin:10px 0;font-size:13px;line-height:1.6;color:var(--text)}
+.box-t{background:var(--teal-d);border-left:3px solid var(--teal)}
+.box-r{background:var(--red-d);border-left:3px solid var(--red)}
+.box-a{background:var(--amber-d);border-left:3px solid var(--amber)}
+.box-g{background:var(--green-d);border-left:3px solid var(--green)}
+.box-b{background:var(--blue-d);border-left:3px solid var(--blue)}
+.box-p{background:var(--purple-d);border-left:3px solid var(--purple)}
+.box-gold{background:var(--gold-d);border-left:3px solid var(--gold)}
+.box strong{font-weight:700}
+.box-t strong{color:var(--teal)}.box-r strong{color:var(--red)}.box-a strong{color:var(--amber)}
+.box-g strong{color:var(--green)}.box-b strong{color:var(--blue)}.box-gold strong{color:var(--gold)}
 
-    /* Card grid & cards */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 26px;
-      margin-bottom: 36px;
-    }
+.tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--rim);margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:var(--bg3);color:var(--teal);font-weight:700;padding:8px 10px;text-align:left;border-bottom:1px solid var(--rim);white-space:nowrap}
+td{padding:7px 10px;border-bottom:1px solid var(--rim);color:var(--muted);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(0,200,176,.03)}
+td strong{color:var(--text)}
+.td-hold{color:var(--red)!important;font-weight:700}
+.td-ok{color:var(--green)!important;font-weight:700}
+.td-caution{color:var(--amber)!important;font-weight:700}
 
-    .card {
-      background: #ffffff;
-      border-radius: 24px;
-      border: 1px solid #e2ebf3;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-      overflow: hidden;
-      transition: all 0.1s ease;
-    }
+.stitle{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:20px 0 10px;padding-left:10px;border-left:2px solid var(--teal)}
+.footnote{text-align:center;font-size:11px;color:var(--dim);padding:18px 0 0;border-top:1px solid var(--rim);margin-top:28px}
+.class-b{font-family:var(--mono);font-size:10px;font-weight:700;padding:2px 7px;border-radius:6px;margin:1px;display:inline-block}
+.cb1{background:rgba(48,200,120,.2);color:var(--green)}.cb2a{background:rgba(72,152,224,.2);color:var(--blue)}
+.cb2b{background:rgba(240,160,48,.2);color:var(--amber)}.cb3{background:rgba(240,80,96,.2);color:var(--red)}
 
-    .card-header {
-      background: #edf5fa;
-      padding: 16px 20px;
-      font-weight: 700;
-      font-size: 18px;
-      border-bottom: 2px solid #cbdfec;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: #115c6b;
-    }
+/* Calculator styles */
+.calc-wrap{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r2);padding:18px;margin-bottom:14px}
+.calc-wrap h3{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--teal);letter-spacing:.04em;margin-bottom:12px}
+.cinp{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r);padding:8px 10px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none;width:100%;transition:border-color .15s}
+.cinp:focus{border-color:var(--teal)}
+.csel{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r);padding:8px 10px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none;width:100%;cursor:pointer}
+.csel:focus{border-color:var(--teal)}
+.clbl{font-size:10.5px;color:var(--muted);font-weight:700;display:block;margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:14px}
+.calc-fld{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r);padding:11px}
+.calc-btn{width:100%;background:var(--teal-d);border:1px solid var(--teal);border-radius:var(--r);padding:11px;color:var(--teal);font-family:var(--mono);font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.06em;transition:all .15s}
+.calc-btn:hover{background:rgba(0,200,176,.2)}
+.calc-result{display:none;margin-top:14px}
+.result-box{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:16px 18px}
 
-    .card-body {
-      padding: 20px 22px;
-    }
+.chk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;margin-bottom:14px}
+.chk-item{display:flex;align-items:flex-start;gap:10px;background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r);padding:10px 12px;cursor:pointer;transition:all .15s}
+.chk-item:hover{border-color:var(--teal-b)}
+.chk-item.sel{background:var(--teal-d);border-color:var(--teal)}
+.chk-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--teal);cursor:pointer;flex-shrink:0;margin-top:2px}
+.chk-item label{font-size:12.5px;color:var(--muted);cursor:pointer;line-height:1.5}
+.chk-item.sel label{color:var(--text)}
+.chk-pts{font-family:var(--mono);font-size:10px;color:var(--teal);font-weight:700;margin-left:auto;padding-left:6px;flex-shrink:0}
 
-    .step-title {
-      font-weight: 800;
-      font-size: 14px;
-      background: #f2f7fc;
-      padding: 6px 12px;
-      border-radius: 30px;
-      display: inline-block;
-      margin-bottom: 12px;
-      color: #1a6f80;
-    }
+/* Step indicators */
+.step{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--rim)}
+.step:last-child{border-bottom:none}
+.step-num{width:26px;height:26px;border-radius:50%;background:var(--teal-d);border:1px solid var(--teal);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:var(--teal);flex-shrink:0}
+.step-body h4{color:var(--text);font-size:13.5px;margin-bottom:3px}
+.step-body p{color:var(--muted);font-size:12.5px}
 
-    .drug-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
+/* INR severity colors in tables */
+.inr-ok{color:var(--green);font-weight:700}
+.inr-warn{color:var(--amber);font-weight:700}
+.inr-high{color:var(--red);font-weight:700}
 
-    .drug-table td, .drug-table th {
-      padding: 9px 7px;
-      border-bottom: 1px solid #e5edf3;
-      vertical-align: top;
-    }
-
-    .drug-table th {
-      text-align: left;
-      font-weight: 800;
-      background: #f5faff;
-      color: #1c6070;
-    }
-
-    .two-col {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-
-    .col {
-      flex: 1;
-      min-width: 230px;
-    }
-
-    .important-box {
-      background: #fff7ec;
-      border-left: 5px solid #e67e22;
-      padding: 14px 18px;
-      border-radius: 20px;
-      margin: 18px 0;
-      font-size: 13px;
-    }
-
-    .alert-box {
-      background: #ffeceb;
-      border-left: 5px solid #c73e2d;
-      padding: 14px 18px;
-      border-radius: 20px;
-      margin: 18px 0;
-      font-size: 13px;
-    }
-
-    .pill {
-      background: #ecf5fd;
-      color: #1f6c7c;
-      border-radius: 40px;
-      padding: 2px 10px;
-      font-size: 12px;
-      font-weight: 600;
-      display: inline-block;
-    }
-
-    .footnote {
-      font-size: 11px;
-      color: #6a7f9b;
-      margin-top: 14px;
-      border-top: 1px dashed #d0deea;
-      padding-top: 12px;
-    }
-
-    hr {
-      margin: 28px 0;
-      border: 0;
-      height: 1px;
-      background: #e2edf5;
-    }
-
-    h3 {
-      font-size: 16px;
-      margin: 12px 0 10px 0;
-      font-weight: 700;
-      color: #1f5e6e;
-    }
-
-    .inline-badge {
-      background: #1f6c7c;
-      color: white;
-      font-size: 11px;
-      border-radius: 30px;
-      padding: 2px 10px;
-      display: inline-block;
-      margin-left: 8px;
-      vertical-align: middle;
-    }
-
-    @media (max-width: 720px) {
-      .content {
-        padding: 18px;
-      }
-      .header {
-        padding: 20px;
-      }
-    }
-
-    .score-grid {
-      background: #fafeff;
-      border-radius: 18px;
-      padding: 12px 16px;
-      border: 1px solid #d9e6f2;
-      margin-bottom: 16px;
-    }
-  </style>
+@media(max-width:600px){
+  .hdr-title{font-size:14px}
+  .nav-grid{grid-template-columns:repeat(5,1fr)}
+  .nb-lbl{font-size:8px}
+}
+</style>
 </head>
 <body>
-<div class="warf-container">
-  <div class="header">
-    <h1>
-      💊 WARFARIN ANTICOAGULATION PROTOCOL
-      <span class="badge-warf">APPENDIX 8 & 9 · BOJAR 6TH ED.</span>
-    </h1>
-    <div class="subhead">
-      Evidence‑based initiation, monitoring, INR reversal, and drug interactions for cardiac surgery patients.<br>
-      <strong>Key facts in 5 seconds:</strong> Standard vs low‑dose initiation • Daily INR until therapeutic • Reversal based on bleeding risk • PCC + vitamin K for life‑threatening bleeding.
-    </div>
-  </div>
-  <div class="content">
-
-    <!-- 2-COLUMN GRID: INITIATION (Standard + Low-dose) -->
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-header">📅 STANDARD INITIATION PROTOCOL (no risk factors)</div>
-        <div class="card-body">
-          <div class="important-box" style="margin-top: 0;">
-            <strong>⚡ Risk factors for warfarin sensitivity → use LOW-DOSE protocol:</strong><br>
-            • Small, elderly females • Age >75 years • Renal (Cr >1.5) or hepatic dysfunction • Interacting drugs (amiodarone, antibiotics)
-          </div>
-          <table class="drug-table">
-            <thead>
-              <tr><th>Day</th><th>INR</th><th>Standard dose (mg)</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>1</td><td>WNL</td><td>5 mg</td></tr>
-              <tr><td rowspan="3">2</td><td>&lt;1.5</td><td>5 mg</td></tr>
-              <tr><td>1.5–1.9</td><td>2.5 mg</td></tr>
-              <tr><td>&gt;2.0</td><td>HOLD*</td></tr>
-              <tr><td rowspan="4">3</td><td>&lt;1.5</td><td>7.5 mg</td></tr>
-              <tr><td>1.5–1.9</td><td>5 mg</td></tr>
-              <tr><td>2.0–3.0</td><td>2.5 mg</td></tr>
-              <tr><td>&gt;3.0</td><td>HOLD*</td></tr>
-              <tr><td rowspan="4">4</td><td>&lt;1.5</td><td>10 mg</td></tr>
-              <tr><td>1.5–1.9</td><td>7.5 mg</td></tr>
-              <tr><td>2.0–3.0</td><td>5 mg</td></tr>
-              <tr><td>&gt;3.0</td><td>HOLD*</td></tr>
-              <tr><td rowspan="4">5</td><td>&lt;1.5</td><td>10 mg</td></tr>
-              <tr><td>1.5–1.9</td><td>10 mg</td></tr>
-              <tr><td>2.0–3.0</td><td>5 mg</td></tr>
-              <tr><td>&gt;3.0</td><td>HOLD*</td></tr>
-              <tr><td rowspan="4">6</td><td>&lt;1.5</td><td>12.5 mg</td></tr>
-              <tr><td>1.5–1.9</td><td>10 mg</td></tr>
-              <tr><td>2.0–3.0</td><td>5 mg</td></tr>
-              <tr><td>&gt;3.0</td><td>HOLD*</td></tr>
-            </tbody>
-          </table>
-          <div class="footnote">* Restart warfarin when INR &lt;3.0, then adjust dose based on INR trend. Target INR 2.0–3.0 (or 2.5–3.5 for mechanical mitral/aortic valve).</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">📉 LOW‑DOSE PROTOCOL (sensitivity / high bleeding risk)</div>
-        <div class="card-body">
-          <table class="drug-table">
-            <thead><tr><th>Day</th><th>INR</th><th>Low dose (mg)</th></tr></thead>
-            <tbody>
-              <tr><td>1</td><td>WNL</td><td>2.5 mg</td></tr>
-              <tr><td rowspan="3">2</td><td>&lt;1.5</td><td>2.5 mg</td></tr>
-              <tr><td>1.5–1.9</td><td>1.25 mg</td></tr>
-              <tr><td>&gt;2.0</td><td>HOLD*</td></tr>
-              <tr><td rowspan="4">3</td><td>&lt;1.5</td><td>5 mg</td></tr>
-              <tr><td>1.5–1.9</td><td>2.5 mg</td></tr>
-              <tr><td>2.0–3.0</td><td>HOLD*</td></tr>
-              <tr><td>&gt;3.0</td><td>HOLD*</td></tr>
-              <tr><td rowspan="4">4</td><td>&lt;1.5</td><td>7.5 mg</td></tr>
-              <tr><td>1.5–1.9</td><td>5 mg</td></tr>
-              <tr><td>2.0–3.0</td><td>HOLD*</td></tr>
-              <tr><td>&gt;3.0</td><td>HOLD*</td></tr>
-              <tr><td rowspan="4">5</td><td>&lt;1.5</td><td>10 mg</td></tr>
-              <tr><td>1.5–1.9</td><td>5 mg</td></tr>
-              <tr><td>2.0–3.0</td><td>HOLD*</td></tr>
-              <tr><td>&gt;3.0</td><td>HOLD*</td></tr>
-              <tr><td rowspan="4">6</td><td>&lt;1.5</td><td>10 mg</td></tr>
-              <tr><td>1.5–1.9</td><td>7.5 mg</td></tr>
-              <tr><td>2.0–3.0</td><td>2.5 mg</td></tr>
-              <tr><td>&gt;3.0</td><td>HOLD*</td></tr>
-            </tbody>
-          </table>
-          <div class="important-box" style="margin-top: 12px;">💡 <strong>Monitoring:</strong> Check INR daily until therapeutic range (≥2 consecutive days), then 2–3 times/week, then weekly, then up to every 4 weeks when stable.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- REVERSAL PROTOCOL (APPENDIX 9) + PCC DOSING -->
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-header">🩸 INR REVERSAL PROTOCOL – NON‑BLEEDING PATIENT</div>
-        <div class="card-body">
-          <table class="drug-table">
-            <thead><tr><th>INR range</th><th>Action (no active bleeding)</th></tr></thead>
-            <tbody>
-              <tr><td>3.5 – 4.9</td><td>Reduce dose or hold 1 dose; resume at lower dose (reduce by 10–20%)</td></tr>
-              <tr><td>5.0 – 8.9</td><td>Hold warfarin 1–2 days; consider oral vitamin K 1–2.5 mg (high bleeding risk)</td></tr>
-              <tr><td>9.0 – 20.0</td><td>Hold warfarin; administer oral vitamin K 2.5–5 mg; recheck INR in 6–12 h</td></tr>
-              <tr><td>&gt;20.0</td><td>Hold warfarin; oral vitamin K 5–10 mg; consider IV vitamin K 5–10 mg (slow)</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">🚨 ACTIVE BLEEDING / LIFE‑THREATENING REVERSAL</div>
-        <div class="card-body">
-          <div class="alert-box" style="margin-top:0"><strong>⚠️ ANY ACTIVE BLEEDING (mild/moderate):</strong> Hold warfarin, IV vitamin K 5–10 mg, consider PCC 25–50 units/kg or FFP 15 mL/kg if PCC unavailable.</div>
-          <div class="alert-box" style="background:#f9e0dd;"><strong>🆘 LIFE‑THREATENING BLEEDING / INTRACRANIAL HEMORRHAGE:</strong><br>
-            • IMMEDIATELY hold warfarin<br>
-            • IV vitamin K 10 mg (slow over 30 min)<br>
-            • <strong>4‑factor PCC (Kcentra) 25–50 units/kg</strong> → target INR &lt;1.5<br>
-            • FFP 15–30 mL/kg if PCC not available (slower, volume overload risk)<br>
-            • Repeat INR q15–30 min until &lt;1.5.
-          </div>
-          <table class="drug-table">
-            <thead><tr><th>Pre‑treatment INR (4‑factor PCC Kcentra)</th><th>Dose (units/kg factor IX)</th><th>Max dose</th></tr></thead>
-            <tbody>
-              <tr><td>2.0 – 4.0</td><td>25 units/kg</td><td>2500 units</td></tr>
-              <tr><td>4.0 – 6.0</td><td>35 units/kg</td><td>3500 units</td></tr>
-              <tr><td>&gt;6.0</td><td>50 units/kg</td><td>5000 units</td></tr>
-            </tbody>
-          </table>
-          <div class="footnote">PCC = 3‑factor (Profline) or 4‑factor (Kcentra). Always administer IV vitamin K concurrently – reversal effect lasts 24h.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TARGET INR + MONITORING + INTERACTIONS (two cards) -->
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-header">🎯 TARGET INR & CLINICAL SCORES</div>
-        <div class="card-body">
-          <h3>Indication – target INR</h3>
-          <ul style="margin-left: 20px; margin-bottom: 16px;">
-            <li><strong>Atrial fibrillation (non‑valvular):</strong> INR 2.0–3.0</li>
-            <li><strong>Mechanical mitral/aortic valve (bileaflet):</strong> INR 2.5–3.5</li>
-            <li><strong>Mechanical valve + additional risk (AF, LV thrombus):</strong> INR 3.0–4.0</li>
-            <li><strong>DVT / PE / LV thrombus:</strong> INR 2.0–3.0</li>
-            <li><strong>Bioprosthetic valve + AF:</strong> INR 2.0–3.0</li>
-          </ul>
-          <div class="score-grid">
-            <strong>🔹 CHA₂DS₂‑VASc (stroke risk, non‑rheumatic AF)</strong><br>
-            CHF (1), Hypertension (1), Age≥75 (2), DM (1), Stroke/TIA (2), Vascular disease (1), Age 65–74 (1), Female (1).<br>
-            <strong>Anticoagulate if male ≥1, female ≥2.</strong>
-          </div>
-          <div class="score-grid">
-            <strong>🔹 HAS‑BLED (bleeding risk, score ≥3 high risk)</strong><br>
-            Hypertension (1), Abnormal renal/hepatic (1 or 2), Stroke (1), Bleeding history (1), Labile INR (1), Elderly >65 (1), Drugs/alcohol (1). 
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">⚡ DRUG, FOOD & HERBAL INTERACTIONS (Appendix 11)</div>
-        <div class="card-body">
-          <div class="two-col">
-            <div class="col">
-              <span class="pill" style="background:#fde9e8;">🔺 Increase INR (potentiation)</span>
-              <ul style="margin-top: 8px;">
-                <li>Amiodarone, Metronidazole</li>
-                <li>Fluconazole, Trimethoprim‑SMX</li>
-                <li>Simvastatin, Omeprazole</li>
-                <li>Diltiazem, Aspirin, Tramadol</li>
-                <li>Fish oils, Grapefruit, Mango</li>
-              </ul>
-            </div>
-            <div class="col">
-              <span class="pill" style="background:#e1f5e8;">🔻 Decrease INR (inhibition)</span>
-              <ul style="margin-top: 8px;">
-                <li>Rifampin, Carbamazepine</li>
-                <li>Barbiturates, Cholestyramine</li>
-                <li>Nafcillin, Sucralfate</li>
-                <li>Avocado, Ginseng</li>
-                <li>Green leafy vegetables (high vitamin K)</li>
-                <li>Soy milk, Multivitamins with K</li>
-              </ul>
-            </div>
-          </div>
-          <div class="important-box" style="margin-top: 8px;">📌 <strong>Key advice:</strong> consistent vitamin K intake, avoid abrupt dietary changes. Inform all providers about warfarin.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- EMERGENCY REVERSAL + BRIDGING / SPECIAL SITUATIONS -->
-    <div class="card">
-      <div class="card-header">📋 BRIDGING & PERIOPERATIVE MANAGEMENT</div>
-      <div class="card-body">
-        <div class="two-col">
-          <div class="col">
-            <h3>🔄 Interruption for surgery (mechanical valve / high risk)</h3>
-            <ul>
-              <li>Stop warfarin 5 days pre‑op</li>
-              <li>Start therapeutic LMWH (enoxaparin 1 mg/kg BID) when INR &lt;2.0</li>
-              <li>Last LMWH 24h before procedure (12h for prophylactic dose)</li>
-              <li>Resume warfarin post‑op when hemostasis secure</li>
-              <li>Restart LMWH when INR &lt;2.0 until INR therapeutic</li>
-            </ul>
-          </div>
-          <div class="col">
-            <h3>🧠 Special considerations</h3>
-            <ul>
-              <li>Extreme INR &gt;10 with no bleeding → oral vitamin K 2.5–5 mg, recheck in 24h.</li>
-              <li>Reversal with PCC and FFP: contraindicated in HIT history? use alternative.</li>
-              <li>If life‑threatening bleed and PCC not available → rFVIIa (off‑label, thrombotic risk).</li>
-              <li>After reversal: restart warfarin only when clinical stability regained and INR &lt;1.5 (start with low dose).</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- QUICK REFERENCE CARD: SUMMARY ALGORITHM -->
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-header">⚙️ QUICK STEP‑BY‑STEP WARFarin INITIATION (wards/ICU)</div>
-        <div class="card-body">
-          <div class="step-title">✅ Step 1 – Assess</div>
-          <p>Baseline INR, CBC, LFTs, renal function. Identify sensitivity risks (age &gt;75, low weight, amiodarone, Cr &gt;1.5).</p>
-          <div class="step-title">✅ Step 2 – Choose protocol</div>
-          <p>No risk factors → Standard (Day1: 5 mg). Sensitivity → Low‑dose (Day1: 2.5 mg).</p>
-          <div class="step-title">✅ Step 3 – Daily INR & dosing</div>
-          <p>Follow day 1–6 tables above. Hold if INR &gt;3.0, restart when &lt;3.0 with reduced dose.</p>
-          <div class="step-title">✅ Step 4 – Therapeutic range & maintenance</div>
-          <p>Once INR 2.0–3.0 (or target) for 2 days → adjust weekly doses (typical maintenance 2.5–10 mg/day).</p>
-          <div class="alert-box" style="margin-top: 12px;">⏱️ <strong>First 5 seconds summary:</strong> INITIATE with 5 mg or 2.5 mg (sensitive) → INR daily → REVERSAL: oral vitamin K if INR &gt;5 without bleed; IV vitamin K + PCC for major/life‑threatening bleed.</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">🧾 PATIENT EDUCATION & DISCHARGE CHECKLIST</div>
-        <div class="card-body">
-          <ul style="margin-left: 18px;">
-            <li>Take warfarin at same time (evening preferred, 5–6 PM).</li>
-            <li>Do not double dose; if missed, contact provider.</li>
-            <li>Avoid abrupt changes in green vegetables (keep vitamin K intake stable).</li>
-            <li>Report bleeding: hematuria, black stools, bruising, epistaxis, gingival bleeding.</li>
-            <li>Use soft toothbrush, electric razor, avoid NSAIDs unless approved.</li>
-            <li>Carry warfarin alert card and list of current medications.</li>
-            <li>Limit alcohol to ≤1 drink/day.</li>
-          </ul>
-          <div class="important-box" style="margin-bottom: 0;">📞 <strong>Emergency contact:</strong> immediately seek care for severe headache, neurologic change, heavy bleeding, or chest trauma.</div>
-        </div>
-      </div>
-    </div>
-
-    <hr>
-    <div class="footnote" style="text-align: center; margin-top: 12px;">
-      ⚕️ Protocol derived from Bojar 6th Edition – <strong>Appendix 8 (Warfarin Initiation)</strong> and <strong>Appendix 9 (INR Reversal)</strong>, supplemented with CHA₂DS₂‑VASc, HAS‑BLED, and drug interactions (Appendix 10A, 10B, 11). Always adapt to local INR monitoring frequency and institutional PCC availability.
-    </div>
+<div class="hdr">
+  <div class="hdr-title">💊 WARFARIN ANTICOAGULATION IN CARDIAC SURGERY</div>
+  <div class="hdr-sub">Initiation · Monitoring · INR Reversal · Perioperative Management · Drug Interactions · Clinical Scores</div>
+  <div class="hdr-badges">
+    <span class="bdg bdg-t">Initiation Protocols</span>
+    <span class="bdg bdg-r">Reversal & PCC</span>
+    <span class="bdg bdg-a">Perioperative Bridging</span>
+    <span class="bdg bdg-g">Target INR by Indication</span>
+    <span class="bdg bdg-p">Risk Calculators</span>
+    <span class="bdg bdg-b">Drug Interactions</span>
   </div>
 </div>
+
+<div class="nav-wrap">
+  <div class="nav-grid">
+    <button class="nb active" onclick="gt(0,this)"><span class="nb-icon">📅</span><span class="nb-lbl">Initiation</span></button>
+    <button class="nb" onclick="gt(1,this)"><span class="nb-icon">🩸</span><span class="nb-lbl">Reversal</span></button>
+    <button class="nb" onclick="gt(2,this)"><span class="nb-icon">🎯</span><span class="nb-lbl">Targets &amp; Scores</span></button>
+    <button class="nb" onclick="gt(3,this)"><span class="nb-icon">🔄</span><span class="nb-lbl">Perioperative</span></button>
+    <button class="nb" onclick="gt(4,this)"><span class="nb-icon">🧮</span><span class="nb-lbl">Calculators</span></button>
+  </div>
+</div>
+
+<main class="page">
+
+<!-- ════ TAB 0: INITIATION ════ -->
+<section class="tab active" id="t0">
+  <div class="sh"><h2>📅 Warfarin Initiation Protocols</h2>
+  <p>Standard vs. low-dose initiation based on patient sensitivity risk factors. All protocols require daily INR monitoring.</p></div>
+
+  <!-- FIX 7: Low-dose criteria expanded beyond just Cr>1.5 -->
+  <div class="box box-a" style="margin-bottom:16px">
+    <strong>⚠️ Use LOW-DOSE protocol if ANY of the following present:</strong><br>
+    Advanced age (&gt;75 years) · Low body weight / frailty · Small elderly female · Hepatic dysfunction (any degree) ·
+    Impaired renal function (use eGFR/CrCl, not serum creatinine alone — eGFR &lt;30 mL/min indicates significant sensitivity) ·
+    Interacting medications (amiodarone, azole antifungals, metronidazole, TMP-SMX) · Reduced albumin ·
+    High baseline bleeding risk · Baseline INR &gt;1.2
+  </div>
+
+  <div class="g2">
+    <div class="card" style="border-top:3px solid var(--teal)">
+      <h3 style="color:var(--teal)">📅 Standard Initiation (no sensitivity factors)</h3>
+      <div class="tw"><table>
+        <thead><tr><th>Day</th><th>INR</th><th>Dose (mg)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1</strong></td><td>Baseline</td><td><strong>5 mg</strong></td></tr>
+          <tr><td rowspan="3"><strong>2</strong></td><td>&lt;1.5</td><td>5 mg</td></tr>
+          <tr><td>1.5–1.9</td><td class="td-caution">2.5 mg</td></tr>
+          <tr><td>&gt;2.0</td><td class="td-hold">HOLD</td></tr>
+          <tr><td rowspan="4"><strong>3</strong></td><td>&lt;1.5</td><td>7.5 mg</td></tr>
+          <tr><td>1.5–1.9</td><td>5 mg</td></tr>
+          <tr><td>2.0–3.0</td><td class="td-caution">2.5 mg</td></tr>
+          <tr><td>&gt;3.0</td><td class="td-hold">HOLD</td></tr>
+          <tr><td rowspan="4"><strong>4</strong></td><td>&lt;1.5</td><td>10 mg</td></tr>
+          <tr><td>1.5–1.9</td><td>7.5 mg</td></tr>
+          <tr><td>2.0–3.0</td><td class="td-caution">5 mg</td></tr>
+          <tr><td>&gt;3.0</td><td class="td-hold">HOLD</td></tr>
+          <tr><td rowspan="4"><strong>5</strong></td><td>&lt;1.5</td><td>10 mg</td></tr>
+          <tr><td>1.5–1.9</td><td>10 mg</td></tr>
+          <tr><td>2.0–3.0</td><td class="td-caution">5 mg</td></tr>
+          <tr><td>&gt;3.0</td><td class="td-hold">HOLD</td></tr>
+          <tr><td rowspan="4"><strong>6</strong></td><td>&lt;1.5</td><td>12.5 mg</td></tr>
+          <tr><td>1.5–1.9</td><td>10 mg</td></tr>
+          <tr><td>2.0–3.0</td><td class="td-caution">5 mg</td></tr>
+          <tr><td>&gt;3.0</td><td class="td-hold">HOLD</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:11.5px;color:var(--dim)">HOLD = hold warfarin; restart when INR &lt;3.0 at reduced dose. Target INR 2.0–3.0 unless indication-specific range differs.</p>
+    </div>
+
+    <div class="card" style="border-top:3px solid var(--amber)">
+      <h3 style="color:var(--amber)">📉 Low-Dose Protocol (sensitivity / high bleeding risk)</h3>
+      <div class="tw"><table>
+        <thead><tr><th>Day</th><th>INR</th><th>Dose (mg)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1</strong></td><td>Baseline</td><td><strong>2.5 mg</strong></td></tr>
+          <tr><td rowspan="3"><strong>2</strong></td><td>&lt;1.5</td><td>2.5 mg</td></tr>
+          <tr><td>1.5–1.9</td><td class="td-caution">1.25 mg</td></tr>
+          <tr><td>&gt;2.0</td><td class="td-hold">HOLD</td></tr>
+          <tr><td rowspan="4"><strong>3</strong></td><td>&lt;1.5</td><td>5 mg</td></tr>
+          <tr><td>1.5–1.9</td><td>2.5 mg</td></tr>
+          <tr><td>2.0–3.0</td><td class="td-hold">HOLD</td></tr>
+          <tr><td>&gt;3.0</td><td class="td-hold">HOLD</td></tr>
+          <tr><td rowspan="4"><strong>4</strong></td><td>&lt;1.5</td><td>7.5 mg</td></tr>
+          <tr><td>1.5–1.9</td><td>5 mg</td></tr>
+          <tr><td>2.0–3.0</td><td class="td-hold">HOLD</td></tr>
+          <tr><td>&gt;3.0</td><td class="td-hold">HOLD</td></tr>
+          <tr><td rowspan="4"><strong>5</strong></td><td>&lt;1.5</td><td>10 mg</td></tr>
+          <tr><td>1.5–1.9</td><td>5 mg</td></tr>
+          <tr><td>2.0–3.0</td><td class="td-hold">HOLD</td></tr>
+          <tr><td>&gt;3.0</td><td class="td-hold">HOLD</td></tr>
+          <tr><td rowspan="4"><strong>6</strong></td><td>&lt;1.5</td><td>10 mg</td></tr>
+          <tr><td>1.5–1.9</td><td>7.5 mg</td></tr>
+          <tr><td>2.0–3.0</td><td class="td-caution">2.5 mg</td></tr>
+          <tr><td>&gt;3.0</td><td class="td-hold">HOLD</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- FIX 6: Monitoring — added nuance beyond "2 consecutive days" -->
+  <div class="card" style="border-top:3px solid var(--teal)">
+    <h3 style="color:var(--teal)">📊 INR Monitoring Schedule</h3>
+    <div class="g2">
+      <div>
+        <strong style="color:var(--text);font-size:13px">Frequency:</strong>
+        <ul style="margin-top:6px">
+          <li><strong>Daily</strong> during initiation until target range achieved</li>
+          <li><strong>2–3×/week</strong> for first 1–2 weeks after reaching target</li>
+          <li><strong>Weekly</strong> when INR stable ×2–3 consecutive readings</li>
+          <li><strong>Every 2–4 weeks</strong> once stable on maintenance dose</li>
+          <li><strong>Maximum interval: 4 weeks</strong> in very stable patients</li>
+        </ul>
+      </div>
+      <div>
+        <!-- FIX 6 nuance -->
+        <div class="box box-a">
+          <strong>Readiness for monitoring interval extension</strong> depends on multiple factors — not solely "2 consecutive days in range":<br>
+          <ul style="margin-top:6px;padding-left:14px">
+            <li>Indication and urgency (e.g. mechanical valve needs careful confirmation)</li>
+            <li>Inpatient vs outpatient setting</li>
+            <li>Concurrent heparin bridge being weaned</li>
+            <li>Concomitant interacting medications</li>
+            <li>Hepatic function and nutritional status</li>
+            <li>Rate of INR change (stable trend vs still rising)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:var(--teal)">⚙️ Quick Initiation — Step-by-Step</h3>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Baseline Assessment</h4><p>INR, CBC, LFTs, renal function (CrCl/eGFR). Identify sensitivity factors. Document current medications for interactions.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Choose Protocol</h4><p>No sensitivity factors → Standard (Day 1: 5 mg). Any sensitivity factor → Low-dose (Day 1: 2.5 mg). Evening dosing preferred (5–6 PM).</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Daily INR-guided Dosing</h4><p>Follow Day 1–6 tables above. Hold if INR &gt;3.0, restart when &lt;3.0 with dose reduction of 10–25%.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Therapeutic Maintenance</h4><p>When INR stable in target range, transition to maintenance (typically 2.5–10 mg/day). Extend monitoring intervals gradually as described above. Dose changes: adjust by 10–20% of weekly total dose.</p></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Discharge Education</h4><p>Consistent vitamin K intake, evening dosing, monitoring plan, emergency contacts, alert card, avoid NSAIDs unless approved.</p></div></div>
+  </div>
+</section>
+
+<!-- ════ TAB 1: REVERSAL ════ -->
+<section class="tab" id="t1">
+  <div class="sh"><h2>🩸 INR Reversal Protocols</h2>
+  <p>Stratified by bleeding severity. Approach differs fundamentally between non-bleeding elevated INR and active haemorrhage.</p></div>
+
+  <!-- NON-BLEEDING -->
+  <div class="stitle">Non-Bleeding Elevated INR</div>
+  <div class="card" style="border-top:3px solid var(--teal)">
+    <h3 style="color:var(--teal)">📋 Elevated INR — No Active Bleeding</h3>
+    <div class="tw"><table>
+      <thead><tr><th>INR Range</th><th>Intervention</th><th>Follow-up</th></tr></thead>
+      <tbody>
+        <tr><td><span class="inr-warn">3.5–4.9</span></td>
+          <td>Reduce next dose by 10–20% or hold 1 dose. No vitamin K unless very high bleeding risk.</td>
+          <td>Recheck INR in 24–48 h</td></tr>
+        <tr><td><span class="inr-warn">5.0–8.9</span></td>
+          <td>Hold warfarin 1–2 days. <strong>Consider oral vitamin K 1–2.5 mg</strong> if elevated bleeding risk, urgent procedure planned, or patient elderly/frail. Not mandatory for all patients at this range.</td>
+          <td>Recheck INR in 24 h</td></tr>
+        <tr><td><span class="inr-high">9.0–20.0</span></td>
+          <td>Hold warfarin. Oral vitamin K 2.5–5 mg. More urgent correction if procedure imminent.</td>
+          <td>Recheck INR in 6–12 h</td></tr>
+        <tr><td><span class="inr-high">&gt;20.0</span></td>
+          <td>Hold warfarin. Oral vitamin K 5–10 mg. Consider IV vitamin K 5–10 mg (over 30 min) if rapid correction required. Monitor for anaphylaxis (rare with slow IV infusion).</td>
+          <td>Recheck INR in 4–6 h</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box box-t"><strong>Vitamin K route note:</strong> Oral vitamin K has predictable absorption and is preferred for non-emergency reversal. IV vitamin K (phytonadione) provides faster, more complete reversal within 6–12 h but carries rare anaphylaxis risk — always infuse slowly over ≥30 min. SC route is discouraged (erratic absorption).</div>
+  </div>
+
+  <!-- ACTIVE BLEEDING — FIX 4: stratified by severity, NOT "any active bleeding → PCC" -->
+  <div class="stitle">Active Bleeding — Severity-Stratified Approach</div>
+
+  <div class="box box-r" style="margin-bottom:14px">
+    <strong>⚠️ Critical principle:</strong> PCC is NOT indicated for every active bleeding. Approach is stratified by bleeding severity. Inappropriate PCC use increases thrombotic risk (DVT, PE, arterial thrombosis) — particularly dangerous in mechanical valve patients.
+  </div>
+
+  <div class="g2">
+    <div class="card" style="border-top:3px solid var(--amber)">
+      <h3 style="color:var(--amber)">🟡 Minor Bleeding</h3>
+      <p style="margin-bottom:10px;font-size:12.5px;color:var(--muted)">Epistaxis, gum bleeding, minor skin lacerations, minor haematuria</p>
+      <ul>
+        <li>Hold or adjust warfarin dose</li>
+        <li>Local haemostatic measures</li>
+        <li>Check INR and follow non-bleeding reversal table</li>
+        <li>Oral vitamin K 1–2.5 mg if INR markedly elevated</li>
+        <li><strong>PCC NOT indicated for minor bleeding</strong></li>
+        <li>Resume at lower dose once bleeding controlled</li>
+      </ul>
+    </div>
+    <div class="card" style="border-top:3px solid var(--red)">
+      <h3 style="color:var(--red)">🔴 Clinically Significant / Major Bleeding</h3>
+      <p style="margin-bottom:10px;font-size:12.5px;color:var(--muted)">GI bleeding, haematuria requiring intervention, significant haematoma, post-surgical haemorrhage</p>
+      <ul>
+        <li>Hold warfarin immediately</li>
+        <li>IV vitamin K 5–10 mg (over 30 min)</li>
+        <li><strong>4F-PCC: consider in significant bleeding with elevated INR</strong>, especially if rapid reversal needed or patient haemodynamically unstable — not automatic for all cases</li>
+        <li>FFP 15–30 mL/kg if PCC not available (slower, volume overload risk)</li>
+        <li>Source control (endoscopy, interventional radiology, surgery) is paramount</li>
+        <li>Recheck INR q30–60 min until stable</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="border-top:3px solid var(--red)">
+    <h3 style="color:var(--red)">🆘 Life-Threatening / Intracranial Haemorrhage</h3>
+    <div class="box box-r" style="margin-top:0"><strong>Immediate coordinated action required — every minute matters in ICH</strong></div>
+    <div class="g2" style="margin-top:10px">
+      <div>
+        <ol style="padding-left:16px">
+          <li style="margin-bottom:8px"><strong style="color:var(--text)">Hold warfarin immediately</strong></li>
+          <li style="margin-bottom:8px"><strong style="color:var(--text)">IV vitamin K 10 mg</strong> slow infusion over 30 min (mandatory — prevents INR rebound after PCC)</li>
+          <li style="margin-bottom:8px"><strong style="color:var(--text)">4-factor PCC</strong> (see dosing table below) — first-line reversal agent for life-threatening bleeding</li>
+          <li style="margin-bottom:8px">FFP 15–30 mL/kg only if 4F-PCC unavailable</li>
+          <li style="margin-bottom:8px">Recheck INR 15–30 min after PCC administration; target rapid correction</li>
+          <li style="margin-bottom:8px">Neurosurgery/IR/surgical consultation for source control</li>
+        </ol>
+      </div>
+      <div>
+        <!-- FIX 5: INR <1.5 not universal -->
+        <div class="box box-a">
+          <strong>INR target after PCC:</strong> Aim for rapid correction, generally to ≤1.5 in major/life-threatening bleeding, according to local protocol. Recheck INR shortly after PCC administration. The specific target may vary by indication and local practice — ≤1.5 is a widely used practical goal, not an absolute universal endpoint.
+        </div>
+        <!-- FIX 11: rFVIIa warning -->
+        <div class="box box-r">
+          <strong>rFVIIa — NOT a routine alternative to PCC:</strong> rFVIIa is not recommended for routine warfarin reversal. Carries significant thrombotic risk (arterial + venous) and is not superior to 4F-PCC. Should not be used as a substitute for PCC. Any exceptional rescue use requires specialist haematology or haemostasis consultation.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PCC DOSING — FIX 3: corrected "Profline" → "Profilnine", proper 3F vs 4F distinction -->
+  <div class="stitle">4-Factor PCC Dosing (Kcentra / Beriplex / Octaplex)</div>
+  <div class="card" style="border-top:3px solid var(--red)">
+    <h3 style="color:var(--red)">⚖️ 4-Factor PCC — Weight-Based Dosing</h3>
+    <div class="tw"><table>
+      <thead><tr><th>Pre-treatment INR</th><th>Dose (units/kg Factor IX equivalent)</th><th>Maximum dose</th></tr></thead>
+      <tbody>
+        <tr><td class="inr-warn">2.0–4.0</td><td><strong>25 units/kg</strong></td><td>2,500 units</td></tr>
+        <tr><td class="inr-high">4.0–6.0</td><td><strong>35 units/kg</strong></td><td>3,500 units</td></tr>
+        <tr><td class="inr-high">&gt;6.0</td><td><strong>50 units/kg</strong></td><td>5,000 units</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box box-t"><strong>Concurrent IV vitamin K is mandatory</strong> — PCC alone produces only transient reversal (t½ of factors II and X is hours); vitamin K provides sustained suppression of warfarin effect. Without vitamin K, INR rebounds when PCC factors are consumed.</div>
+    <div class="box box-a">
+      <!-- FIX 3: Profline → Profilnine + 3F vs 4F clarification -->
+      <strong>3-factor vs 4-factor PCC — critical distinction:</strong><br>
+      <strong>4-factor PCC</strong> (Kcentra [USA], Beriplex [Europe], Octaplex) contains factors II, VII, IX, X + Proteins C and S — <strong>preferred agent</strong> for warfarin reversal when available.<br>
+      <strong>3-factor PCC</strong> (e.g. Profilnine SD, depending on local availability) contains II, IX, X but <strong>minimal or no factor VII</strong> — less effective for warfarin reversal alone; may require supplemental FFP to restore factor VII. Product availability varies by country — always verify your local formulary.<br>
+      FFP: universal fallback but large volume required (15–30 mL/kg), slow onset, risk of volume overload and transfusion reactions.
+    </div>
+  </div>
+
+  <!-- FIX 12: Warfarin restart — not just "INR <1.5" -->
+  <div class="stitle">Restarting Warfarin After Reversal</div>
+  <div class="card">
+    <h3 style="color:var(--teal)">🔄 When to Resume Anticoagulation</h3>
+    <div class="box box-r">
+      <strong>INR &lt;1.5 alone is NOT a universal criterion for warfarin restart after reversal.</strong> The decision depends on:
+    </div>
+    <div class="g2" style="margin-top:10px">
+      <div>
+        <strong style="color:var(--text)">Factors favouring earlier restart:</strong>
+        <ul style="margin-top:6px">
+          <li>High thromboembolic risk (mechanical valve, recent DVT/PE, AF with high CHA₂DS₂-VASc)</li>
+          <li>Bleeding source controlled (endoscopy, surgery)</li>
+          <li>Extracranial bleeding with haemostasis secured</li>
+          <li>Non-life-threatening bleeding episode</li>
+        </ul>
+      </div>
+      <div>
+        <strong style="color:var(--text)">Factors favouring delayed restart:</strong>
+        <ul style="margin-top:6px">
+          <li>Intracranial haemorrhage — typically delay 7–14+ days; individualize with neurosurgery</li>
+          <li>Ongoing or incompletely controlled bleeding</li>
+          <li>High rebleeding risk (unresectable lesion, coagulopathy)</li>
+          <li>Recent major surgery</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box box-t" style="margin-top:10px">
+      <strong>Principle:</strong> Restart anticoagulation when adequate haemostasis is secured and the balance of thromboembolic and rebleeding risks favours resumption. Timing is indication- and bleeding-site-specific. Start with low dose (2.5 mg) and titrate based on INR response. Always document the restart decision rationale.
+    </div>
+  </div>
+</section>
+
+<!-- ════ TAB 2: TARGETS & SCORES ════ -->
+<section class="tab" id="t2">
+  <div class="sh"><h2>🎯 Target INR by Indication &amp; Clinical Risk Scores</h2>
+  <p>Indication-specific INR targets with evidence base. CHA₂DS₂-VASc and HAS-BLED for AF stroke/bleeding risk stratification.</p></div>
+
+  <!-- FIX 2: Mechanical valve targets — disaggregated by type/position, no universal 3.0–4.0 -->
+  <div class="stitle">Mechanical Prosthetic Valves — Indication-Specific Targets</div>
+  <div class="box box-r" style="margin-bottom:14px">
+    <strong>⚠️ INR 3.0–4.0 is NOT a universal recommendation for all mechanical valves.</strong> Target INR depends on valve generation, position, and individual risk factors. Using an unnecessarily high target increases bleeding risk without proportional ischaemic benefit in modern bileaflet valves.
+  </div>
+
+  <div class="tw" style="margin-bottom:16px"><table>
+    <thead><tr>
+      <th>Valve Type &amp; Position</th>
+      <th>No additional risk factors</th>
+      <th>With risk factors*</th>
+      <th>Evidence / Source</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Modern bileaflet — Aortic position</strong><br><span style="font-size:11px;color:var(--dim)">(St. Jude, CarboMedics, On-X)</span></td>
+        <td class="td-ok">INR 2.0–3.0<br><span style="font-size:11px">(target 2.5)</span></td>
+        <td class="td-caution">INR 2.5–3.5<br><span style="font-size:11px">(target 3.0)</span></td>
+        <td style="font-size:11.5px">AHA/ACC 2021; ESC 2021</td>
+      </tr>
+      <tr>
+        <td><strong>On-X Aortic valve</strong><br><span style="font-size:11px;color:var(--dim)">(after 3 months stable)</span></td>
+        <td class="td-ok">INR 1.5–2.0<br><span style="font-size:11px">(PROACT trial — selected patients)</span></td>
+        <td class="td-ok">INR 2.0–3.0</td>
+        <td style="font-size:11.5px">PROACT trial; specific eligibility criteria apply</td>
+      </tr>
+      <tr>
+        <td><strong>Modern bileaflet — Mitral position</strong></td>
+        <td class="td-caution">INR 2.5–3.5<br><span style="font-size:11px">(target 3.0)</span></td>
+        <td class="td-caution">INR 3.0–4.0<br><span style="font-size:11px">(target 3.5)</span></td>
+        <td style="font-size:11.5px">AHA/ACC 2021; ESC 2021</td>
+      </tr>
+      <tr>
+        <td><strong>Tilting-disc (Medtronic-Hall) — Any position</strong><br><span style="font-size:11px;color:var(--dim)">(older generation)</span></td>
+        <td class="td-caution">Aortic: INR 2.5–3.5<br>Mitral: INR 3.0–4.0</td>
+        <td class="td-high">Mitral: INR 3.0–4.0</td>
+        <td style="font-size:11.5px">Manufacturer + ESC 2021</td>
+      </tr>
+      <tr>
+        <td><strong>Caged-ball / Starr-Edwards</strong><br><span style="font-size:11px;color:var(--dim)">(historical, highest risk)</span></td>
+        <td colspan="2" class="td-caution">INR 3.0–4.0 (all positions)</td>
+        <td style="font-size:11.5px">ESC/EACTS 2021</td>
+      </tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:11.5px;color:var(--dim);margin-bottom:14px">*Additional risk factors: prior thromboembolism on anticoagulation, hypercoagulable state, AF, LV dysfunction (EF &lt;35%), LA enlargement (&gt;50 mm), spontaneous echo contrast. Each factor shifts target upward within the indicated range — not automatically to 3.0–4.0.</p>
+
+  <!-- Other indications -->
+  <div class="stitle">Other Indications</div>
+  <div class="tw"><table>
+    <thead><tr><th>Indication</th><th>Target INR</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Atrial fibrillation (non-valvular)</strong></td><td class="td-ok">2.0–3.0 (target 2.5)</td><td>DOAC preferred over warfarin in most non-valvular AF; warfarin indicated if DOAC contraindicated or patient preference</td></tr>
+      <tr><td><strong>DVT / PE (acute treatment)</strong></td><td class="td-ok">2.0–3.0</td><td>Initiate with LMWH or UFH bridge until INR therapeutic ×2 days; minimum 3 months duration</td></tr>
+      <tr><td><strong>LV thrombus</strong></td><td class="td-ok">2.0–3.0</td><td>Typically 3–6 months; reassess after thrombus resolution on imaging</td></tr>
+      <tr><td><strong>Bioprosthetic valve (first 3 months post-op)</strong></td><td class="td-ok">2.0–3.0</td><td>ESC/AHA both support short-term anticoagulation post bioprosthetic implantation; after 3 months switch to aspirin unless other indication for OAC exists</td></tr>
+      <tr>
+        <!-- FIX 8: Bioprosthesis + AF clarification -->
+        <td><strong>Bioprosthetic valve + AF</strong></td>
+        <td class="td-ok">2.0–3.0</td>
+        <td><strong>Anticoagulant choice depends on valve type, timing after surgery, AF indication, and patient-specific factors.</strong> DOAC is increasingly preferred in bioprosthesis + AF (RIVER trial: edoxaban non-inferior to warfarin). This target applies if warfarin is selected.</td>
+      </tr>
+      <tr><td><strong>Antiphospholipid syndrome (triple positive)</strong></td><td class="td-caution">2.0–3.0 to 3.0–4.0</td><td>Warfarin superior to rivaroxaban (RAPS, TRAPS trials) in triple-positive APS; higher target (3.0–4.0) for recurrent events despite adequate anticoagulation</td></tr>
+    </tbody>
+  </table></div>
+
+  <!-- CHA₂DS₂-VASc — FIX 9: nuanced anticoagulation threshold -->
+  <div class="stitle">Clinical Risk Scores</div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--blue)">🔹 CHA₂DS₂-VASc — Stroke Risk (Non-Rheumatic AF)</h3>
+      <div class="tw"><table>
+        <thead><tr><th>Criterion</th><th>Points</th></tr></thead>
+        <tbody>
+          <tr><td><strong>C</strong> — Congestive Heart Failure / LV dysfunction</td><td>1</td></tr>
+          <tr><td><strong>H</strong> — Hypertension</td><td>1</td></tr>
+          <tr><td><strong>A₂</strong> — Age ≥75 years</td><td>2</td></tr>
+          <tr><td><strong>D</strong> — Diabetes mellitus</td><td>1</td></tr>
+          <tr><td><strong>S₂</strong> — Prior Stroke / TIA / thromboembolism</td><td>2</td></tr>
+          <tr><td><strong>V</strong> — Vascular disease (prior MI, PAD, aortic plaque)</td><td>1</td></tr>
+          <tr><td><strong>A</strong> — Age 65–74 years</td><td>1</td></tr>
+          <tr><td><strong>Sc</strong> — Sex category: female</td><td>1</td></tr>
+        </tbody>
+      </table></div>
+      <!-- FIX 9: More nuanced than "male ≥1, female ≥2" -->
+      <div class="box box-b">
+        <strong>Anticoagulation thresholds (ESC 2020):</strong><br>
+        • Score 0 (male) or 1 (female sex only): anticoagulation not recommended<br>
+        • Score 1 (male): individualised decision — consider anticoagulation<br>
+        • Score ≥2 (male) or ≥3 (female including sex point): OAC recommended<br><br>
+        <strong>Note:</strong> Oral anticoagulation is recommended at sufficiently elevated thromboembolic risk. Intermediate scores require individualised decision-making balancing stroke reduction vs bleeding risk. Female sex category is a risk modifier, not an independent risk factor — a score of 1 in females (sex category only) does not independently meet the threshold for OAC.
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--amber)">🔹 HAS-BLED — Bleeding Risk in Anticoagulated AF</h3>
+      <div class="tw"><table>
+        <thead><tr><th>Criterion</th><th>Points</th></tr></thead>
+        <tbody>
+          <tr><td><strong>H</strong> — Hypertension (uncontrolled SBP &gt;160)</td><td>1</td></tr>
+          <tr><td><strong>A</strong> — Abnormal renal function (dialysis, Cr &gt;200 μmol/L)</td><td>1</td></tr>
+          <tr><td><strong>A</strong> — Abnormal liver function (cirrhosis, bilirubin &gt;2×, AST/ALT &gt;3×)</td><td>1</td></tr>
+          <tr><td><strong>S</strong> — Stroke history</td><td>1</td></tr>
+          <tr><td><strong>B</strong> — Bleeding history or predisposition</td><td>1</td></tr>
+          <tr><td><strong>L</strong> — Labile INR (TTR &lt;60%)</td><td>1</td></tr>
+          <tr><td><strong>E</strong> — Elderly (age &gt;65)</td><td>1</td></tr>
+          <tr><td><strong>D</strong> — Drugs (antiplatelet/NSAIDs) or alcohol (≥8 units/week)</td><td>1 or 2</td></tr>
+        </tbody>
+      </table></div>
+      <div class="box box-a">
+        <strong>Score ≥3 = High bleeding risk</strong> — but this should prompt optimisation of modifiable risk factors, NOT withholding anticoagulation. Haemorrhagic risk must always be weighed against thromboembolic risk (CHA₂DS₂-VASc). Most patients with high HAS-BLED still have net benefit from OAC if CHA₂DS₂-VASc is elevated.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ TAB 3: PERIOPERATIVE ════ -->
+<section class="tab" id="t3">
+  <div class="sh"><h2>🔄 Perioperative Anticoagulation Management</h2>
+  <p>Individualised bridging strategy — the decision is NOT universal. Driven by valve type, position, thromboembolic risk, and procedure-specific bleeding risk.</p></div>
+
+  <!-- FIX 1: Bridging is not universal — show decision tree logic -->
+  <div class="box box-r" style="margin-bottom:16px">
+    <strong>⚠️ Critical: Bridging is not required for all patients on warfarin.</strong> The BRIDGE trial (2015) demonstrated that bridging with LMWH in AF patients undergoing elective procedures was associated with increased bleeding without reducing stroke. Bridging decisions must be individualised based on thromboembolic risk stratification — particularly: valve type, valve position, additional risk factors, and procedure bleeding risk. Not all mechanical aortic valve patients require bridging.
+  </div>
+
+  <!-- Bridging decision framework -->
+  <div class="card" style="border-top:3px solid var(--amber)">
+    <h3 style="color:var(--amber)">📐 Individualised Bridging Decision Framework</h3>
+    <div class="g2">
+      <div>
+        <strong style="color:var(--text);font-size:13px">Step 1 — Assess thromboembolic risk:</strong>
+        <div class="tw" style="margin-top:8px"><table>
+          <thead><tr><th>Risk Category</th><th>Characteristics</th><th>Bridging decision</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span style="color:var(--red);font-weight:700">HIGH</span></td>
+              <td>
+                • Mitral mechanical valve (any type)<br>
+                • Caged-ball or tilting-disc valve (any position)<br>
+                • Aortic mechanical valve + ≥1 risk factor (prior TE, AF, EF&lt;35%, &gt;1 mechanical valve)<br>
+                • Stroke/TIA within 6 months<br>
+                • Rheumatic mitral disease
+              </td>
+              <td style="color:var(--red);font-weight:700">Bridging generally recommended</td>
+            </tr>
+            <tr>
+              <td><span style="color:var(--amber);font-weight:700">MODERATE</span></td>
+              <td>
+                • Aortic bileaflet mechanical valve + 1 additional risk factor (not multiple)<br>
+                • Non-valvular AF with CHA₂DS₂-VASc 4–6<br>
+                • VTE within 3–12 months
+              </td>
+              <td style="color:var(--amber);font-weight:700">Individualise — weigh procedure bleeding risk</td>
+            </tr>
+            <tr>
+              <td><span style="color:var(--green);font-weight:700">LOW</span></td>
+              <td>
+                • Modern bileaflet aortic mechanical valve (St. Jude, CarboMedics) — NO additional risk factors<br>
+                • Non-valvular AF with CHA₂DS₂-VASc ≤3<br>
+                • VTE &gt;12 months ago, no other high-risk features
+              </td>
+              <td style="color:var(--green);font-weight:700">Bridging often NOT required — discontinue warfarin, resume post-procedure</td>
+            </tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div>
+        <strong style="color:var(--text);font-size:13px">Step 2 — Assess procedure bleeding risk:</strong>
+        <div class="box box-t" style="margin-top:8px">
+          <strong>Low bleeding risk procedures</strong> (can often proceed at therapeutic INR):<br>
+          Dental extractions, cataract surgery, dermatological procedures, minor gastrointestinal endoscopy, colonoscopy without polypectomy, pacemaker/ICD implantation (selected patients)
+        </div>
+        <div class="box box-a">
+          <strong>High bleeding risk procedures</strong> (warfarin interruption required):<br>
+          Major abdominal/thoracic surgery, neurosurgery, urological procedures, bowel resection, cardiac surgery, hip/knee arthroplasty, polypectomy
+        </div>
+        <div class="box box-b">
+          <strong>Step 3 — LMWH vs UFH for bridging:</strong><br>
+          • LMWH (enoxaparin 1 mg/kg BID) preferred — outpatient, predictable, no monitoring (check anti-Xa if renal failure)<br>
+          • UFH preferred: mechanical mitral valve + very high risk, renal failure (CrCl &lt;30), when rapid reversibility needed (surgery imminent)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Standard bridging protocol for HIGH risk patients -->
+  <div class="card" style="border-top:3px solid var(--red)">
+    <h3 style="color:var(--red)">🔴 High-Risk Patient — Bridging Protocol</h3>
+    <div class="g2">
+      <div>
+        <strong style="color:var(--text)">Pre-operative:</strong>
+        <ul style="margin-top:6px">
+          <li><strong>Stop warfarin 5 days pre-op</strong> (Day −5)</li>
+          <li>Check INR Day −2: if still &gt;1.5, consider low-dose oral vitamin K</li>
+          <li>Start therapeutic LMWH (enoxaparin 1 mg/kg BID or dalteparin 100 units/kg BID) when INR &lt;2.0 (typically Day −3)</li>
+          <li><strong>Last LMWH dose: 24 h before procedure</strong> (BID regimen → last dose morning of Day −1)</li>
+          <li>If UFH: stop 4–6 h before; check aPTT &lt;50 s before proceeding</li>
+          <li>Check INR on day of procedure: target &lt;1.5</li>
+        </ul>
+      </div>
+      <div>
+        <strong style="color:var(--text)">Post-operative:</strong>
+        <ul style="margin-top:6px">
+          <li>Resume warfarin <strong>12–24 h post-procedure</strong> when haemostasis secured (or pre-operative dose evening of surgery day)</li>
+          <li>Resume LMWH bridging 24–48 h post-op (48–72 h for high bleeding risk procedures)</li>
+          <li>Continue LMWH until INR therapeutic (≥2 consecutive readings in target range)</li>
+          <li>Check INR every 2–3 days until stable in range</li>
+          <li>For neuraxial/spinal anaesthesia: follow specific interval guidelines (ASRA guidelines) — typically LMWH ≥12–24 h after procedure, catheter removal</li>
+        </ul>
+        <div class="box box-a" style="margin-top:8px">
+          <strong>UFH bridging for mechanical mitral valve:</strong><br>
+          IV UFH target aPTT 60–80 s. Stop UFH 4 h before procedure. Resume 12–24 h post-op if haemostasis secure. Consider anti-Xa monitoring in obese patients or renal impairment.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drug/food interactions — FIX 10: stratified by clinical significance -->
+  <div class="stitle">Drug, Food &amp; Herbal Interactions</div>
+  <div class="box box-t" style="margin-bottom:14px">
+    <strong>Core principle:</strong> The most clinically important dietary interaction is <strong>consistency of vitamin K intake</strong> — not avoidance of green vegetables. Patients should maintain stable (not low) dietary vitamin K. Abrupt changes (e.g. starting a green juice diet or stopping it) cause INR fluctuations. Blanket avoidance of vegetables is not recommended.
+  </div>
+  <div class="g2">
+    <div class="card">
+      <h3 style="color:var(--red)">🔺 Clinically Significant INR ↑ (Strong interactions)</h3>
+      <ul>
+        <li><strong>Amiodarone</strong> — potent CYP2C9 inhibitor; effect may be delayed 2–6 weeks, lasts months; reduce warfarin dose by 30–50% when starting</li>
+        <li><strong>Metronidazole / Tinidazole</strong> — CYP2C9 inhibition; short course can double INR</li>
+        <li><strong>Trimethoprim-SMX</strong> — CYP2C9 inhibition + folate antagonism; check INR within 3–5 days of starting</li>
+        <li><strong>Azole antifungals</strong> (fluconazole, itraconazole, voriconazole) — potent CYP2C9/3A4 inhibition</li>
+        <li><strong>Ciprofloxacin</strong> — moderate effect; check INR 3–5 days after initiation</li>
+        <li><strong>Aspirin / NSAIDs</strong> — pharmacodynamic interaction (↑ bleeding risk, not INR); major GI bleeding risk</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--green)">🔻 Clinically Significant INR ↓ (Strong interactions)</h3>
+      <ul>
+        <li><strong>Rifampicin / Rifampin</strong> — potent CYP2C9 inducer; may need 2–3× dose increase; takes 2 weeks to reach full effect; hazardous when stopped</li>
+        <li><strong>Carbamazepine / Phenytoin / Phenobarbital</strong> — hepatic enzyme induction</li>
+        <li><strong>Cholestyramine / Colesevelam</strong> — reduces warfarin absorption; take warfarin 1 h before or 4 h after</li>
+        <li><strong>Nafcillin / Dicloxacillin</strong> — CYP2C9 induction</li>
+        <li><strong>St. John's Wort</strong> — potent CYP2C9/P-gp inducer; unpredictable and prolonged effect</li>
+        <li><strong>Dietary vitamin K</strong> — large acute changes (e.g. starting vitamin K supplement); encourage consistency rather than avoidance</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--amber)">⚠️ Variable or Less Predictable Interactions</h3>
+      <p style="font-size:12.5px;color:var(--muted);margin-bottom:8px">These interactions are documented but the magnitude is variable and unpredictable — monitor INR more frequently rather than making pre-emptive dose changes:</p>
+      <ul>
+        <li><strong>Fish oils / omega-3</strong> — mild antiplatelet + possible mild INR ↑; clinical significance uncertain</li>
+        <li><strong>Grapefruit</strong> — CYP3A4 inhibition; minor effect on warfarin (primarily CYP2C9)</li>
+        <li><strong>Mango</strong> — limited evidence; monitor if consuming regularly</li>
+        <li><strong>Ginseng</strong> — possible INR ↓ via enzyme induction; variable</li>
+        <li><strong>Cranberry juice</strong> — possible INR ↑ (inhibits CYP2C9); avoid large quantities</li>
+        <li><strong>Simvastatin / Lovastatin</strong> — mild CYP2C9 inhibition; check INR 1–2 weeks after statin initiation</li>
+        <li><strong>Avocado</strong> — contains vitamin K; large amounts may ↓ INR; maintain consistency</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:var(--teal)">🧾 Patient Discharge Checklist</h3>
+    <div class="g2">
+      <ul>
+        <li>Take warfarin <strong>at the same time each day</strong> (evening preferred, 5–6 PM)</li>
+        <li>Do not double dose if missed — contact provider</li>
+        <li>Maintain <strong>consistent</strong> vitamin K intake (do not abruptly change green vegetable consumption)</li>
+        <li>Report any bleeding: haematuria, black/tarry stools, unusual bruising, epistaxis, gingival bleeding, haemoptysis</li>
+        <li>Use soft toothbrush and electric razor. Avoid NSAIDs unless explicitly approved by physician.</li>
+        <li>Carry warfarin alert card and complete medication list at all times</li>
+        <li>Limit alcohol to ≤1 drink/day (acute alcohol inhibits; chronic use induces warfarin metabolism)</li>
+        <li>Inform ALL prescribers and dentists of warfarin use before any new prescription or procedure</li>
+      </ul>
+      <div>
+        <div class="box box-r"><strong>Emergency — seek immediate care if:</strong> Sudden severe headache, vision changes, weakness/numbness (possible ICH) · Coughing/vomiting blood · Black or blood-streaked stools · Fall with head trauma (ICH risk even with seemingly mild head injury)</div>
+        <div class="box box-t"><strong>INR monitoring reminder:</strong> Never miss a scheduled INR check. Carry the anticoagulation clinic number. Report any new prescription or OTC medication (including vitamins and supplements) before starting.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ TAB 4: CALCULATORS ════ -->
+<section class="tab" id="t4">
+  <div class="sh"><h2>🧮 Clinical Calculators &amp; Decision Assistants</h2>
+  <p>Interactive tools: Mechanical Valve INR Target Assistant · Warfarin Reversal Decision Tree · Perioperative Bridging Assistant</p></div>
+
+  <!-- TOOL 1: Mechanical Valve INR Target Assistant -->
+  <div class="calc-wrap">
+    <h3>🫀 Mechanical Valve INR Target &amp; Bridging Recommendation</h3>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px">Select valve characteristics and risk factors to receive an individualised INR target and bridging recommendation.</p>
+    <div class="calc-grid">
+      <div class="calc-fld">
+        <label class="clbl">Valve Generation</label>
+        <select class="csel" id="mv-gen" onchange="calcMV()">
+          <option value="">— Select —</option>
+          <option value="bileaflet_modern">Modern bileaflet (St. Jude, CarboMedics, Regent)</option>
+          <option value="onx">On-X bileaflet</option>
+          <option value="tilting">Tilting-disc (Medtronic-Hall, Björk-Shiley)</option>
+          <option value="caged">Caged-ball (Starr-Edwards)</option>
+          <option value="bio">Bioprosthetic valve</option>
+        </select>
+      </div>
+      <div class="calc-fld">
+        <label class="clbl">Valve Position</label>
+        <select class="csel" id="mv-pos" onchange="calcMV()">
+          <option value="">— Select —</option>
+          <option value="aortic">Aortic</option>
+          <option value="mitral">Mitral</option>
+          <option value="tricuspid">Tricuspid</option>
+          <option value="double">Double (aortic + mitral)</option>
+        </select>
+      </div>
+      <div class="calc-fld">
+        <label class="clbl">Surgical Context</label>
+        <select class="csel" id="mv-ctx" onchange="calcMV()">
+          <option value="chronic">Chronic / stable (on warfarin)</option>
+          <option value="early">Early post-op (&lt;3 months)</option>
+        </select>
+      </div>
+    </div>
+    <div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--amber);letter-spacing:.08em;margin-bottom:8px">ADDITIONAL RISK FACTORS (select all that apply)</div>
+    <div class="chk-grid" id="mv-risks">
+      <div class="chk-item" onclick="toggleChk(this)"><input type="checkbox" class="mv-risk"><label>Prior thromboembolism on adequate anticoagulation</label><span class="chk-pts">High</span></div>
+      <div class="chk-item" onclick="toggleChk(this)"><input type="checkbox" class="mv-risk"><label>Atrial fibrillation (current or paroxysmal)</label><span class="chk-pts">+1</span></div>
+      <div class="chk-item" onclick="toggleChk(this)"><input type="checkbox" class="mv-risk"><label>LV dysfunction (EF &lt;35%)</label><span class="chk-pts">+1</span></div>
+      <div class="chk-item" onclick="toggleChk(this)"><input type="checkbox" class="mv-risk"><label>LA enlargement (&gt;50 mm) or spontaneous echo contrast</label><span class="chk-pts">+1</span></div>
+      <div class="chk-item" onclick="toggleChk(this)"><input type="checkbox" class="mv-risk"><label>More than one mechanical valve</label><span class="chk-pts">High</span></div>
+      <div class="chk-item" onclick="toggleChk(this)"><input type="checkbox" class="mv-risk"><label>Hypercoagulable state (APS, malignancy, thrombophilia)</label><span class="chk-pts">High</span></div>
+    </div>
+    <button class="calc-btn" onclick="calcMV()">▶ GET INR TARGET &amp; BRIDGING RECOMMENDATION</button>
+    <div class="calc-result" id="mv-result"></div>
+  </div>
+
+  <!-- TOOL 2: Reversal Decision Tree -->
+  <div class="calc-wrap">
+    <h3>🩸 Warfarin Reversal Decision Tree</h3>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px">Enter INR and bleeding status to receive a stratified reversal recommendation.</p>
+    <div class="calc-grid">
+      <div class="calc-fld">
+        <label class="clbl">Current INR</label>
+        <input type="number" class="cinp" id="rev-inr" min="1" max="30" step="0.1" placeholder="e.g. 6.5" onchange="calcRev()">
+      </div>
+      <div class="calc-fld">
+        <label class="clbl">Bleeding Status</label>
+        <select class="csel" id="rev-bleed" onchange="calcRev()">
+          <option value="none">No active bleeding</option>
+          <option value="minor">Minor bleeding (local, not haemodynamically significant)</option>
+          <option value="major">Major / clinically significant bleeding</option>
+          <option value="life">Life-threatening / intracranial haemorrhage</option>
+        </select>
+      </div>
+      <div class="calc-fld">
+        <label class="clbl">Urgent procedure within 24 h?</label>
+        <select class="csel" id="rev-proc" onchange="calcRev()">
+          <option value="no">No urgent procedure</option>
+          <option value="yes">Yes — urgent / emergent procedure planned</option>
+        </select>
+      </div>
+      <div class="calc-fld">
+        <label class="clbl">Indication for warfarin</label>
+        <select class="csel" id="rev-ind" onchange="calcRev()">
+          <option value="af">Atrial fibrillation</option>
+          <option value="mech">Mechanical prosthetic valve</option>
+          <option value="vte">DVT / PE</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calcRev()">▶ GET REVERSAL RECOMMENDATION</button>
+    <div class="calc-result" id="rev-result"></div>
+  </div>
+
+  <!-- TOOL 3: Perioperative Bridging Assistant -->
+  <div class="calc-wrap">
+    <h3>🔄 Perioperative Bridging Assistant</h3>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px">Determine whether perioperative bridging is required and generate a tailored management plan.</p>
+    <div class="calc-grid">
+      <div class="calc-fld">
+        <label class="clbl">Anticoagulation Indication</label>
+        <select class="csel" id="br-ind" onchange="calcBridge()">
+          <option value="">— Select —</option>
+          <option value="mech_mitral">Mechanical mitral valve</option>
+          <option value="mech_ao_rf">Mechanical aortic valve + risk factors</option>
+          <option value="mech_ao_no">Modern bileaflet aortic valve — NO risk factors</option>
+          <option value="af_high">AF — CHA₂DS₂-VASc ≥4 (high risk)</option>
+          <option value="af_low">AF — CHA₂DS₂-VASc ≤3 (low-moderate risk)</option>
+          <option value="vte_recent">VTE within 3 months</option>
+          <option value="vte_old">VTE &gt;3 months ago</option>
+        </select>
+      </div>
+      <div class="calc-fld">
+        <label class="clbl">Procedure Bleeding Risk</label>
+        <select class="csel" id="br-proc" onchange="calcBridge()">
+          <option value="low">Low (dental, cataract, minor endoscopy)</option>
+          <option value="high">High (major surgery, neurosurgery, urology)</option>
+        </select>
+      </div>
+      <div class="calc-fld">
+        <label class="clbl">Renal Function</label>
+        <select class="csel" id="br-renal" onchange="calcBridge()">
+          <option value="normal">Normal / mild impairment (CrCl ≥30)</option>
+          <option value="severe">Severe (CrCl &lt;30) — LMWH use caution</option>
+        </select>
+      </div>
+      <div class="calc-fld">
+        <label class="clbl">Recent stroke/TIA?</label>
+        <select class="csel" id="br-stroke" onchange="calcBridge()">
+          <option value="no">No recent stroke/TIA</option>
+          <option value="yes">Yes — within 6 months</option>
+        </select>
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calcBridge()">▶ GENERATE BRIDGING PLAN</button>
+    <div class="calc-result" id="br-result"></div>
+  </div>
+
+  <div class="footnote">
+    Based on: AHA/ACC 2021 Guideline for Valvular Heart Disease · ESC/EACTS 2021 Valvular Heart Disease Guidelines · BRIDGE Trial (Douketis et al., NEJM 2015) · AHA/ASA Stroke Guidelines 2019 · Bojar RM — Manual of Perioperative Care in Adult Cardiac Surgery 6th ed. (Appendix 8, 9, 10, 11) · PROACT II Trial (On-X valve) · ESC 2020 AF Guidelines. For educational purposes — always integrate with clinical judgement and institutional protocols.
+  </div>
+</section>
+
+<script>
+// ── NAV ──────────────────────────────────────────────────────────
+const tabs = document.querySelectorAll('.tab');
+const nbs  = document.querySelectorAll('.nb');
+function gt(i, b) {
+  tabs.forEach(t => t.classList.remove('active'));
+  nbs.forEach(n => n.classList.remove('active'));
+  tabs[i].classList.add('active');
+  b.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleChk(el) {
+  const cb = el.querySelector('input[type=checkbox]');
+  if (!cb) return;
+  cb.checked = !cb.checked;
+  el.classList.toggle('sel', cb.checked);
+}
+
+// ── TOOL 1: MECHANICAL VALVE INR TARGET ──────────────────────────
+function calcMV() {
+  const gen  = document.getElementById('mv-gen').value;
+  const pos  = document.getElementById('mv-pos').value;
+  const ctx  = document.getElementById('mv-ctx').value;
+  const risks = document.querySelectorAll('.mv-risk:checked').length;
+  const highRisk = document.querySelectorAll('.mv-risk:checked');
+  let hasHighRF = false;
+  highRisk.forEach(cb => {
+    const label = cb.closest('.chk-item').querySelector('label').textContent;
+    if (label.includes('Prior thromboembolism') || label.includes('More than one') || label.includes('Hypercoagulable')) hasHighRF = true;
+  });
+
+  if (!gen || !pos) return;
+  const r = document.getElementById('mv-result');
+  r.style.display = 'block';
+
+  let target = '', bridging = '', notes = [], color = 'var(--teal)';
+
+  // Bioprosthetic
+  if (gen === 'bio') {
+    target = ctx === 'early' ? 'INR 2.0–3.0 (first 3 months post-op)' : 'Aspirin 75–100 mg/day (after 3 months, no AF)';
+    bridging = 'Bridging generally not required for bioprosthetic valves in most procedures. If concurrent AF: assess stroke risk independently using CHA₂DS₂-VASc.';
+    color = 'var(--green)';
+    notes = ['If concurrent AF: anticoagulant choice (DOAC vs warfarin) should be made based on valve type and timing', 'After 3 months from surgery without other OAC indication: aspirin monotherapy is standard'];
+  }
+  // On-X special protocol
+  else if (gen === 'onx' && pos === 'aortic' && ctx !== 'early' && risks === 0) {
+    target = 'INR 1.5–2.0 (PROACT trial — selected low-risk patients, after ≥3 months stable)';
+    color = 'var(--green)';
+    bridging = 'Low thromboembolic risk — bridging generally NOT required for most procedures.';
+    notes = ['PROACT eligibility: On-X aortic valve, no AF, EF >30%, no prior thromboembolism, no multiple valves', 'Confirm eligibility with treating team; standard INR 2.0–3.0 applies if not meeting all criteria'];
+  }
+  // Caged-ball
+  else if (gen === 'caged') {
+    target = 'INR 3.0–4.0 (all positions)';
+    color = 'var(--red)';
+    bridging = 'BRIDGING REQUIRED — very high thromboembolic risk. Use therapeutic UFH or LMWH.';
+    notes = ['Caged-ball valves have highest thrombogenicity among mechanical prostheses', 'Interruption of anticoagulation should be minimised — consult specialist'];
+  }
+  // Tilting disc
+  else if (gen === 'tilting') {
+    target = pos === 'mitral' || pos === 'tricuspid' || pos === 'double' ? 'INR 3.0–4.0' : 'INR 2.5–3.5';
+    color = 'var(--amber)';
+    bridging = 'BRIDGING REQUIRED — high thromboembolic risk. Use therapeutic LMWH or UFH.';
+    notes = ['Tilting-disc valves carry higher thrombogenicity than modern bileaflet valves', 'Mitral position tilting-disc: UFH bridging preferred over LMWH in very high-risk patients'];
+  }
+  // Modern bileaflet
+  else if (gen === 'bileaflet_modern') {
+    if (pos === 'mitral' || pos === 'tricuspid') {
+      target = risks === 0 ? 'INR 2.5–3.5 (target 3.0)' : 'INR 3.0–4.0 (target 3.5)';
+      color = 'var(--amber)';
+      bridging = 'BRIDGING RECOMMENDED — mitral position carries higher thromboembolic risk than aortic.';
+      notes = ['Mitral mechanical valve: higher thromboembolic risk regardless of valve generation', 'Consider UFH if very high risk (prior TE, poor LV function, multiple valves)'];
+    } else if (pos === 'double') {
+      target = 'INR 3.0–4.0 (target 3.5)';
+      color = 'var(--red)';
+      bridging = 'BRIDGING RECOMMENDED — double valve replacement carries compounded risk.';
+      notes = ['Double valve: treat as mitral mechanical valve risk level'];
+    } else { // aortic
+      if (hasHighRF || risks >= 2) {
+        target = 'INR 2.5–3.5 (target 3.0)';
+        color = 'var(--amber)';
+        bridging = 'INDIVIDUALISE: moderate-high risk — bridging recommended for high-bleeding-risk procedures; assess for lower-risk procedures individually.';
+        notes = ['Multiple high-risk factors shift the risk stratification toward "bridging recommended"', 'Consider UFH if prior thromboembolism or multiple risk factors'];
+      } else if (risks === 1) {
+        target = 'INR 2.5–3.5 (target 3.0)';
+        color = 'var(--amber)';
+        bridging = 'MODERATE RISK: consider procedure-specific bleeding risk. Low bleeding risk → may proceed without bridging. High bleeding risk → bridging with LMWH.';
+        notes = ['Bridge trial evidence (AF patients) may not fully apply to mechanical valve patients — use judgement'];
+      } else {
+        target = 'INR 2.0–3.0 (target 2.5)';
+        color = 'var(--green)';
+        bridging = 'LOW RISK: Bridging often NOT required for modern bileaflet aortic valve with no additional risk factors. Stop warfarin 5 days pre-op, resume post-op.';
+        notes = ['This is a major clinical insight: not all mechanical aortic valve patients need bridging', 'Verify no additional risk factors are present before omitting bridging', 'Resume warfarin promptly post-op when haemostasis secured'];
+      }
+    }
+  }
+
+  r.innerHTML = `
+  <div class="result-box">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">
+      <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:${color}">${target || 'See notes'}</div>
+    </div>
+    <div class="box" style="background:rgba(0,200,176,.08);border-left:3px solid ${color};margin-bottom:10px">
+      <strong>Bridging recommendation:</strong> ${bridging}
+    </div>
+    ${notes.length ? `<ul style="font-size:12.5px;color:var(--muted);padding-left:16px">${notes.map(n=>`<li style="margin-bottom:5px">${n}</li>`).join('')}</ul>` : ''}
+    <div style="font-size:11px;color:var(--dim);margin-top:10px;padding-top:8px;border-top:1px solid var(--rim)">
+      Based on AHA/ACC 2021 VHD Guidelines & ESC 2021. Always confirm with local institutional protocol and patient's cardiologist/surgeon. Individual patient factors may override these general recommendations.
+    </div>
+  </div>`;
+}
+
+// ── TOOL 2: REVERSAL DECISION TREE ───────────────────────────────
+function calcRev() {
+  const inr   = parseFloat(document.getElementById('rev-inr').value) || null;
+  const bleed = document.getElementById('rev-bleed').value;
+  const proc  = document.getElementById('rev-proc').value;
+  const ind   = document.getElementById('rev-ind').value;
+  if (!inr) { alert('Please enter current INR.'); return; }
+
+  const r = document.getElementById('rev-result');
+  r.style.display = 'block';
+
+  let steps = [], color = 'var(--teal)', title = '';
+  const mechValve = ind === 'mech';
+
+  if (bleed === 'life') {
+    color = 'var(--red)';
+    title = '🆘 LIFE-THREATENING BLEEDING — Immediate action required';
+    steps = [
+      'Hold warfarin immediately',
+      'IV vitamin K 10 mg slow infusion over 30 min (mandatory — prevents INR rebound)',
+      `4-factor PCC: ${inr < 4 ? '25 units/kg (max 2,500)' : inr < 6 ? '35 units/kg (max 3,500)' : '50 units/kg (max 5,000)'}`,
+      'Recheck INR 15–30 min after PCC; aim for rapid correction (generally ≤1.5 per local protocol)',
+      'FFP 15–30 mL/kg ONLY if 4F-PCC unavailable',
+      'rFVIIa: NOT recommended as routine alternative to PCC — requires specialist consultation',
+      'Urgent neurosurgery/IR/surgical consultation for source control',
+      `Anticoagulation restart: timing is indication- and bleeding-site-specific${mechValve ? ' — mechanical valve patients are at high thromboembolic risk during interruption; involve cardiology' : '. Restart when haemostasis secured and TE risk outweighs rebleeding risk'}`
+    ];
+  } else if (bleed === 'major') {
+    color = 'var(--red)';
+    title = '🔴 MAJOR BLEEDING — Urgent reversal';
+    steps = [
+      'Hold warfarin immediately',
+      `IV vitamin K 5–10 mg over 30 min`,
+      `4-factor PCC: consider if haemodynamically significant / INR markedly elevated (${inr < 4 ? '25 units/kg' : inr < 6 ? '35 units/kg' : '50 units/kg'}) — NOT automatic for all major bleeding`,
+      'Source control is paramount: endoscopy, interventional radiology, surgery',
+      'Recheck INR q30–60 min until stable',
+      mechValve ? '⚠️ Mechanical valve: very high TE risk during prolonged interruption — minimise warfarin-free interval, involve cardiology for restart timing' : 'Resume anticoagulation when adequate haemostasis secured and TE/rebleed balance favours resumption'
+    ];
+  } else if (bleed === 'minor') {
+    color = 'var(--amber)';
+    title = '🟡 MINOR BLEEDING — Conservative management';
+    steps = [
+      'Hold or reduce warfarin dose',
+      'Local haemostatic measures',
+      `INR ${inr}: ${inr < 5 ? 'reduce dose 10–20%' : inr < 9 ? 'hold 1–2 days; oral vitamin K 1–2.5 mg if high bleeding risk' : 'hold; oral vitamin K 2.5–5 mg; recheck in 6–12 h'}`,
+      'PCC NOT indicated for minor bleeding',
+      'Recheck INR in 24–48 h',
+      'Resume at lower dose once bleeding controlled; identify reversible cause'
+    ];
+  } else {
+    // No bleeding
+    color = 'var(--teal)';
+    title = proc === 'yes' ? '⚡ NO BLEEDING — Urgent procedure planned' : '📋 NO BLEEDING — Elevated INR management';
+    if (proc === 'yes') {
+      steps = [
+        `Current INR ${inr} — urgent procedure planned`,
+        inr > 8 ? 'IV vitamin K 5–10 mg (over 30 min) — rapid correction required' : inr > 4 ? 'Oral vitamin K 2.5–5 mg for faster correction' : 'Oral vitamin K 1–2.5 mg',
+        inr > 8 ? 'Consider 4F-PCC if procedure within 2–4 h and INR critically elevated' : 'If procedure within 6–12 h and INR still elevated after oral vitamin K: consider IV vitamin K',
+        'Recheck INR 4–6 h after IV vitamin K; 6–12 h after oral vitamin K',
+        'Target INR ≤1.5 before high-risk procedure'
+      ];
+    } else {
+      const actions = {
+        low: (inr < 4 ? 'Reduce dose by 10–20% or hold 1 dose; recheck in 24–48 h' :
+              inr < 5 ? 'Hold 1–2 days; recheck in 24 h' :
+              inr < 9 ? 'Hold warfarin; oral vitamin K 1–2.5 mg; recheck in 24 h' :
+              inr < 20 ? 'Hold warfarin; oral vitamin K 2.5–5 mg; recheck in 6–12 h' :
+                         'Hold warfarin; oral vitamin K 5–10 mg; consider IV vitamin K; recheck in 4–6 h')
+      };
+      steps = [
+        `INR ${inr} — no active bleeding`,
+        actions.low,
+        'Investigate cause of supratherapeutic INR: new drugs, dietary changes, illness, non-compliance',
+        mechValve ? 'Mechanical valve: avoid prolonged sub-therapeutic INR — resume warfarin promptly when INR falls' : 'Resume warfarin at reduced dose when INR approaches therapeutic range'
+      ];
+    }
+  }
+
+  r.innerHTML = `
+  <div class="result-box">
+    <div style="font-size:14px;font-weight:700;color:${color};margin-bottom:12px">${title}</div>
+    <ol style="padding-left:18px">
+      ${steps.map((s,i) => `<li style="margin-bottom:8px;font-size:13px;color:var(--muted)">${s}</li>`).join('')}
+    </ol>
+    <div style="font-size:11px;color:var(--dim);margin-top:10px;padding-top:8px;border-top:1px solid var(--rim)">
+      Clinical decision support — always integrate with full clinical assessment and local protocols.
+    </div>
+  </div>`;
+}
+
+// ── TOOL 3: BRIDGING ASSISTANT ────────────────────────────────────
+function calcBridge() {
+  const ind    = document.getElementById('br-ind').value;
+  const proc   = document.getElementById('br-proc').value;
+  const renal  = document.getElementById('br-renal').value;
+  const stroke = document.getElementById('br-stroke').value;
+  if (!ind) return;
+
+  const r = document.getElementById('br-result');
+  r.style.display = 'block';
+
+  const risk = {
+    'mech_mitral': 'high',
+    'mech_ao_rf': 'high',
+    'mech_ao_no': 'low',
+    'af_high': 'high',
+    'af_low': 'low',
+    'vte_recent': 'high',
+    'vte_old': 'low'
+  }[ind] || 'mod';
+
+  const effectiveRisk = stroke === 'yes' ? 'high' : risk;
+  const needsBridging = effectiveRisk === 'high' && proc === 'high';
+  const maySkip = effectiveRisk === 'low' || proc === 'low';
+
+  let decision = '', color = '', agent = '', preOp = [], postOp = [], special = [];
+
+  if (ind === 'mech_ao_no' || (ind === 'af_low' && proc === 'high')) {
+    color = 'var(--green)';
+    decision = '✅ BRIDGING NOT REQUIRED';
+    agent = 'Stop warfarin 5 days pre-op; resume post-op when haemostasis secured.';
+    preOp = ['Day −5: Stop warfarin', 'Day −2: Check INR; if >1.5, consider low-dose oral vitamin K (1 mg)', 'Day 0: Confirm INR <1.5 before procedure'];
+    postOp = ['Resume warfarin evening of surgery day or next morning when haemostasis secured', 'Daily INR until therapeutic', 'No LMWH bridging needed'];
+    special = ['Evidence: BRIDGE trial (AF, elective procedures) — no bridging reduced bleeding without increasing stroke', 'For bileaflet aortic valve with NO risk factors: same principle applies', 'Key: resume warfarin promptly post-op'];
+  } else if (effectiveRisk === 'high' && proc === 'high') {
+    color = 'var(--red)';
+    decision = '🔴 BRIDGING RECOMMENDED';
+    agent = renal === 'severe' ? 'UFH (preferred in severe renal failure — CrCl <30 mL/min)' : ind === 'mech_mitral' ? 'UFH preferred (mechanical mitral — very high risk) or LMWH if UFH unavailable' : 'LMWH: enoxaparin 1 mg/kg BID (or dalteparin 100 units/kg BID)';
+    preOp = [
+      'Day −5: Stop warfarin',
+      'Day −3 (when INR <2.0): Start therapeutic LMWH or UFH',
+      renal === 'severe' ? 'UFH IV: target aPTT 60–80 s' : 'LMWH: enoxaparin 1 mg/kg BID subcutaneously',
+      'Day −1: Last LMWH dose 24 h before procedure (BID → last morning dose). If UFH: stop 4–6 h before.',
+      'Day 0: Confirm INR <1.5; aPTT <50 s (if UFH)'
+    ];
+    postOp = [
+      'Resume warfarin within 12–24 h post-op when haemostasis secured',
+      'Resume LMWH or UFH 24–48 h post-op (48–72 h for high bleeding risk)',
+      'Continue bridging until INR therapeutic × 2 consecutive readings',
+      'Check INR every 2–3 days during bridge phase'
+    ];
+    special = [
+      stroke === 'yes' ? '⚠️ Recent stroke within 6 months: very high risk — minimise warfarin-free period; involve neurology and cardiology' : '',
+      ind === 'mech_mitral' ? 'Mechanical mitral valve: UFH bridging preferred for very high-risk patients; LMWH acceptable if UFH not feasible' : '',
+      renal === 'severe' ? 'Severe renal failure: LMWH significantly renally cleared — use UFH with aPTT monitoring; if LMWH used, monitor anti-Xa levels' : ''
+    ].filter(Boolean);
+  } else {
+    color = 'var(--amber)';
+    decision = '⚡ INDIVIDUALISE — Moderate risk situation';
+    agent = 'LMWH therapeutic dosing if bridging chosen';
+    preOp = ['Assess procedure-specific bleeding risk carefully', 'For low-risk procedure: may proceed without interruption or with minimal interruption', 'For high-risk procedure: consider LMWH bridging with standard protocol'];
+    postOp = ['Resume warfarin promptly when haemostasis secured', 'Reassess whether bridging needed post-operatively based on actual haemostasis'];
+    special = ['Weigh thromboembolic risk vs procedure-specific bleeding risk', 'Discuss with referring specialist, proceduralist, and patient', 'Document decision rationale'];
+  }
+
+  r.innerHTML = `
+  <div class="result-box">
+    <div style="font-size:14px;font-weight:700;color:${color};margin-bottom:12px">${decision}</div>
+    <div class="box" style="background:rgba(0,0,0,.15);border-left:3px solid ${color};margin-bottom:12px">
+      <strong>Bridging agent:</strong> ${agent}
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:12px">
+      <div style="background:var(--bg3);border-radius:var(--r);padding:12px">
+        <div style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.1em;margin-bottom:8px">PRE-OPERATIVE</div>
+        <ol style="padding-left:15px;font-size:12.5px;color:var(--muted);line-height:1.9">${preOp.map(s=>`<li>${s}</li>`).join('')}</ol>
+      </div>
+      <div style="background:var(--bg3);border-radius:var(--r);padding:12px">
+        <div style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.1em;margin-bottom:8px">POST-OPERATIVE</div>
+        <ol style="padding-left:15px;font-size:12.5px;color:var(--muted);line-height:1.9">${postOp.map(s=>`<li>${s}</li>`).join('')}</ol>
+      </div>
+    </div>
+    ${special.length ? `<div style="background:var(--bg3);border-radius:var(--r);padding:12px;font-size:12.5px;color:var(--amber)">${special.map(s=>`⚡ ${s}`).join('<br>')}</div>` : ''}
+    <div style="font-size:11px;color:var(--dim);margin-top:10px;padding-top:8px;border-top:1px solid var(--rim)">
+      Based on AHA/ACC 2021 VHD Guidelines, ESC 2021, BRIDGE Trial. Individual patient decisions may differ — always discuss with cardiology, haematology, and the proceduralist.
+    </div>
+  </div>`;
+}
+</script>
+</main>
 </body>
 </html>
