@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IABP — Intra-Aortic Balloon Pump | Complete Clinical Guide</title>
+<style>
+/* ─── TOKENS ───────────────────────────────────────────────────── */
+:root {
+  --bg:#070d1a;--bg2:#0d1627;--bg3:#111e35;--bg4:#162440;
+  --rim:rgba(255,255,255,0.07);--glass:rgba(255,255,255,0.025);
+  --text:#e2eaf8;--muted:#7b90b8;--dim:#4a5a78;
+
+  --gold:#f0c040;--gold2:#c99a20;
+  --red:#e85555;--red-dim:rgba(232,85,85,0.15);
+  --green:#42c47a;--green-dim:rgba(66,196,122,0.12);
+  --blue:#4c9fff;--blue-dim:rgba(76,159,255,0.12);
+  --amber:#f59e0b;--amber-dim:rgba(245,158,11,0.12);
+  --teal:#2dd4bf;--teal-dim:rgba(45,212,191,0.12);
+  --purple:#a78bfa;--purple-dim:rgba(167,139,250,0.12);
+
+  --r:14px;--r2:22px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI', system-ui, -apple-system, sans-serif;font-size:14.5px;line-height:1.7;overflow-x:hidden}
+::selection{background:rgba(240,192,64,.3);color:#fff}
+
+/* ─── HEADER ───────────────────────────────────────────────────── */
+.header{position:sticky;top:0;z-index:300;background:rgba(7,13,26,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--rim)}
+.header-inner{display:flex;align-items:center;padding:12px 24px;gap:12px}
+.logo{font-size:17px;font-weight:800;color:var(--gold);line-height:1.1}
+.logo small{display:block;font-weight:400;font-size:10px;color:var(--muted)}
+
+/* TAB GRID */
+.tab-grid-wrap{
+  background:var(--bg2);
+  border-bottom:2px solid var(--rim);
+  padding:14px 20px;
+  position:sticky;top:53px;z-index:200;
+}
+.tab-grid{
+  display:grid;
+  grid-template-columns:repeat(10,1fr);
+  gap:6px;
+  max-width:1440px;
+  margin:0 auto;
+}
+.tg-btn{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:5px;
+  background:var(--bg3);
+  border:1px solid var(--rim);
+  border-radius:12px;
+  padding:10px 6px 8px;
+  cursor:pointer;
+  transition:all .18s;
+  min-height:64px;
+}
+.tg-btn:hover{border-color:rgba(240,192,64,.4);background:rgba(240,192,64,.06)}
+.tg-btn.active{background:rgba(240,192,64,.14);border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.tg-icon{font-size:18px;line-height:1}
+.tg-label{font-size:9.5px;font-weight:600;color:var(--muted);text-align:center;line-height:1.3;letter-spacing:.01em}
+.tg-btn.active .tg-label{color:var(--gold)}
+.tg-btn:hover .tg-label{color:var(--text)}
+
+@media(max-width:860px){
+  .tab-grid-wrap{padding:10px 12px;top:49px}
+  .tab-grid{grid-template-columns:repeat(5,1fr)}
+  .tg-btn{padding:8px 4px 6px;min-height:56px;border-radius:10px}
+  .tg-icon{font-size:16px}
+  .tg-label{font-size:9px}
+}
+@media(max-width:400px){
+  .tab-grid{gap:4px}
+  .tg-btn{min-height:52px;padding:6px 3px}
+  .tg-icon{font-size:15px}
+  .tg-label{font-size:8.5px}
+}
+
+.page{max-width:1440px;margin:0 auto;padding:28px 24px 80px}
+.tab{display:none}.tab.active{display:block}
+
+.sh{margin-bottom:28px}
+.sh h2{font-size:28px;font-weight:800;color:var(--gold);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.sh p{color:var(--muted);font-size:13.5px;margin-top:5px;max-width:800px}
+
+/* ─── GRID HELPERS ─────────────────────────────────────────────── */
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.g12{display:grid;grid-template-columns:1fr 2fr;gap:20px}
+.g21{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+
+/* ─── CARD ──────────────────────────────────────────────────────── */
+.card{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:24px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;inset:0;background:var(--glass);pointer-events:none}
+.card-title{font-size:18px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.card-accent-red .card-title{color:var(--red)}
+.card-accent-green .card-title{color:var(--green)}
+.card-accent-blue .card-title{color:var(--blue)}
+.card-accent-amber .card-title{color:var(--amber)}
+.card-accent-teal .card-title{color:var(--teal)}
+.card-accent-purple .card-title{color:var(--purple)}
+.card-accent-gold .card-title{color:var(--gold)}
+.card p,.card li{color:var(--muted);font-size:14px;line-height:1.7}
+.card ul,.card ol{padding-left:18px}
+.card li{margin-bottom:5px}
+.card-accent-red{border-top:3px solid var(--red)}
+.card-accent-green{border-top:3px solid var(--green)}
+.card-accent-blue{border-top:3px solid var(--blue)}
+.card-accent-amber{border-top:3px solid var(--amber)}
+.card-accent-teal{border-top:3px solid var(--teal)}
+.card-accent-purple{border-top:3px solid var(--purple)}
+.card-accent-gold{border-top:3px solid var(--gold)}
+
+/* ─── PEARL / ALERT ─────────────────────────────────────────────── */
+.pearl{background:rgba(240,192,64,0.07);border:1px solid rgba(240,192,64,0.25);border-left:4px solid var(--gold);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:20px 0;font-size:13.5px;color:var(--text)}
+.pearl strong{color:var(--gold)}
+.alert-red{background:var(--red-dim);border-left:4px solid var(--red);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:20px 0;font-size:13.5px;color:var(--text)}
+.alert-red strong{color:var(--red)}
+.alert-blue{background:var(--blue-dim);border-left:4px solid var(--blue);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:20px 0;font-size:13.5px;color:var(--text)}
+.alert-blue strong{color:var(--blue)}
+.alert-green{background:var(--green-dim);border-left:4px solid var(--green);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:20px 0;font-size:13.5px;color:var(--text)}
+.alert-green strong{color:var(--green)}
+
+/* ─── TABLE ──────────────────────────────────────────────────────── */
+.tbl-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--rim);margin:16px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--bg3);color:var(--gold);font-weight:600;padding:10px 14px;text-align:left;border-bottom:1px solid var(--rim);letter-spacing:.03em}
+td{padding:9px 14px;border-bottom:1px solid var(--rim);color:var(--muted);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,0.02)}
+.up{color:var(--red)}.dn{color:var(--green)}.nc{color:var(--muted)}
+td strong{color:var(--text)}
+
+/* ─── BADGE ──────────────────────────────────────────────────────── */
+.badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:40px;letter-spacing:.06em;margin-right:4px;margin-bottom:4px}
+.badge-red{background:var(--red-dim);color:var(--red)}
+.badge-green{background:var(--green-dim);color:var(--green)}
+.badge-blue{background:var(--blue-dim);color:var(--blue)}
+.badge-amber{background:var(--amber-dim);color:var(--amber)}
+.badge-teal{background:var(--teal-dim);color:var(--teal)}
+.badge-gold{background:rgba(240,192,64,0.12);color:var(--gold)}
+.badge-purple{background:var(--purple-dim);color:var(--purple)}
+
+.divider{height:1px;background:var(--rim);margin:32px 0}
+
+/* ─── PARAMETER STRIP (glance card) ─────────────────────────────── */
+.glance-strip{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.glance-pill{background:var(--bg3);border:1px solid var(--rim);border-radius:40px;padding:8px 16px;font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.glance-pill b{color:var(--text)}
+.glance-pill .arrow-up{color:var(--red)}
+.glance-pill .arrow-dn{color:var(--green)}
+
+/* ─── EFFECT TREE ────────────────────────────────────────────────── */
+.tree{font-family:'Courier New', Courier, monospace;font-size:13px;line-height:1.9;background:var(--bg);border:1px solid var(--rim);border-radius:var(--r);padding:18px 22px;color:var(--muted);overflow-x:auto;white-space:pre}
+.tree .node{color:var(--text)}
+.tree .up{color:var(--red)}.tree .dn{color:var(--green)}
+
+/* ─── INTERACTIVE SIM ────────────────────────────────────────────── */
+.sim-panel{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:24px;margin-bottom:24px}
+.sim-top{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.canvas-wrap{background:var(--bg);border:1px solid var(--rim);border-radius:var(--r);overflow:hidden;min-height:280px;display:flex;align-items:center;justify-content:center}
+canvas{display:block;max-width:100%;height:auto}
+.sliders{display:flex;flex-direction:column;gap:16px;min-width:230px}
+.mode-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.mode-btn{background:var(--bg3);border:1px solid var(--rim);border-radius:10px;padding:8px 10px;font-size:11.5px;font-weight:600;color:var(--muted);cursor:pointer;text-align:center;transition:all .15s}
+.mode-btn:hover{border-color:var(--gold);color:var(--text)}
+.mode-btn.active{background:rgba(240,192,64,.14);border-color:var(--gold);color:var(--gold)}
+.sl-row{display:flex;flex-direction:column;gap:6px}
+.sl-label{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--text)}
+.sl-label span:last-child{font-family:'Courier New', Courier, monospace;color:var(--gold)}
+input[type=range]{width:100%;accent-color:var(--gold);height:4px;cursor:pointer}
+.diag-box{margin-top:16px;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:14px 18px}
+.diag-box .dline{font-size:12.5px;margin-bottom:6px;color:var(--muted)}
+.diag-box .dline b{color:var(--gold)}
+.diag-box .dline:last-child{margin-bottom:0}
+
+/* ─── DECISION TREE TOOL ─────────────────────────────────────────── */
+.dt-panel{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:24px}
+.dt-q{font-size:16px;color:var(--text);margin-bottom:16px;font-weight:600}
+.dt-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.dt-opt{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:10px 16px;cursor:pointer;font-size:14px;color:var(--muted);transition:all .15s;text-align:left;width:100%}
+.dt-opt:hover{border-color:var(--gold);color:var(--text)}
+.dt-result{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:16px 20px;margin-top:8px}
+.dt-result.res-ok{border-color:var(--green);background:var(--green-dim)}
+.dt-result.res-caution{border-color:var(--amber);background:var(--amber-dim)}
+.dt-result.res-no{border-color:var(--red);background:var(--red-dim)}
+.dt-trail{font-size:11.5px;color:var(--dim);margin-bottom:14px;line-height:1.6}
+.dt-restart{margin-top:14px;background:var(--bg4);border:1px solid var(--rim);border-radius:var(--r);padding:8px 16px;cursor:pointer;color:var(--muted);font-size:12.5px}
+.dt-restart:hover{color:var(--gold);border-color:var(--gold)}
+
+/* ─── CALCULATORS ────────────────────────────────────────────────── */
+.calc-card{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:18px 20px}
+.calc-card h4{font-size:13.5px;color:var(--gold);margin-bottom:12px}
+.calc-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:12.5px}
+.calc-row label{flex:1;color:var(--muted)}
+.calc-row input{width:90px;background:var(--bg);border:1px solid var(--rim);border-radius:6px;padding:5px 8px;color:var(--text);font-family:'Courier New', Courier, monospace;font-size:12.5px}
+.calc-out{margin-top:10px;padding:10px 12px;background:var(--bg);border-radius:8px;font-family:'Courier New', Courier, monospace;font-size:14px;color:var(--gold);text-align:center}
+.calc-out .unit{font-size:10px;color:var(--dim);display:block;margin-top:2px}
+
+.formula{font-family:'Courier New', Courier, monospace;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:12px 18px;margin:12px 0;font-size:13px;color:var(--teal);display:block}
+
+/* ─── KEY POINTS LIST ────────────────────────────────────────────── */
+.kp-list{list-style:none;padding:0;margin:0}
+.kp-list li{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--rim);font-size:14px;color:var(--muted)}
+.kp-list li:last-child{border-bottom:none}
+.kp-list .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:7px}
+
+/* ─── FLOW / ALGORITHM DIAGRAM ───────────────────────────────────── */
+.flow{display:flex;flex-direction:column;align-items:center;gap:4px;margin:16px 0}
+.flow-step{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:10px 18px;font-size:13px;color:var(--text);text-align:center;min-width:220px}
+.flow-step.warn{border-color:var(--red);background:var(--red-dim);color:var(--red)}
+.flow-arrow{color:var(--dim);font-size:16px;line-height:1}
+
+.footnote{text-align:center;font-size:12px;color:var(--dim);padding:40px 20px 0;border-top:1px solid var(--rim);margin-top:60px}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────────── */
+@media(max-width:900px){
+  .g12,.g21{grid-template-columns:1fr}
+  .sim-top{grid-template-columns:1fr}
+  .sliders{flex-direction:column}
+  .header-inner{padding:10px 16px}
+  .page{padding:20px 16px 60px}
+  .sh h2{font-size:24px}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      ⎋ IABP Atlas
+      <small>Intra-Aortic Balloon Pump — Complete Clinical Guide</small>
+    </div>
+  </div>
+</header>
+
+<div class="tab-grid-wrap">
+  <div class="tab-grid" id="tabGrid">
+    <button class="tg-btn active" onclick="gt(0,this)"><span class="tg-icon">⚡</span><span class="tg-label">At a Glance</span></button>
+    <button class="tg-btn" onclick="gt(1,this)"><span class="tg-icon">🧭</span><span class="tg-label">Anatomy &amp; Position</span></button>
+    <button class="tg-btn" onclick="gt(2,this)"><span class="tg-icon">📈</span><span class="tg-label">Timing &amp; Waveforms</span></button>
+    <button class="tg-btn" onclick="gt(3,this)"><span class="tg-icon">✅</span><span class="tg-label">Indications</span></button>
+    <button class="tg-btn" onclick="gt(4,this)"><span class="tg-icon">⛔</span><span class="tg-label">Contraindications &amp; Access</span></button>
+    <button class="tg-btn" onclick="gt(5,this)"><span class="tg-icon">🖥️</span><span class="tg-label">Monitoring</span></button>
+    <button class="tg-btn" onclick="gt(6,this)"><span class="tg-icon">🚨</span><span class="tg-label">Complications</span></button>
+    <button class="tg-btn" onclick="gt(7,this)"><span class="tg-icon">📉</span><span class="tg-label">Weaning &amp; Removal</span></button>
+    <button class="tg-btn" onclick="gt(8,this)"><span class="tg-icon">⚖️</span><span class="tg-label">Special Situations &amp; MCS</span></button>
+    <button class="tg-btn" onclick="gt(9,this)"><span class="tg-icon">🧮</span><span class="tg-label">Tools &amp; Calculators</span></button>
+  </div>
+</div>
+
+<main class="page">
+
+<section class="tab active" id="t0">
+  <div class="sh">
+    <h2>⚡ IABP at a Glance</h2>
+    <p>Intra-aortic balloon pump — a temporary counterpulsation device. It does not pump blood forward like an axial-flow or centrifugal device; its benefit comes from cyclically reshaping the aortic pressure waveform in phase with the cardiac cycle.</p>
+  </div>
+
+  <div class="g21">
+    <div class="card card-accent-gold">
+      <div class="card-title">🫀 Counterpulsation — the core idea</div>
+      <div class="glance-strip">
+        <div class="glance-pill"><span class="arrow-dn">↓</span> <b>LV afterload</b></div>
+        <div class="glance-pill"><span class="arrow-up">↑</span> <b>Coronary perfusion</b></div>
+        <div class="glance-pill"><span class="arrow-up">↑</span> <b>Diastolic pressure</b></div>
+        <div class="glance-pill">🔄 <b>Temporary counterpulsation support</b></div>
+      </div>
+      <p>The balloon inflates in diastole and deflates rapidly just before systole. Inflation augments diastolic aortic pressure and coronary perfusion; deflation drops end-diastolic aortic pressure just as the LV is about to eject, reducing the impedance (afterload) it ejects against.</p>
+      <div class="pearl"><strong>Key distinction:</strong> this is fundamentally different from Impella, TandemHeart, or VA-ECMO, all of which actively displace blood volume forward. IABP's primary mechanism is timing-dependent reshaping of the pressure waveform — <strong>LV unloading and counterpulsation, not direct mechanical pumping</strong> — not bulk flow generation.</div>
+    </div>
+
+    <div class="card card-accent-blue">
+      <div class="card-title">📋 Parameter Summary</div>
+      <div class="tbl-wrap">
+        <table>
+          <tr><td><strong>Primary effect</strong></td><td>Diastolic augmentation</td></tr>
+          <tr><td><strong>Chamber unloaded</strong></td><td>LV</td></tr>
+          <tr><td><strong>Main coronary effect</strong></td><td>↑ diastolic coronary perfusion</td></tr>
+          <tr><td><strong>Inflation timing</strong></td><td>At / near the dicrotic notch</td></tr>
+          <tr><td><strong>Deflation timing</strong></td><td>Immediately before LV systole</td></tr>
+          <tr><td><strong>Typical mode</strong></td><td>1:1 (full support)</td></tr>
+          <tr><td><strong>Access</strong></td><td>Femoral or axillary/subclavian</td></tr>
+          <tr><td><strong>Main risks</strong></td><td>Limb ischemia, bleeding, vascular injury, thrombocytopenia</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">1. What IABP is</div>
+      <p>IABP is a temporary counterpulsation device that inflates during diastole and rapidly deflates immediately before systole.</p>
+      <p><strong style="color:var(--text)">IABP does not directly pump blood forward</strong> the way an axial-flow or centrifugal pump does. This distinguishes it from:</p>
+      <ul>
+        <li>Impella (axial LV-to-aorta flow)</li>
+        <li>TandemHeart (LA-to-arterial bypass)</li>
+        <li>VA-ECMO (full cardiopulmonary bypass support)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2. What it actually does</div>
+      <p style="margin-bottom:10px"><strong style="color:var(--text)">During diastole</strong></p>
+      <div class="tree">Balloon inflation
+  └─→ Aortic diastolic pressure <span class="up">↑</span>
+        └─→ Coronary perfusion <span class="up">↑</span></div>
+      <p style="margin:14px 0 10px"><strong style="color:var(--text)">Immediately before systole</strong></p>
+      <div class="tree">Balloon deflation
+  └─→ Aortic end-diastolic pressure <span class="dn">↓</span>
+        └─→ LV afterload <span class="dn">↓</span>
+              └─→ LV myocardial O₂ demand <span class="dn">↓</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <div class="card-title">3. The physiologic model — avoid oversimplifying</div>
+    <div class="alert-blue"><strong>Not this:</strong> "IABP increases cardiac output." This is too reductive and misrepresents the dominant mechanism.</div>
+    <p style="margin-bottom:8px"><strong style="color:var(--text)">Better framing — counterpulsation drives several parallel effects, with forward-flow augmentation as a modest downstream consequence, not the primary mechanism:</strong></p>
+    <div class="tree node">IABP
+├── <span class="up">↑</span> diastolic aortic pressure
+├── <span class="up">↑</span> coronary perfusion
+├── <span class="dn">↓</span> LV afterload
+├── <span class="dn">↓</span> LV wall stress
+├── <span class="dn">↓</span> myocardial O₂ demand
+└── modest <span class="up">↑</span> forward flow / cardiac output</div>
+  </div>
+</section>
+
+<section class="tab" id="t1">
+  <div class="sh">
+    <h2>🧭 Anatomy &amp; Positioning</h2>
+    <p>Correct balloon position is essential for both efficacy and safety, and must be reassessed whenever the patient is repositioned or transported.</p>
+  </div>
+
+  <div class="g2">
+    <div class="card card-accent-gold">
+      <div class="card-title">Correct position</div>
+      <div class="tree">Aortic arch
+    │
+Proximal balloon marker  ← ~1–2 cm distal to
+    │                       left subclavian a.
+Descending thoracic aorta
+    │
+    │  ← balloon body
+    │
+Distal balloon marker
+    │
+Celiac / renal arteries ← must remain below</div>
+      <div class="pearl"><strong>Rule:</strong> the proximal tip should lie distal to the left subclavian artery origin, and the distal tip should remain above the renal/visceral arteries. The exact radiopaque marker position and its interpretation vary by catheter design — <strong>always confirm against the specific device's IFU</strong> rather than treating the ~1–2 cm figure as universal.</div>
+      <ul>
+        <li>Confirm with chest X-ray after insertion</li>
+        <li>Fluoroscopy or TEE guidance where available/appropriate</li>
+        <li>Re-verify position after any transport or major repositioning</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Malposition consequences</div>
+      <div class="alert-red" style="margin-bottom:14px">
+        <strong>Too high</strong>
+        <div class="tree" style="background:transparent;border:none;padding:6px 0;margin:6px 0 0">Balloon too proximal
+  └─→ Left subclavian obstruction
+        └─→ Arm ischemia / reduced cerebral perfusion concern</div>
+      </div>
+      <div class="alert-amber" style="background:var(--amber-dim);border-left:4px solid var(--amber);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:0;color:var(--text)">
+        <strong style="color:var(--amber)">Too low</strong>
+        <div class="tree" style="background:transparent;border:none;padding:6px 0;margin:6px 0 0">Balloon too distal
+  └─→ Renal / visceral artery obstruction
+        └─→ Renal ischemia</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tab" id="t2">
+  <div class="sh">
+    <h2>📈 Mechanics, Timing &amp; Waveform Atlas</h2>
+    <p>Inflation is timed to the dicrotic notch (aortic valve closure); deflation must occur immediately before the next systole. Recognizing timing errors on the arterial waveform is the single skill in IABP management that text alone cannot substitute for.</p>
+  </div>
+
+  <div class="g2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title">Correct inflation</div>
+      <p>Balloon inflation occurs at the moment of aortic valve closure, near the dicrotic notch on the arterial waveform.</p>
+      <div class="formula">Dicrotic notch → INFLATION → diastolic augmentation ↑ → coronary perfusion ↑</div>
+      <p>Timing is judged from the arterial pressure trace: with correctly timed inflation, the augmented (assisted) diastolic pressure exceeds the preceding unassisted systolic peak, and the assisted end-diastolic pressure is lower than the preceding unassisted end-diastolic pressure.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Correct deflation</div>
+      <p>Deflation must occur immediately before LV systole begins — early enough that aortic pressure has fully decayed before the aortic valve opens.</p>
+      <div class="formula">Balloon deflation → aortic pressure ↓ → LV afterload ↓ → LV systole begins against a lower impedance</div>
+      <div class="pearl" style="margin-top:14px"><strong>In practice</strong> this isn't simply "deflate before systole" as a fixed rule — the precise moment is derived from the arterial waveform itself (systolic upstroke, dicrotic notch, assisted end-diastolic pressure) and from the console's device-specific timing algorithm, which differs between manufacturers.</div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE SIMULATOR -->
+  <div class="sim-panel">
+    <div class="card-title" style="margin-bottom:4px">🖥️ Waveform Simulator — ECG / Aortic Pressure / Balloon / LV Pressure</div>
+    <p style="color:var(--muted);font-size:12.5px;margin-bottom:16px">Simplified educational model — select a timing pattern or rhythm to see how it distorts the waveforms, with an automatic diagnosis below.</p>
+    <div class="sim-top">
+      <div class="canvas-wrap"><canvas id="iabpCanvas"></canvas></div>
+      <div class="sliders">
+        <div class="sl-row">
+          <div class="sl-label"><span>Timing / rhythm mode</span></div>
+          <div class="mode-grid" id="modeGrid">
+            <button class="mode-btn active" data-mode="normal">Normal</button>
+            <button class="mode-btn" data-mode="early_inflation">Early inflation</button>
+            <button class="mode-btn" data-mode="late_inflation">Late inflation</button>
+            <button class="mode-btn" data-mode="early_deflation">Early deflation</button>
+            <button class="mode-btn" data-mode="late_deflation">Late deflation</button>
+            <button class="mode-btn" data-mode="low_aug">Low augmentation</button>
+            <button class="mode-btn" data-mode="tachy">Tachycardia</button>
+            <button class="mode-btn" data-mode="af">Atrial fibrillation</button>
+          </div>
+        </div>
+        <div class="sl-row">
+          <div class="sl-label"><span>Assist ratio</span></div>
+          <div class="mode-grid" id="ratioGrid">
+            <button class="mode-btn active" data-ratio="1">1:1</button>
+            <button class="mode-btn" data-ratio="2">1:2</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="diag-box" id="diagBox">
+      <div class="dline"><b>Diagnosis:</b> <span id="dxText">Normal timing</span></div>
+      <div class="dline"><b>Expected consequence:</b> <span id="dxConsequence">Optimal diastolic augmentation and afterload reduction</span></div>
+      <div class="dline"><b>Suggested correction:</b> <span id="dxCorrection">None needed — timing is correct</span></div>
+    </div>
+  </div>
+
+  <div class="pearl"><strong>1:2 mode</strong> alternates an assisted beat with an unassisted (native) beat, allowing direct side-by-side comparison of native vs. augmented pressure, timing, and the true unassisted arterial waveform — useful during assessment and weaning.</div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card card-accent-red">
+      <div class="card-title">Early inflation</div>
+      <p>Inflation before aortic valve closure.</p>
+      <ul>
+        <li>Premature increase in LV afterload</li>
+        <li>Possible interference with LV ejection</li>
+        <li>Increased myocardial oxygen demand</li>
+      </ul>
+    </div>
+    <div class="card card-accent-amber">
+      <div class="card-title">Late inflation</div>
+      <p>Inflation after the optimal diastolic onset (missed dicrotic notch).</p>
+      <ul>
+        <li>Reduced diastolic augmentation</li>
+        <li>Reduced coronary perfusion benefit</li>
+      </ul>
+    </div>
+    <div class="card card-accent-amber">
+      <div class="card-title">Early deflation</div>
+      <p>Balloon deflates too early, well before the next systole.</p>
+      <ul>
+        <li>Loss of diastolic augmentation</li>
+        <li>Reduced coronary perfusion</li>
+        <li>Insufficient afterload unloading</li>
+      </ul>
+    </div>
+    <div class="card card-accent-red">
+      <div class="card-title">Late deflation</div>
+      <p>Balloon remains inflated into LV systole — one of the most important errors to recognize.</p>
+      <ul>
+        <li>Increased LV afterload</li>
+        <li>Increased myocardial oxygen demand</li>
+        <li>Impaired LV ejection</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tbl-wrap" style="margin-top:20px">
+    <table>
+      <tr><th>Timing error</th><th>Waveform clue</th><th>Physiologic effect</th></tr>
+      <tr><td><strong>Early inflation</strong></td><td>Inflation before the dicrotic notch</td><td class="up">↑ LV afterload</td></tr>
+      <tr><td><strong>Late inflation</strong></td><td>Delayed onset of augmentation</td><td class="dn">↓ coronary benefit</td></tr>
+      <tr><td><strong>Early deflation</strong></td><td>Premature fall of augmented pressure</td><td class="dn">↓ augmentation</td></tr>
+      <tr><td><strong>Late deflation</strong></td><td>Balloon remains inflated during systole</td><td class="up">↑ afterload</td></tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">📡 Triggering</div>
+      <p style="margin-bottom:8px"><strong style="color:var(--text)">ECG trigger</strong> — used with a reliable R-wave, sinus rhythm, relatively stable rate.</p>
+      <p style="margin-bottom:8px"><strong style="color:var(--text)">Pressure trigger</strong> — used when the ECG signal is unreliable, with a pacemaker, or with significant electrical artifact.</p>
+      <p style="margin-bottom:4px"><strong style="color:var(--text)">Triggering problems to recognize:</strong></p>
+      <ul>
+        <li>Undersensing / oversensing</li>
+        <li>Pacemaker spikes misread as R-waves</li>
+        <li>Electrical artifact</li>
+        <li>Irregular rhythm, atrial fibrillation</li>
+        <li>Frequent PVCs</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">🔁 Assist ratios / modes</div>
+      <div class="tbl-wrap" style="margin:0">
+        <table>
+          <tr><th>Mode</th><th>Pattern</th><th>Typical use</th></tr>
+          <tr><td><strong>1:1</strong></td><td>Every cycle assisted</td><td>Maximal support</td></tr>
+          <tr><td><strong>1:2</strong></td><td>Every second beat assisted</td><td>Assessing native function, weaning, waveform comparison</td></tr>
+          <tr><td><strong>1:3</strong></td><td>Every third beat assisted</td><td>Used less often, mainly for assessment</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tab" id="t3">
+  <div class="sh">
+    <h2>✅ Indications</h2>
+    <p>Avoid the outdated framing "IABP is indicated for cardiogenic shock." Modern practice requires an indication-specific approach that distinguishes established use from selected, individualized use.</p>
+  </div>
+
+  <div class="alert-red" style="margin-bottom:20px">
+    <strong>Cardiogenic shock — not routine</strong>
+    <div class="tree" style="background:transparent;border:none;padding:8px 0 0;margin:0">AMI-related cardiogenic shock, without a mechanical complication
+        ↓
+Routine IABP
+        ↓
+NOT recommended</div>
+    <p style="margin-top:8px">Contemporary trial evidence and guidelines do not support routine IABP use in AMI-associated cardiogenic shock in the absence of a mechanical complication. This is one of the most important shifts from older teaching and should not be conflated with the mechanical-complication indications below.</p>
+  </div>
+
+  <div class="g2">
+    <div class="card card-accent-teal">
+      <div class="card-title">Mechanical complications of ACS</div>
+      <ul>
+        <li>Acute severe MR from papillary muscle rupture</li>
+        <li>Ventricular septal defect (VSD)</li>
+        <li>Selected mechanical complications while awaiting definitive surgery</li>
+      </ul>
+      <p>IABP can serve as temporary stabilization and a bridge to definitive intervention while these are managed surgically.</p>
+    </div>
+
+    <div class="card card-accent-blue">
+      <div class="card-title">High-risk PCI</div>
+      <p>Framed as an individualized decision, not a blanket indication:</p>
+      <div class="pearl" style="margin:10px 0"><strong>Selected high-risk PCI cases</strong> may be considered after individualized assessment — not "IABP is indicated." Routine elective/prophylactic use as a universal strategy is not supported by evidence.</div>
+      <p style="margin-bottom:4px">Factors to weigh:</p>
+      <ul>
+        <li>Unprotected left main disease</li>
+        <li>Severe LV dysfunction</li>
+        <li>Complex multivessel disease</li>
+        <li>Limited hemodynamic reserve</li>
+        <li>Anticipated transient ischemia during the procedure</li>
+      </ul>
+      <div class="tbl-wrap" style="margin-top:12px">
+        <table>
+          <tr><th>Use context</th><th>Framing</th></tr>
+          <tr><td><strong>Elective / prophylactic</strong></td><td>Not a routine strategy — individualized only</td></tr>
+          <tr><td><strong>Rescue</strong> (intra-procedural instability)</td><td>Reasonable in selected cases</td></tr>
+          <tr><td><strong>Cardiogenic shock</strong></td><td>Not routine — see Indications: shock caveat</td></tr>
+          <tr><td><strong>Mechanical complication</strong></td><td>Established bridge role</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card card-accent-green">
+      <div class="card-title">Preoperative support (cardiac surgery)</div>
+      <ul>
+        <li>Severe left main disease</li>
+        <li>Critical coronary anatomy</li>
+        <li>Refractory unstable angina</li>
+        <li>Ischemia with hemodynamic instability</li>
+        <li>Bridge to CABG</li>
+      </ul>
+    </div>
+
+    <div class="card card-accent-purple">
+      <div class="card-title">Post-cardiotomy support</div>
+      <ul>
+        <li>Failure to wean from cardiopulmonary bypass</li>
+        <li>Post-cardiotomy LV failure</li>
+        <li>Low cardiac output syndrome</li>
+        <li>Myocardial stunning</li>
+        <li>Perioperative ischemia</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-amber" style="margin-top:20px">
+    <div class="card-title">Other selected indications</div>
+    <ul>
+      <li>Acute decompensated LV failure</li>
+      <li>Bridge to recovery</li>
+      <li>Bridge to definitive revascularization</li>
+      <li>Bridge to durable MCS / transplant in selected patients</li>
+    </ul>
+    <p>Across all of these, the key discipline is separating <strong style="color:var(--text)">established indications</strong> from <strong style="color:var(--text)">selected / individualized use</strong> — and documenting the reasoning accordingly.</p>
+  </div>
+</section>
+
+<section class="tab" id="t4">
+  <div class="sh">
+    <h2>⛔ Contraindications &amp; Access</h2>
+  </div>
+
+  <div class="g2">
+    <div class="card card-accent-red">
+      <div class="card-title">Major contraindications</div>
+      <p style="margin-bottom:6px"><strong style="color:var(--text)">Severe aortic regurgitation</strong></p>
+      <div class="tree" style="margin-bottom:14px">Balloon inflation
+  └─→ Diastolic aortic pressure ↑
+        └─→ Regurgitant flow into LV ↑</div>
+      <p>A classic and important contraindication — augmenting diastolic pressure directly worsens regurgitant volume into an already volume-loaded LV.</p>
+      <ul style="margin-top:10px">
+        <li>Aortic dissection</li>
+        <li>Significant aortic aneurysm</li>
+        <li>Severe peripheral arterial disease — relative, not always absolute; access route may need to change</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Access options</div>
+      <div class="tbl-wrap" style="margin:0 0 14px">
+        <table>
+          <tr><th>Route</th><th>Advantages</th><th>Disadvantages</th></tr>
+          <tr><td><strong>Femoral</strong></td><td>Fast, standard, most widely used</td><td>Immobilization, limb ischemia, vascular complications</td></tr>
+          <tr><td><strong>Axillary / subclavian</strong></td><td>Potential mobilization, feasible for longer-term use in selected patients</td><td>More complex insertion, vascular complications, requires surgical expertise</td></tr>
+        </table>
+      </div>
+      <p>Severe peripheral arterial disease often shifts the access decision (e.g. toward axillary/subclavian) rather than ruling out IABP altogether.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tab" id="t5">
+  <div class="sh">
+    <h2>🖥️ Monitoring</h2>
+    <p>A comprehensive monitoring picture spans hemodynamics, myocardial status, perfusion, and the device itself.</p>
+  </div>
+
+  <div class="g4">
+    <div class="card card-accent-blue">
+      <div class="card-title">Hemodynamic</div>
+      <ul>
+        <li>MAP</li><li>SBP / DBP</li><li>Augmented diastolic pressure</li>
+        <li>Cardiac output</li><li>Cardiac index</li><li>SVR</li>
+        <li>Lactate</li><li>Urine output</li>
+      </ul>
+    </div>
+    <div class="card card-accent-red">
+      <div class="card-title">Myocardial</div>
+      <ul>
+        <li>ECG</li><li>ST-segment</li><li>Troponin</li>
+        <li>Echocardiography</li><li>LV function</li><li>RV function</li>
+      </ul>
+    </div>
+    <div class="card card-accent-green">
+      <div class="card-title">Perfusion</div>
+      <ul>
+        <li>Peripheral pulses</li><li>Doppler signals</li><li>Limb temperature</li>
+        <li>Capillary refill</li><li>Lactate</li><li>Renal function</li>
+      </ul>
+    </div>
+    <div class="card card-accent-amber">
+      <div class="card-title">Device</div>
+      <ul>
+        <li>Helium status</li><li>Gas leak</li><li>Balloon integrity</li>
+        <li>Timing</li><li>Trigger source</li><li>Augmentation</li>
+        <li>Catheter position</li><li>Alarms</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pearl" style="margin-top:20px"><strong>At IABP, always distinguish</strong> native (unassisted) pressure, assisted pressure, and augmented diastolic pressure — reporting a single "blood pressure" number without specifying which one can be misleading during counterpulsation.</div>
+
+  <div class="card card-accent-teal" style="margin-top:20px">
+    <div class="card-title">📊 Trend monitoring — the dynamic matters more than a single value</div>
+    <p>A single reading (e.g. "MAP = 70") tells you little in isolation. What matters is the trajectory:</p>
+    <div class="tree">Before IABP
+        ↓
+After initiation
+        ↓
+Trend over time
+        ↓
+Response to weaning</div>
+    <p>Track MAP, lactate, urine output, and augmentation quality along this trajectory rather than in single snapshots — this is what actually tells you whether the device is helping and whether the patient is ready to wean.</p>
+  </div>
+</section>
+
+<section class="tab" id="t6">
+  <div class="sh">
+    <h2>🚨 Complications &amp; Troubleshooting</h2>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Category</th><th>Complications</th></tr>
+      <tr><td><strong>Vascular</strong></td><td>Limb ischemia, bleeding, hematoma, pseudoaneurysm, dissection, thrombosis, embolization</td></tr>
+      <tr><td><strong>Aortic</strong></td><td>Dissection, perforation, rupture</td></tr>
+      <tr><td><strong>Device</strong></td><td>Balloon rupture, helium leak, gas embolism concern, catheter migration, malfunction</td></tr>
+      <tr><td><strong>Hematologic</strong></td><td>Thrombocytopenia, hemolysis, bleeding</td></tr>
+      <tr><td><strong>Neurologic</strong></td><td>Stroke, embolic events</td></tr>
+      <tr><td><strong>Infectious</strong></td><td>Access-site infection, bloodstream infection</td></tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card card-accent-red">
+      <div class="card-title">🦵 Limb ischemia — emergency algorithm</div>
+      <div class="flow">
+        <div class="flow-step warn">New limb pain / pallor / coldness</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Check pulses</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Doppler assessment</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Check catheter position</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Check kinking / obstruction</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Vascular surgery consult</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Reposition / remove / switch to alternative access</div>
+      </div>
+      <p>Requires ongoing attention to acute limb ischemia signs, distal perfusion checks at a defined frequency, and compartment syndrome awareness.</p>
+    </div>
+
+    <div class="card card-accent-amber">
+      <div class="card-title">💨 Balloon rupture / helium leak</div>
+      <div class="flow">
+        <div class="flow-step warn">Sudden helium loss</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Possible balloon rupture</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Stop / follow device-specific emergency protocol</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">Remove or exchange catheter</div>
+      </div>
+      <div class="alert-red"><strong>Do not</strong> leave a ruptured balloon in place while continuing normal operation. Exact steps must follow the specific device's IFU and local protocol — algorithms differ between manufacturers.</div>
+      <div class="pearl"><strong>Practical clue:</strong> blood visible in the helium tubing, or a sudden unexplained helium-loss/fill alarm, should raise immediate suspicion for balloon rupture.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">🩸 Anticoagulation — no blanket rule</div>
+      <p>Avoid "all patients require heparin." The decision depends on:</p>
+      <ul>
+        <li>Specific indication and duration of support</li>
+        <li>Bleeding risk</li>
+        <li>Access route</li>
+        <li>Post-cardiotomy state</li>
+        <li>Thrombocytopenia / suspected HIT</li>
+        <li>Device-specific protocol</li>
+      </ul>
+      <div class="tree" style="margin-top:12px">IABP + thrombocytopenia
+    ↓
+Trend platelet count
+    ↓
+Consider HIT
+    ↓
+4T score</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📍 Position verification loop</div>
+      <div class="tree">Insertion
+  ↓
+Initial imaging
+  ↓
+Confirm position
+  ↓
+Repeat after:
+ • transport
+ • major repositioning
+ • change in waveform
+ • loss of augmentation
+ • unexplained ischemia</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="dt-panel">
+    <div class="card-title" style="margin-bottom:14px">🔧 Interactive troubleshooting: "Augmentation suddenly decreased"</div>
+    <div id="dtRoot"></div>
+  </div>
+</section>
+
+<section class="tab" id="t7">
+  <div class="sh">
+    <h2>📉 Weaning &amp; Removal</h2>
+  </div>
+
+  <div class="g2">
+    <div class="card card-accent-green">
+      <div class="card-title">Clinical readiness for weaning</div>
+      <ul class="kp-list">
+        <li><span class="dot" style="background:var(--green)"></span>Improved MAP</li>
+        <li><span class="dot" style="background:var(--green)"></span>Reduced vasoactive support</li>
+        <li><span class="dot" style="background:var(--green)"></span>Improved lactate</li>
+        <li><span class="dot" style="background:var(--green)"></span>Adequate urine output</li>
+        <li><span class="dot" style="background:var(--green)"></span>Improving LV function</li>
+        <li><span class="dot" style="background:var(--green)"></span>Stable rhythm</li>
+        <li><span class="dot" style="background:var(--green)"></span>No ongoing ischemia</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Weaning methods</div>
+      <p style="margin-bottom:6px"><strong style="color:var(--text)">Ratio weaning</strong></p>
+      <div class="tree" style="margin-bottom:14px">1:1
+ ↓
+1:2
+ ↓
+1:3
+ ↓
+remove</div>
+      <p style="margin-bottom:6px"><strong style="color:var(--text)">Volume weaning</strong> — progressive reduction of balloon inflation volume.</p>
+      <div class="pearl"><strong>There is no single universally superior weaning strategy</strong> — the choice between ratio and volume weaning is institution/device-dependent.</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-amber" style="margin-top:20px">
+    <div class="card-title">When weaning fails</div>
+    <div class="alert-amber" style="background:var(--amber-dim);border-left:4px solid var(--amber);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:0 0 14px;color:var(--text)">
+      <strong style="color:var(--amber)">Failed weaning should prompt reassessment of the underlying pathology</strong> — not repeated cycling between support ratios without a defined plan.
+    </div>
+    <div class="tree">Failed weaning
+      ↓
+     Why?
+├── Persistent LV dysfunction
+├── Ongoing ischemia
+├── RV failure
+├── Sepsis / vasoplegia
+├── Arrhythmia
+└── Mechanical complication</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">✓ Removal checklist</div>
+      <ul class="kp-list">
+        <li><span class="dot" style="background:var(--gold)"></span>Hemodynamic stability</li>
+        <li><span class="dot" style="background:var(--gold)"></span>Minimal vasoactive support</li>
+        <li><span class="dot" style="background:var(--gold)"></span>Adequate end-organ perfusion</li>
+        <li><span class="dot" style="background:var(--gold)"></span>No ongoing ischemia</li>
+        <li><span class="dot" style="background:var(--gold)"></span>Acceptable LV function</li>
+        <li><span class="dot" style="background:var(--gold)"></span>Anticoagulation plan defined</li>
+        <li><span class="dot" style="background:var(--gold)"></span>Vascular access / closure plan defined</li>
+      </ul>
+    </div>
+    <div class="card card-accent-amber">
+      <div class="card-title">After removal — monitor for</div>
+      <ul>
+        <li>Bleeding at the access site</li>
+        <li>Distal perfusion</li>
+        <li>Hematoma</li>
+        <li>Pseudoaneurysm</li>
+        <li>Limb ischemia</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="tab" id="t8">
+  <div class="sh">
+    <h2>⚖️ Special Situations, RV Failure &amp; Mechanical Support Comparison</h2>
+  </div>
+
+  <div class="g3" style="margin-bottom:20px">
+    <div class="card"><div class="card-title">Atrial fibrillation</div><ul><li>Irregular cycle length</li><li>Variable optimal timing beat-to-beat</li><li>Trigger reliability challenges</li></ul></div>
+    <div class="card"><div class="card-title">Pacemaker</div><ul><li>ECG-trigger issues from pacing spikes</li><li>Pressure trigger may be preferable</li></ul></div>
+    <div class="card"><div class="card-title">Tachycardia</div>
+      <div class="tree">Short diastole
+    ↓
+Less time for balloon inflation
+    ↓
+Reduced augmentation</div>
+    </div>
+    <div class="card"><div class="card-title">Bradycardia</div><ul><li>Longer diastolic interval</li><li>Timing considerations differ from normal HR</li></ul></div>
+    <div class="card"><div class="card-title">PVCs</div><ul><li>Ectopic beats disrupt regular cycle</li><li>Trigger errors more likely</li></ul></div>
+    <div class="card"><div class="card-title">Low native pulsatility</div><ul><li>Severe LV failure</li><li>Difficulty identifying timing landmarks on a blunted waveform</li></ul></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card card-accent-purple">
+      <div class="card-title">Right ventricular failure</div>
+      <p>IABP directly unloads the <strong style="color:var(--text)">LV</strong>; it does <strong style="color:var(--text)">not</strong> directly provide RV support.</p>
+      <div class="tree">IABP
+    ↓
+LV support
+    ≠
+RV support</div>
+      <p style="margin-top:10px">Manage RV failure by addressing:</p>
+      <ul>
+        <li>Preload</li><li>RV afterload / pulmonary hypertension</li><li>Hypoxemia, PEEP</li>
+        <li>Inotropes</li><li>Inhaled pulmonary vasodilators</li>
+        <li>Escalation to other MCS if necessary</li>
+      </ul>
+    </div>
+
+    <div class="card card-accent-teal">
+      <div class="card-title">IABP + VA-ECMO</div>
+      <div class="g2" style="gap:12px;margin-bottom:12px">
+        <div>
+          <p style="color:var(--red);font-weight:600;margin-bottom:4px">VA-ECMO alone</p>
+          <p>↑ afterload, ↑ LV distension risk</p>
+        </div>
+        <div>
+          <p style="color:var(--green);font-weight:600;margin-bottom:4px">+ IABP</p>
+          <p>↓ LV afterload, ↑ coronary perfusion</p>
+        </div>
+      </div>
+      <div class="pearl"><strong>Important distinction:</strong> IABP is not a full LV venting device — it reduces afterload and can mitigate LV distension but does not substitute for a dedicated LV vent when true unloading is required.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="card">
+    <div class="card-title">IABP vs. other mechanical circulatory support</div>
+    <div class="tbl-wrap" style="margin:0">
+      <table>
+        <tr><th>Device</th><th>Main support</th><th>Flow</th><th>LV unloading</th><th>Oxygenation</th></tr>
+        <tr><td><strong>IABP</strong></td><td>Counterpulsation</td><td>Modest</td><td>Yes</td><td>No</td></tr>
+        <tr><td><strong>Impella</strong></td><td>Axial LV flow</td><td>Higher</td><td>Yes</td><td>No</td></tr>
+        <tr><td><strong>TandemHeart</strong></td><td>LA→arterial bypass</td><td>High</td><td>Yes</td><td>No</td></tr>
+        <tr><td><strong>VA-ECMO</strong></td><td>Cardiopulmonary support</td><td>High</td><td>Variable</td><td>Yes</td></tr>
+      </table>
+    </div>
+    <div class="pearl"><strong>Not a ranking.</strong> The right question is never "which device is best" — it's "what problem needs to be solved" (afterload reduction, flow, oxygenation, or a combination) for this specific patient.</div>
+  </div>
+</section>
+
+<section class="tab" id="t9">
+  <div class="sh">
+    <h2>🧮 Tools &amp; Calculators</h2>
+    <p>Educational decision-support only; not a substitute for specialist multidisciplinary assessment.</p>
+  </div>
+
+  <div class="dt-panel" style="margin-bottom:24px">
+    <div class="card-title" style="margin-bottom:14px">🧭 IABP Indication Assistant</div>
+    <div id="iaRoot"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Hemodynamic calculators</div>
+    <p style="margin-bottom:14px">With IABP, always keep native, assisted, and augmented diastolic pressures distinct rather than reporting a single blended "blood pressure."</p>
+    <div class="g4">
+      <div class="calc-card">
+        <h4>MAP</h4>
+        <div class="formula" style="margin:0 0 10px;font-size:11.5px;padding:8px 12px">MAP ≈ (SBP + 2×DBP) / 3</div>
+        <div class="calc-row"><label>SBP (mmHg)</label><input type="number" id="mapSBP" value="110"></div>
+        <div class="calc-row"><label>DBP (mmHg)</label><input type="number" id="mapDBP" value="65"></div>
+        <div class="calc-out" id="mapOut">80.0<span class="unit">mmHg</span></div>
+      </div>
+      <div class="calc-card">
+        <h4>Cardiac Index</h4>
+        <div class="formula" style="margin:0 0 10px;font-size:11.5px;padding:8px 12px">CI = CO / BSA</div>
+        <div class="calc-row"><label>CO (L/min)</label><input type="number" id="ciCO" value="4.5" step="0.1"></div>
+        <div class="calc-row"><label>BSA (m²)</label><input type="number" id="ciBSA" value="1.8" step="0.1"></div>
+        <div class="calc-out" id="ciOut">2.50<span class="unit">L/min/m²</span></div>
+      </div>
+      <div class="calc-card">
+        <h4>SVR</h4>
+        <div class="formula" style="margin:0 0 10px;font-size:11.5px;padding:8px 12px">SVR = 80 × (MAP − CVP) / CO</div>
+        <div class="calc-row"><label>MAP (mmHg)</label><input type="number" id="svrMAP" value="80"></div>
+        <div class="calc-row"><label>CVP (mmHg)</label><input type="number" id="svrCVP" value="8"></div>
+        <div class="calc-row"><label>CO (L/min)</label><input type="number" id="svrCO" value="4.5" step="0.1"></div>
+        <div class="calc-out" id="svrOut">1280<span class="unit">dyn·s·cm⁻⁵</span></div>
+      </div>
+      <div class="calc-card">
+        <h4>Oxygen delivery</h4>
+        <div class="formula" style="margin:0 0 10px;font-size:11.5px;padding:8px 12px">DO₂ = CO × CaO₂ × 10</div>
+        <div class="calc-row"><label>CO (L/min)</label><input type="number" id="doCO" value="4.5" step="0.1"></div>
+        <div class="calc-row"><label>CaO₂ (mL/dL)</label><input type="number" id="doCaO2" value="18" step="0.1"></div>
+        <div class="calc-out" id="doOut">810<span class="unit">mL O₂/min</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="footnote">
+  📚 Based on: ESC/ACC-AHA ACS guidelines, EACTS perioperative cardiac surgery guidance, contemporary mechanical circulatory support consensus statements, Kirklin/Barratt-Boyes Cardiac Surgery, Cardiac Surgery in the Adult (Cohn), Bojar — Manual of Perioperative Care in Adult Cardiac Surgery, Kaplan's Cardiac Anesthesia, Marino's The ICU Book, and device manufacturer instructions for use. Device-specific timing algorithms, alarms, and troubleshooting steps vary by manufacturer/model — always confirm against the specific console's IFU. Educational reference only; not a substitute for specialist assessment or device-specific protocols.
+  <br><br>Built for cardiac surgery clinical education · StarleyBy · 2026
+</div>
+
+</main>
+
+<script>
+// ─── TAB NAVIGATION ──────────────────────────────────────────────
+const tabs = document.querySelectorAll('.tab');
+const tgBtns = document.querySelectorAll('.tg-btn');
+function gt(idx, btn){
+  tabs.forEach(t=>t.classList.remove('active'));
+  tgBtns.forEach(b=>b.classList.remove('active'));
+  tabs[idx].classList.add('active');
+  btn.classList.add('active');
+  const page = document.querySelector('.page');
+  if(page){
+    const y = page.getBoundingClientRect().top + window.scrollY - 10;
+    window.scrollTo({top:y, behavior:'smooth'});
+  } else {
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+}
+
+// ─── WAVEFORM SIMULATOR ──────────────────────────────────────────
+(function(){
+  const cv = document.getElementById('iabpCanvas');
+  if(!cv) return;
+  const ctx = cv.getContext('2d');
+  const CW = 640, CH = 388;
+  const DPR = Math.max(window.devicePixelRatio || 1, 1);
+  cv.width = CW*DPR; cv.height = CH*DPR;
+  cv.style.width = CW+'px'; cv.style.height = CH+'px';
+  ctx.scale(DPR,DPR);
+  ctx.lineJoin='round'; ctx.lineCap='round';
+
+  let mode = 'normal';
+  let ratio = 1;
+
+  // ─ physiological constants (mmHg-ish scale, x in px-time units) ─
+  const SBP = 118, NOTCHP = 96, NATIVE_DBP = 66, AUGMENT_AMP = 34, REDUCE_AMP = 16;
+
+  function gauss(x,c,w,h){ return h*Math.exp(-((x-c)*(x-c))/(2*w*w)); }
+
+  function buildBeats(m){
+    const n = 3, baseCycle = 190;
+    let beats = [], x = 20;
+    for(let i=0;i<n;i++){
+      let cyc = baseCycle;
+      if(m==='tachy') cyc = 128;
+      if(m==='af') cyc = baseCycle*(0.62+Math.random()*0.75);
+      const sd = Math.min(78, cyc*0.5);
+      const b = {start:x, cyc:cyc, sd:sd};
+      b.notch = x+sd; b.end = x+cyc;
+      beats.push(b); x = b.end;
+    }
+    return beats;
+  }
+
+  function assistFlags(beats, r){ return beats.map((b,i)=> r===1 ? true : (i%2===0)); }
+
+  function buildEvents(beats, assisted, m){
+    return beats.map((b,i)=>{
+      if(!assisted[i]) return null;
+      let inflOff=0, deflOffEnd=22, riseDur=14, fallDur=16, amp=1.0;
+      if(m==='early_inflation') inflOff=-22;
+      if(m==='late_inflation') inflOff=30;
+      if(m==='early_deflation') deflOffEnd=58;
+      if(m==='late_deflation') deflOffEnd=-22;
+      if(m==='low_aug') amp=0.35;
+      const inflateStart=b.notch+inflOff, inflateFull=inflateStart+riseDur;
+      const deflateStart=b.end-deflOffEnd, deflateEnd=deflateStart+fallDur;
+      return {inflateStart,inflateFull,deflateStart,deflateEnd,amp};
+    });
+  }
+
+  function volumeAt(t, events){
+    for(const e of events){
+      if(!e) continue;
+      if(t<e.inflateStart) continue;
+      if(t<=e.inflateFull) return (t-e.inflateStart)/(e.inflateFull-e.inflateStart)*e.amp;
+      if(t<=e.deflateStart) return e.amp;
+      if(t<=e.deflateEnd) return (1-(t-e.deflateStart)/(e.deflateEnd-e.deflateStart))*e.amp;
+    }
+    return 0;
+  }
+
+  function findBeat(t, beats){
+    if(t<beats[0].start) return beats[0];
+    for(const b of beats) if(t>=b.start && t<b.end) return b;
+    return beats[beats.length-1];
+  }
+
+  // native (unassisted) shape: systolic upstroke → ejection decline → dicrotic notch → diastolic decay
+  function unassistedShape(t, beats){
+    const b = findBeat(t,beats);
+    const lt = Math.max(t-b.start, 0);
+    const sd = b.sd;
+    let base;
+    if(lt<sd){
+      const p = lt/sd, up = 0.16;
+      if(p<up) base = NATIVE_DBP+(SBP-NATIVE_DBP)*Math.pow(p/up,0.7);
+      else { const q=(p-up)/(1-up); base = SBP-(SBP-NOTCHP)*Math.pow(q,0.8); }
+    } else {
+      const dt = lt-sd, dia = Math.max(b.cyc-sd,1);
+      base = NATIVE_DBP+(NOTCHP-NATIVE_DBP)*Math.exp(-2.4*dt/dia);
+    }
+    // dicrotic notch: brief dip then small dicrotic bump right at valve closure
+    const dtn = lt-sd;
+    base += -7*gauss(dtn,2,3.2,1) + 3.5*gauss(dtn,11,4.5,1);
+    return base;
+  }
+
+  function aorticAt(t, beats, events){
+    const base = unassistedShape(t, beats);
+    const v = volumeAt(t, events);
+    let dip = 0;
+    for(const e of events){
+      if(!e) continue;
+      if(t>=e.deflateEnd){
+        dip += REDUCE_AMP*e.amp*Math.exp(-(t-e.deflateEnd)/26);
+      } else if(t>=e.deflateStart){
+        dip += REDUCE_AMP*e.amp*((t-e.deflateStart)/(e.deflateEnd-e.deflateStart));
+      }
+    }
+    return base + AUGMENT_AMP*v - dip;
+  }
+
+  function lvAt(t, beats, events){
+    const b = findBeat(t,beats);
+    const lt = t-b.start, sd = b.sd;
+    const onsetP = aorticAt(b.start-0.5, beats, events);
+    if(lt<sd){
+      const p = lt/sd, isoFrac = 0.10;
+      if(p<isoFrac){
+        const q = p/isoFrac;
+        return 6+q*(onsetP-6);
+      }
+      const q = (p-isoFrac)/(1-isoFrac);
+      const v = volumeAt(t, events);
+      const peak = SBP+14*v;
+      const shape = Math.pow(Math.sin(Math.PI*Math.min(q,1)),0.8);
+      return onsetP+shape*(peak-onsetP);
+    }
+    const dt = lt-sd, dia = Math.max(b.cyc-sd,1);
+    return 5+4*(dt/dia);
+  }
+
+  function ecgAt(t, beats){
+    const b = findBeat(t,beats);
+    const lt = t-b.start;
+    return gauss(lt,5,4.2,1.0) - gauss(lt,0,3.0,0.22) - gauss(lt,10,3.0,0.16)
+         + gauss(lt,-18,9,0.16) + gauss(lt,b.sd*0.78,b.sd*0.16,0.30);
+  }
+
+  function redraw(){
+    ctx.clearRect(0,0,CW,CH);
+    const beats = buildBeats(mode);
+    const assisted = assistFlags(beats, ratio);
+    const events = buildEvents(beats, assisted, mode);
+    const totalW = beats[beats.length-1].end+16;
+    const leftPad=130, rightPad=14, laneH=76, gap=13, top=12;
+
+    const lanes = [
+      {label:'ECG', color:'#42c47a', min:-0.4, max:1.2, fn:(t)=>ecgAt(t,beats)},
+      {label:'Aortic pressure', color:'#f0c040', min:38, max:158, fn:(t)=>aorticAt(t,beats,events)},
+      {label:'Balloon volume', color:'#4c9fff', min:-0.12, max:1.15, fn:(t)=>volumeAt(t,events)},
+      {label:'LV pressure', color:'#e85555', min:0, max:158, fn:(t)=>lvAt(t,beats,events)}
+    ];
+    const plotBottom = top+lanes.length*(laneH+gap)-gap;
+
+    // dicrotic notch guide lines
+    beats.forEach(b=>{
+      const x = leftPad+(b.notch/totalW)*(CW-leftPad-rightPad);
+      ctx.strokeStyle='rgba(240,192,64,0.22)'; ctx.setLineDash([3,3]); ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(x,top); ctx.lineTo(x,plotBottom); ctx.stroke();
+      ctx.setLineDash([]);
+    });
+
+    lanes.forEach((lane,li)=>{
+      const y0 = top+li*(laneH+gap);
+      ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(leftPad,y0+laneH); ctx.lineTo(CW-rightPad,y0+laneH); ctx.stroke();
+      ctx.fillStyle='#7b90b8'; ctx.font='11px Segoe UI, system-ui, sans-serif'; ctx.textAlign='left';
+      ctx.fillText(lane.label, 8, y0+laneH/2+4);
+
+      ctx.strokeStyle=lane.color; ctx.lineWidth=1.7; ctx.beginPath();
+      let started=false;
+      for(let px=0; px<=totalW; px+=1){
+        const val = lane.fn(px);
+        const norm = (val-lane.min)/(lane.max-lane.min);
+        const y = y0+laneH-norm*laneH;
+        const x = leftPad+(px/totalW)*(CW-leftPad-rightPad);
+        if(!started){ ctx.moveTo(x,y); started=true; } else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+    });
+  }
+
+  const DX = {
+    normal:{dx:'Normal timing', cons:'Optimal diastolic augmentation and afterload reduction.', corr:'None needed — timing is correct.'},
+    early_inflation:{dx:'Early inflation — balloon inflates before aortic valve closure', cons:'Premature ↑ LV afterload, possible interference with LV ejection, ↑ myocardial O₂ demand.', corr:'Delay inflation to the dicrotic notch.'},
+    late_inflation:{dx:'Late inflation — inflation after the optimal diastolic onset', cons:'Reduced diastolic augmentation and coronary perfusion benefit.', corr:'Advance inflation timing to the dicrotic notch.'},
+    early_deflation:{dx:'Early deflation — balloon deflates well before the next systole', cons:'Loss of augmentation, reduced coronary perfusion, insufficient afterload unloading.', corr:'Delay deflation to just before systole.'},
+    late_deflation:{dx:'Late deflation — balloon remains inflated into LV systole', cons:'↑ LV afterload, ↑ myocardial O₂ demand, impaired LV ejection.', corr:'Advance (earlier) deflation timing.'},
+    low_aug:{dx:'Inadequate augmentation despite correct timing', cons:'Reduced coronary perfusion benefit and afterload reduction.', corr:'Check helium fill/balloon size selection and console augmentation settings; exclude a leak.'},
+    tachy:{dx:'Tachycardia — shortened diastole', cons:'Less time available for balloon inflation; reduced net augmentation.', corr:'Consider rate control if appropriate; some consoles auto-adjust timing at high heart rates.'},
+    af:{dx:'Atrial fibrillation — irregular cycle length', cons:'Variable optimal timing beat-to-beat and unreliable ECG triggering.', corr:'Consider pressure triggering; accept some beat-to-beat timing variability.'}
+  };
+
+  document.querySelectorAll('#modeGrid .mode-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('#modeGrid .mode-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      mode = btn.dataset.mode;
+      const d = DX[mode];
+      document.getElementById('dxText').textContent = d.dx;
+      document.getElementById('dxConsequence').textContent = d.cons;
+      document.getElementById('dxCorrection').textContent = d.corr;
+      redraw();
+    });
+  });
+  document.querySelectorAll('#ratioGrid .mode-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('#ratioGrid .mode-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      ratio = parseInt(btn.dataset.ratio,10);
+      redraw();
+    });
+  });
+
+  redraw();
+})();
+
+// ─── GENERIC DECISION TREE RENDERER ──────────────────────────────
+function renderTree(rootEl, tree, startId){
+  let path = [];
+  function show(id){
+    const node = tree[id];
+    let html = '';
+    if(path.length){
+      html += '<div class="dt-trail">'+path.join(' &nbsp;→&nbsp; ')+'</div>';
+    }
+    if(node.result){
+      html += '<div class="dt-result res-'+node.result.type+'"><strong>'+node.result.title+'</strong>'
+            + '<p style="margin-top:6px;color:var(--text);font-size:13px;line-height:1.6">'+node.result.text+'</p></div>'
+            + '<button class="dt-restart" data-action="restart">↺ Start over</button>';
+    } else {
+      html += '<div class="dt-q">'+node.question+'</div><div class="dt-opts">';
+      node.options.forEach((o,i)=>{
+        html += '<button class="dt-opt" data-idx="'+i+'">'+o.label+'</button>';
+      });
+      html += '</div>';
+    }
+    rootEl.innerHTML = html;
+    if(!node.result){
+      rootEl.querySelectorAll('.dt-opt').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const o = node.options[parseInt(btn.dataset.idx,10)];
+          path.push(node.question+' → <b>'+o.label+'</b>');
+          show(o.next);
+        });
+      });
+    } else {
+      rootEl.querySelector('.dt-restart').addEventListener('click', ()=>{ path=[]; show(startId); });
+    }
+  }
+  show(startId);
+}
+
+// ─── TROUBLESHOOTING TREE: "Augmentation suddenly decreased" ────
+const troubleshootTree = {
+  q1:{question:'Is the patient hypotensive (low native pressure)?', options:[
+    {label:'Yes', next:'r_hypo'}, {label:'No', next:'q2'}
+  ]},
+  q2:{question:'Is the balloon timing correct (inflation/deflation relative to the dicrotic notch)?', options:[
+    {label:'No — timing looks off', next:'r_timing'}, {label:'Yes — timing looks correct', next:'q3'}
+  ]},
+  q3:{question:'Is the trigger reliable (clean ECG or pressure trigger, no artifact/arrhythmia)?', options:[
+    {label:'No — trigger looks unreliable', next:'r_trigger'}, {label:'Yes', next:'q4'}
+  ]},
+  q4:{question:'Has the balloon migrated (check position vs. last imaging)?', options:[
+    {label:'Yes — position has changed', next:'r_migration'}, {label:'No', next:'q5'}
+  ]},
+  q5:{question:'Is there a gas leak / sudden helium loss?', options:[
+    {label:'Yes', next:'r_leak'}, {label:'No', next:'q6'}
+  ]},
+  q6:{question:'Is the arterial line overdamped?', options:[
+    {label:'Yes', next:'r_damped'}, {label:'No', next:'r_unclear'}
+  ]},
+  r_hypo:{result:{type:'caution', title:'Likely: hypotension reducing native pulsatility', text:'Low native pressure can blunt the appearance of augmentation even with correct device function. Treat the underlying hypotension, then reassess timing and augmentation.'}},
+  r_timing:{result:{type:'ok', title:'Likely: a timing error', text:'Mistimed inflation or deflation is the most common reversible cause of reduced augmentation. Re-identify the dicrotic notch and correct inflation/deflation timing accordingly (see Timing & Waveforms tab).'}},
+  r_trigger:{result:{type:'caution', title:'Likely: unreliable triggering', text:'Arrhythmia, pacing artifact, or undersensing/oversensing can degrade effective augmentation even when intended timing is correct. Consider switching trigger source (ECG ↔ pressure) or addressing the underlying rhythm.'}},
+  r_migration:{result:{type:'caution', title:'Likely: balloon malposition', text:'A migrated balloon (too high or too low) reduces effective augmentation and raises risk of subclavian or renal/visceral obstruction. Reposition and re-confirm with imaging.'}},
+  r_leak:{result:{type:'no', title:'Possible balloon rupture / helium leak', text:'This is a device emergency. Do not continue routine operation — follow the device-specific emergency protocol and prepare for catheter removal/exchange.'}},
+  r_damped:{result:{type:'ok', title:'Likely: an overdamped arterial line, not device failure', text:'An overdamped line can falsely suggest reduced augmentation. Check the line, flush, and re-zero, and confirm true waveform fidelity before concluding there is a device problem.'}},
+  r_unclear:{result:{type:'caution', title:'No single clear cause identified', text:'Escalate to a full device and system reassessment (console alarms, tubing, balloon integrity, position, patient hemodynamics) with specialist input.'}}
+};
+const dtRootEl = document.getElementById('dtRoot');
+if(dtRootEl) renderTree(dtRootEl, troubleshootTree, 'q1');
+
+// ─── IABP INDICATION ASSISTANT ────────────────────────────────────
+const indicationTree = {
+  i1:{question:'Is the patient hemodynamically unstable / in shock?', options:[
+    {label:'No', next:'r_notroutine1'}, {label:'Yes', next:'i2'}
+  ]},
+  i2:{question:'Is there severe aortic regurgitation?', options:[
+    {label:'Yes', next:'r_contra_ar'}, {label:'No', next:'i3'}
+  ]},
+  i3:{question:'Is there aortic dissection or a major aortic aneurysm?', options:[
+    {label:'Yes', next:'r_contra_aorta'}, {label:'No', next:'i4'}
+  ]},
+  i4:{question:'Is there severe peripheral vascular disease precluding standard access?', options:[
+    {label:'Yes', next:'r_pvd'}, {label:'No', next:'i5'}
+  ]},
+  i5:{question:'Is there a mechanical complication of ACS (papillary muscle rupture, VSD)?', options:[
+    {label:'Yes', next:'r_ok_bridge'}, {label:'No', next:'i6'}
+  ]},
+  i6:{question:'Is this AMI-related cardiogenic shock?', options:[
+    {label:'Yes', next:'i7'}, {label:'No', next:'i10'}
+  ]},
+  i7:{question:'Is failure predominantly right-ventricular rather than left-ventricular?', options:[
+    {label:'Yes — RV-predominant', next:'r_rv_caution'}, {label:'No — LV-predominant', next:'i8'}
+  ]},
+  i8:{question:'Is there refractory hypoxemia or a need for oxygenation support?', options:[
+    {label:'Yes', next:'r_needs_oxygenation'}, {label:'No', next:'i9'}
+  ]},
+  i9:{question:'Is there a mechanical complication or other established bridge indication despite this being AMI shock?', options:[
+    {label:'Yes', next:'r_ok_bridge'}, {label:'No', next:'r_notroutine2'}
+  ]},
+  i10:{question:'Is this preoperative (bridge to CABG) or post-cardiotomy support?', options:[
+    {label:'Yes', next:'r_ok_bridge'}, {label:'No', next:'i11'}
+  ]},
+  i11:{question:'Is this a high-risk PCI context?', options:[
+    {label:'Yes', next:'r_ok_selected'}, {label:'No', next:'r_notroutine1'}
+  ]},
+  r_notroutine1:{result:{type:'caution', title:'Not routinely recommended', text:'No established or selected indication identified from this pathway. IABP is not indicated for hemodynamically stable patients, or for shock without a matching hemodynamic problem, outside specific perioperative planning or selected high-risk PCI contexts.'}},
+  r_contra_ar:{result:{type:'no', title:'Contraindicated', text:'Balloon inflation augments diastolic pressure and would worsen regurgitant flow into the LV. Consider an alternative MCS after addressing the valve lesion.'}},
+  r_contra_aorta:{result:{type:'no', title:'Contraindicated via this route', text:'Aortic pathology precludes safe balloon placement in the affected segment. Consider an alternative MCS.'}},
+  r_pvd:{result:{type:'caution', title:'Relative barrier — reconsider access', text:'Consider axillary/subclavian access, or an alternative MCS if no vascular access route is feasible.'}},
+  r_ok_bridge:{result:{type:'ok', title:'Potentially reasonable', text:'IABP can serve as temporary stabilization / a bridge to definitive surgery or recovery in this context.'}},
+  r_rv_caution:{result:{type:'caution', title:'Reconsider — IABP does not directly support the RV', text:'IABP is a device for a specific hemodynamic problem, not merely for the presence of shock: it primarily unloads the LV and does not directly treat RV failure. Address RV preload, afterload/pulmonary hypertension, and hypoxemia; consider RV-specific or biventricular mechanical support if this remains inadequate.'}},
+  r_needs_oxygenation:{result:{type:'caution', title:'Consider an oxygenation-capable device instead of, or with, IABP', text:'IABP provides no gas exchange support. If refractory hypoxemia is present, VA-ECMO (with IABP as an afterload-reducing / anti-LV-distension adjunct if needed) is the more appropriate primary consideration.'}},
+  r_notroutine2:{result:{type:'caution', title:'Not routinely recommended', text:'Contemporary evidence does not support routine IABP use in AMI-related, LV-predominant cardiogenic shock without a mechanical complication or another established bridge indication.'}},
+  r_ok_selected:{result:{type:'ok', title:'Potentially reasonable in selected contexts', text:'E.g. high-risk PCI or refractory angina as a bridge to CABG — individualized multidisciplinary assessment is required; not a routine/elective strategy.'}}
+};
+const iaRootEl = document.getElementById('iaRoot');
+if(iaRootEl) renderTree(iaRootEl, indicationTree, 'i1');
+
+// ─── HEMODYNAMIC CALCULATORS ──────────────────────────────────────
+(function(){
+  function $(id){ return document.getElementById(id); }
+  function updateCalcs(){
+    if(!$('mapSBP')) return;
+    const sbp=+$('mapSBP').value, dbp=+$('mapDBP').value;
+    $('mapOut').innerHTML = ((sbp+2*dbp)/3).toFixed(1)+'<span class="unit">mmHg</span>';
+    const co=+$('ciCO').value, bsa=+$('ciBSA').value;
+    $('ciOut').innerHTML = (co/bsa).toFixed(2)+'<span class="unit">L/min/m²</span>';
+    const smap=+$('svrMAP').value, scvp=+$('svrCVP').value, sco=+$('svrCO').value;
+    $('svrOut').innerHTML = Math.round(80*(smap-scvp)/sco)+'<span class="unit">dyn·s·cm⁻⁵</span>';
+    const dco=+$('doCO').value, dcao2=+$('doCaO2').value;
+    $('doOut').innerHTML = Math.round(dco*dcao2*10)+'<span class="unit">mL O₂/min</span>';
+  }
+  ['mapSBP','mapDBP','ciCO','ciBSA','svrMAP','svrCVP','svrCO','doCO','doCaO2'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('input', updateCalcs);
+  });
+  updateCalcs();
+})();
+</script>
+
+</body>
+</html>
