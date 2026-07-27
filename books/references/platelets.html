@@ -850,14 +850,217 @@ td strong{color:var(--text)}
 
 <script>
 // ── TAB NAVIGATION ──────────────────────────────────────────────
+<<<<<<< HEAD
+const tabs = document.querySelectorAll('.tab');
+const tgs  = document.querySelectorAll('.tg');
+function gt(i, b) {
+  tabs.forEach(t => t.classList.remove('active'));
+  tgs.forEach(n => n.classList.remove('active'));
+=======
 const tabs=document.querySelectorAll('.tab');
 const tgs=document.querySelectorAll('.tg');
 function gt(i,b){
   tabs.forEach(t=>t.classList.remove('active'));
   tgs.forEach(t=>t.classList.remove('active'));
+>>>>>>> cb5ecd95010fcdec7726032f177d1bd4ef45b752
   tabs[i].classList.add('active');
   b.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── CALC ITEM TOGGLE ──────────────────────────────────────────────
+function toggleCalcItem(el, type) {
+  const cb = el.querySelector('input[type=checkbox]');
+  if (!cb) return;
+  cb.checked = !cb.checked;
+  el.classList.toggle('selected', cb.checked);
+  if (type === 'hbr')  updateHBRLive();
+  if (type === 'dapt') updateDAPTLive();
+  if (type === 'hb')   updateHBLive();
+}
+
+// ── ARC-HBR ──────────────────────────────────────────────────────
+function updateHBRLive() {}
+function calcHBR() {
+  const majors = document.querySelectorAll('.hbr-major:checked').length;
+  const minors = document.querySelectorAll('.hbr-minor:checked').length;
+  const isHBR  = majors >= 1 || minors >= 2;
+  const r = document.getElementById('hbr-result');
+  r.style.display = 'block';
+  r.innerHTML = `
+    <div class="score-val" style="color:${isHBR ? 'var(--red)' : 'var(--green)'}">${majors} major · ${minors} minor</div>
+    <div class="score-label">ARC-HBR Status</div>
+    <div class="score-risk ${isHBR ? 'risk-high' : 'risk-low'}">${isHBR ? '⚠️ HIGH BLEEDING RISK — HBR POSITIVE' : '✅ Not HBR — Standard DAPT duration appropriate'}</div>
+    <div style="font-size:12.5px;color:var(--muted);margin-top:12px;text-align:left;padding:0 8px">
+      ${isHBR
+        ? `<strong style="color:var(--amber)">Clinical implications:</strong><br>
+           • Consider shortened DAPT: 1–3 months (ACS) or 3–6 months (selected CCS)<br>
+           • Consider Aspirin + Clopidogrel instead of potent P2Y₁₂ agent<br>
+           • Mandatory PPI gastroprotection (pantoprazole or rabeprazole)<br>
+           • Address all modifiable HBR criteria before proceeding<br>
+           • Re-evaluate at 1 month — switch to monotherapy if stable`
+        : `<strong style="color:var(--green)">Clinical implications:</strong><br>
+           • Standard DAPT duration appropriate (12 months for ACS)<br>
+           • Consider prolonged DAPT if DAPT score ≥2 and high ischaemic risk<br>
+           • Continue standard PPI gastroprotection if additional GI risk factors`}
+    </div>`;
+}
+
+// ── PRECISE-DAPT ──────────────────────────────────────────────────
+function calcPD() {
+  const age   = parseFloat(document.getElementById('pd-age').value)  || null;
+  const crcl  = parseFloat(document.getElementById('pd-crcl').value) || null;
+  const hgb   = parseFloat(document.getElementById('pd-hgb').value)  || null;
+  const wbc   = parseFloat(document.getElementById('pd-wbc').value)  || null;
+  const bleed = parseInt(document.getElementById('pd-bleed').value)  || 0;
+  if (!age || !crcl || !hgb || !wbc) { alert('Please fill in all required fields.'); return; }
+  const raw   = 0.102*age - 0.0557*crcl - 0.681*hgb + 0.344*wbc + 5.27*bleed + 3.62;
+  const score = Math.round(Math.max(0, Math.min(100, raw * 3.2 + 12)));
+  const isHBR = score >= 25;
+  const r = document.getElementById('pd-result');
+  r.style.display = 'block';
+  r.innerHTML = `
+    <div class="score-val" style="color:${score>=25?'var(--red)':score>=15?'var(--amber)':'var(--green)'}">${score}</div>
+    <div class="score-label">PRECISE-DAPT Score (0–100)</div>
+    <div class="score-risk ${score>=25?'risk-high':score>=15?'risk-mod':'risk-low'}">
+      ${score>=25 ? '⚠️ HIGH BLEEDING RISK (≥25) — Short DAPT 3–6 months' : score>=15 ? '⚡ INTERMEDIATE — Reassess at 3 months' : '✅ LOW BLEEDING RISK (<15) — Standard/prolonged DAPT appropriate'}
+    </div>
+    <div style="font-size:12.5px;color:var(--muted);margin-top:12px;text-align:left;padding:0 8px">
+      ${isHBR
+        ? '<strong style="color:var(--amber)">Recommendation:</strong> Consider shortened DAPT (3–6 months post-ACS or 1 month post-elective). Class IIa, Level B per ESC 2023.'
+        : '<strong style="color:var(--green)">Recommendation:</strong> Low bleeding risk supports standard 12-month DAPT for ACS. Consider DAPT Score for prolonged DAPT evaluation.'}
+    </div>`;
+}
+
+// ── DAPT SCORE ──────────────────────────────────────────────────
+function updateDAPTLive() {
+  const items = document.querySelectorAll('.dapt-chk:checked');
+  let score = 0;
+  items.forEach(cb => { score += parseInt(cb.getAttribute('data-pts')); });
+  const el     = document.getElementById('dapt-score-live');
+  const val    = document.getElementById('dapt-val');
+  const interp = document.getElementById('dapt-interp');
+  el.style.display = 'block';
+  val.textContent   = (score >= 0 ? '+' : '') + score;
+  val.style.color   = score >= 2 ? 'var(--green)' : score < 0 ? 'var(--red)' : 'var(--amber)';
+  interp.textContent = score >= 2
+    ? '→ Prolonged DAPT (18–30 months) favoured — ischaemic benefit outweighs bleeding risk'
+    : score < 0
+    ? '→ Standard 12 months — bleeding risk outweighs prolonged DAPT benefit'
+    : '→ Borderline — individualise based on clinical context';
+}
+
+// ── HAS-BLED ──────────────────────────────────────────────────
+function updateHBLive() {}
+function calcHASBLED() {
+  const checks = document.querySelectorAll('.hb-chk:checked').length;
+  const r       = document.getElementById('hb-result');
+  r.style.display = 'block';
+  const cls  = checks>=3 ? 'risk-high' : checks>=2 ? 'risk-mod' : 'risk-low';
+  const txt  = checks>=3 ? '⚠️ HIGH RISK (≥3) — Address modifiable factors' : checks>=2 ? '⚡ MODERATE RISK (2)' : '✅ LOW RISK (0–1)';
+  const rate = ['~1.1','~1.0','~1.9','~3.7','~8.7','>12'][Math.min(checks,5)];
+  r.innerHTML = `
+    <div class="score-val" style="color:${checks>=3?'var(--red)':checks>=2?'var(--amber)':'var(--green)'}">${checks}</div>
+    <div class="score-label">HAS-BLED Score</div>
+    <div class="score-risk ${cls}">${txt}</div>
+    <div style="font-size:12.5px;color:var(--muted);margin-top:10px">Annual major bleeding rate ≈ <strong style="color:var(--text)">${rate}%</strong></div>
+    <div style="font-size:12px;color:var(--dim);margin-top:8px;padding:0 6px;text-align:left">
+      ⚠️ HAS-BLED ≥3 identifies <em>modifiable</em> risk factors — it should prompt optimisation, NOT withholding anticoagulation in AF. Always compare against CHA₂DS₂-VASc stroke risk.
+    </div>`;
+}
+
+// ── URGENT CABG ASSISTANT ────────────────────────────────────────
+function calcUCA() {
+  const drug    = document.getElementById('uca-drug').value;
+  const hours   = parseFloat(document.getElementById('uca-hours').value) || null;
+  const pru     = parseFloat(document.getElementById('uca-pru').value)   || null;
+  const hgb     = parseFloat(document.getElementById('uca-hgb').value)   || null;
+  const plt     = parseFloat(document.getElementById('uca-plt').value)   || null;
+  const urgency = document.getElementById('uca-urgency').value;
+
+  if (!drug) { alert('Please select a drug.'); return; }
+
+  const r = document.getElementById('uca-result');
+  r.style.display = 'block';
+
+  const pruHigh    = pru !== null && pru < 100;
+  const pruMid     = pru !== null && pru >= 100 && pru <= 185;
+  const pruLow     = pru !== null && pru > 185;
+  const anaemia    = hgb !== null && hgb < 10;
+  const lowPlt     = plt !== null && plt < 100;
+  const earlyWash  = hours !== null && hours < 24;
+
+  const drugs = {
+    aspirin:     { washout:'N/A — continue through CABG', transfusion:'Rarely needed for aspirin alone. One adult therapeutic dose only if severe microvascular bleeding on TEG/ROTEM.', special:'', risk:'low' },
+    clopidogrel: { washout:'5 days ideal; 3 days minimum', transfusion:'One adult therapeutic dose (apheresis unit or pooled equivalent). Effective — clopidogrel does NOT redistribute to transfused platelets. Titrate to platelet function testing.', special:'PRU-guided timing: PRU >185 → proceed without transfusion.', risk: earlyWash ? 'high':'mod' },
+    prasugrel:   { washout:'7 days ideal; ≥5 days minimum', transfusion:'One to two adult therapeutic doses. Prasugrel more potent than clopidogrel — anticipate greater need if <7 days washout. Guide with VerifyNow or Multiplate.', special:'Higher potency — expect more platelet support than for clopidogrel at equivalent washout.', risk: earlyWash ? 'high':'mod' },
+    ticagrelor:  { washout:'5 days ideal; 3 days minimum (RAPID CABG: 2–3 d with PRU testing)', transfusion:'CRITICAL: Active drug redistributes to transfused platelets — each unit acquires the same P2Y₁₂ inhibition. Multiple doses required; repeat platelet function testing after each transfusion. With bentracimab (if available): full reversal within minutes of loading dose → subsequent transfusions fully effective.', special:'Do NOT expect one platelet unit to be sufficient. Most surgeons underestimate ticagrelor reversal difficulty.', risk: earlyWash ? 'high':'mod' },
+    cangrelor:   { washout:'STOP INFUSION — platelet function recovers in 30–60 min', transfusion:'Usually NOT needed. Verify recovery with VerifyNow ≥1 h after stopping infusion before proceeding.', special:'Ideal bridging scenario: no platelet transfusion needed after cessation.', risk:'low' },
+    tirofiban:   { washout:'4–8 h (normal renal); 8–12 h (CrCl <30 mL/min)', transfusion:'Effective after drug clearance — reversible agent. Time-dependent: wait for washout when possible. One adult therapeutic dose if urgent.', special:'Verify renal function — t½ doubles in CKD. ROTEM/TEG to confirm residual effect before proceeding.', risk: earlyWash ? 'high':'mod' },
+    abciximab:   { washout:'24–48 h (platelet-bound drug persists despite short plasma t½)', transfusion:'Multiple adult therapeutic doses likely required — drug redistributes from occupied to fresh platelets. Repeat platelet function testing after each transfusion. Do not rely on plasma t½ to estimate offset.', special:'Platelet-bound receptor occupancy persists 24–48 h regardless of plasma clearance. This is why the surgical delay is based on platelet lifespan, not drug half-life.', risk:'high' }
+  };
+
+  const d = drugs[drug] || {};
+  let riskLevel = d.risk || 'mod';
+  if (lowPlt || (anaemia && riskLevel !== 'low')) riskLevel = 'high';
+  if (pruLow && riskLevel === 'mod') riskLevel = 'low';
+  if (pruHigh) riskLevel = 'high';
+
+  const riskLabel = riskLevel === 'high' ? '🔴 HIGH Bleeding Risk' : riskLevel === 'low' ? '✅ LOW Bleeding Risk' : '⚡ MODERATE Bleeding Risk';
+  const riskCls   = riskLevel === 'high' ? 'risk-high' : riskLevel === 'low' ? 'risk-low' : 'risk-mod';
+
+  const urgencyText = {
+    emergent:   '⚠️ Operate immediately regardless of antiplatelet status. Maximise intraoperative haemostatic support.',
+    urgent:     'Allow partial washout only if haemodynamically stable. Target minimum safe interval guided by PRU.',
+    semiurgent: 'Allow full washout. Repeat PRU at scheduled washout time to confirm adequacy before proceeding.',
+    elective:   'Schedule after full washout: ' + (d.washout || 'per drug protocol')
+  }[urgency] || '';
+
+  const pruLine = pru !== null
+    ? `<div style="margin-top:8px;padding:7px 10px;background:var(--bg);border-radius:8px;font-size:12.5px">
+        PRU ${pru} →
+        <strong style="color:${pruLow?'var(--green)':pruMid?'var(--amber)':'var(--red)'}">
+          ${pruLow ? 'Low inhibition — proceed; no transfusion needed'
+            : pruMid ? 'Moderate — one adult therapeutic dose + TXA'
+            : 'High — delay if possible; 2+ doses; DDAVP'}
+        </strong>
+       </div>` : '';
+
+  r.innerHTML = `
+    <div style="background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:16px 18px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+        <span class="score-risk ${riskCls}" style="display:inline-block">${riskLabel}</span>
+        <span style="font-family:var(--mono);font-size:11px;color:var(--muted)">${drug.toUpperCase()} · ${urgency.toUpperCase()}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px">
+        <div style="background:var(--bg3);border-radius:var(--r);padding:12px">
+          <div style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--cyan);letter-spacing:.1em;margin-bottom:8px">⏱ TIMING &amp; WASHOUT</div>
+          <div style="font-size:13px;color:var(--muted)">${d.washout}</div>
+          <div style="font-size:12.5px;color:var(--amber);margin-top:8px">${urgencyText}</div>
+          ${pruLine}
+        </div>
+        <div style="background:var(--bg3);border-radius:var(--r);padding:12px">
+          <div style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--amber);letter-spacing:.1em;margin-bottom:8px">🩸 PLATELET TRANSFUSION</div>
+          <div style="font-size:13px;color:var(--muted)">${d.transfusion}</div>
+          ${d.special ? `<div style="margin-top:8px;background:var(--bg);border-radius:8px;padding:8px 10px;font-size:12px;color:var(--amber)">⚡ ${d.special}</div>` : ''}
+        </div>
+        <div style="background:var(--bg3);border-radius:var(--r);padding:12px">
+          <div style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--green);letter-spacing:.1em;margin-bottom:8px">✅ INTRAOPERATIVE CHECKLIST</div>
+          <ul style="font-size:12.5px;color:var(--muted);padding-left:15px;line-height:2">
+            <li>TXA loading dose <strong style="color:var(--text)">before CPB</strong> (institutional protocol)</li>
+            <li>Cell saver <strong style="color:var(--text)">routinely deployed</strong></li>
+            <li>Blood bank alert: platelets · FFP · fibrinogen concentrate · cryoprecipitate</li>
+            <li>TEG/ROTEM <strong style="color:var(--text)">immediately post-CPB</strong> → targeted therapy</li>
+            ${anaemia ? '<li style="color:var(--red)">⚠️ Anaemia (Hgb <10) — pRBC crossmatch and prepare in advance</li>' : ''}
+            ${lowPlt  ? '<li style="color:var(--red)">⚠️ Thrombocytopaenia (<100) — haematology consultation pre-op</li>' : ''}
+            <li>DDAVP 0.3 mcg/kg IV at wound closure if microvascular bleeding (<strong>ONE dose only — tachyphylaxis after repeat</strong>)</li>
+          </ul>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--dim);margin-top:12px;padding-top:10px;border-top:1px solid var(--rim)">
+        Clinical decision support only — always apply clinical judgment and institutional protocols. Complex cases: involve haematology and cardiac anaesthesia.
+      </div>
+    </div>`;
 }
 
 // ── CALC HELPERS ─────────────────────────────────────────────────
@@ -1722,6 +1925,9 @@ function calcHBLED() {
   Based on: ESC 2023 Guidelines ACS · ACC/AHA/SCAI 2021 Coronary Revascularization · ESC 2024 CCS · STS/EACTS Myocardial Revascularization 2022 · ARC-HBR Consensus 2019 · DACAB Trial · PRECISE-DAPT · DAPT Trial · HAS-BLED (Chest 2010). For educational purposes — always verify with current formulary and institutional protocols.
 </div>
 
+<<<<<<< HEAD
+
+=======
 <script>
 // TAB NAVIGATION
 const tabs = document.querySelectorAll('.tab');
@@ -1930,6 +2136,7 @@ function calcUCA() {
 }
 
 </script>
+>>>>>>> cb5ecd95010fcdec7726032f177d1bd4ef45b752
 </main>
 </body>
 </html>
