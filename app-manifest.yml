@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-07-19 16:44
+  updated: 2026-07-27 21:24
 
 sections:
   - id: calculators
@@ -211,6 +211,12 @@ sections:
       - id: external_pacing
         title: "Temporary External Pacing – Clinical Reference"
         file: books/cheatsheets/external_pacing.html
+        type: cheatsheet
+        visible: true
+        tags: []
+      - id: iabc
+        title: "IABP — Intra-Aortic Balloon Pump | Complete Clinical Guide"
+        file: books/cheatsheets/iabc.html
         type: cheatsheet
         visible: true
         tags: []
