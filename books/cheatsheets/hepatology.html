@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cirrhosis &amp; Jaundice — On-Call Physician's Guide</title>
+<style>
+/* ─── TOKENS ───────────────────────────────────────────────────── */
+:root {
+  --bg:#070d1a;--bg2:#0d1627;--bg3:#111e35;--bg4:#162440;
+  --rim:rgba(255,255,255,0.07);--glass:rgba(255,255,255,0.025);
+  --text:#e2eaf8;--muted:#7b90b8;--dim:#4a5a78;
+
+  --gold:#f0c040;--gold2:#c99a20;
+  --red:#e85555;--red-dim:rgba(232,85,85,0.15);
+  --green:#42c47a;--green-dim:rgba(66,196,122,0.12);
+  --blue:#4c9fff;--blue-dim:rgba(76,159,255,0.12);
+  --amber:#f59e0b;--amber-dim:rgba(245,158,11,0.12);
+  --teal:#2dd4bf;--teal-dim:rgba(45,212,191,0.12);
+  --purple:#a78bfa;--purple-dim:rgba(167,139,250,0.12);
+
+  --r:14px;--r2:22px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI', system-ui, -apple-system, sans-serif;font-size:14.5px;line-height:1.7;overflow-x:hidden}
+::selection{background:rgba(240,192,64,.3);color:#fff}
+
+/* ─── HEADER ───────────────────────────────────────────────────── */
+.header{position:sticky;top:0;z-index:300;background:rgba(7,13,26,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--rim)}
+.header-inner{display:flex;align-items:center;padding:12px 24px;gap:12px}
+.logo{font-size:17px;font-weight:800;color:var(--gold);line-height:1.1}
+.logo small{display:block;font-weight:400;font-size:10px;color:var(--muted)}
+
+/* TAB GRID */
+.tab-grid-wrap{
+  background:var(--bg2);
+  border-bottom:2px solid var(--rim);
+  padding:14px 20px;
+  position:sticky;top:53px;z-index:200;
+}
+.tab-grid{
+  display:grid;
+  grid-template-columns:repeat(10,1fr);
+  gap:6px;
+  max-width:1440px;
+  margin:0 auto;
+}
+.tg-btn{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:5px;
+  background:var(--bg3);
+  border:1px solid var(--rim);
+  border-radius:12px;
+  padding:10px 6px 8px;
+  cursor:pointer;
+  transition:all .18s;
+  min-height:64px;
+}
+.tg-btn:hover{border-color:rgba(240,192,64,.4);background:rgba(240,192,64,.06)}
+.tg-btn.active{background:rgba(240,192,64,.14);border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.tg-icon{font-size:18px;line-height:1}
+.tg-label{font-size:9.5px;font-weight:600;color:var(--muted);text-align:center;line-height:1.3;letter-spacing:.01em}
+.tg-btn.active .tg-label{color:var(--gold)}
+.tg-btn:hover .tg-label{color:var(--text)}
+
+@media(max-width:860px){
+  .tab-grid-wrap{padding:10px 12px;top:49px}
+  .tab-grid{grid-template-columns:repeat(5,1fr)}
+  .tg-btn{padding:8px 4px 6px;min-height:56px;border-radius:10px}
+  .tg-icon{font-size:16px}
+  .tg-label{font-size:9px}
+}
+@media(max-width:400px){
+  .tab-grid{gap:4px}
+  .tg-btn{min-height:52px;padding:6px 3px}
+  .tg-icon{font-size:15px}
+  .tg-label{font-size:8.5px}
+}
+
+.page{max-width:1440px;margin:0 auto;padding:28px 24px 80px}
+.tab{display:none}.tab.active{display:block}
+
+.sh{margin-bottom:28px}
+.sh h2{font-size:28px;font-weight:800;color:var(--gold);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.sh p{color:var(--muted);font-size:13.5px;margin-top:5px;max-width:800px}
+
+/* ─── GRID HELPERS ─────────────────────────────────────────────── */
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.g12{display:grid;grid-template-columns:1fr 2fr;gap:20px}
+.g21{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+
+/* ─── CARD ──────────────────────────────────────────────────────── */
+.card{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:24px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;inset:0;background:var(--glass);pointer-events:none}
+.card-title{font-size:18px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.card-accent-red .card-title{color:var(--red)}
+.card-accent-green .card-title{color:var(--green)}
+.card-accent-blue .card-title{color:var(--blue)}
+.card-accent-amber .card-title{color:var(--amber)}
+.card-accent-teal .card-title{color:var(--teal)}
+.card-accent-purple .card-title{color:var(--purple)}
+.card-accent-gold .card-title{color:var(--gold)}
+.card p,.card li{color:var(--muted);font-size:14px;line-height:1.7}
+.card ul,.card ol{padding-left:18px}
+.card li{margin-bottom:5px}
+.card-accent-red{border-top:3px solid var(--red)}
+.card-accent-green{border-top:3px solid var(--green)}
+.card-accent-blue{border-top:3px solid var(--blue)}
+.card-accent-amber{border-top:3px solid var(--amber)}
+.card-accent-teal{border-top:3px solid var(--teal)}
+.card-accent-purple{border-top:3px solid var(--purple)}
+.card-accent-gold{border-top:3px solid var(--gold)}
+
+/* ─── PEARL / ALERT ─────────────────────────────────────────────── */
+.pearl{background:rgba(240,192,64,0.07);border:1px solid rgba(240,192,64,0.25);border-left:4px solid var(--gold);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:20px 0;font-size:13.5px;color:var(--text)}
+.pearl strong{color:var(--gold)}
+.alert-red{background:var(--red-dim);border-left:4px solid var(--red);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:20px 0;font-size:13.5px;color:var(--text)}
+.alert-red strong{color:var(--red)}
+.alert-blue{background:var(--blue-dim);border-left:4px solid var(--blue);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:20px 0;font-size:13.5px;color:var(--text)}
+.alert-blue strong{color:var(--blue)}
+.alert-green{background:var(--green-dim);border-left:4px solid var(--green);border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:20px 0;font-size:13.5px;color:var(--text)}
+.alert-green strong{color:var(--green)}
+
+/* ─── TABLE ──────────────────────────────────────────────────────── */
+.tbl-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--rim);margin:16px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--bg3);color:var(--gold);font-weight:600;padding:10px 14px;text-align:left;border-bottom:1px solid var(--rim);letter-spacing:.03em}
+td{padding:9px 14px;border-bottom:1px solid var(--rim);color:var(--muted);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,0.02)}
+.up{color:var(--red)}.dn{color:var(--green)}.nc{color:var(--muted)}
+td strong{color:var(--text)}
+
+/* ─── BADGE ──────────────────────────────────────────────────────── */
+.badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:40px;letter-spacing:.06em;margin-right:4px;margin-bottom:4px}
+.badge-red{background:var(--red-dim);color:var(--red)}
+.badge-green{background:var(--green-dim);color:var(--green)}
+.badge-blue{background:var(--blue-dim);color:var(--blue)}
+.badge-amber{background:var(--amber-dim);color:var(--amber)}
+.badge-teal{background:var(--teal-dim);color:var(--teal)}
+.badge-gold{background:rgba(240,192,64,0.12);color:var(--gold)}
+.badge-purple{background:var(--purple-dim);color:var(--purple)}
+
+.divider{height:1px;background:var(--rim);margin:32px 0}
+
+/* ─── PARAMETER STRIP (glance card) ─────────────────────────────── */
+.glance-strip{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.glance-pill{background:var(--bg3);border:1px solid var(--rim);border-radius:40px;padding:8px 16px;font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.glance-pill b{color:var(--text)}
+.glance-pill .arrow-up{color:var(--red)}
+.glance-pill .arrow-dn{color:var(--green)}
+
+/* ─── EFFECT TREE ────────────────────────────────────────────────── */
+.tree{font-family:'Courier New', Courier, monospace;font-size:13px;line-height:1.9;background:var(--bg);border:1px solid var(--rim);border-radius:var(--r);padding:18px 22px;color:var(--muted);overflow-x:auto;white-space:pre}
+.tree .node{color:var(--text)}
+.tree .up{color:var(--red)}.tree .dn{color:var(--green)}
+
+/* ─── INTERACTIVE SIM ────────────────────────────────────────────── */
+.sim-panel{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:24px;margin-bottom:24px}
+.sim-top{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.canvas-wrap{background:var(--bg);border:1px solid var(--rim);border-radius:var(--r);overflow:hidden;min-height:280px;display:flex;align-items:center;justify-content:center}
+canvas{display:block;max-width:100%;height:auto}
+.sliders{display:flex;flex-direction:column;gap:16px;min-width:230px}
+.mode-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.mode-btn{background:var(--bg3);border:1px solid var(--rim);border-radius:10px;padding:8px 10px;font-size:11.5px;font-weight:600;color:var(--muted);cursor:pointer;text-align:center;transition:all .15s}
+.mode-btn:hover{border-color:var(--gold);color:var(--text)}
+.mode-btn.active{background:rgba(240,192,64,.14);border-color:var(--gold);color:var(--gold)}
+.sl-row{display:flex;flex-direction:column;gap:6px}
+.sl-label{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--text)}
+.sl-label span:last-child{font-family:'Courier New', Courier, monospace;color:var(--gold)}
+input[type=range]{width:100%;accent-color:var(--gold);height:4px;cursor:pointer}
+.diag-box{margin-top:16px;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:14px 18px}
+.diag-box .dline{font-size:12.5px;margin-bottom:6px;color:var(--muted)}
+.diag-box .dline b{color:var(--gold)}
+.diag-box .dline:last-child{margin-bottom:0}
+
+/* ─── DECISION TREE TOOL ─────────────────────────────────────────── */
+.dt-panel{background:var(--bg2);border:1px solid var(--rim);border-radius:var(--r2);padding:24px}
+.dt-q{font-size:16px;color:var(--text);margin-bottom:16px;font-weight:600}
+.dt-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.dt-opt{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:10px 16px;cursor:pointer;font-size:14px;color:var(--muted);transition:all .15s;text-align:left;width:100%}
+.dt-opt:hover{border-color:var(--gold);color:var(--text)}
+.dt-result{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:16px 20px;margin-top:8px}
+.dt-result.res-ok{border-color:var(--green);background:var(--green-dim)}
+.dt-result.res-caution{border-color:var(--amber);background:var(--amber-dim)}
+.dt-result.res-no{border-color:var(--red);background:var(--red-dim)}
+.dt-trail{font-size:11.5px;color:var(--dim);margin-bottom:14px;line-height:1.6}
+.dt-restart{margin-top:14px;background:var(--bg4);border:1px solid var(--rim);border-radius:var(--r);padding:8px 16px;cursor:pointer;color:var(--muted);font-size:12.5px}
+.dt-restart:hover{color:var(--gold);border-color:var(--gold)}
+
+/* ─── CALCULATORS ────────────────────────────────────────────────── */
+.calc-card{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:18px 20px}
+.calc-card h4{font-size:13.5px;color:var(--gold);margin-bottom:12px}
+.calc-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:12.5px}
+.calc-row label{flex:1;color:var(--muted)}
+.calc-row input{width:90px;background:var(--bg);border:1px solid var(--rim);border-radius:6px;padding:5px 8px;color:var(--text);font-family:'Courier New', Courier, monospace;font-size:12.5px}
+.calc-out{margin-top:10px;padding:10px 12px;background:var(--bg);border-radius:8px;font-family:'Courier New', Courier, monospace;font-size:14px;color:var(--gold);text-align:center}
+.calc-out .unit{font-size:10px;color:var(--dim);display:block;margin-top:2px}
+
+.formula{font-family:'Courier New', Courier, monospace;background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:12px 18px;margin:12px 0;font-size:13px;color:var(--teal);display:block}
+
+/* ─── KEY POINTS LIST ────────────────────────────────────────────── */
+.kp-list{list-style:none;padding:0;margin:0}
+.kp-list li{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--rim);font-size:14px;color:var(--muted)}
+.kp-list li:last-child{border-bottom:none}
+.kp-list .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:7px}
+
+/* ─── FLOW / ALGORITHM DIAGRAM ───────────────────────────────────── */
+.flow{display:flex;flex-direction:column;align-items:center;gap:4px;margin:16px 0}
+.flow-step{background:var(--bg3);border:1px solid var(--rim);border-radius:var(--r);padding:10px 18px;font-size:13px;color:var(--text);text-align:center;min-width:220px}
+.flow-step.warn{border-color:var(--red);background:var(--red-dim);color:var(--red)}
+.flow-arrow{color:var(--dim);font-size:16px;line-height:1}
+
+.footnote{text-align:center;font-size:12px;color:var(--dim);padding:40px 20px 0;border-top:1px solid var(--rim);margin-top:60px}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────────── */
+@media(max-width:900px){
+  .g12,.g21{grid-template-columns:1fr}
+  .sim-top{grid-template-columns:1fr}
+  .sliders{flex-direction:column}
+  .header-inner{padding:10px 16px}
+  .page{padding:20px 16px 60px}
+  .sh h2{font-size:24px}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      🟡 Hepatology On-Call
+      <small>Cirrhosis &amp; Jaundice — Guide for the Duty Physician</small>
+    </div>
+  </div>
+</header>
+
+<div class="tab-grid-wrap">
+  <div class="tab-grid" id="tabGrid">
+    <button class="tg-btn active" onclick="gt(0,this)"><span class="tg-icon">⚡</span><span class="tg-label">At a Glance</span></button>
+    <button class="tg-btn" onclick="gt(1,this)"><span class="tg-icon">🟡</span><span class="tg-label">Jaundice Workup</span></button>
+    <button class="tg-btn" onclick="gt(2,this)"><span class="tg-icon">📊</span><span class="tg-label">Cirrhosis Severity</span></button>
+    <button class="tg-btn" onclick="gt(3,this)"><span class="tg-icon">💧</span><span class="tg-label">Ascites &amp; SBP</span></button>
+    <button class="tg-btn" onclick="gt(4,this)"><span class="tg-icon">🩸</span><span class="tg-label">Variceal Bleeding</span></button>
+    <button class="tg-btn" onclick="gt(5,this)"><span class="tg-icon">🧠</span><span class="tg-label">Hepatic Encephalopathy</span></button>
+    <button class="tg-btn" onclick="gt(6,this)"><span class="tg-icon">🫘</span><span class="tg-label">HRS &amp; AKI</span></button>
+    <button class="tg-btn" onclick="gt(7,this)"><span class="tg-icon">🩹</span><span class="tg-label">Coagulopathy</span></button>
+    <button class="tg-btn" onclick="gt(8,this)"><span class="tg-icon">💊</span><span class="tg-label">Labs, Drugs &amp; Withdrawal</span></button>
+    <button class="tg-btn" onclick="gt(9,this)"><span class="tg-icon">🧮</span><span class="tg-label">Tools &amp; Calculators</span></button>
+  </div>
+</div>
+
+<main class="page">
+
+<section class="tab active" id="t0">
+  <div class="sh">
+    <h2>⚡ Cirrhosis &amp; Jaundice — At a Glance</h2>
+    <p>A practical framework for the physician on call: how to think about jaundice, how to grade cirrhosis severity fast, and what actually needs urgent attention overnight.</p>
+  </div>
+
+  <div class="g21">
+    <div class="card card-accent-gold">
+      <div class="card-title">🩺 The on-call mindset</div>
+      <p>Most calls about a cirrhotic patient fall into a short list of scripts. Recognizing which script you're in changes everything that follows:</p>
+      <div class="glance-strip">
+        <div class="glance-pill">🩸 <b>GI bleeding</b></div>
+        <div class="glance-pill">🧠 <b>Confusion / altered mental status</b></div>
+        <div class="glance-pill">🌡️ <b>Fever + ascites</b></div>
+        <div class="glance-pill">🫘 <b>Rising creatinine</b></div>
+        <div class="glance-pill">🩹 <b>Bleeding / bruising before a procedure</b></div>
+        <div class="glance-pill">🟡 <b>New jaundice</b></div>
+      </div>
+      <div class="pearl"><strong>First question for every one of these:</strong> is this a decompensating event (bleed, infection, new AKI, worsening encephalopathy) rather than an isolated abnormal number? Decompensation in cirrhosis is rarely a single-system problem — treat the whole patient, not the lab value.</div>
+    </div>
+
+    <div class="card card-accent-blue">
+      <div class="card-title">📋 Compensated vs. decompensated</div>
+      <div class="tbl-wrap" style="margin:0">
+        <table>
+          <tr><th></th><th>Compensated</th><th>Decompensated</th></tr>
+          <tr><td><strong>Definition</strong></td><td>No ascites, no variceal bleed, no encephalopathy, no jaundice from liver failure</td><td>Any of: ascites, variceal hemorrhage, encephalopathy, jaundice</td></tr>
+          <tr><td><strong>Median survival</strong></td><td>~12 years</td><td>~2 years</td></tr>
+          <tr><td><strong>On-call implication</strong></td><td>Any new decompensating event is a sentinel event — admit, investigate trigger</td><td>Each further event (2nd decompensation) sharply worsens prognosis</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g3">
+    <div class="card">
+      <div class="card-title">Common causes of cirrhosis</div>
+      <ul>
+        <li>Alcohol-associated liver disease</li>
+        <li>Metabolic dysfunction-associated steatotic liver disease (MASLD/NAFLD)</li>
+        <li>Chronic viral hepatitis (B, C)</li>
+        <li>Autoimmune hepatitis</li>
+        <li>Primary biliary cholangitis (PBC) / primary sclerosing cholangitis (PSC)</li>
+        <li>Hemochromatosis, Wilson disease, α1-antitrypsin deficiency</li>
+        <li>Cardiac / congestive hepatopathy</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Typical decompensating triggers</div>
+      <ul>
+        <li>Infection (SBP, pneumonia, UTI, cellulitis)</li>
+        <li>GI bleeding</li>
+        <li>Dehydration / diuretic overuse</li>
+        <li>Constipation</li>
+        <li>Sedatives / opioids / benzodiazepines</li>
+        <li>Non-adherence to lactulose or diuretics</li>
+        <li>New nephrotoxin or NSAID exposure</li>
+        <li>Alcohol relapse, portal vein thrombosis, HCC</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Jaundice — the 30-second triage</div>
+      <div class="tree">Total bilirubin ↑
+    │
+    ├─ Direct (conjugated) ↑↑ → hepatocellular / cholestatic
+    │        → LFTs + imaging (US)
+    │
+    └─ Indirect (unconjugated) ↑↑ → hemolysis / Gilbert
+             → haptoglobin, LDH, retic count</div>
+    </div>
+  </div>
+
+  <div class="alert-red" style="margin-top:20px"><strong>Red flags requiring immediate escalation:</strong> hematemesis/melena in a known or suspected varix carrier, new confusion with asterixis, temperature + worsening ascites, rapidly rising creatinine, or any active bleeding with markedly deranged coagulation before an urgent procedure. These are covered in dedicated tabs — this page is built to be used <em>during</em> the call, not just read beforehand.</div>
+</section>
+
+<section class="tab" id="t1">
+  <div class="sh">
+    <h2>🟡 Jaundice — Diagnostic Approach</h2>
+    <p>Classify by bilirubin fraction first (unconjugated vs. conjugated), then by LFT pattern (hepatocellular vs. cholestatic) — this two-step sort gets you to the right differential fast.</p>
+  </div>
+
+  <div class="card card-accent-gold">
+    <div class="card-title">Bilirubin metabolism — where the block is</div>
+    <div class="tree">Heme breakdown → Unconjugated bilirubin (indirect)
+        │  (bound to albumin, water-insoluble)
+        ▼
+   Hepatocyte uptake + conjugation (UGT1A1)
+        │
+        ▼
+Conjugated bilirubin (direct) — water-soluble
+        │
+        ▼
+   Biliary excretion → gut → stercobilin (stool color)
+                     → urobilinogen → urine</div>
+    <div class="g3" style="margin-top:16px">
+      <div class="pearl" style="margin:0"><strong>↑ Unconjugated</strong> = production (hemolysis) or uptake/conjugation problem (Gilbert syndrome, Crigler-Najjar) — <em>upstream</em> of the liver's excretory machinery. Normal urine/stool color, no dark urine.</div>
+      <div class="alert-blue" style="margin:0"><strong>↑ Conjugated</strong> = hepatocellular injury or biliary obstruction — <em>downstream</em> problem. Dark urine, pale stool possible.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g3">
+    <div class="card card-accent-teal">
+      <div class="card-title">Pre-hepatic</div>
+      <p><strong style="color:var(--text)">Mechanism:</strong> excess bilirubin production or impaired conjugation, normal excretory pathway.</p>
+      <ul>
+        <li>Hemolysis (autoimmune, mechanical, hemoglobinopathy)</li>
+        <li>Ineffective erythropoiesis</li>
+        <li>Gilbert syndrome (very common, benign)</li>
+        <li>Crigler-Najjar syndrome</li>
+      </ul>
+      <p style="margin-top:8px"><strong style="color:var(--text)">Workup:</strong> CBC/smear, haptoglobin (↓), LDH (↑), reticulocyte count (↑), direct Coombs.</p>
+    </div>
+    <div class="card card-accent-amber">
+      <div class="card-title">Hepatocellular</div>
+      <p><strong style="color:var(--text)">Mechanism:</strong> hepatocyte injury/death — ALT/AST rise disproportionately to ALP.</p>
+      <ul>
+        <li>Viral hepatitis (A, B, C, E)</li>
+        <li>Alcohol-associated hepatitis</li>
+        <li>Drug-induced liver injury</li>
+        <li>Ischemic hepatitis ("shock liver")</li>
+        <li>Autoimmune hepatitis</li>
+        <li>Acute decompensation of cirrhosis</li>
+      </ul>
+    </div>
+    <div class="card card-accent-red">
+      <div class="card-title">Cholestatic / post-hepatic</div>
+      <p><strong style="color:var(--text)">Mechanism:</strong> impaired bile flow — ALP/GGT rise disproportionately to ALT/AST.</p>
+      <ul>
+        <li>Choledocholithiasis</li>
+        <li>Malignant biliary obstruction (pancreatic, cholangiocarcinoma)</li>
+        <li>Primary biliary cholangitis (PBC)</li>
+        <li>Primary sclerosing cholangitis (PSC)</li>
+        <li>Drug-induced cholestasis</li>
+        <li>Sepsis-associated cholestasis</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">R-ratio — quantifying the pattern</div>
+      <div class="formula">R = (ALT ÷ ALT_ULN) / (ALP ÷ ALP_ULN)</div>
+      <div class="tbl-wrap" style="margin:12px 0 0">
+        <table>
+          <tr><th>R value</th><th>Pattern</th></tr>
+          <tr><td><strong>R ≥ 5</strong></td><td>Hepatocellular</td></tr>
+          <tr><td><strong>R ≤ 2</strong></td><td>Cholestatic</td></tr>
+          <tr><td><strong>2 &lt; R &lt; 5</strong></td><td>Mixed</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Initial on-call workup</div>
+      <ul class="kp-list">
+        <li><span class="dot" style="background:var(--gold)"></span>Total + direct bilirubin, ALT, AST, ALP, GGT, albumin, INR</li>
+        <li><span class="dot" style="background:var(--gold)"></span>CBC (cytopenias suggest portal hypertension/hypersplenism)</li>
+        <li><span class="dot" style="background:var(--gold)"></span>Abdominal ultrasound with Doppler — first-line imaging, assesses ducts, liver texture, ascites, portal vein patency/flow</li>
+        <li><span class="dot" style="background:var(--gold)"></span>If cholestatic pattern + dilated ducts → MRCP or CT to define the obstruction level</li>
+        <li><span class="dot" style="background:var(--gold)"></span>If hepatocellular pattern → viral serologies, autoimmune markers, medication/toxin history, acetaminophen level if any suspicion</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pearl" style="margin-top:20px"><strong>Isolated hyperbilirubinemia with normal ALT/AST/ALP and normal direct fraction</strong> in an otherwise well patient is very often Gilbert syndrome — reassurance and outpatient follow-up, not an overnight workup.</div>
+</section>
+
+<section class="tab" id="t2">
+  <div class="sh">
+    <h2>📊 Cirrhosis Severity — Child-Pugh &amp; MELD-Na</h2>
+    <p>These two scores drive most downstream decisions: procedural risk, transplant priority, prognosis discussions, and how aggressively to chase a decompensating event.</p>
+  </div>
+
+  <div class="sim-panel">
+    <div class="card-title" style="margin-bottom:14px">⚖️ Child-Pugh Calculator</div>
+    <div id="cpCalc"></div>
+    <div class="diag-box" id="cpResult" style="margin-top:16px">
+      <div class="dline"><b>Score:</b> <span id="cpScore">5</span> points — <b>Class <span id="cpClass">A</span></b></div>
+      <div class="dline"><b>Approx. 1-year survival:</b> <span id="cpSurv1">100%</span> &nbsp;|&nbsp; <b>2-year:</b> <span id="cpSurv2">85%</span></div>
+    </div>
+  </div>
+
+  <div class="sim-panel">
+    <div class="card-title" style="margin-bottom:4px">🧮 MELD-Na Calculator</div>
+    <p style="color:var(--muted);font-size:12.5px;margin-bottom:16px">Used for transplant allocation priority; also a general severity/mortality index. Units: bilirubin &amp; creatinine in mg/dL, sodium in mEq/L.</p>
+    <div class="g4">
+      <div class="calc-row" style="flex-direction:column;align-items:stretch;gap:4px">
+        <label style="color:var(--text);font-weight:600">Bilirubin (mg/dL)</label>
+        <input type="number" id="meldBili" value="2.0" step="0.1" style="width:100%">
+      </div>
+      <div class="calc-row" style="flex-direction:column;align-items:stretch;gap:4px">
+        <label style="color:var(--text);font-weight:600">INR</label>
+        <input type="number" id="meldINR" value="1.3" step="0.1" style="width:100%">
+      </div>
+      <div class="calc-row" style="flex-direction:column;align-items:stretch;gap:4px">
+        <label style="color:var(--text);font-weight:600">Creatinine (mg/dL)</label>
+        <input type="number" id="meldCr" value="1.0" step="0.1" style="width:100%">
+      </div>
+      <div class="calc-row" style="flex-direction:column;align-items:stretch;gap:4px">
+        <label style="color:var(--text);font-weight:600">Sodium (mEq/L)</label>
+        <input type="number" id="meldNa" value="137" step="1" style="width:100%">
+      </div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;margin-top:14px;font-size:13px;color:var(--muted)">
+      <input type="checkbox" id="meldDialysis" style="width:auto"> Dialysis ≥2× in the past week (or ≥24h CVVHD) — creatinine set to 4.0
+    </label>
+    <div class="diag-box" id="meldResult" style="margin-top:16px">
+      <div class="dline"><b>MELD:</b> <span id="meldRaw">–</span></div>
+      <div class="dline"><b>MELD-Na:</b> <span id="meldNaScore">–</span></div>
+      <div class="dline"><b>Approx. 90-day mortality:</b> <span id="meldMortality">–</span></div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">What Child-Pugh is (and isn't) good for</div>
+      <ul>
+        <li>Simple, bedside, no calculator needed in a pinch</li>
+        <li>Guides general prognosis and rough procedural risk</li>
+        <li>Weakness: ascites/encephalopathy grading is subjective; not used for transplant allocation</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">What MELD-Na is used for</div>
+      <ul>
+        <li>Transplant waitlist priority (the actual allocation purpose)</li>
+        <li>Objective, lab-based, reproducible</li>
+        <li>Score capped 6–40; values outside physiologic bounds are truncated (see formula note)</li>
+        <li>Rising MELD-Na over serial measurements matters more than one snapshot</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pearl"><strong>Neither score should be the sole basis for a bedside decision.</strong> A Child-Pugh A patient can still have a life-threatening variceal bleed; a high MELD-Na patient may still tolerate a well-planned procedure with the right precautions. Use these to communicate severity and trend, not as a substitute for examining the patient in front of you.</div>
+</section>
+
+<section class="tab" id="t3">
+  <div class="sh">
+    <h2>💧 Ascites &amp; Spontaneous Bacterial Peritonitis</h2>
+  </div>
+
+  <div class="g3" style="margin-bottom:20px">
+    <div class="card"><div class="card-title">Grade 1</div><p>Mild — detectable only by ultrasound.</p></div>
+    <div class="card"><div class="card-title">Grade 2</div><p>Moderate — symmetrical abdominal distension, clinically detectable.</p></div>
+    <div class="card"><div class="card-title">Grade 3</div><p>Large / tense — marked abdominal distension, often uncomfortable, may impair breathing.</p></div>
+  </div>
+
+  <div class="sim-panel">
+    <div class="card-title" style="margin-bottom:4px">🧮 SAAG Calculator</div>
+    <p style="color:var(--muted);font-size:12.5px;margin-bottom:16px">Serum-Ascites Albumin Gradient — the single most useful test for classifying a new ascites. Units: g/dL.</p>
+    <div class="g3">
+      <div class="calc-row" style="flex-direction:column;align-items:stretch;gap:4px">
+        <label style="color:var(--text);font-weight:600">Serum albumin (g/dL)</label>
+        <input type="number" id="saagSerum" value="3.0" step="0.1" style="width:100%">
+      </div>
+      <div class="calc-row" style="flex-direction:column;align-items:stretch;gap:4px">
+        <label style="color:var(--text);font-weight:600">Ascitic fluid albumin (g/dL)</label>
+        <input type="number" id="saagAscites" value="1.2" step="0.1" style="width:100%">
+      </div>
+    </div>
+    <div class="diag-box" id="saagResult" style="margin-top:16px">
+      <div class="dline"><b>SAAG:</b> <span id="saagValue">1.8</span> g/dL</div>
+      <div class="dline"><b>Interpretation:</b> <span id="saagInterp">≥1.1 g/dL — consistent with portal hypertension</span></div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card card-accent-teal">
+      <div class="card-title">SAAG ≥ 1.1 g/dL (portal hypertensive)</div>
+      <ul>
+        <li>Cirrhosis (most common)</li>
+        <li>Cardiac ascites / constrictive pericarditis</li>
+        <li>Budd-Chiari syndrome, portal vein thrombosis</li>
+        <li>Massive hepatic metastases</li>
+      </ul>
+    </div>
+    <div class="card card-accent-amber">
+      <div class="card-title">SAAG &lt; 1.1 g/dL (non-portal hypertensive)</div>
+      <ul>
+        <li>Peritoneal carcinomatosis</li>
+        <li>Tuberculous peritonitis</li>
+        <li>Pancreatic ascites</li>
+        <li>Nephrotic syndrome</li>
+        <li>Serositis (autoimmune)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card card-accent-red">
+      <div class="card-title">🚨 Spontaneous bacterial peritonitis</div>
+      <p style="margin-bottom:6px"><strong style="color:var(--text)">Diagnosis:</strong> ascitic fluid PMN (neutrophil) count ≥ 250 cells/mm³, in the absence of a surgical/secondary source of infection.</p>
+      <p style="margin-bottom:6px"><strong style="color:var(--text)">Suspect in any cirrhotic with ascites and:</strong></p>
+      <ul>
+        <li>Fever, abdominal pain/tenderness</li>
+        <li>New or worsening encephalopathy</li>
+        <li>Unexplained AKI or hypotension</li>
+        <li>GI bleeding (perform diagnostic tap even without other symptoms)</li>
+      </ul>
+      <div class="pearl" style="margin-top:12px"><strong>Low threshold to tap.</strong> SBP can present with minimal or no localizing symptoms — a low threshold for diagnostic paracentesis in any decompensating cirrhotic with ascites is the standard of care.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Treatment</div>
+      <ul>
+        <li><strong style="color:var(--text)">Empiric antibiotics:</strong> third-generation cephalosporin (e.g. ceftriaxone) pending culture; broaden if nosocomial/prior resistant organisms</li>
+        <li><strong style="color:var(--text)">IV albumin:</strong> 1.5 g/kg on day 1, 1 g/kg on day 3 — reduces incidence of hepatorenal syndrome and improves survival, especially if bilirubin &gt; 4 mg/dL or creatinine &gt; 1 mg/dL</li>
+        <li>Repeat paracentesis at 48h if inadequate response to confirm PMN decline</li>
+        <li>Avoid nephrotoxins, NSAIDs, and non-selective beta-blockers during active SBP/AKI</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">SBP prophylaxis</div>
+      <div class="tbl-wrap" style="margin:0">
+        <table>
+          <tr><th>Indication</th><th>Regimen</th></tr>
+          <tr><td><strong>Prior SBP episode</strong> (secondary ppx)</td><td>Long-term norfloxacin or ciprofloxacin/TMP-SMX</td></tr>
+          <tr><td><strong>GI bleeding</strong></td><td>Short-course prophylaxis (e.g. ceftriaxone) regardless of ascites</td></tr>
+          <tr><td><strong>Low ascitic protein</strong> (&lt;1.5 g/dL) + additional risk factors (renal/liver failure)</td><td>Primary prophylaxis may be considered</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Large volume paracentesis</div>
+      <ul>
+        <li>Therapeutic tap &gt; 5 L requires albumin replacement</li>
+        <li><strong style="color:var(--text)">Rule of thumb:</strong> 6–8 g albumin per liter removed beyond 5 L</li>
+        <li>Reduces post-paracentesis circulatory dysfunction</li>
+        <li>Hold diuretics if hypotensive or AKI present</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="tab" id="t4">
+  <div class="sh">
+    <h2>🩸 Variceal Bleeding — Acute Management</h2>
+    <p>The single highest-stakes overnight call in a cirrhotic patient. A structured, simultaneous approach (resuscitate + pharmacotherapy + antibiotics + arrange endoscopy) saves time that matters.</p>
+  </div>
+
+  <div class="alert-red"><strong>Assume variceal source</strong> in any cirrhotic with hematemesis or melena until proven otherwise — start pharmacotherapy before endoscopy confirms the diagnosis, not after.</div>
+
+  <div class="card card-accent-gold" style="margin-top:16px">
+    <div class="card-title">Simultaneous initial bundle (first 15–30 minutes)</div>
+    <div class="g4">
+      <div>
+        <p style="color:var(--gold);font-weight:600;margin-bottom:6px">1. Resuscitate</p>
+        <ul><li>Two large-bore IVs</li><li>Restrictive transfusion — target Hb ~7 g/dL (not higher)</li><li>Avoid over-transfusion (raises portal pressure, worsens bleeding)</li></ul>
+      </div>
+      <div>
+        <p style="color:var(--gold);font-weight:600;margin-bottom:6px">2. Vasoactive drug</p>
+        <ul><li>Octreotide (bolus + infusion), or</li><li>Terlipressin where available</li><li>Start immediately, continue 2–5 days</li></ul>
+      </div>
+      <div>
+        <p style="color:var(--gold);font-weight:600;margin-bottom:6px">3. Antibiotics</p>
+        <ul><li>Prophylactic ceftriaxone (or per local resistance pattern)</li><li>Reduces rebleeding, infection, and mortality — give regardless of ascites</li></ul>
+      </div>
+      <div>
+        <p style="color:var(--gold);font-weight:600;margin-bottom:6px">4. Airway &amp; endoscopy</p>
+        <ul><li>Consider airway protection if massive hematemesis / altered mental status</li><li>Endoscopy within 12 hours of presentation</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Transfusion targets — why restrictive</div>
+      <div class="tree">Over-transfusion
+    ↓
+Portal pressure ↑
+    ↓
+Rebleeding risk ↑</div>
+      <ul style="margin-top:10px">
+        <li>Target Hb ~7 g/dL (individualize for active massive bleeding, cardiac disease, hemodynamic instability)</li>
+        <li>Correct severe thrombocytopenia/coagulopathy only per active bleeding and planned intervention — see Coagulopathy tab</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">If bleeding is refractory / uncontrolled</div>
+      <ul>
+        <li>Balloon tamponade (Sengstaken-Blakemore / Minnesota) — temporizing bridge only, 24h max</li>
+        <li>Self-expanding esophageal stent — alternative bridge in some centers</li>
+        <li>TIPS (transjugular intrahepatic portosystemic shunt) — definitive rescue for refractory or recurrent bleeding</li>
+        <li><strong style="color:var(--text)">Early/pre-emptive TIPS</strong> within 72h considered in high-risk patients (e.g. Child-Pugh C, or B with active bleeding at endoscopy) at centers with the capability</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Primary prophylaxis (known varices, no bleed yet)</div>
+      <ul>
+        <li>Non-selective beta-blocker (propranolol, nadolol, or carvedilol), or</li>
+        <li>Endoscopic variceal ligation (EVL)</li>
+        <li>Choice depends on varix size, decompensation status, local expertise</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Secondary prophylaxis (after a bleed)</div>
+      <ul>
+        <li>Combination: non-selective beta-blocker <strong style="color:var(--text)">+</strong> EVL — more effective than either alone</li>
+        <li>Repeat EVL sessions until variceal obliteration</li>
+        <li>Consider TIPS if rebleeding despite combination therapy</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pearl"><strong>Beta-blockers and refractory ascites/AKI:</strong> non-selective beta-blockers may need to be held or reduced in the setting of refractory ascites, hypotension, SBP with AKI, or hyponatremia — the so-called "window hypothesis." This is a nuanced, individualized decision, not an automatic stop.</div>
+</section>
+
+<section class="tab" id="t5">
+  <div class="sh">
+    <h2>🧠 Hepatic Encephalopathy</h2>
+    <p>Before labeling any confused cirrhotic as "just HE" — rule out the mimics and find the precipitant. HE is very often a symptom of something else that needs its own treatment.</p>
+  </div>
+
+  <div class="card card-accent-gold">
+    <div class="card-title">West Haven grading</div>
+    <div class="tbl-wrap" style="margin:0">
+      <table>
+        <tr><th>Grade</th><th>Clinical features</th></tr>
+        <tr><td><strong>0 (minimal)</strong></td><td>No detectable changes; subtle deficits only on psychometric testing</td></tr>
+        <tr><td><strong>1</strong></td><td>Trivial lack of awareness, shortened attention span, mild asterixis or tremor, sleep pattern reversal</td></tr>
+        <tr><td><strong>2</strong></td><td>Lethargy, disorientation to time, obvious personality change, asterixis present</td></tr>
+        <tr><td><strong>3</strong></td><td>Marked confusion, disorientation to place, somnolent but rousable, muscular rigidity</td></tr>
+        <tr><td><strong>4 (coma)</strong></td><td>Unresponsive to verbal/painful stimuli</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card card-accent-red">
+      <div class="card-title">⚠️ Rule out mimics before anchoring on HE</div>
+      <ul>
+        <li>Hypoglycemia</li>
+        <li>Intracranial hemorrhage (cirrhotics fall, bleed, and have coagulopathy — low threshold for CT head)</li>
+        <li>Sepsis / meningitis</li>
+        <li>Alcohol intoxication or withdrawal</li>
+        <li>Wernicke encephalopathy (give thiamine before/with glucose in at-risk patients)</li>
+        <li>Post-ictal state</li>
+        <li>Sedative/opioid accumulation</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Find the precipitant — it's almost always there</div>
+      <div class="tree">New/worsening HE
+      ↓
+     Why?
+├── Infection (incl. SBP — tap the ascites)
+├── GI bleeding (check rectal exam / Hb)
+├── Constipation
+├── Dehydration / over-diuresis
+├── Electrolyte disturbance (Na, K)
+├── Sedatives / opioids / benzodiazepines
+├── Non-adherence to lactulose
+└── Renal dysfunction, TIPS placement</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card card-accent-teal">
+      <div class="card-title">Treatment — lactulose</div>
+      <ul>
+        <li>Titrate to 2–3 soft bowel movements per day</li>
+        <li>Oral/NG route preferred; lactulose enemas if unable to take orally or ileus</li>
+        <li>Over-titration causes dehydration/hypernatremia and can itself worsen HE — reassess if excessive diarrhea</li>
+      </ul>
+    </div>
+    <div class="card card-accent-teal">
+      <div class="card-title">Treatment — rifaximin</div>
+      <ul>
+        <li>Added for recurrent HE despite adequate lactulose, or secondary prophylaxis after a hospitalized episode</li>
+        <li>Used in combination with lactulose, not as monotherapy</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pearl" style="margin-top:20px"><strong>Protein restriction is outdated.</strong> Do not restrict dietary protein to manage HE — adequate protein intake (including in HE) is now standard; restriction worsens sarcopenia and outcomes without controlling HE better.</div>
+
+  <div class="alert-blue"><strong>Airway consideration:</strong> Grade 3–4 HE with an unprotected airway and risk of aspiration may need ICU-level monitoring or intubation for airway protection — this is a clinical/respiratory decision independent of the HE-specific therapy above.</div>
+</section>
+
+<section class="tab" id="t6">
+  <div class="sh">
+    <h2>🫘 Hepatorenal Syndrome &amp; AKI in Cirrhosis</h2>
+    <p>Not every rise in creatinine in a cirrhotic is HRS — and treating it as HRS before excluding other causes delays effective therapy.</p>
+  </div>
+
+  <div class="card card-accent-gold">
+    <div class="card-title">ICA-AKI staging (based on creatinine change)</div>
+    <div class="tbl-wrap" style="margin:0">
+      <table>
+        <tr><th>Stage</th><th>Creatinine criteria</th></tr>
+        <tr><td><strong>1</strong></td><td>↑ ≥0.3 mg/dL within 48h, or ≥1.5–2× baseline</td></tr>
+        <tr><td><strong>2</strong></td><td>Increase 2–3× baseline</td></tr>
+        <tr><td><strong>3</strong></td><td>Increase &gt;3× baseline, or Cr ≥4.0 mg/dL with an acute rise ≥0.3, or initiation of renal replacement therapy</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">Step 1 — stop diuretics, exclude the obvious</div>
+      <ul class="kp-list">
+        <li><span class="dot" style="background:var(--gold)"></span>Hold diuretics and any nephrotoxins/NSAIDs</li>
+        <li><span class="dot" style="background:var(--gold)"></span>Volume challenge with albumin (1 g/kg/day, up to 2 days) to exclude prerenal/hypovolemic AKI</li>
+        <li><span class="dot" style="background:var(--gold)"></span>Rule out infection (SBP, UTI, pneumonia) — tap the ascites</li>
+        <li><span class="dot" style="background:var(--gold)"></span>Renal ultrasound to exclude obstruction</li>
+        <li><span class="dot" style="background:var(--gold)"></span>Urinalysis/microscopy, urine sodium — exclude ATN (muddy brown casts, high urine Na)</li>
+      </ul>
+    </div>
+    <div class="card card-accent-red">
+      <div class="card-title">HRS-AKI diagnostic criteria (after exclusions above)</div>
+      <ul>
+        <li>Cirrhosis with ascites</li>
+        <li>AKI per ICA criteria, no improvement after 2 days of diuretic withdrawal + albumin</li>
+        <li>Absence of shock</li>
+        <li>No current/recent nephrotoxin exposure</li>
+        <li>No macroscopic signs of structural kidney injury (no significant proteinuria/hematuria, normal renal ultrasound)</li>
+      </ul>
+      <p style="margin-top:8px">HRS-AKI is a diagnosis of exclusion — reached only after the above steps, not a first-line label.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="card card-accent-teal">
+    <div class="card-title">Treatment of confirmed HRS-AKI</div>
+    <div class="tree">Terlipressin (or norepinephrine where terlipressin unavailable)
+        +
+Albumin
+        ↓
+Splanchnic vasoconstriction → effective arterial volume ↑ → renal perfusion ↑</div>
+    <ul style="margin-top:12px">
+      <li>Terlipressin + albumin is first-line where available; norepinephrine infusion (ICU setting) + albumin is the main alternative</li>
+      <li>Monitor for terlipressin-associated ischemia and volume overload</li>
+      <li>Involve nephrology/hepatology early — renal replacement therapy and transplant evaluation may be needed if refractory</li>
+      <li>Liver transplantation is the only definitive cure for true HRS</li>
+    </ul>
+  </div>
+
+  <div class="pearl" style="margin-top:20px"><strong>Distinguish HRS from ATN:</strong> HRS classically shows a bland urine sediment and low urine sodium (avid sodium retention); ATN shows muddy brown granular casts and higher urine sodium. Overlap exists, especially after an ischemic or septic insult — treat the most likely driver first and reassess.</div>
+</section>
+
+<section class="tab" id="t7">
+  <div class="sh">
+    <h2>🩹 Coagulopathy &amp; Procedures</h2>
+    <p>The most consequential misconception in cirrhotic patients: that an elevated INR means the patient is "auto-anticoagulated" or bleeding-prone in a way that must be corrected before any procedure.</p>
+  </div>
+
+  <div class="alert-red"><strong>Rebalanced hemostasis:</strong> cirrhosis reduces both pro- and anti-coagulant factor synthesis in parallel. INR reflects only the procoagulant side and does <strong>not</strong> reliably predict bleeding risk in cirrhosis — routine correction of a mildly/moderately elevated INR with FFP before low-risk procedures is not supported and exposes the patient to volume overload without proven benefit.</div>
+
+  <div class="g2" style="margin-top:16px">
+    <div class="card">
+      <div class="card-title">What INR does and doesn't tell you</div>
+      <ul>
+        <li>Does <strong style="color:var(--text)">not</strong> reliably predict procedural bleeding risk in cirrhosis</li>
+        <li>Does <strong style="color:var(--text)">not</strong> need routine correction with FFP before low/moderate-risk procedures (e.g. paracentesis, thoracentesis, routine central line)</li>
+        <li>Still relevant as a marker of synthetic liver function (used in Child-Pugh/MELD)</li>
+        <li>Global assays (thromboelastography/ROTEM) better reflect overall clot formation when available and are increasingly preferred to guide transfusion before higher-risk procedures</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Practical approach before a procedure</div>
+      <ul class="kp-list">
+        <li><span class="dot" style="background:var(--gold)"></span>Match correction strategy to bleeding risk of the specific procedure, not to the INR number alone</li>
+        <li><span class="dot" style="background:var(--gold)"></span>Avoid routine prophylactic FFP for paracentesis/thoracentesis</li>
+        <li><span class="dot" style="background:var(--gold)"></span>Use TEG/ROTEM-guided transfusion where available for higher-risk interventions</li>
+        <li><span class="dot" style="background:var(--gold)"></span>Correct fibrinogen if &lt;100–120 mg/dL and active/high-risk bleeding planned</li>
+        <li><span class="dot" style="background:var(--gold)"></span>Involve hepatology/anesthesia/IR early for high-risk procedures in advanced disease</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card card-accent-amber">
+      <div class="card-title">Thrombocytopenia</div>
+      <ul>
+        <li>Common — from hypersplenism (portal hypertension) and reduced thrombopoietin</li>
+        <li>Platelet transfusion generally reserved for active bleeding or very low counts (roughly &lt;50,000/µL) before higher-risk procedures — thresholds vary by institution/procedure</li>
+        <li>Thrombopoietin-receptor agonists (e.g. avatrombopag, lusutrombopag) are an option pre-procedure in select patients to avoid transfusion</li>
+      </ul>
+    </div>
+    <div class="card card-accent-purple">
+      <div class="card-title">Portal vein thrombosis</div>
+      <ul>
+        <li>Cirrhotic patients are <strong style="color:var(--text)">not</strong> protected from thrombosis despite elevated INR — PVT occurs</li>
+        <li>Consider in acute decompensation, new/worsening ascites, or abdominal pain</li>
+        <li>Anticoagulation may be indicated in selected patients (especially transplant candidates) — individualized, specialist-guided decision</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pearl"><strong>Vitamin K</strong> is reasonable to trial (won't harm, may help if there's a nutritional/cholestatic component) but rarely normalizes INR when the elevation is due to synthetic liver failure itself — don't rely on it as a bridge to an urgent procedure.</div>
+</section>
+
+<section class="tab" id="t8">
+  <div class="sh">
+    <h2>💊 Labs, Drugs &amp; Alcohol Withdrawal</h2>
+  </div>
+
+  <div class="card card-accent-gold">
+    <div class="card-title">LFT pattern quick reference</div>
+    <div class="tbl-wrap" style="margin:0">
+      <table>
+        <tr><th>Pattern</th><th>Dominant abnormality</th><th>Think</th></tr>
+        <tr><td><strong>Hepatocellular</strong></td><td>ALT/AST ↑↑ &gt; ALP</td><td>Viral, alcohol, drug/toxin, ischemic, autoimmune</td></tr>
+        <tr><td><strong>Cholestatic</strong></td><td>ALP/GGT ↑↑ &gt; ALT/AST</td><td>Obstruction, PBC/PSC, infiltrative, drug-induced</td></tr>
+        <tr><td><strong>Mixed</strong></td><td>Both elevated proportionally</td><td>Overlap syndromes, sepsis, drug-induced</td></tr>
+        <tr><td><strong>Isolated ↑ bilirubin</strong></td><td>Normal ALT/AST/ALP</td><td>Hemolysis, Gilbert syndrome</td></tr>
+      </table>
+    </div>
+    <p style="margin-top:10px">AST:ALT ratio &gt; 2 is classically suggestive of alcohol-associated liver injury (though not specific).</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="g2">
+    <div class="card card-accent-red">
+      <div class="card-title">Drugs to use cautiously or avoid</div>
+      <ul>
+        <li><strong style="color:var(--text)">NSAIDs</strong> — avoid; worsen renal perfusion and GI bleeding risk, can precipitate HRS</li>
+        <li><strong style="color:var(--text)">Benzodiazepines / opioids</strong> — use cautiously, lowest effective dose; can precipitate or mask hepatic encephalopathy</li>
+        <li><strong style="color:var(--text)">Acetaminophen</strong> — not contraindicated, but consider reduced max daily dose (commonly ≤2 g/day) in advanced cirrhosis</li>
+        <li><strong style="color:var(--text)">Aminoglycosides</strong> — heightened nephrotoxicity risk, avoid if possible</li>
+        <li><strong style="color:var(--text)">IV contrast</strong> — weigh AKI risk, ensure adequate hydration, don't withhold if diagnosis genuinely requires it</li>
+        <li><strong style="color:var(--text)">ACE-inhibitors/ARBs</strong> — often held in decompensated cirrhosis/ascites due to hypotension and renal perfusion concerns</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Nutrition</div>
+      <ul>
+        <li>Do <strong style="color:var(--text)">not</strong> routinely restrict protein — sarcopenia worsens outcomes and is common in cirrhosis</li>
+        <li>Target adequate protein intake (roughly 1.2–1.5 g/kg/day in most decompensated patients, per dietitian/hepatology guidance)</li>
+        <li>Late-evening snack / avoid prolonged overnight fasting — reduces catabolism</li>
+        <li>Thiamine before/with glucose in any patient with alcohol use history (prevent Wernicke encephalopathy)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="sim-panel">
+    <div class="card-title" style="margin-bottom:4px">🧮 CIWA-Ar — Alcohol Withdrawal Assessment</div>
+    <p style="color:var(--muted);font-size:12.5px;margin-bottom:16px">Relevant in alcohol-associated cirrhosis — withdrawal is itself a common precipitant of decompensation and can mimic or compound hepatic encephalopathy. Score each item, total updates automatically.</p>
+    <div id="ciwaCalc"></div>
+    <div class="diag-box" id="ciwaResult" style="margin-top:16px">
+      <div class="dline"><b>Total CIWA-Ar:</b> <span id="ciwaScore">0</span> / 67</div>
+      <div class="dline"><b>Interpretation:</b> <span id="ciwaInterp">Minimal / no withdrawal — monitor</span></div>
+    </div>
+  </div>
+
+  <div class="pearl"><strong>In cirrhotic patients, treat withdrawal carefully:</strong> benzodiazepines remain first-line but accumulate in liver failure — prefer shorter-acting agents (e.g. lorazepam, oxazepam, which don't require hepatic phase-I metabolism) and use symptom-triggered (CIWA-guided) rather than fixed-schedule dosing where feasible.</div>
+</section>
+
+<section class="tab" id="t9">
+  <div class="sh">
+    <h2>🧮 Tools &amp; Calculators</h2>
+    <p>Fibrosis-risk and alcoholic hepatitis severity scores. Child-Pugh &amp; MELD-Na live in <em>Cirrhosis Severity</em>, SAAG in <em>Ascites &amp; SBP</em>, CIWA-Ar in <em>Labs, Drugs &amp; Withdrawal</em>.</p>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">FIB-4 (fibrosis risk, non-invasive)</div>
+      <div class="formula">FIB-4 = (Age × AST) / (Platelets × √ALT)</div>
+      <div class="calc-row"><label>Age (years)</label><input type="number" id="fib4Age" value="55"></div>
+      <div class="calc-row"><label>AST (U/L)</label><input type="number" id="fib4AST" value="45"></div>
+      <div class="calc-row"><label>ALT (U/L)</label><input type="number" id="fib4ALT" value="40"></div>
+      <div class="calc-row"><label>Platelets (×10⁹/L)</label><input type="number" id="fib4Plt" value="180"></div>
+      <div class="calc-out" id="fib4Out">–</div>
+      <div class="tbl-wrap" style="margin-top:12px">
+        <table>
+          <tr><th>FIB-4</th><th>Interpretation</th></tr>
+          <tr><td>&lt; 1.3 (&lt;2.0 if age &gt;65)</td><td>Low probability of advanced fibrosis</td></tr>
+          <tr><td>1.3 – 2.67</td><td>Indeterminate — consider further testing</td></tr>
+          <tr><td>&gt; 2.67</td><td>High probability of advanced fibrosis</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">APRI (AST-to-Platelet Ratio Index)</div>
+      <div class="formula">APRI = (AST / AST_ULN × 100) / Platelets</div>
+      <div class="calc-row"><label>AST (U/L)</label><input type="number" id="apriAST" value="45"></div>
+      <div class="calc-row"><label>AST ULN (U/L)</label><input type="number" id="apriULN" value="40"></div>
+      <div class="calc-row"><label>Platelets (×10⁹/L)</label><input type="number" id="apriPlt" value="180"></div>
+      <div class="calc-out" id="apriOut">–</div>
+      <div class="tbl-wrap" style="margin-top:12px">
+        <table>
+          <tr><th>APRI</th><th>Interpretation</th></tr>
+          <tr><td>&lt; 0.5</td><td>Low probability of significant fibrosis</td></tr>
+          <tr><td>0.5 – 1.5</td><td>Indeterminate</td></tr>
+          <tr><td>&gt; 1.5 (or &gt;1.0 for cirrhosis)</td><td>High probability of significant fibrosis/cirrhosis</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="pearl">FIB-4/APRI are screening tools for <strong style="color:var(--text)">chronic</strong> fibrosis risk, not acute severity scores — they're most useful outpatient/on new referrals, less so for an already-known decompensated cirrhotic overnight.</div>
+
+  <div class="divider"></div>
+
+  <div class="sim-panel">
+    <div class="card-title" style="margin-bottom:4px">Maddrey's Discriminant Function (alcoholic hepatitis severity)</div>
+    <p style="color:var(--muted);font-size:12.5px;margin-bottom:16px">Used to decide whether to consider corticosteroids in severe alcohol-associated hepatitis.</p>
+    <div class="formula">DF = 4.6 × (Patient PT − Control PT) + Total bilirubin (mg/dL)</div>
+    <div class="g3" style="margin-top:14px">
+      <div class="calc-row" style="flex-direction:column;align-items:stretch;gap:4px">
+        <label style="color:var(--text);font-weight:600">Patient PT (sec)</label>
+        <input type="number" id="maddreyPatPT" value="18" style="width:100%">
+      </div>
+      <div class="calc-row" style="flex-direction:column;align-items:stretch;gap:4px">
+        <label style="color:var(--text);font-weight:600">Control PT (sec)</label>
+        <input type="number" id="maddreyCtrlPT" value="12" style="width:100%">
+      </div>
+      <div class="calc-row" style="flex-direction:column;align-items:stretch;gap:4px">
+        <label style="color:var(--text);font-weight:600">Total bilirubin (mg/dL)</label>
+        <input type="number" id="maddreyBili" value="8" step="0.1" style="width:100%">
+      </div>
+    </div>
+    <div class="diag-box" id="maddreyResult" style="margin-top:16px">
+      <div class="dline"><b>Discriminant Function:</b> <span id="maddreyOut">–</span></div>
+      <div class="dline"><b>Interpretation:</b> <span id="maddreyInterp">–</span></div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title">If DF ≥ 32 (severe)</div>
+      <ul>
+        <li>Consider corticosteroids (e.g. prednisolone) if no contraindication (active infection, GI bleeding, renal failure)</li>
+        <li>Screen for and treat infection <strong style="color:var(--text)">before</strong> starting steroids</li>
+        <li>Reassess response with the <strong style="color:var(--text)">Lille score</strong> at day 7 — a poor Lille score identifies non-responders in whom steroids should be stopped</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Related scores (reference)</div>
+      <ul>
+        <li><strong style="color:var(--text)">Glasgow Alcoholic Hepatitis Score (GAHS)</strong> — alternative severity index incorporating age, WBC, urea, PT ratio, bilirubin</li>
+        <li><strong style="color:var(--text)">MELD</strong> — also used/validated for alcoholic hepatitis severity in many centers (see Cirrhosis Severity tab)</li>
+        <li><strong style="color:var(--text)">Lille score</strong> — day-7 steroid response; guides continuation vs. discontinuation of steroids</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="footnote">
+  📚 Based on: AASLD Practice Guidance (cirrhosis, ascites, hepatic encephalopathy, variceal bleeding), EASL Clinical Practice Guidelines, Baveno VII consensus, ICA (International Club of Ascites) criteria, Sanford Guide, UpToDate, Bojar — Manual of Perioperative Care, and Marino's The ICU Book. All units follow Israeli laboratory conventions (mg/dL for bilirubin/creatinine/glucose, g/dL for albumin/hemoglobin, mEq/L for electrolytes). Scores and thresholds are decision-support aids, not substitutes for clinical judgment — verify against your institution's protocols and the treating hepatology/GI team.
+  <br><br>Built for clinical education · StarleyBy · 2026
+</div>
+
+</main>
+
+<script>
+// ─── TAB NAVIGATION ──────────────────────────────────────────────
+const tabs = document.querySelectorAll('.tab');
+const tgBtns = document.querySelectorAll('.tg-btn');
+function gt(idx, btn){
+  tabs.forEach(t=>t.classList.remove('active'));
+  tgBtns.forEach(b=>b.classList.remove('active'));
+  tabs[idx].classList.add('active');
+  btn.classList.add('active');
+  const page = document.querySelector('.page');
+  if(page){
+    const y = page.getBoundingClientRect().top + window.scrollY - 10;
+    window.scrollTo({top:y, behavior:'smooth'});
+  } else {
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+}
+
+// ─── CHILD-PUGH CALCULATOR ────────────────────────────────────────
+(function(){
+  const root = document.getElementById('cpCalc');
+  if(!root) return;
+  const params = [
+    {key:'bili', label:'Total bilirubin (mg/dL)', opts:[{pts:1,label:'< 2'},{pts:2,label:'2 – 3'},{pts:3,label:'> 3'}]},
+    {key:'alb', label:'Albumin (g/dL)', opts:[{pts:1,label:'> 3.5'},{pts:2,label:'2.8 – 3.5'},{pts:3,label:'< 2.8'}]},
+    {key:'inr', label:'INR', opts:[{pts:1,label:'< 1.7'},{pts:2,label:'1.7 – 2.3'},{pts:3,label:'> 2.3'}]},
+    {key:'ascites', label:'Ascites', opts:[{pts:1,label:'None'},{pts:2,label:'Mild / controlled'},{pts:3,label:'Moderate–severe / refractory'}]},
+    {key:'enceph', label:'Encephalopathy', opts:[{pts:1,label:'None'},{pts:2,label:'Grade 1–2'},{pts:3,label:'Grade 3–4'}]}
+  ];
+  const state = {bili:1, alb:1, inr:1, ascites:1, enceph:1};
+
+  let html = '';
+  params.forEach(p=>{
+    html += '<div class="sl-row" style="margin-bottom:14px"><div class="sl-label"><span>'+p.label+'</span></div>';
+    html += '<div class="mode-grid" style="grid-template-columns:repeat(3,1fr)" data-key="'+p.key+'">';
+    p.opts.forEach(o=>{
+      html += '<button class="mode-btn'+(o.pts===1?' active':'')+'" data-pts="'+o.pts+'">'+o.label+' <span style="opacity:.6">('+o.pts+'pt)</span></button>';
+    });
+    html += '</div></div>';
+  });
+  root.innerHTML = html;
+
+  function recompute(){
+    const total = Object.values(state).reduce((a,b)=>a+b,0);
+    let cls, s1, s2;
+    if(total<=6){ cls='A'; s1='100%'; s2='85%'; }
+    else if(total<=9){ cls='B'; s1='80%'; s2='60%'; }
+    else { cls='C'; s1='45%'; s2='35%'; }
+    document.getElementById('cpScore').textContent = total;
+    document.getElementById('cpClass').textContent = cls;
+    document.getElementById('cpSurv1').textContent = s1;
+    document.getElementById('cpSurv2').textContent = s2;
+  }
+
+  root.querySelectorAll('.mode-grid').forEach(grid=>{
+    const key = grid.dataset.key;
+    grid.querySelectorAll('.mode-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        grid.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        state[key] = parseInt(btn.dataset.pts,10);
+        recompute();
+      });
+    });
+  });
+  recompute();
+})();
+
+// ─── MELD-Na CALCULATOR ────────────────────────────────────────────
+(function(){
+  const el = document.getElementById('meldBili');
+  if(!el) return;
+  function $(id){ return document.getElementById(id); }
+  function compute(){
+    let bili = parseFloat($('meldBili').value); if(isNaN(bili)) bili=1;
+    let inr = parseFloat($('meldINR').value); if(isNaN(inr)) inr=1;
+    let cr = parseFloat($('meldCr').value); if(isNaN(cr)) cr=1;
+    let na = parseFloat($('meldNa').value); if(isNaN(na)) na=137;
+    if($('meldDialysis').checked) cr = 4.0;
+    bili = Math.max(bili,1);
+    inr = Math.max(inr,1);
+    cr = Math.max(Math.min(cr,4.0),1.0);
+    const naB = Math.max(Math.min(na,137),125);
+
+    let meld = 3.78*Math.log(bili) + 11.2*Math.log(inr) + 9.57*Math.log(cr) + 6.43;
+    meld = Math.max(6, Math.min(40, Math.round(meld)));
+
+    let meldNaVal = meld;
+    if(meld>11){
+      meldNaVal = meld + 1.32*(137-naB) - (0.033*meld*(137-naB));
+      meldNaVal = Math.round(meldNaVal);
+    }
+    meldNaVal = Math.max(6, Math.min(40, meldNaVal));
+
+    let mort;
+    if(meldNaVal<10) mort='~2% (approx. 90-day)';
+    else if(meldNaVal<20) mort='~6% (approx. 90-day)';
+    else if(meldNaVal<30) mort='~20% (approx. 90-day)';
+    else if(meldNaVal<40) mort='~50% (approx. 90-day)';
+    else mort='>70% (approx. 90-day)';
+
+    $('meldRaw').textContent = meld;
+    $('meldNaScore').textContent = meldNaVal;
+    $('meldMortality').textContent = mort;
+  }
+  ['meldBili','meldINR','meldCr','meldNa'].forEach(id=> $(id).addEventListener('input', compute));
+  $('meldDialysis').addEventListener('change', compute);
+  compute();
+})();
+
+// ─── SAAG CALCULATOR ───────────────────────────────────────────────
+(function(){
+  const el = document.getElementById('saagSerum');
+  if(!el) return;
+  function compute(){
+    const serum = parseFloat(document.getElementById('saagSerum').value)||0;
+    const asc = parseFloat(document.getElementById('saagAscites').value)||0;
+    const saag = serum-asc;
+    document.getElementById('saagValue').textContent = saag.toFixed(1);
+    document.getElementById('saagInterp').textContent = saag>=1.1
+      ? '≥1.1 g/dL — consistent with portal hypertension (cirrhosis, cardiac, Budd-Chiari)'
+      : '<1.1 g/dL — non-portal-hypertensive cause (malignancy, TB, pancreatic, nephrotic syndrome)';
+  }
+  document.getElementById('saagSerum').addEventListener('input', compute);
+  document.getElementById('saagAscites').addEventListener('input', compute);
+  compute();
+})();
+
+// ─── CIWA-Ar CALCULATOR ─────────────────────────────────────────────
+(function(){
+  const root = document.getElementById('ciwaCalc');
+  if(!root) return;
+  const items = [
+    {key:'nausea', label:'Nausea / vomiting', max:7},
+    {key:'tremor', label:'Tremor', max:7},
+    {key:'sweats', label:'Paroxysmal sweats', max:7},
+    {key:'anxiety', label:'Anxiety', max:7},
+    {key:'agitation', label:'Agitation', max:7},
+    {key:'tactile', label:'Tactile disturbances', max:7},
+    {key:'auditory', label:'Auditory disturbances', max:7},
+    {key:'visual', label:'Visual disturbances', max:7},
+    {key:'headache', label:'Headache / fullness in head', max:7},
+    {key:'orientation', label:'Orientation / clouding of sensorium', max:4}
+  ];
+  let html = '<div class="g2" style="gap:14px 24px">';
+  items.forEach(it=>{
+    html += '<div class="sl-row"><div class="sl-label"><span>'+it.label+'</span><span id="ciwa_'+it.key+'_val">0</span></div>'
+          + '<input type="range" min="0" max="'+it.max+'" value="0" id="ciwa_'+it.key+'"></div>';
+  });
+  html += '</div>';
+  root.innerHTML = html;
+
+  function compute(){
+    let total = 0;
+    items.forEach(it=>{
+      const v = parseInt(document.getElementById('ciwa_'+it.key).value,10);
+      document.getElementById('ciwa_'+it.key+'_val').textContent = v;
+      total += v;
+    });
+    document.getElementById('ciwaScore').textContent = total;
+    let interp;
+    if(total<8) interp = 'Minimal / no significant withdrawal — monitor';
+    else if(total<=15) interp = 'Moderate withdrawal — symptom-triggered benzodiazepine dosing typically indicated';
+    else interp = 'Severe withdrawal — high risk of seizures / delirium tremens; aggressive dosing, consider closer-level monitoring';
+    document.getElementById('ciwaInterp').textContent = interp;
+  }
+  items.forEach(it=> document.getElementById('ciwa_'+it.key).addEventListener('input', compute));
+  compute();
+})();
+
+// ─── FIB-4 / APRI / MADDREY CALCULATORS ─────────────────────────────
+(function(){
+  function $(id){ return document.getElementById(id); }
+
+  function computeFib4(){
+    if(!$('fib4Age')) return;
+    const age=+$('fib4Age').value, ast=+$('fib4AST').value, alt=+$('fib4ALT').value, plt=+$('fib4Plt').value;
+    const val = (age*ast)/(plt*Math.sqrt(alt));
+    $('fib4Out').innerHTML = (isFinite(val)?val.toFixed(2):'–')+'<span class="unit">FIB-4 index</span>';
+  }
+  ['fib4Age','fib4AST','fib4ALT','fib4Plt'].forEach(id=>{ if($(id)) $(id).addEventListener('input', computeFib4); });
+  computeFib4();
+
+  function computeApri(){
+    if(!$('apriAST')) return;
+    const ast=+$('apriAST').value, uln=+$('apriULN').value, plt=+$('apriPlt').value;
+    const val = ((ast/uln)*100)/plt;
+    $('apriOut').innerHTML = (isFinite(val)?val.toFixed(2):'–')+'<span class="unit">APRI</span>';
+  }
+  ['apriAST','apriULN','apriPlt'].forEach(id=>{ if($(id)) $(id).addEventListener('input', computeApri); });
+  computeApri();
+
+  function computeMaddrey(){
+    if(!$('maddreyPatPT')) return;
+    const patPT=+$('maddreyPatPT').value, ctrlPT=+$('maddreyCtrlPT').value, bili=+$('maddreyBili').value;
+    const df = 4.6*(patPT-ctrlPT)+bili;
+    $('maddreyOut').textContent = isFinite(df)?df.toFixed(1):'–';
+    $('maddreyInterp').textContent = df>=32
+      ? 'DF ≥ 32 — severe alcoholic hepatitis; consider corticosteroids if no contraindication (infection, GI bleed, renal failure)'
+      : 'DF < 32 — mild-to-moderate; corticosteroids generally not indicated';
+  }
+  ['maddreyPatPT','maddreyCtrlPT','maddreyBili'].forEach(id=>{ if($(id)) $(id).addEventListener('input', computeMaddrey); });
+  computeMaddrey();
+})();
+</script>
+
+</body>
+</html>
