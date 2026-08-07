@@ -1,7 +1,7 @@
 meta:
   app: CS Helper
   version: 1.0.0
-  updated: 2026-07-27 21:24
+  updated: 2026-08-07 08:40
 
 sections:
   - id: calculators
@@ -211,6 +211,12 @@ sections:
       - id: external_pacing
         title: "Temporary External Pacing – Clinical Reference"
         file: books/cheatsheets/external_pacing.html
+        type: cheatsheet
+        visible: true
+        tags: []
+      - id: hepatology
+        title: "Cirrhosis &amp; Jaundice — On-Call Physician's Guide"
+        file: books/cheatsheets/hepatology.html
         type: cheatsheet
         visible: true
         tags: []
